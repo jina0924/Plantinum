@@ -1,0 +1,12 @@
+* 카톡에 올려드린 것과 동일합니다.
+
+[git 명령어]
+$ git status    : git 상태확인
+$ git add .   : 폴더에 있는 모든 파일 staging
+$ git commit -m "[커밋 메세지]"   : "" 안에 있는 메세지와 함께 commit(대괄호 제외)
+------commit-------
+$ git push origin main   : 원격 저장소에 push
+$ git pull      : 내려받기 (*branch를 명확하게 하고 싶다면 git pull origin main)
+
+* Shift+Del   : Ctrl+C (~2가 뜨는 건 정상입니다) 
+* Shift+INS   : Ctrl+V
