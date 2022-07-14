@@ -33,13 +33,14 @@
 
 - Window OS
   - Windows 10 Exterprise
+- Linux
 
 
 
 ### DB
 
 - MySQL
-  - MySQL 8.0.29(64bits)
+  - MySQL
 
 
 
@@ -52,6 +53,12 @@
 ### Front-end
 
 - Vue.js
+- HTML5
+- CSS3
+- JavaScript
+- Node.js
+- Vue3
+- Vuex
 
 
 
@@ -59,7 +66,8 @@
 
 - Django
 
-
+- Python
+- (Java, SpringBoot)
 
 ### HW
 
@@ -83,7 +91,9 @@
 - BreadBoard (아래 2개 중 선택)
   - 400holes BreadBoard
   - 170holes BreadBoard
--  추후 추가 예정
+-  Pyside6
+-  C
+-  Python
 
 
 
@@ -98,6 +108,9 @@
 
 - Visual Studio Code
   - Visual Studio Code 1.68.1
+- Eclipse
+- Pycharm
+- Vim
 
 
 
