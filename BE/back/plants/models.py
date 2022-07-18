@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 class Plants(models.Model):
     name = models.CharField(max_length=100)
     hd_code = models.CharField(max_length=6)
@@ -13,9 +14,9 @@ class Plants(models.Model):
 
 class Myplant(models.Model):
     name = models.CharField(max_length=100)
-    planted_date = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     otp_code = models.CharField(max_length=6, blank=True, null=True)
-    species = models.ForeignKey(Plants, on_delete=models.PROTECT)
+    species = models.ForeignKey(Plants, on_delete=models.PROTECT, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
@@ -31,6 +32,5 @@ class Diary(models.Model):
     content = models.CharField(max_length=1000)
     photo = models.TextField()
     diary_created_at = models.DateTimeField(auto_now_add=True)
-    diary_updated_at = models.DateTimeField(auto_now=True)
     public_private = models.BooleanField(default=False)
     plant = models.ForeignKey(Myplant, on_delete=models.CASCADE)

@@ -18,9 +18,6 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         nickname = data.get('nickname')
         user.nickname = nickname
 
-        email = data.get('email')
-        user.email = email
-
         user.save()
         return user
 
