@@ -32,7 +32,7 @@ color: rgb(85, 170, 127);
 font: 16pt &quot;맑은 고딕&quot;;</string>
     </property>
     <property name="text">
-     <string>새 식물</string>
+     <string>NEW</string>
     </property>
    </widget>
    <widget class="QPushButton" name="old_button">
@@ -50,7 +50,7 @@ color: rgb(85, 170, 127);
 font: 16pt &quot;맑은 고딕&quot;;</string>
     </property>
     <property name="text">
-     <string>기존 정보 불러오기</string>
+     <string>EXIST</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -95,7 +95,7 @@ image: url(:/logo/img/logo.png);</string>
    <hints>
     <hint type="sourcelabel">
      <x>132</x>
-     <y>285</y>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>83</x>
@@ -111,7 +111,7 @@ image: url(:/logo/img/logo.png);</string>
    <hints>
     <hint type="sourcelabel">
      <x>135</x>
-     <y>500</y>
+     <y>522</y>
     </hint>
     <hint type="destinationlabel">
      <x>68</x>

@@ -2,4 +2,10 @@
   <qresource prefix="logo">
     <file>img/logo.png</file>
   </qresource>
+  <qresource prefix="icon">
+    <file>img/backicon.png</file>
+  </qresource>
+  <qresource prefix="water">
+    <file>img/ocean.jpg</file>
+  </qresource>
 </RCC>
