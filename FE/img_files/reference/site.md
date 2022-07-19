@@ -14,6 +14,8 @@ https://www.pinterest.co.kr/pin/18014467251734591/
 
 https://www.pinterest.co.kr/pin/638455684687424811/
 
+https://www.freepik.com/free-vector/set-nature-plant-logo-vectors_3392040.htm#page=3&query=plant&position=3&from_view=search
+
 - 로고 디자인
 
 
