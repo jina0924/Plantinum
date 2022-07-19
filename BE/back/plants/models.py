@@ -18,6 +18,7 @@ class Myplant(models.Model):
     otp_code = models.CharField(max_length=6, blank=True, null=True)
     species = models.ForeignKey(Plants, on_delete=models.PROTECT, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='images/', blank=True)
 
 
 class Sensing(models.Model):
