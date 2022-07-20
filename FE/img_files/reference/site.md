@@ -49,3 +49,25 @@ https://www.pinterest.co.kr/pin/1759287341538293/
 https://www.pinterest.co.kr/pin/1266706136388996/
 
 - 프로필 이미지
+
+
+
+https://www.pinterest.co.kr/pin/352336370858464350/?mt=login
+
+- 모듈형 디자인 참고
+
+
+
+https://www.pinterest.co.kr/pin/378091331228194773/
+
+https://www.pinterest.co.kr/pin/261138478384279098/
+
+https://www.pinterest.co.kr/pin/425238389824749114/
+
+- 식물 페이지 참고
+
+
+
+https://www.pinterest.co.kr/pin/361554676345524672/
+
+- 내 식물 상세페이지 참고
