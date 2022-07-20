@@ -24,13 +24,24 @@ def plants(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def read_myplant(request):
-    plants = get_list_or_404(Myplant)
+    user = request.user
+    plants = get_list_or_404(Myplant, user=user)
 
     serializer = MyplantSerializer(plants, many=True)
     return Response(serializer.data)
 
 
-# 물주기(내 식물) 등록
+# 식물 이름 검색 --> 등록과 합치기
+@api_view(['GET'])
+def search(request, plantname):
+    plants = Plants.objects.filter(name__contains=plantname)
+    serializer = PlantsSearchSerializer(plants, many=True)
+    return Response(serializer.data)
+
+# 식물 이름 검색을 등록하면서 같이
+# 등록할 때 otp 생성
+# 5분 카운트걸고 암호 생성 함수 실행
+# 물주기(내 식물) 등록 (등록 전 식물 검색 필요)
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -43,9 +54,11 @@ def create_myplant(request, plantname):
 
         serializer.save(user=user, species=species)
 
+
         return Response(serializer.data)
 
-
+# 커넥티드 안되었는데 otp도 널값이면
+# otp 생성
 @api_view(['PUT'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -56,13 +69,8 @@ def create_otp(request, plant_pk):
     if plant['otp_code'] == False:
         serializer = MyplantSerializer(instance=plant)
         otp_code = ''
-    pass
+
+# 오티피 4자리 유저pk 2자리 식물pk 2자리 랜덤, isconnected로 확인하기
 
 
 
-# 식물 이름 검색
-@api_view(['GET'])
-def search(request, plantname):
-    plants = Plants.objects.filter(name__contains=plantname)
-    serializer = PlantsSearchSerializer(plants, many=True)
-    return Response(serializer.data)

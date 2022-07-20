@@ -19,6 +19,7 @@ class Myplant(models.Model):
     species = models.ForeignKey(Plants, on_delete=models.PROTECT, null=True, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='images/', blank=True)
+    is_connected = models.BooleanField(default=False)
 
 
 class Sensing(models.Model):
@@ -35,3 +36,4 @@ class Diary(models.Model):
     diary_created_at = models.DateTimeField(auto_now_add=True)
     public_private = models.BooleanField(default=False)
     plant = models.ForeignKey(Myplant, on_delete=models.CASCADE)
+
