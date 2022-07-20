@@ -58,7 +58,12 @@ class DetailPage(QWidget, Ui_DetailUI):
 
     def go_mainpage(self):
         print("Bye! - detail")
-        self.close()
+        self.hide()
+        self.first = MainPage()
+        print("go to main page!")
+        self.first.exec()
+        self.show()
+        self.exec()
 
 
 
