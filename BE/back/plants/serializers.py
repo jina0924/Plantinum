@@ -45,3 +45,4 @@ class PlantsSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plants
         fields = ('name',)
+
