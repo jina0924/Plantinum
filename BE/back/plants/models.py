@@ -19,7 +19,7 @@ class Myplant(models.Model):
     nickname = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     otp_code = models.CharField(max_length=6, blank=True)
-    name = models.ForeignKey(Plants, on_delete=models.PROTECT, blank=True)
+    name = models.ForeignKey(Plants, on_delete=models.PROTECT, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # photo = models.ImageField(upload_to='images/', blank=True)
     photo = models.TextField(blank=True)

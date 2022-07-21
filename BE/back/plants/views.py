@@ -31,46 +31,95 @@ def read_myplant(request):
     return Response(serializer.data)
 
 
-# 식물 이름 검색 --> 등록과 합치기
+# 식물 이름 검색
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def search(request, plantname):
     plants = Plants.objects.filter(name__contains=plantname)
     serializer = PlantsSearchSerializer(plants, many=True)
     return Response(serializer.data)
 
-# 식물 이름 검색을 등록하면서 같이
-# 등록할 때 otp 생성
-# 5분 카운트걸고 암호 생성 함수 실행
+
+from threading import Timer
+import random
+
+
+# 등록할 때 5분 카운트걸고 암호 생성 함수 실행, 시간이 지나면 db에서 암호 삭제
 # 물주기(내 식물) 등록 (등록 전 식물 검색 필요)
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def create_myplant(request, plantname):
+    
     user = request.user
-    species = get_object_or_404(Plants, name=plantname)
+
+    otp_code = ''
+
+    while otp_code == '':
+
+        otp_code = random.randint(0, 9999)
+        otp_code = str(otp_code).zfill(4)
+
+        # print(otp_code)
+
+        if Myplant.objects.filter(otp_code=otp_code).exists():  # db 존재 여부 확인
+            otp_code = ''  # 재발급
 
     serializer = MyplantSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
 
-        serializer.save(user=user, species=species)
+        if Plants.objects.filter(name=plantname).exists():
+            name = Plants.objects.get(name=plantname)
+            serializer.save(user=user, name=name, otp_code=otp_code)
+        else:
+            serializer.save(user=user, otp_code=otp_code)
 
+        def otp():
+
+            myplant = Myplant.objects.filter(pk=serializer.data['id'])
+            # print(myplant.values('otp_code'))  otp code 존재
+            myplant.update(otp_code='')
+            # print(myplant.values('otp_code'))  otp code 삭제
+
+        Timer(301, otp).start()  # 5분 뒤 함수 실행
 
         return Response(serializer.data)
 
-# 커넥티드 안되었는데 otp도 널값이면
-# otp 생성
-@api_view(['PUT'])
+
+# 연결되지 않은 상태, otp도 없는 상태에서 otp 발급
+@api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def create_otp(request, plant_pk):
-    plant = get_object_or_404(Plants, pk=plant_pk)
-    otp_codes = ''
-    
-    if plant['otp_code'] == False:
-        serializer = MyplantSerializer(instance=plant)
+def create_otp(request, myplant_pk):
+    if Myplant.objects.filter(pk=myplant_pk, otp_code='', is_connected=False).exists():
+
         otp_code = ''
 
-# 오티피 4자리 유저pk 2자리 식물pk 2자리 랜덤, isconnected로 확인하기
+        while otp_code == '':
+
+            otp_code = random.randint(0, 9999)
+            otp_code = str(otp_code).zfill(4)
+
+            # print(otp_code)
+
+            if Myplant.objects.filter(otp_code=otp_code).exists():  # db 존재 여부 확인
+                otp_code = ''  # 재발급
+
+        myplant = Myplant.objects.filter(pk=myplant_pk)
+        myplant.update(otp_code=otp_code)
+
+        myplant_s = get_object_or_404(Myplant, pk=myplant_pk)
+        serializer = MyplantSerializer(myplant_s)
+
+        def delete_otp():
+            myplant.update(otp_code='')
+        Timer(301, delete_otp).start()  # 5분뒤 삭제 함수 실행
+
+        return Response(serializer.data)
+
+    else:
+        return Response({'result': '이미 발급되었거나 연결되었습니다.'})
 
 
-
+# 연결끊기
