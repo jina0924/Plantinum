@@ -33,6 +33,10 @@
 ---
  [기술스택정리문서](./STACK_EXPLANATION.md)
 
+ ## 💿ERD
+---
+ [ERD](https://www.erdcloud.com/d/QBfSSRay4GCSgap25)
+
 
 
 
