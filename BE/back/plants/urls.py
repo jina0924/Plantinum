@@ -7,5 +7,4 @@ urlpatterns = [
     path('myplant/<plantname>/', views.create_myplant),
     path('search/<plantname>/', views.search),
     path('myplant/<int:plant_pk>/otp/', views.create_otp),
-    path('myplant/<int:plant_pk>/connect/', views.connect),
 ]
