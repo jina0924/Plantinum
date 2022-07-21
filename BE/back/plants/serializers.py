@@ -10,7 +10,7 @@ class MyplantSerializer(serializers.ModelSerializer):
     class UserSerializer(serializers.ModelSerializer):
         class Meta:
             model = User
-            fields = ('username', 'nickname',)
+            fields = ('pk', 'username', 'nickname',)
 
     user = UserSerializer(read_only=True)
 
@@ -19,7 +19,7 @@ class MyplantSerializer(serializers.ModelSerializer):
             model = Plants
             fields = '__all__'
 
-    species = PlantsSerializer(read_only=True)
+    name = PlantsSerializer(read_only=True)
     
     class Meta:
         model = Myplant
@@ -31,7 +31,7 @@ class PlantsSerializer(serializers.ModelSerializer):
     class MyplantSerializer(serializers.ModelSerializer):
         class Meta:
             model = Myplant
-            fields = ('pk', 'name',)
+            fields = ('pk', 'nickname',)
         
     myplant_set = MyplantSerializer(many=True, read_only=True)
 
