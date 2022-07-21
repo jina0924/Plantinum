@@ -8,7 +8,38 @@ from otpUI import Ui_Form as Ui_Otp
 import mysql.connector
 import json
 from datetime import datetime
+import time
 
+
+#variable
+success_acc = 0
+detail_back =0
+
+class sensorThread(QThread):
+    global a,success_acc
+
+    def __init__(self):
+        super().__init__()
+        print("make thread")
+
+    def stop(self):
+        self.quit()
+        self.wait(1000)
+        print("stop thread")
+
+    def run(self):
+        global a
+        print("start thread")
+        a = 1
+        while(1):
+            if(success_acc == 0):
+                continue
+            else:
+                #code, code
+
+                print("A :",a)
+                a += 1
+                time.sleep(1)
 
 
 
@@ -39,10 +70,12 @@ class EntryPage(QMainWindow, Ui_MainWindow):
             self.show()
 
     def old_plant(self):
+        global success_acc
         #바로 메인페이지로 이동
         self.hide()
         print("go to main page!")
         self.second = MainPage()
+        success_acc =1
         self.second.exec_()
         #self.close()
         # 메인페이지가 끝나면 바로 종료
@@ -55,36 +88,44 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
         print("HI I'm MainPage")
         #self.show()
         #self.main()
-        self.init()
+        #now_timer.start()
+        self.timer = QTimer(self)
+        self.timer.setInterval(1000)  # 1초 => 나중에 5초에 한번으로 바꿀거임
+        self.timer.timeout.connect(self.show_clock)
+        self.timer.start()
 
-    def init(self):
-        self.timer_clock = QTimer()
-        self.timer_clock.setInterval(1000) #1초
-        self.timer_clock.timeout.connect(self.clock)
-        self.timer_clock.start()
+        self.snsth = sensorThread()
+        self.snsth.start()
+
 
 
     def main(self):
-        pass
+       pass
 
     def go_detailPage(self):
         global detail_back
         #self.hide()
         self.close()
+        self.timer.stop()
         self.detailpage = DetailPage()
         print("go to detail page!")
         self.detailpage.exec_()
         if(detail_back == 1):
             detail_back =0
             self.show()
+            self.timer.start()
 
     def exit_program(self):
         print("Bye! - main")
         self.close()
 
-    def clock(self):
-        self.now = datetime.now()
-        print(self.now)
+    def show_clock(self):
+        global now_time
+        now = datetime.now()
+        now_time = str(now.hour) + ":" + str(now.minute) + ":" + str(now.second)
+        self.clock.setText(now_time)
+        print(now_time)
+
 
 
 
@@ -94,9 +135,11 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         self.setupUi(self)
         print("HI I'm Detail Page")
         #self.show()
+        self.main()
 
     def main(self):
-        pass
+       self.testlabel.setText(str(a))
+       pass
 
     def go_mainpage(self):
         global detail_back
@@ -159,14 +202,13 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
         self.close()
 
 
+
+
+
 app=QApplication()
 main = EntryPage()
-success_acc = 0
-detail_back =0
-widget = QStackedWidget()
 
-#widget.addWidget()
-
+#widget = QStackedWidget()
 
 
 main.show()
