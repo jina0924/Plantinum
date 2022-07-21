@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import MyplantView from '@/views/MyplantView.vue'
+import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import Leaf82View from '@/views/Leaf82View.vue'
@@ -16,6 +17,11 @@ const routes = [
     path: '/myplant',
     name: 'myplant',
     component: MyplantView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
   },
   {
     path: '/logout',
