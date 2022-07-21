@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light">
-    <router-link class="navbar-brand" :to="{ name: 'myplant'}">Plantinum</router-link>
+    <router-link class="navbar-brand" :to="{ name: 'home'}">Plantinum</router-link>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,7 +25,11 @@
         </li>
       </ul>
       <div class="nav-logout my-2 my-lg-0">
-        <router-link class="nav-link" :to="{ name: 'logout'}" @click="fetchProfile()">Logout</router-link>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link class="nav-link" :to="{ name: 'logout'}" @click="fetchProfile()">Logout</router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
@@ -70,13 +74,15 @@ export default {
     background-color: #F8F5EE;
   }
 
-  .nav-logout {
-    background: #B2C9AB;
+  .nav-logout .nav-item {
+    background-color: #B2C9AB;
+    font-family: 'SUIT', sans-serif;
     border-radius: 10px;
+    font-size: 0.5rem;
+    /* 컬러가 안먹어 ㅠㅠㅠ */
+    color: white;
   }
 
-  .nav-logout a {
-    text-decoration: none;
-  }
+  /* 드랍다운 CSS */
 
 </style>
