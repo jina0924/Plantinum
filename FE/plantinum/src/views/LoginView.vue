@@ -7,6 +7,7 @@
       <input v-model="credentials.password" type="text" placeholder="Your password">
       <button type="submit">로그인</button>
     </form>
+    <div></div>
   </div>
 </template>
 
