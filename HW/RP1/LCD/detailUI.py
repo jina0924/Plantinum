@@ -42,6 +42,13 @@ class Ui_Form(object):
         self.back_button.setStyleSheet(u"border-image: url(:/icon/img/backicon.png);\n"
 "color: rgb(124, 200, 135);\n"
 "background-color: rgb(255, 237, 222);")
+        self.testlabel = QLabel(Form)
+        self.testlabel.setObjectName(u"testlabel")
+        self.testlabel.setGeometry(QRect(150, 250, 131, 211))
+        font1 = QFont()
+        font1.setPointSize(18)
+        font1.setBold(True)
+        self.testlabel.setFont(font1)
 
         self.retranslateUi(Form)
         self.back_button.clicked.connect(Form.go_mainpage)
@@ -53,5 +60,6 @@ class Ui_Form(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.title.setText(QCoreApplication.translate("Form", u"MY PLANT", None))
         self.back_button.setText("")
+        self.testlabel.setText("")
     # retranslateUi
 
