@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>430</x>
-     <y>190</y>
+     <y>210</y>
      <width>160</width>
      <height>50</height>
     </rect>
@@ -57,15 +57,15 @@ border-radius: 5px;</string>
   <widget class="QLabel" name="background_label">
    <property name="geometry">
     <rect>
-     <x>-2</x>
-     <y>230</y>
+     <x>0</x>
+     <y>0</y>
      <width>1024</width>
-     <height>433</height>
+     <height>600</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: qlineargradient(spread:pad, x1:0.517045, y1:1, x2:0.466, y2:0, stop:0 rgba(178, 201, 171, 255), stop:1 rgba(248, 245, 238, 255));
-border-image: url(:/img/img/background_supool_3.jpg);</string>
+background-image: url(:/img/img/시작화면_배경.png);</string>
    </property>
    <property name="midLineWidth">
     <number>0</number>
@@ -74,35 +74,7 @@ border-image: url(:/img/img/background_supool_3.jpg);</string>
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="logo_label">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>40</y>
-     <width>360</width>
-     <height>110</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Palace Script MT</family>
-     <pointsize>60</pointsize>
-     <italic>true</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font-weight: bold;</string>
-   </property>
-   <property name="text">
-    <string>Supool</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
   <zorder>background_label</zorder>
-  <zorder>logo_label</zorder>
   <zorder>old_button</zorder>
   <zorder>new_button</zorder>
  </widget>
