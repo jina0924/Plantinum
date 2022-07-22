@@ -14,6 +14,8 @@ https://www.pinterest.co.kr/pin/18014467251734591/
 
 https://www.pinterest.co.kr/pin/638455684687424811/
 
+https://www.freepik.com/free-vector/set-nature-plant-logo-vectors_3392040.htm#page=3&query=plant&position=3&from_view=search
+
 - 로고 디자인
 
 
@@ -47,3 +49,25 @@ https://www.pinterest.co.kr/pin/1759287341538293/
 https://www.pinterest.co.kr/pin/1266706136388996/
 
 - 프로필 이미지
+
+
+
+https://www.pinterest.co.kr/pin/352336370858464350/?mt=login
+
+- 모듈형 디자인 참고
+
+
+
+https://www.pinterest.co.kr/pin/378091331228194773/
+
+https://www.pinterest.co.kr/pin/261138478384279098/
+
+https://www.pinterest.co.kr/pin/425238389824749114/
+
+- 식물 페이지 참고
+
+
+
+https://www.pinterest.co.kr/pin/361554676345524672/
+
+- 내 식물 상세페이지 참고
