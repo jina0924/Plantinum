@@ -10,11 +10,11 @@
 						<div class="card-3d-wrap mx-auto">
 							<div class="card-3d-wrapper">
 								<div class="card-front">
-									<div class="center-wrap">
+                  <account-error-list v-if="authError"></account-error-list>
+									<!-- <div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">로그인</h4>
 											<div class="form-group">
-                        <!-- account error -->
                         <account-error-list v-if="authError"></account-error-list>
 												<input v-model="credentials.username" type="text" name="username" class="form-style" placeholder="Your ID" id="username" autocomplete="off">
                         <span class="material-symbols-outlined input-icon">person</span>
@@ -26,10 +26,9 @@
                         </div>
                         <button class="mt-4 btn" type=submit>로그인</button>
                       </form>
-                      <!-- router link  -->
                       <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a></p>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 								<div class="card-back">
 									<div class="center-wrap">
