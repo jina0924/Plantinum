@@ -1,22 +1,29 @@
 from django.db import models
 from django.conf import settings
 
+
 class Plants(models.Model):
     name = models.CharField(max_length=100)
-    hd_code = models.CharField(max_length=6)
     watercycle_spring = models.CharField(max_length=6)
+    watercycle_spring_nm = models.CharField(max_length=100)
     watercycle_summer = models.CharField(max_length=6)
+    watercycle_summer_nm = models.CharField(max_length=100)
     watercycle_autumn = models.CharField(max_length=6)
+    watercycle_autumn_nm = models.CharField(max_length=100)
     watercycle_winter = models.CharField(max_length=6)
-    specl_manage_info = models.CharField(max_length=100, blank=True, null=True)
+    watercycle_winter_nm = models.CharField(max_length=100)
+    specl_manage_info = models.TextField(blank=True)
 
 
 class Myplant(models.Model):
-    name = models.CharField(max_length=100)
-    planted_date = models.DateTimeField()
-    otp_code = models.CharField(max_length=6, blank=True, null=True)
-    species = models.ForeignKey(Plants, on_delete=models.PROTECT)
+    nickname = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    otp_code = models.CharField(max_length=6, blank=True)
+    name = models.ForeignKey(Plants, on_delete=models.PROTECT, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # photo = models.ImageField(upload_to='images/', blank=True)
+    photo = models.TextField(blank=True)
+    is_connected = models.BooleanField(default=False)
 
 
 class Sensing(models.Model):
@@ -29,8 +36,8 @@ class Sensing(models.Model):
 
 class Diary(models.Model):
     content = models.CharField(max_length=1000)
-    photo = models.TextField()
+    photo = models.TextField(blank=True)
     diary_created_at = models.DateTimeField(auto_now_add=True)
-    diary_updated_at = models.DateTimeField(auto_now=True)
     public_private = models.BooleanField(default=False)
-    plant = models.ForeignKey(Myplant, on_delete=models.CASCADE)
+    my_plant = models.ForeignKey(Myplant, on_delete=models.CASCADE)
+
