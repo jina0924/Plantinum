@@ -3,9 +3,11 @@
     <file>img/logo.png</file>
   </qresource>
   <qresource prefix="icon">
+    <file>img/home.svg</file>
     <file>img/backicon.png</file>
   </qresource>
   <qresource prefix="img">
     <file>img/ocean.jpg</file>
+    <file>img/background_supool_3.jpg</file>
   </qresource>
 </RCC>

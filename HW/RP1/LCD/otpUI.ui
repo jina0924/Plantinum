@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>156</x>
-     <y>130</y>
+     <y>140</y>
      <width>200</width>
      <height>80</height>
     </rect>
@@ -42,36 +42,13 @@ color: rgb(101, 128, 93);</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_ok">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>490</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>22</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 235, 219);
-color: rgb(85, 170, 127);</string>
-   </property>
-   <property name="text">
-    <string>ok</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="button_back">
    <property name="geometry">
     <rect>
      <x>950</x>
-     <y>20</y>
-     <width>41</width>
-     <height>41</height>
+     <y>10</y>
+     <width>51</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
@@ -83,7 +60,7 @@ color: rgb(85, 170, 127);</string>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(248, 245, 238);
 color: rgb(85, 170, 127);
-border-image: url(:/icon/img/backicon.png);</string>
+border-image: url(:/icon/img/home.svg);</string>
    </property>
    <property name="text">
     <string/>
@@ -94,12 +71,22 @@ border-image: url(:/icon/img/backicon.png);</string>
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>81</width>
-     <height>21</height>
+     <width>121</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Palace Script MT</family>
+     <pointsize>26</pointsize>
+     <italic>true</italic>
+    </font>
    </property>
    <property name="text">
     <string>plantinum</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -127,7 +114,7 @@ border-image: url(:/icon/img/backicon.png);</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -256,11 +243,11 @@ border-radius: 10px;
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget1">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>70</y>
+     <x>600</x>
+     <y>100</y>
      <width>301</width>
      <height>371</height>
     </rect>
@@ -582,22 +569,6 @@ border-radius:5px;</string>
   <include location="myres.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>button_ok</sender>
-   <signal>clicked()</signal>
-   <receiver>Form</receiver>
-   <slot>check_otp()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>791</x>
-     <y>512</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>808</x>
-     <y>549</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>button_back</sender>
    <signal>clicked()</signal>
