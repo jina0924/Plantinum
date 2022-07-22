@@ -215,8 +215,6 @@ http://127.0.0.1:8000/plants/myplant/
 ### 물주기 등록
 
 - 물주기 등록 전 반드시 식물 이름 검색이 선행되어야 함
-- 등록시 OTP 자동 발급, 5분 뒤 자동 삭제(blank)
-
 - 로그인 사용자 - 토큰 사용
 - POST
 - URL
@@ -258,7 +256,7 @@ http://127.0.0.1:8000/plants/myplant/{식물이름}/
     },
     "nickname": "깨운이",
     "created_at": "2022-07-22T05:23:33.900553Z",
-    "otp_code": "3190",
+    "otp_code": "",
     "photo": "",
     "is_connected": false
 }
@@ -269,7 +267,7 @@ http://127.0.0.1:8000/plants/myplant/{식물이름}/
 ### OTP 생성
 
 - 기기와 연결되지 않았고 OTP도 없는 상태에서 OTP 발급
-- 수동 발급
+- 5분 후 자동으로 삭제 (blank)
 
 - 로그인 사용자 - 토큰 사용
 - POST
@@ -299,4 +297,39 @@ http://127.0.0.1:8000/plants/myplant/{물주기 식물 pk}/otp/
     "result": "이미 발급되었거나 연결되었습니다."
 }
 ```
+
+
+
+### 연결 해제
+
+- 기기와 연결상태가 True인 경우 연결 해제
+- 로그인 사용자 - 토큰 사용
+
+- POST
+- URL
+
+```
+http://127.0.0.1:8000/plants/myplant/{물주기 식물 pk}/disconnect/
+```
+
+- Request Parameters
+
+| Name           | Type | Description             | Mandatory | Example |
+| -------------- | ---- | ----------------------- | --------- | ------- |
+| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 1       |
+
+- Response
+
+```
+{
+	"is_connected": false
+}
+```
+
+```
+{
+    "result": "연결상태를 확인해주세요."
+}
+```
+
 
