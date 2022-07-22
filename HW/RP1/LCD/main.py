@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from entry import Ui_MainWindow
+from entryUI import Ui_Form as Ui_EntryUI
 from mainUI import Ui_Form as Ui_MainUI
 from detailUI import Ui_Form as Ui_DetailUI
 from otpUI import Ui_Form as Ui_Otp
@@ -14,6 +15,7 @@ import time
 #variable
 success_acc = 0
 detail_back =0
+otp_back = 0
 
 class sensorThread(QThread):
     global a,success_acc
@@ -43,7 +45,7 @@ class sensorThread(QThread):
 
 
 
-class EntryPage(QMainWindow, Ui_MainWindow):
+class EntryPage(QMainWindow, Ui_EntryUI):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -59,6 +61,7 @@ class EntryPage(QMainWindow, Ui_MainWindow):
         pass
 
     def new_plant(self):
+        global otp_back
         #otp 등록페이지로 이동
         self.hide()
         print("regist new plant!")
@@ -66,7 +69,8 @@ class EntryPage(QMainWindow, Ui_MainWindow):
         self.go_otp.exec_()
         if(success_acc == 1):
             self.old_plant()
-        else:
+        elif (otp_back == 1):
+            otp_back = 0
             self.show()
 
     def old_plant(self):
@@ -156,13 +160,17 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.otp_code = ""
+        self.number_label = [self.number_1, self.number_2, self.number_3, self.number_4]
+        for i in range(4):
+            self.number_label[i].clear()
+
 
     def check_otp(self):
         global success_acc
-        self.otp_code = self.text_otp.toPlainText()
         print(self.otp_code)
         self.flag=0
-        if(len(self.otp_code) == 6):
+        if(len(self.otp_code) == 4):
             self.flag = 1
             self.cur = db.cursor()
 
@@ -193,14 +201,33 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
             msgBox.setText("Wrong OTP")
             msgBox.exec()
             success_acc = 0
-            self.text_otp.clear()
+            for i in range(4):
+                self.number_label[i].clear()
+            self.otp_code = ""
 
 
 
     def back_entry(self):
+        global otp_back
         #메인으로 다시 돌아감
+        otp_back = 1
         self.close()
 
+    def click_pad(self):
+        self.send = self.sender().text()
+        print(self.send)
+
+
+        if( self.send == "<"):
+            if(len(self.otp_code) != 0):
+                self.number_label[len(self.otp_code) - 1].clear()
+                self.otp_code = self.otp_code[:-1]
+
+            print("back space")
+        else:
+            if(len(self.otp_code) != 4):
+                self.otp_code += self.send
+                self.number_label[len(self.otp_code)-1].setText(self.send)
 
 
 
@@ -209,7 +236,6 @@ app=QApplication()
 main = EntryPage()
 
 #widget = QStackedWidget()
-
 
 main.show()
 app.exec_()
