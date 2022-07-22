@@ -4,9 +4,15 @@ import { Account } from './modules/accounts'
 // import accounts from './modules/accounts'
 
 export default createStore({
-  modules: { 
-    Account
-  }
+  state: {
+  },
+  getters: {
+  },
+  mutations: {
+  },
+  actions: {
+  },
+  modules: { Account }
 })
 
 
