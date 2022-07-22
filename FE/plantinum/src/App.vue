@@ -28,4 +28,7 @@ export default {
 </script>
 
 <style>
+  #app {
+    font-family: 'SUIT';
+  }
 </style>

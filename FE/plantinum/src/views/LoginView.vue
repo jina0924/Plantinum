@@ -1,5 +1,4 @@
 <template>
-  <h1>Login</h1>
   <!-- <div>
     <form action="">
       <account-error-list v-if="authError"></account-error-list>
@@ -10,12 +9,12 @@
     <div></div>
   </div> -->
   
-	<div class="section">
+	<div class="section background">
 		<div class="container">
 			<div class="row full-height justify-content-center">
 				<div class="col-12 text-center align-self-center py-5">
 					<div class="section pb-5 pt-5 pt-sm-2 text-center">
-						<h6 class="mb-0 pb-3"><span>로그인</span><span>회원가입</span></h6>
+						<h5 class="mb-0 pb-3"><span>로그인</span><span>회원가입</span></h5>
             <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
             <label for="reg-log"></label>
 						<div class="card-3d-wrap mx-auto">
@@ -25,16 +24,19 @@
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">로그인</h4>
 											<div class="form-group">
+                        <!-- account error -->
                         <account-error-list v-if="authError"></account-error-list>
 												<input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
-												<i class="input-icon uil uil-at"></i>
-											</div>	
-											<div class="form-group mt-2">
-												<input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
-												<i class="input-icon uil uil-lock-alt"></i>
+                        <span class="material-symbols-outlined input-icon">alternate_email</span>
 											</div>
-											<a href="#" class="btn mt-4">로그인</a>
-                      <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                      <form @submit.prevent="login(credentials)">
+                        <div class="form-group mt-2">
+                          <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                          <span class="material-symbols-outlined input-icon">lock</span>
+                        </div>
+                        <button class="mt-4 btn" type=submit>로그인</button>
+                      </form>
+                      <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a></p>
                     </div>
                   </div>
                 </div>
@@ -42,19 +44,22 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">회원가입</h4>
-											<div class="form-group">
-												<input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
-												<i class="input-icon uil uil-user"></i>
-											</div>	
-											<div class="form-group mt-2">
-												<input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
-												<i class="input-icon uil uil-at"></i>
-											</div>	
-											<div class="form-group mt-2">
-												<input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
-												<i class="input-icon uil uil-lock-alt"></i>
-											</div>
-											<a href="#" class="btn mt-4">회원가입</a>
+                      <form action="">
+                        <div class="form-group">
+                          <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
+                          <span class="material-symbols-outlined input-icon">person</span>
+                        </div>	
+                        <div class="form-group mt-2">
+                          <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+                          <span class="material-symbols-outlined input-icon">alternate_email</span>
+                        </div>	
+                        <div class="form-group mt-2">
+                          <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                          <span class="material-symbols-outlined input-icon">lock</span>
+                        </div>
+                        <!-- <a href="#" class="btn mt-4">회원가입</a> -->
+                        <button class="mt-4 btn" type=submit>회원가입</button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -63,7 +68,7 @@
           </div>
         </div>
       </div>
-  </div>
+    </div>
 	</div>
 </template>
 
@@ -94,14 +99,11 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
-
-.section {
+.background {
   background-image: url('@/assets/Login/login_bg.jpg');
 }
 
 body{
-	font-family: 'Poppins', sans-serif;
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.7;
@@ -130,10 +132,10 @@ p {
 h4 {
   font-weight: 600;
 }
-h6 span{
+h5 span{
   padding: 0 20px;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 500;
 }
 .section{
   position: relative;
@@ -159,7 +161,7 @@ h6 span{
   padding: 0;
   margin: 10px auto;
   cursor: pointer;
-  background-color: #a17c6b;
+  background-color: #65805d;
 }
 .checkbox:checked + label:before,
 .checkbox:not(:checked) + label:before{
@@ -168,16 +170,16 @@ h6 span{
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: #ffeba7;
-  background-color: #65805d;
-  font-family: 'unicons';
-  content: '\eb4f';
+  color: #ffffff;
+  background-color: #b2c9ab;
+  content: '↖';
   z-index: 20;
   top: -10px;
   left: -10px;
   line-height: 36px;
   text-align: center;
-  font-size: 24px;
+  font-size: 1rem;
+  font-weight: 800;
   transition: all 0.5s ease;
 }
 .checkbox:checked + label:before {
@@ -329,9 +331,9 @@ h6 span{
 }
 
 .btn{  
-  border-radius: 4px;
+  border-radius: 5px;
   height: 44px;
-  font-size: 13px;
+  font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
   -webkit-transition : all 200ms linear;
