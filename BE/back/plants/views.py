@@ -109,17 +109,19 @@ def create_otp(request, myplant_pk):
         myplant = Myplant.objects.filter(pk=myplant_pk)
         myplant.update(otp_code=otp_code)
 
-        myplant_s = get_object_or_404(Myplant, pk=myplant_pk)
-        serializer = MyplantSerializer(myplant_s)
+        # myplant_s = get_object_or_404(Myplant, pk=myplant_pk)
+        # serializer = MyplantSerializer(myplant_s)
 
         def delete_otp():
             myplant.update(otp_code='')
         Timer(301, delete_otp).start()  # 5분뒤 삭제 함수 실행
 
-        return Response(serializer.data)
+        # return Response(serializer.data)
+        return Response({'otp_code': otp_code})
 
     else:
         return Response({'result': '이미 발급되었거나 연결되었습니다.'})
 
 
 # 연결끊기
+# 물주기 식물 상세페이지
