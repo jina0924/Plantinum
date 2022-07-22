@@ -17,7 +17,7 @@ class MyplantSerializer(serializers.ModelSerializer):
     class PlantsSerializer(serializers.ModelSerializer):
         class Meta:
             model = Plants
-            fields = '__all__'
+            fields = ('pk', 'name', 'watercycle_spring_nm', 'watercycle_summer_nm', 'watercycle_autumn_nm', 'watercycle_winter_nm', 'specl_manage_info',)
 
     name = PlantsSerializer(read_only=True)
     

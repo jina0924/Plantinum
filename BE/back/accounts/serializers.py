@@ -7,7 +7,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     phone_number = serializers.CharField(max_length=11)
     addr = serializers.CharField(max_length=100)
-    zip_code = serializers.IntegerField()
+    zip_code = serializers.CharField(max_length=5)
     nickname = serializers.CharField(max_length=15)
 
 
