@@ -82,8 +82,11 @@ border-image: url(:/icon/img/home.svg);</string>
      <italic>true</italic>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/logo/img/ＯＴＰ＿ｐｌａｎｔｉｎｕｍ.png);</string>
+   </property>
    <property name="text">
-    <string>plantinum</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

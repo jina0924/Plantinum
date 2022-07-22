@@ -27,7 +27,7 @@ class Ui_Form(object):
         Form.setStyleSheet(u"background-color: rgb(248, 245, 238);")
         self.new_button = QPushButton(Form)
         self.new_button.setObjectName(u"new_button")
-        self.new_button.setGeometry(QRect(430, 190, 160, 50))
+        self.new_button.setGeometry(QRect(430, 210, 160, 50))
         self.new_button.setStyleSheet(u"background-color: rgb(178, 201, 171);\n"
 "color: rgb(248, 245, 238);\n"
 "font: 700 22pt \"\ub9d1\uc740 \uace0\ub515\";\n"
@@ -41,23 +41,11 @@ class Ui_Form(object):
 "border-radius: 5px;")
         self.background_label = QLabel(Form)
         self.background_label.setObjectName(u"background_label")
-        self.background_label.setGeometry(QRect(-2, 230, 1024, 433))
+        self.background_label.setGeometry(QRect(0, 0, 1024, 600))
         self.background_label.setStyleSheet(u"background-color: qlineargradient(spread:pad, x1:0.517045, y1:1, x2:0.466, y2:0, stop:0 rgba(178, 201, 171, 255), stop:1 rgba(248, 245, 238, 255));\n"
-"border-image: url(:/img/img/background_supool_3.jpg);")
+"background-image: url(:/img/img/\uc2dc\uc791\ud654\uba74_\ubc30\uacbd.png);")
         self.background_label.setMidLineWidth(0)
-        self.logo_label = QLabel(Form)
-        self.logo_label.setObjectName(u"logo_label")
-        self.logo_label.setGeometry(QRect(330, 40, 360, 110))
-        font = QFont()
-        font.setFamilies([u"Palace Script MT"])
-        font.setPointSize(60)
-        font.setBold(True)
-        font.setItalic(True)
-        self.logo_label.setFont(font)
-        self.logo_label.setStyleSheet(u"font-weight: bold;")
-        self.logo_label.setAlignment(Qt.AlignCenter)
         self.background_label.raise_()
-        self.logo_label.raise_()
         self.old_button.raise_()
         self.new_button.raise_()
 
@@ -73,6 +61,5 @@ class Ui_Form(object):
         self.new_button.setText(QCoreApplication.translate("Form", u"New", None))
         self.old_button.setText(QCoreApplication.translate("Form", u"Load", None))
         self.background_label.setText("")
-        self.logo_label.setText(QCoreApplication.translate("Form", u"Supool", None))
     # retranslateUi
 
