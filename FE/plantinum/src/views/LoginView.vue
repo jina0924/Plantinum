@@ -96,7 +96,7 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900');
 
-template {
+.section {
   background-image: url('@/assets/Login/login_bg.jpg');
 }
 
