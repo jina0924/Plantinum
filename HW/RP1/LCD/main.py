@@ -16,6 +16,9 @@ import time
 success_acc = 0
 detail_back =0
 otp_back = 0
+userfilepath= "./user_setting.json"
+plant_id = -1
+water_amount = -1
 
 class sensorThread(QThread):
     global a,success_acc
@@ -75,12 +78,35 @@ class EntryPage(QMainWindow, Ui_EntryUI):
 
     def old_plant(self):
         global success_acc
-        #바로 메인페이지로 이동
-        self.hide()
-        print("go to main page!")
-        self.second = MainPage()
-        success_acc =1
-        self.second.exec_()
+        global plant_id,nickname,water_amount
+
+
+
+        #connect test
+        with open(userfilepath, "r") as file:
+            self.user_data = json.load(file)
+
+        self.cur = db.cursor()
+        self.sql_str = "select isconnect from test where id=" + str(self.user_data['id'])
+        self.cur.execute(self.sql_str)
+
+        for result in self.cur:
+            # connect success 바로 메인페이지로 이동
+            if(result[0] == 1):
+                self.hide()
+                print("go to main page!")
+                self.second = MainPage()
+                success_acc = 1
+                self.second.show()
+            else:
+                msgBox = QMessageBox()
+                msgBox.setText("There are no connected plants")
+                msgBox.exec()
+
+            print(result[0])
+
+
+#        self.second.exec_()
         #self.close()
         # 메인페이지가 끝나면 바로 종료
 
@@ -168,26 +194,54 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
 
     def check_otp(self):
         global success_acc
+        global plant_id, water_amount
         print(self.otp_code)
         self.flag=0
+
         if(len(self.otp_code) == 4):
-            self.flag = 1
+            #self.flag = 1
             self.cur = db.cursor()
 
+            # is otp exist?
             self.sql_str = "select * from test where otp=" + self.otp_code
             self.cur.execute(self.sql_str)
+            # result = 1개
             if(self.cur.rowcount ==1):
-                for(id,name,otp) in self.cur:
-                    print(id, name, otp)
-                    self.plant_id = id
-                    self.name = name
-                self.flag = 1
-                self.sql_str = "update test set otp = NULL where otp=" + self.otp_code
-                self.cur.execute(self.sql_str)
-                db.commit()
+                #id, 닉네임, 물의 양 저장
+                for(id,name,otp,isconnect) in self.cur:
+                    print(id, name, otp, isconnect)
+                    #Already connect
+                    if(isconnect == 1):
+                        self.flag = 2
+                        break;
+                    self.plant_id = int(id)
+                    self.name = str(name)
 
-                #json 수정
-               # with open("./user_setting.json","w")
+                # Success connect!
+                if(self.flag != 2):
+                    self.flag = 1
+
+                    # make otp=NULL, isconnect = 1
+                    self.sql_str = "update test set otp = NULL, isconnect = 1 where otp=" + self.otp_code
+                    self.cur.execute(self.sql_str)
+
+                    #json 수정
+
+                    with open(userfilepath, "r") as file:
+                        self.user_data = json.load(file)
+
+
+#                    print(self.user_data['id'], self.user_data['nickname'], self.user_data['water_amount'])
+                    self.user_data['id'] = self.plant_id
+                    self.user_data['water_amount'] = 80
+
+                    with open(userfilepath, "w", encoding='utf-8') as file:
+                        json.dump(self.user_data, file, indent="\t")
+
+                    plant_id = self.plant_id
+                    water_amount = 80
+
+                    db.commit()
             else:
                 self.flag = 0
 
@@ -198,8 +252,13 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
         else:
             #실패했을때
             msgBox = QMessageBox()
-            msgBox.setText("Wrong OTP")
+            if(self.flag == 2):
+                msgBox.setText("Already connected")
+            else:
+                msgBox.setText("Wrong OTP")
             msgBox.exec()
+
+
             success_acc = 0
             for i in range(4):
                 self.number_label[i].clear()
