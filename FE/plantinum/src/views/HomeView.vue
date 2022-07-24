@@ -32,7 +32,7 @@
         <!-- <div class="btnbox row"> -->
           <div class="btn-border col-6">
             <div class="login d-flex justify-content-center">
-              <router-link :to="{ name: login }">
+              <router-link :to="{ name: 'login' }">
                 <button class="btn">로그인</button>
               </router-link>
             </div>
@@ -74,7 +74,7 @@
               <router-link :to="{ name: 'myplant' }" v-if="isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
-              <router-link :to="{ name: login }" v-if="!isLoggedIn">
+              <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
             </div>
