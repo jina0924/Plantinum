@@ -28,19 +28,12 @@
             <p>안녕하세요, *** 님</p>
         </div>
         <!-- 버튼 -->
-        <div class="btnbox row" v-if="!isLoggedIn">
+        <div class="btnbox" v-if="!isLoggedIn">
         <!-- <div class="btnbox row"> -->
-          <div class="btn-border col-6">
+          <div class="btn-border">
             <div class="login d-flex justify-content-center">
-              <router-link :to="{ name: login }">
-                <button class="btn">로그인</button>
-              </router-link>
-            </div>
-          </div>
-          <div class="btn-border col-6">
-            <div class="signup d-flex justify-content-center">
-              <router-link :to="{ name: signup }">
-                <button class="btn">회원가입</button>
+              <router-link :to="{ name: 'login' }">
+                <button class="btn">로그인 / 회원가입</button>
               </router-link>
             </div>
           </div>
@@ -74,7 +67,7 @@
               <router-link :to="{ name: 'myplant' }" v-if="isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
-              <router-link :to="{ name: login }" v-if="!isLoggedIn">
+              <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
             </div>
