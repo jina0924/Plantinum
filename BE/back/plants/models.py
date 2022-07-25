@@ -29,9 +29,9 @@ class Myplant(models.Model):
 class Sensing(models.Model):
     remaining_water = models.BooleanField(default=False)
     state_led = models.BooleanField(default=False)
-    moisture_level = models.IntegerField()
-    last_watering = models.DateTimeField(auto_now=True)
-    my_plant = models.ForeignKey(Myplant, on_delete=models.CASCADE)
+    moisture_level = models.IntegerField(default=0)
+    last_watering = models.CharField(max_length=16, blank=True)
+    my_plant = models.OneToOneField(Myplant, on_delete=models.CASCADE)
 
 
 class Diary(models.Model):
