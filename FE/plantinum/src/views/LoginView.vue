@@ -13,6 +13,7 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">로그인</h4>
+											<!-- <h4 class="mb-4">로그인</h4> -->
                       <account-error-list v-if="authError"></account-error-list>
                       <form @submit.prevent="login(login_credentials)">
                         <div class="form-group">
@@ -34,17 +35,18 @@
 								<div class="card-back">
 									<div class="center-wrap">
 										<div class="section text-center">
-											<h4 class="mb-4 pb-3">회원가입</h4>
+											<!-- <h4 class="mb-4 pb-3">회원가입</h4> -->
+											<h4 class="mb-4">회원가입</h4>
                       <account-error-list v-if="authError"></account-error-list>
                       <form @submit.prevent="signup(signup_credentials)">
                         <div class="form-group">
                           <input v-model="signup_credentials.username" type="text" name="username" class="form-style" placeholder="Your ID" id="username" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">person</span>
                         </div>	
-                        <!-- <div class="form-group mt-2">
+                        <div class="form-group mt-2">
                           <input v-model="signup_credentials.email" type="email" name="signup-email" class="form-style" placeholder="Your Email" id="signup-email" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">alternate_email</span>
-                        </div>	 -->
+                        </div>	
                         <div class="form-group mt-2">
                           <input v-model="signup_credentials.password1" type="password" name="signuppass1" class="form-style" placeholder="Your Password" id="signuppass1" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">lock</span>
@@ -93,7 +95,7 @@ export default {
       },
       signup_credentials: {
         username: '',
-        // email: '',
+        email: '',
         password1: '',
         password2 : '',
       }
@@ -105,9 +107,6 @@ export default {
   methods: {
     ...mapActions(['login', 'signup', 'fetchAuthError'])
   },
-  // beforeUpdate() {
-  //   this.$store.dispatch('fetchAuthError', null)
-  // }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <p>다시 한번 작성해주세요.</p>
+  <p class="mt-0 mb-1">다시 한번 작성해주세요.</p>
 </template>
 
 <script>
