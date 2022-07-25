@@ -114,6 +114,10 @@ export const Account = {
       }
     },
 
+    fetchAuthError({ commit }, authState) {
+      commit('SET_AUTH_ERROR', authState)
+    },
+
     fetchProfile({ commit, getters }, { nickname }) {
       axios({
         url: drf.accounts.profile(nickname),

@@ -1,12 +1,5 @@
 <template>
-  <p v-for="(errors, field) in authError" :key="field">
-    {{ field }}
-    <ul>
-      <li v-for="(error, idx) in errors" :key="idx">
-        {{ error }}
-      </li>
-    </ul>
-  </p>
+  <p>다시 한번 작성해주세요.</p>
 </template>
 
 <script>
@@ -21,7 +14,7 @@ export default {
 </script>
 
 <style scoped>
-  .account-error-list {
+  p {
     color: red;
   }
 </style>
