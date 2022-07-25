@@ -5,7 +5,7 @@
 				<div class="col-12 text-center align-self-center py-5">
 					<div class="section pb-5 pt-5 pt-sm-2 text-center">
 						<h5 class="mb-0 pb-3"><span>로그인</span><span>회원가입</span></h5>
-            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+            <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" @click="fetchAuthError(null)">
             <label for="reg-log"></label>
 						<div class="card-3d-wrap mx-auto">
 							<div class="card-3d-wrapper">
@@ -13,15 +13,15 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">로그인</h4>
-											<div class="form-group">
-                        <!-- account error -->
-                        <account-error-list v-if="authError"></account-error-list>
-												<input v-model="credentials.username" type="text" name="username" class="form-style" placeholder="Your ID" id="username" autocomplete="off">
-                        <span class="material-symbols-outlined input-icon">person</span>
-											</div>
-                      <form @submit.prevent="login(credentials)">
+                      <account-error-list v-if="authError"></account-error-list>
+                      <form @submit.prevent="login(login_credentials)">
+                        <div class="form-group">
+                          <!-- account error -->
+                          <input v-model="login_credentials.username" type="text" name="login-username" class="form-style" placeholder="Your ID" id="login-username" autocomplete="off">
+                          <span class="material-symbols-outlined input-icon">person</span>
+                        </div>
                         <div class="form-group mt-2">
-                          <input v-model="credentials.password" type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                          <input v-model="login_credentials.password" type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">lock</span>
                         </div>
                         <button class="mt-4 btn" type=submit>로그인</button>
@@ -35,22 +35,23 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">회원가입</h4>
-                      <form action="">
+                      <account-error-list v-if="authError"></account-error-list>
+                      <form @submit.prevent="signup(signup_credentials)">
                         <div class="form-group">
-                          <input type="text" name="username" class="form-style" placeholder="Your ID" id="username" autocomplete="off">
+                          <input v-model="signup_credentials.username" type="text" name="username" class="form-style" placeholder="Your ID" id="username" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">person</span>
                         </div>	
-                        <div class="form-group mt-2">
-                          <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+                        <!-- <div class="form-group mt-2">
+                          <input v-model="signup_credentials.email" type="email" name="signup-email" class="form-style" placeholder="Your Email" id="signup-email" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">alternate_email</span>
-                        </div>	
+                        </div>	 -->
                         <div class="form-group mt-2">
-                          <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                          <input v-model="signup_credentials.password1" type="password" name="signuppass1" class="form-style" placeholder="Your Password" id="signuppass1" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">lock</span>
                         </div>
                         <!-- ------------------------------------------------------- -->
                         <div class="form-group mt-2">
-                          <input type="password" name="logpass2" class="form-style" placeholder="Confirm Password" id="logpass2" autocomplete="off">
+                          <input v-model="signup_credentials.password2" type="password" name="signuppass2" class="form-style" placeholder="Confirm Password" id="signuppass2" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">lock</span>
                         </div>
                         <!-- <div class="form-group mt-2">
@@ -86,9 +87,15 @@ export default {
   },
   data() {
     return {
-      credentials: {
+      login_credentials: {
         username: '',
         password: '',
+      },
+      signup_credentials: {
+        username: '',
+        // email: '',
+        password1: '',
+        password2 : '',
       }
     }
   },
@@ -96,8 +103,11 @@ export default {
     ...mapGetters(['authError'])
   },
   methods: {
-    ...mapActions(['login'])
-  }
+    ...mapActions(['login', 'signup', 'fetchAuthError'])
+  },
+  // beforeUpdate() {
+  //   this.$store.dispatch('fetchAuthError', null)
+  // }
 }
 </script>
 
