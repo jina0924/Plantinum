@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <router-link class="nav-link" :to="{ name: 'myplant'}">내 식물</router-link>
+          <router-link class="nav-link" :to="{ name: 'myplant' }">내 식물</router-link>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,12 +24,10 @@
           <router-link class="nav-link" :to="{ name: 'profile'}">프로필</router-link>
         </li>
       </ul>
-      <div class="nav-logout my-2 my-lg-0">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <router-link class="nav-link" :to="{ name: 'logout'}" @click="fetchProfile()">Logout</router-link>
-          </li>
-        </ul>
+      <div class="my-2 my-lg-0">
+        <router-link class="nav-link" :to="{ name: 'logout'}" @click="fetchProfile()">
+          <button class="btn">로그아웃</button>
+        </router-link>
       </div>
     </div>
   </nav>
@@ -74,15 +72,13 @@ export default {
     background-color: #F8F5EE;
   }
 
-  .nav-logout .nav-item {
-    background-color: #B2C9AB;
-    font-family: 'SUIT', sans-serif;
-    border-radius: 10px;
-    font-size: 0.5rem;
-    /* 컬러가 안먹어 ㅠㅠㅠ */
+  .btn{
+    border-radius: 5px;
+    height: 44px;
+    font-size: 1rem;
+    background-color: #b2c9ab;
     color: white;
+    width: 100%;
   }
-
-  /* 드랍다운 CSS */
 
 </style>
