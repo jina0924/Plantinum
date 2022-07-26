@@ -17,7 +17,7 @@ http://127.0.0.1:8000/admin/
 - URL
 
 ```
-http://127.0.0.1:8000/accounts/signup/
+http://127.0.0.1:8000/api/v1/accounts/signup/
 ```
 
 - Body
@@ -50,7 +50,7 @@ http://127.0.0.1:8000/accounts/signup/
 - URL
 
 ```
-http://127.0.0.1:8000/accounts/login/
+http://127.0.0.1:8000/api/v1/accounts/login/
 ```
 
 - Body
@@ -79,7 +79,7 @@ http://127.0.0.1:8000/accounts/login/
 - URL
 
 ```
-http://127.0.0.1:8000/accounts/logout/
+http://127.0.0.1:8000/api/v1/accounts/logout/
 ```
 
 - Headers
@@ -108,7 +108,7 @@ http://127.0.0.1:8000/accounts/logout/
 - URL
 
 ```
-http://127.0.0.1:8000/plants/
+http://127.0.0.1:8000/api/v1/plants/
 ```
 
 - Response
@@ -143,7 +143,7 @@ http://127.0.0.1:8000/plants/
 - URL
 
 ```
-http://127.0.0.1:8000/plants/search/{식물이름}/
+http://127.0.0.1:8000/api/v1/plants/search/{식물이름}/
 ```
 
 - Request Parameters
@@ -178,7 +178,7 @@ http://127.0.0.1:8000/plants/search/{식물이름}/
 - URL
 
 ```
-http://127.0.0.1:8000/plants/myplant/
+http://127.0.0.1:8000/api/v1/plants/myplant/
 ```
 
 - Response
@@ -220,7 +220,7 @@ http://127.0.0.1:8000/plants/myplant/
 - URL
 
 ```
-http://127.0.0.1:8000/plants/myplant/{식물이름}/
+http://127.0.0.1:8000/api/v1/plants/myplant/{식물이름}/
 ```
 
 - Request Parameters
@@ -258,7 +258,67 @@ http://127.0.0.1:8000/plants/myplant/{식물이름}/
     "created_at": "2022-07-22T05:23:33.900553Z",
     "otp_code": "",
     "photo": "",
-    "is_connected": false
+    "is_connected": false,
+    "sensing": {
+    	"pk": 1,
+    	"remaining_water": false,
+    	"state_led": false,
+    	"moisture_level": 0,
+    	"last_watering": ""
+    }
+}
+```
+
+
+
+### 물주기 상세페이지
+
+- 물주기 식물 별 상세페이지
+- 로그인 사용자 - 토큰 사용
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
+```
+
+- Request Parameters
+
+| Name           | Type | Description             | Mandatory | Example |
+| -------------- | ---- | ----------------------- | --------- | ------- |
+| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 1       |
+
+- Response
+
+```
+{
+    "id": 1,
+    "user": {
+        "pk": 2,
+        "username": "idsampleuser",
+        "nickname": "samplenickname"
+    },
+    "name": {
+        "pk": 2,
+        "name": "개운죽",
+        "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_summer_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_autumn_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_winter_nm": "토양 표면이 말랐을때 충분히 관수함",
+        "specl_manage_info": "수경은 물주기가 필요 없으나, 화분은 1-2주에 한번씩 충분히 관수한다."
+    },
+    "nickname": "깨운이",
+    "created_at": "2022-07-22T05:23:33.900553Z",
+    "otp_code": "",
+    "photo": "",
+    "is_connected": false,
+    "sensing": {
+    	"pk": 1,
+    	"remaining_water": false,
+    	"state_led": false,
+    	"moisture_level": 0,
+    	"last_watering": ""
+    }
 }
 ```
 
@@ -275,7 +335,7 @@ http://127.0.0.1:8000/plants/myplant/{식물이름}/
 - URL
 
 ```
-http://127.0.0.1:8000/plants/myplant/{물주기 식물 pk}/otp/
+http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/otp/
 ```
 
 - Request Parameters
@@ -288,7 +348,7 @@ http://127.0.0.1:8000/plants/myplant/{물주기 식물 pk}/otp/
 
 ```
 {
-    "otp_code": "6366"
+    "otp_code": "636631"
 }
 ```
 
@@ -309,7 +369,7 @@ http://127.0.0.1:8000/plants/myplant/{물주기 식물 pk}/otp/
 - URL
 
 ```
-http://127.0.0.1:8000/plants/myplant/{물주기 식물 pk}/disconnect/
+http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/disconnect/
 ```
 
 - Request Parameters
@@ -331,5 +391,4 @@ http://127.0.0.1:8000/plants/myplant/{물주기 식물 pk}/disconnect/
     "result": "연결상태를 확인해주세요."
 }
 ```
-
 
