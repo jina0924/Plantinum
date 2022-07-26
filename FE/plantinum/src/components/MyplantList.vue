@@ -2,9 +2,9 @@
   <div>
     <!-- 리스트가 있을 때 -->
     <div class="yesplant row" v-if="myplant[0]">
-      <div class="col-md-2"></div>
-      <div class="col-md-2 col-sm-4" v-for="plant in myplant" :key="plant.id">
-        <div class="card mt-2">
+      <div class="col-md-2 px-0"></div>
+      <div class="col-md-8 col-sm-12 row px-0 mx-0">
+        <div class="card mt-2 col-md-3 col-sm-6 px-0" v-for="plant in myplant" :key="plant.id">
           <div class="plant-img d-flex justify-content-center">
             <img :src="`${plant.photo}`" :alt="`${plant.nickanme} 사진 입니다.`">
           </div>
@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-2"></div>
+      <div class="col-md-2 px-0"></div>
     </div>
     <!-- 리스트가 없을 때 -->
     <div class="noplant" v-if="!myplant[0]">
