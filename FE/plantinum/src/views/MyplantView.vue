@@ -6,9 +6,11 @@
     <!-- 리스트 -->
     <myplant-list :myplant='myplant'></myplant-list>
     <!-- 추가 버튼 (스티키 바텀) -->
-    <div class="create-btn" v-if="mypage">
-      <router-link :to="create-myplant">
-        <span class="material-symbols-outlined">add</span>
+    <div class="create-btn d-flex justify-content-end" v-if="mypage">
+      <router-link class="add px-5 mx-5 pb-5" :to="{  }">
+        <button class="btn">
+          <span class="material-symbols-outlined">add</span>
+        </button>
       </router-link>
     </div>
   </div>
@@ -65,5 +67,24 @@ export default {
 
 .myplant {
   background-color: #F8F5EE;
+}
+
+.a {
+  text-decoration: none;
+}
+
+.material-symbols-outlined {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.btn{
+  border-radius: 100%;
+  height: 44px;
+  font-size: 1rem;
+  background-color: #b2c9ab;
+  color: white;
+  width: 100%;
 }
 </style>
