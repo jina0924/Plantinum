@@ -90,15 +90,16 @@ export default {
 .material-symbols-outlined {
   color: white;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 2.5rem;
 }
 
 .btn{
   border-radius: 100%;
-  height: 44px;
-  font-size: 1rem;
+  height: 60px;
+  width: 60px;
   background-color: #b2c9ab;
   color: white;
-  width: 100%;
 }
 </style>
