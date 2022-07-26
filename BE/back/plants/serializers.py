@@ -52,6 +52,22 @@ class MyplantSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class MyplantListSerializer(serializers.ModelSerializer):
+
+    class SensingSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Sensing
+            fields = ('moisture_level',)
+    
+    sensing = SensingSerializer(read_only=True)
+
+    diary_count = serializers.IntegerField(source='diary_set.count', read_only=True)
+    
+    class Meta:
+        model = Myplant
+        fields = ('pk', 'nickname', 'photo', 'sensing', 'diary_count',)
+
+
 class PlantsSerializer(serializers.ModelSerializer):
 
     class MyplantSerializer(serializers.ModelSerializer):

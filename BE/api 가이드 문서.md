@@ -150,22 +150,27 @@ http://127.0.0.1:8000/api/v1/plants/search/{식물이름}/
 
 | Name     | Type   | Description                              | Mandatory | Example |
 | -------- | ------ | ---------------------------------------- | --------- | ------- |
-| 식물이름 | String | 한글명, 검색어를 포함하는 모든 식물 검색 | O         | 무늬    |
+| 식물이름 | String | 한글명, 검색어를 포함하는 모든 식물 검색 | O         | 백      |
 
 - Response
 
 ```
 [
     {
-        "name": "무늬관음죽"
+        "name": "동백"
     },
     {
-        "name": "무늬마삭줄"
+        "name": "백량금"
     },
     {
-        "name": "무늬벤자민고무나무"
+        "name": "백정화"
     },
-    ...
+    {
+        "name": "백화등"
+    },
+    {
+        "name": "죽백나무"
+    }
 ]
 ```
 
@@ -185,111 +190,39 @@ http://127.0.0.1:8000/api/v1/plants/myplant/user/{사용자 nickname}/
 
 | Name            | Type   | Description | Mandatory | Example |
 | --------------- | ------ | ----------- | --------- | ------- |
-| 사용자 nickname | String |             | O         | test1   |
+| 사용자 nickname | String |             | O         | 식집사1 |
 
 - Response
 
 ```
 [
     {
-        "id": 1,
-        "user": {
-            "pk": 1,
-            "username": "test1",
-            "nickname": ""
-        },
-        "name": {
-            "pk": 2,
-            "name": "개운죽",
-            "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
-            "watercycle_summer_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
-            "watercycle_autumn_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
-            "watercycle_winter_nm": "토양 표면이 말랐을때 충분히 관수함",
-            "specl_manage_info": "수경은 물주기가 필요 없으나, 화분은 1-2주에 한번씩 충분히 관수한다."
-        },
-        "sensing": {
-            "id": 1,
-            "remaining_water": false,
-            "state_led": false,
-            "moisture_level": 0,
-            "last_watering": "",
-            "my_plant": 1
-        },
-        "diary_set": [],
-        "diary_count": 0,
+        "pk": 1,
         "nickname": "깨운이",
-        "created_at": "2022-07-26T07:08:54.928651Z",
-        "otp_code": "",
         "photo": "",
-        "is_connected": false
+        "sensing": {
+            "moisture_level": 0
+        },
+        "diary_count": 0
     },
     {
-        "id": 2,
-        "user": {
-            "pk": 1,
-            "username": "test1",
-            "nickname": ""
-        },
-        "name": {
-            "pk": 1,
-            "name": "가울테리아",
-            "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
-            "watercycle_summer_nm": "토양 표면이 말랐을때 충분히 관수함",
-            "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
-            "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-            "specl_manage_info": ""
-        },
-        "sensing": {
-            "id": 2,
-            "remaining_water": false,
-            "state_led": false,
-            "moisture_level": 0,
-            "last_watering": "",
-            "my_plant": 2
-        },
-        "diary_set": [
-            {
-                "id": 1,
-                "my_plant": {
-                    "pk": 2,
-                    "nickname": "가울이"
-                },
-                "content": "첫 번째 일지",
-                "photo": "",
-                "diary_created_at": "2022-07-26T08:15:09.427783Z",
-                "public_private": false
-            },
-            {
-                "id": 2,
-                "my_plant": {
-                    "pk": 2,
-                    "nickname": "가울이"
-                },
-                "content": "두 번째 일지",
-                "photo": "",
-                "diary_created_at": "2022-07-26T08:16:08.831901Z",
-                "public_private": false
-            },
-            {
-                "id": 3,
-                "my_plant": {
-                    "pk": 2,
-                    "nickname": "가울이"
-                },
-                "content": "쑥쑥 자라는 가울이",
-                "photo": "",
-                "diary_created_at": "2022-07-26T08:32:50.126572Z",
-                "public_private": false
-            }
-        ],
-        "diary_count": 3,
+        "pk": 2,
         "nickname": "가울이",
-        "created_at": "2022-07-26T07:25:42.426355Z",
-        "otp_code": "",
         "photo": "",
-        "is_connected": false
+        "sensing": {
+            "moisture_level": 0
+        },
+        "diary_count": 3
     },
-    ...
+    {
+        "pk": 3,
+        "nickname": "개운개운",
+        "photo": "",
+        "sensing": {
+            "moisture_level": 0
+        },
+        "diary_count": 0
+    }
 ]
 ```
 
@@ -426,7 +359,17 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
             "diary_created_at": "2022-07-26T08:16:08.831901Z",
             "public_private": false
         },
-        ...
+        {
+            "id": 3,
+            "my_plant": {
+                "pk": 2,
+                "nickname": "가울이"
+            },
+            "content": "쑥쑥 자라는 가울이",
+            "photo": "",
+            "diary_created_at": "2022-07-26T08:32:50.126572Z",
+            "public_private": false
+        }
     ],
     "diary_count": 3,
     "nickname": "가울이",
@@ -614,22 +557,6 @@ user 모델에 updated_at컬럼을 추가,
 
 
 
-json 실제 데이터 그대로. ... 줄임표 사용x
-
-
-
-### 내식물
-
-내식물 전체 조회 => request parameter에 user의 nickname 추가
-
-################## 오류 수정 필요 ################
-
-내식물pk nickname photo sensing중에서 토양습도, 일지개수만
-
-
-
-
-
 ### 회원가입
 
 ### if '식집사' in nickname starts_with
@@ -638,9 +565,11 @@ json 실제 데이터 그대로. ... 줄임표 사용x
 
 식집사 + 난수 길게
 
+====> 내식물 유저 nickname으로 조회
 
 
 
+휴대폰번호 형식 지정
 
 
 
