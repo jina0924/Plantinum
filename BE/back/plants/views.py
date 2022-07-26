@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, SensingSerializer
-from .models import Myplant, Plants, Sensing
+from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer
+from .models import Myplant, Plants, Diary
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -23,12 +23,13 @@ def plants(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def read_myplant(request):
-    user = request.user
-    plants = get_list_or_404(Myplant, user=user)
+def read_myplant(request, usernickname):
+    # 오류수정필요
+    # plants = get_list_or_404(Myplant, user_username=usernickname)
 
-    serializer = MyplantSerializer(plants, many=True)
-    return Response(serializer.data)
+    # serializer = MyplantSerializer(plants, many=True)
+    # return Response(serializer.data)
+    pass
 
 
 # 식물 이름 검색
@@ -54,11 +55,6 @@ def create_myplant(request, plantname):
     user = request.user
 
     otp_code = ''
-
-    sensing = SensingSerializer(data=request.data)
-    if sensing.is_valid(raise_exception=True):
-        myplant = Myplant.objects.get()
-        sensing.save(my_plant=re)
 
     # while otp_code == '':
 
@@ -104,8 +100,8 @@ def create_otp(request, myplant_pk):
 
         while otp_code == '':
 
-            otp_code = random.randint(0, 9999)
-            otp_code = str(otp_code).zfill(4)
+            otp_code = random.randint(0, 999999)
+            otp_code = str(otp_code).zfill(6)
 
             # print(otp_code)
 
@@ -152,3 +148,29 @@ def detail(request, myplant_pk):
     myplant = get_object_or_404(Myplant, pk=myplant_pk)
     serializer = MyplantSerializer(myplant)
     return Response(serializer.data)
+
+
+# 물주기 각 식물 별 다이어리-식물 별 전체조회/다이어리 작성
+@api_view(['GET', 'POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def diary(request, myplant_pk):
+
+    def read_diary():
+        diary = get_list_or_404(Diary, my_plant_id=myplant_pk)
+        serializer = DiarySerializer(diary, many=True)
+        return Response(serializer.data)
+
+    def create_diary():
+        my_plant = get_object_or_404(Myplant, pk=myplant_pk)
+        serializer = DiarySerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(my_plant=my_plant)
+            return Response(serializer.data)
+
+    if request.method == 'GET':
+        return read_diary()
+    elif request.method == 'POST':
+        return create_diary()
+    # 삭제 추가하기
+
