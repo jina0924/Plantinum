@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer
-from .models import Myplant, Plants
+from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, SensingSerializer
+from .models import Myplant, Plants, Sensing
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -55,6 +55,11 @@ def create_myplant(request, plantname):
 
     otp_code = ''
 
+    sensing = SensingSerializer(data=request.data)
+    if sensing.is_valid(raise_exception=True):
+        myplant = Myplant.objects.get()
+        sensing.save(my_plant=re)
+
     # while otp_code == '':
 
     #     otp_code = random.randint(0, 9999)
@@ -70,6 +75,7 @@ def create_myplant(request, plantname):
 
         if Plants.objects.filter(name=plantname).exists():
             name = Plants.objects.get(name=plantname)
+            
             serializer.save(user=user, name=name, otp_code=otp_code)
         else:
             serializer.save(user=user, otp_code=otp_code)
@@ -139,3 +145,10 @@ def disconnect(request, myplant_pk):
 
 
 # 물주기 식물 상세페이지
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def detail(request, myplant_pk):
+    myplant = get_object_or_404(Myplant, pk=myplant_pk)
+    serializer = MyplantSerializer(myplant)
+    return Response(serializer.data)
