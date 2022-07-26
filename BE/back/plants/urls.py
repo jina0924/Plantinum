@@ -8,4 +8,5 @@ urlpatterns = [
     path('myplant/<plantname>/', views.create_myplant),
     path('myplant/<int:myplant_pk>/otp/', views.create_otp),
     path('myplant/<int:myplant_pk>/disconnect/', views.disconnect),
+    path('myplant/<int:myplant_pk>/detail/', views.detail),
 ]
