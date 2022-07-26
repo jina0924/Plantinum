@@ -145,3 +145,10 @@ def disconnect(request, myplant_pk):
 
 
 # 물주기 식물 상세페이지
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def detail(request, myplant_pk):
+    myplant = get_object_or_404(Myplant, pk=myplant_pk)
+    serializer = MyplantSerializer(myplant)
+    return Response(serializer.data)
