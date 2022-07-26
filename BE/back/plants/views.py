@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer
+from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer, MyplantListSerializer
 from .models import Myplant, Plants, Diary
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -19,18 +19,18 @@ def plants(request):
     return Response(serializer.data)
 
 
-# 물주기(내 식물) 조회
+# 내 식물 전체 조회
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def read_myplant(request, usernickname):
-    # 오류수정필요
-    # plants = get_list_or_404(Myplant, user_username=usernickname)
+    # 오류수정 완료, username 을 nickname으로 바꾸기 => 회원가입시 바로 닉네임 생성되도록
+    user = get_object_or_404(User, username=usernickname)
+    plants = get_list_or_404(Myplant, user=user)
 
-    # serializer = MyplantSerializer(plants, many=True)
-    # return Response(serializer.data)
-    pass
-
+    serializer = MyplantListSerializer(plants, many=True)
+    return Response(serializer.data)
+    
 
 # 식물 이름 검색
 @api_view(['GET'])
