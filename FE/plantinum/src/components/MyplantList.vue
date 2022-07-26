@@ -26,11 +26,13 @@
       <div class="col-md-2 px-0"></div>
     </div>
     <!-- 리스트가 없을 때 -->
-    <div class="noplant" v-if="!myplant[0]">
-      <span class="material-symbols-outlined">
-        macro_off
-      </span>
-      <p>등록된 식물이 없습니다.</p>
+    <div class="container">
+      <div class="noplant" v-if="!myplant[0]">
+        <span class="material-symbols-outlined">
+          macro_off
+        </span>
+        <p>등록된 식물이 없습니다.</p>
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +72,18 @@ export default {
 }
 
 .material-symbols-outlined {
-  font-size: 1rem;
+  font-size: 13rem;
+  margin: 0 0 1rem 0;
+}
+
+.container {
+  margin: 3rem auto;
+}
+
+.noplant {
+  color: #A6A6A6;
+  margin: 5rem, auto;
+  text-align: center;
+  font-size: 1.5rem;
 }
 </style>
