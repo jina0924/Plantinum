@@ -1,8 +1,24 @@
 from rest_framework import serializers
-from .models import Plants, Myplant, Sensing
+from .models import Plants, Myplant, Sensing, Diary
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
+
+class DiarySerializer(serializers.ModelSerializer):
+
+    class MyplantSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Myplant
+            fields = ('pk', 'nickname',)
+    
+    my_plant = MyplantSerializer(read_only=True)
+
+    class Meta:
+
+        model = Diary
+        fields = '__all__'
 
 
 class MyplantSerializer(serializers.ModelSerializer):
@@ -27,6 +43,9 @@ class MyplantSerializer(serializers.ModelSerializer):
             fields = '__all__'
     
     sensing = SensingSerializer(read_only=True)
+
+    diary_set = DiarySerializer(many=True, read_only=True)
+    diary_count = serializers.IntegerField(source='diary_set.count', read_only=True)
     
     class Meta:
         model = Myplant
@@ -67,3 +86,4 @@ class SensingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sensing
         fields = '__all__'
+
