@@ -25,13 +25,15 @@ class Myplant(models.Model):
     photo = models.TextField(blank=True)
     is_connected = models.BooleanField(default=False)
 
+from annoying.fields import AutoOneToOneField
 
 class Sensing(models.Model):
     remaining_water = models.BooleanField(default=False)
     state_led = models.BooleanField(default=False)
     moisture_level = models.IntegerField(default=0)
     last_watering = models.CharField(max_length=16, blank=True)
-    my_plant = models.OneToOneField(Myplant, on_delete=models.CASCADE)
+    # my_plant = models.OneToOneField(Myplant, on_delete=models.CASCADE)
+    my_plant = AutoOneToOneField(Myplant, on_delete=models.CASCADE)
 
 
 class Diary(models.Model):
@@ -40,4 +42,3 @@ class Diary(models.Model):
     diary_created_at = models.DateTimeField(auto_now_add=True)
     public_private = models.BooleanField(default=False)
     my_plant = models.ForeignKey(Myplant, on_delete=models.CASCADE)
-
