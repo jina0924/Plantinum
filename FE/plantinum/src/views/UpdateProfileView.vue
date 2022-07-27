@@ -2,22 +2,22 @@
   <div class="profile">
     <div class="row mx-0">
       <!-- 여백 -->
-      <div class="col-md-1 px-0 mx-0"></div>
+      <div class="col-md-1"></div>
       <!-- 내용 담을 흰 상자 -->
-      <profile-detail class="col-md-10 mb-5 pb-5 px-0 mx-0"></profile-detail>
+      <update-profile-detail class="col-md-10 mb-5 pb-5"></update-profile-detail>
       <!-- 여백 -->
-      <div class="col-md-1 px-0 mx-0"></div>
+      <div class="col-md-1"></div>
     </div>
   </div>
 </template>
 
 <script>
-import ProfileDetail from '@/components/ProfileDetail.vue'
+import UpdateProfileDetail from '@/components/UpdateProfileDetail.vue'
 
 export default {
-  name: 'ProfileView',
-  components: {
-    ProfileDetail
+  name: 'UpdateProfileView',
+  components : {
+    UpdateProfileDetail
   }
 }
 </script>
