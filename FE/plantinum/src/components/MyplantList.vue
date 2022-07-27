@@ -54,23 +54,28 @@ export default {
   data() {
     return {
       sort_by : '등록순↓',
-      myplants : this.myplant
+      myplant_list : this.myplant
     }
   },
   props : {
     myplant: Array
   },
+  computed : {
+    myplants() {
+      return this.myplant_list
+    }
+  },
   methods : {
     myplantSort() {
       if (this.sort_by === '등록순↓') {
         this.sort_by = '이름순↓'
-        this.myplants.sort(function(a, b){
-          return a.nickname - b.nickname
+        this.myplant_list.sort(function(a, b){
+          return a.nickname.localeCompare(b.nickname)
         })
       } else if (this.sort_by === '이름순↓') {
         this.sort_by = '등록순↓'
-        this.myplants.sort(function(a, b){
-          return b - a
+        this.myplant_list.sort(function(a, b){
+          return b.id - a.id
         })
       }
     }
