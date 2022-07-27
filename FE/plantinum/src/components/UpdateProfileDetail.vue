@@ -1,13 +1,27 @@
 <template>
-  <div class="profile-detail mt-5 row">
+  <form class="profile-detail mt-5 row" @submit.prevent="onSubmit">
     <!-- 헤드부분 -->
     <div class="profile-head col-lg-4 row">
       <div class="col-2"></div>
-      <!-- 프로필 사진 -->
+      <!-- 프로필 사진 및 닉네임과 이메일 -->
       <div class="profile-head-content col-8">
+        <!-- 프로필 사진 -->
         <div class="profile-img-box">
-          <img src="@/assets/ProfileView/background_img.jpg" alt="temporary img" class="profile-img">
+          <div>
+            <img src="@/assets/ProfileView/background_img.jpg" alt="temporary img" class="profile-img">
+          </div>
         </div>
+          <div class="profile-pic d-flex justify-content-center">
+            <label for="pic-file">
+              <span class="material-symbols-outlined">
+                photo_camera
+              </span>
+              <span>
+                사진 변경하기
+              </span>
+            </label>
+            <input type="file" id="pic-file">
+          </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
           <p class="mb-0">Moonys</p>
@@ -17,12 +31,21 @@
           <p class="">dytjdkroea@naver.com</p>
         </div>
         <!-- 회원정보 수정 -->
-        <div class="profile-update-btn" v-if="!myleaf82">
-          <router-link :to="{ name : 'updateprofile' }">
-            <button class="btn">
-              회원 정보 수정
-            </button>
-          </router-link>
+        <div class="btns row">
+          <div class="profile-update-btn col-3 d-flex justify-content-center">
+            <router-link :to="{  }">
+              <button class="btn">
+                저장
+              </button>
+            </router-link>
+          </div>
+          <div class="profile-cancel-btn col-3 d-flex justify-content-center">
+            <router-link :to="{ name : 'profile' }">
+              <button class="btn">
+                취소
+              </button>
+            </router-link>
+          </div>
         </div>
       </div>
       <div class="col-2"></div>
@@ -30,18 +53,13 @@
     <!-- body 부분 -->
     <div class="profile-body col-lg-8">
       <!-- 로그인/프로필 정보 - 기본형 -->
-      <div class="row px-3" v-if="!myleaf82">
-        <div class="profile-info-on mt-5 offset-0 offset-md-3 offset-lg-0" v-if="!myleaf82">
-          <span class="info pr-2">로그인 및 프로필</span>
-          <span class="divider">|</span>
-          <span class="myleaf82 pl-2" @click="changeMyleaf82">내 잎팔이 글</span>
-        </div>
-        <br>
-        <div class="comment mt-1 offset-0 offset-md-1 offset-lg-0" v-if="!myleaf82">
-          <p>계정 보안 및 로그인하는데 문제가 있을 경우 설정을 변경하고 프로필을 관리합니다.</p>
-        </div>
+      <div class="profile-info-on mt-5">
+        <span class="info pr-2">로그인 및 프로필</span>
       </div>
-      <div class="profile-list row mt-5" v-if="!myleaf82">
+      <div class="comment mt-1">
+        <p>계정 보안 및 로그인하는데 문제가 있을 경우 설정을 변경하고 프로필을 관리합니다.</p>
+      </div>
+      <div class="profile-list row mt-5">
         <div class="profile-list-left col-md-6 mx-0">
           <div class="container p-0 pb-2">
             <div class="card nickname">
@@ -50,7 +68,7 @@
                 <span class="material-symbols-outlined icon pr-4">spa</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">Moonys</span>
+                <input type="text" class="card-input mx-4">
               </div>
             </div>
           </div>
@@ -61,7 +79,7 @@
                 <span class="material-symbols-outlined icon pr-4">email</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">dytjdkorea@naver.com</span>
+                <input type="text" class="card-input mx-4">
               </div>
             </div>
           </div>
@@ -72,7 +90,7 @@
                 <span class="material-symbols-outlined icon pr-4">phone</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">010-3440-8727</span>
+                <input type="text" class="card-input mx-4">
               </div>
             </div>
           </div>
@@ -85,7 +103,9 @@
                 <span class="material-symbols-outlined icon pr-4">lock</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">최근 업데이트 : 2022.07.26</span>
+                <router-link :to="{  }">
+                  <span class="card-content pl-4">비밀번호 변경</span>
+                </router-link>
               </div>
             </div>
           </div>
@@ -96,7 +116,8 @@
                 <span class="material-symbols-outlined icon pr-4">home</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">경기도 수원시</span>
+                <input type="hidden" class="card-input mx-4">
+                <span class="card-input mx-4">주소 찾기</span>
               </div>
             </div>
           </div>
@@ -113,61 +134,17 @@
           </div>
         </div>
       </div>
-      <!-- 내 잎팔이 사진 조회 - 클릭 -->
-      <div class="row px-3" v-if="myleaf82">
-        <div class="profile-myleaf82-on mt-5 px-0 col-12 offset-0 offset-md-3 offset-lg-0" v-if="myleaf82">
-          <span class="info pr-2" @click="changeMyleaf82">로그인 및 프로필</span>
-          <span class="divider">|</span>
-          <span class="myleaf82 pl-2">내 잎팔이 글</span>
-        </div>
-        <div class="comment mt-1 offset-0 offset-md-4 offset-lg-0" v-if="myleaf82">
-          <p>회원님이 등록한 잎팔이 글 목록입니다.</p>
-        </div>
-      </div>
-      <div class="myleaf-list row mt-5 d-flex justify-content-start" v-if="myleaf82">
-        <!-- v-for 등록해야 -->
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
-        </div>
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
-        </div>
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
-        </div>
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
 export default {
-  name: 'ProfileDetail',
-  data() {
-    return {
-      myleaf82: false,
-    }
-  },
-  methods: {
-    changeMyleaf82() {
-      this.myleaf82 = !this.myleaf82
-    },
-  }
+  name: 'UpdateProfileDetail'
 }
 </script>
 
-<style scoped>
+<style>
 .profile-detail {
   font-family: 'SUIT' sans-serif;
   background-color: #FFFFFFCC;
@@ -189,18 +166,40 @@ export default {
   border-radius: 50%;
 }
 
+.profile-pic span {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
 /* .profile-img {
   width: 100%;
   height: 100%;
   border-radius: 10rem;
 } */
 
-.btn{
+.profile-update-btn .btn{
   border-radius: 15px;
   height: 44px;
   font-size: 1rem;
   background-color: #b2c9ab;
   color: white;
+  width: 100%;
+}
+
+.profile-cancel-btn .btn{
+  border-radius: 15px;
+  height: 44px;
+  font-size: 1rem;
+  color: black;
   width: 100%;
 }
 
@@ -217,44 +216,9 @@ export default {
 
 /* profile-body 부분 */
 
-.divider {
-  font-size: 2rem;
-}
-
 .profile-info-on .info {
   font-size: 2rem;
   font-weight: bold;
-}
-
-.profile-info-on .myleaf82 {
-  font-size: 1.7rem;
-}
-
-.profile-info-on .myleaf82 {
-  color: #7E7E7E;
-}
-
-.profile-info-on .myleaf82:hover {
-  cursor: pointer;
-  color:black
-}
-
-.profile-myleaf82-on .myleaf82 {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.profile-myleaf82-on .info {
-  font-size: 1.7rem;
-}
-
-.profile-myleaf82-on .info {
-  color: #7E7E7E;
-}
-
-.profile-myleaf82-on .info:hover {
-  cursor: pointer;
-  color:black
 }
 
 .comment {
@@ -276,9 +240,10 @@ export default {
   color: #b2c9ab;
 }
 
-.card-text .card-content {
+.card-text .card-input {
   color: #7E7E7E;
   font-size: 0.9rem;
+  width: 80%;
 }
 
 .myleaf-pic {
