@@ -1,7 +1,9 @@
 <template>
   <div class="myplant">
     <!-- 배경 화면 -->
-    <div class="banner">
+    <div class="container">
+      <div class="banner-img">
+      </div>
     </div>
     <!-- 리스트 -->
     <myplant-list :myplant='myplant'></myplant-list>
@@ -59,10 +61,22 @@ export default {
 </script>
 
 <style scoped>
-.banner {
-  background-image: url('../assets/MyplantView/banner_img-01.jpg');
-  height: 600px;
-  background-size: cover;  
+.container {
+  height: 50vh;
+  /* height: 500px; */
+  /* width: 100vw; */
+  margin: 0;
+  padding: 0;
+  max-width: 1920px;
+  /* max-height: 500px; */
+}
+
+.banner-img {
+  background-image: url('../assets/MyplantView/banner_img-02.svg');
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background-repeat: repeat-x;
 }
 
 .myplant {
@@ -76,15 +90,16 @@ export default {
 .material-symbols-outlined {
   color: white;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 2.5rem;
 }
 
 .btn{
   border-radius: 100%;
-  height: 44px;
-  font-size: 1rem;
+  height: 60px;
+  width: 60px;
   background-color: #b2c9ab;
   color: white;
-  width: 100%;
 }
 </style>
