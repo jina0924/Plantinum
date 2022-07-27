@@ -7,6 +7,7 @@ import SignupView from '@/views/SignupView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import Leaf82View from '@/views/Leaf82View.vue'
 import MessengerView from '@/views/MessengerView.vue'
+import UpdateProfileView from '@/views/UpdateProfileView.vue'
 
 const routes = [
   {
@@ -38,6 +39,11 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView
+  },
+  {
+    path: '/profile/update',
+    name: 'updateprofile',
+    component: UpdateProfileView
   },
   {
     path: '/leaf82',
