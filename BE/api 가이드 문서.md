@@ -25,13 +25,13 @@ http://127.0.0.1:8000/api/v1/accounts/signup/
 | Key          | Type   | Description     | Mandatory | Example        |
 | ------------ | ------ | --------------- | --------- | -------------- |
 | username     | String | 유저아이디      | O         | idsampleuser   |
-| email        | String | 이메일          | 임시 X    |                |
+| email        | String | 이메일          | O    | abc@aa.com               |
 | password1    | String | 비밀번호        | O         | testpassword   |
 | password2    | String | 비밀번호 재입력 | O         | testpassword   |
 | phone_number | String | 폰넘버          |           | 01012345678    |
 | addr         | String | 주소            |           | seoul          |
 | zip_code     | String | 우편번호        |           | 12345          |
-| nickname     | String | 닉네임          |           | samplenickname |
+| nickname     | String | 닉네임, default값 존재         |           | samplenickname |
 
 - Response
 
@@ -143,32 +143,37 @@ http://127.0.0.1:8000/api/v1/plants/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/search/{식물이름}/
+http://127.0.0.1:8000/api/v1/plants/search/{검색어}/
 ```
 
 - Request Parameters
 
 | Name     | Type   | Description                              | Mandatory | Example |
 | -------- | ------ | ---------------------------------------- | --------- | ------- |
-| 식물이름 | String | 한글명, 검색어를 포함하는 모든 식물 검색 | O         | 백      |
+| 검색어 | String | 한글명, 검색어를 포함하는 모든 식물 검색 | O         | 백      |
 
 - Response
 
 ```
 [
     {
+        "pk": 32,
         "name": "동백"
     },
     {
+        "pk": 77,
         "name": "백량금"
     },
     {
+        "pk": 78,
         "name": "백정화"
     },
     {
+        "pk": 79,
         "name": "백화등"
     },
     {
+        "pk": 149,
         "name": "죽백나무"
     }
 ]
@@ -183,7 +188,7 @@ http://127.0.0.1:8000/api/v1/plants/search/{식물이름}/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/user/{사용자 nickname}/
+http://127.0.0.1:8000/api/v1/plants/myplant/{사용자 nickname}/
 ```
 
 - Request Parameters
@@ -236,14 +241,8 @@ http://127.0.0.1:8000/api/v1/plants/myplant/user/{사용자 nickname}/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{식물이름}/
+http://127.0.0.1:8000/api/v1/plants/myplant/
 ```
-
-- Request Parameters
-
-| Name     | Type   | Description             | Mandatory | Example |
-| -------- | ------ | ----------------------- | --------- | ------- |
-| 식물이름 | String | 검색 후 선택한 식물이름 | O         | 개운죽  |
 
 - Body
 
@@ -251,6 +250,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{식물이름}/
 | -------- | ------ | ---------------------------- | --------- | ------- |
 | nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
 | photo    | String | 물주기 등록 대상 식물의 사진 | 임시 X    |         |
+| name_id    | Int | 식물의 pk | O    | 2        |
 
 - Response
 
@@ -260,7 +260,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{식물이름}/
     "user": {
         "pk": 1,
         "username": "test1",
-        "nickname": ""
+        "nickname": "촉촉한귤나무123"
     },
     "name": {
         "pk": 2,
@@ -525,19 +525,70 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/diary/
 
 
 
+### 마이페이지(프로필)
+- 플랜티넘과 함께한 날 수, 잎팔이 글 전체 조회 추가예정
+- 나의 프로필만 확인 가능, 다른 사람의 프로필 확인 X
+- 로그인 사용자 - 토큰 사용
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/accounts/profile/
+```
+
+- Response
+```
+{
+    "pk": 1,
+    "nickname": "",
+    "email": "test1@ssafy.com",
+    "phone_number": "",
+    "addr": "",
+    "zip_code": "",
+    "myplant_count": 2
+}
+```
+
+
+
+### 회원정보수정
+- 닉네임, 이메일, 핸드폰번호, 주소, 우편번호만 수정 가능
+- 비밀번호 변경은 별개의 요청
+- 로그인 사용자 - 토큰 사용
+- PUT
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/accounts/userinformation/
+```
+
+- Body
+
+| Key            | Type   | Description                   | Mandatory | Example            |
+| -------------- | ------ | ----------------------------- | --------- | ------------------ |
+| nickname        | String |                               |          | 새로운닉네임 |
+| email          | String |                               |     | ssafy@naver.com                   |
+| phone_number | Bool   |  |           | 01012341234                   |
+| addr | Bool   |  |           | seoul                   |
+| zip_code | String   |  |           | 12345                   |
+
+- Response
+```
+{
+    "pk": 1,
+    "nickname": "새로운닉네임",
+    "email": "ssafy@naver.com",
+    "phone_number": "01012341234",
+    "addr": "seoul",
+    "zip_code": "12345"
+}
+```
+
+
+
+
+---------------------------------------------------------
 ### 마이페이지 (로그인정보+잎팔이정보)
-
-request.user 의 정보 나의정보만 열람 (분기처리x)
-
-닉네임
-
-이메일
-
-연락처
-
-주소
-
-내 식물 수 =>  serializer 에 추가, read_only
 
 암호 업데이트 날짜 => read_only
 
@@ -550,23 +601,9 @@ user 모델에 updated_at컬럼을 추가,
 ==> 안되면 우리와 함께 한 날짜
 
 
-
 내 잎팔이 글 전체 조회
 
 => 잎팔이 글 pk와 이미지url만 받아오기 (임시로 이미지 주소 보내기)
-
-
-
-### 회원가입
-
-### if '식집사' in nickname starts_with
-
-식집사 자체를 금지
-
-식집사 + 난수 길게
-
-====> 내식물 유저 nickname으로 조회
-
 
 
 휴대폰번호 형식 지정

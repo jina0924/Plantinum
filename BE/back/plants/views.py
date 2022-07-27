@@ -19,13 +19,12 @@ def plants(request):
     return Response(serializer.data)
 
 
-# 내 식물 전체 조회
+# 내 식물 전체 조회 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def read_myplant(request, usernickname):
-    # 오류수정 완료, username 을 nickname으로 바꾸기 => 회원가입시 바로 닉네임 생성되도록
-    user = get_object_or_404(User, username=usernickname)
+    user = get_object_or_404(User, nickname=usernickname)
     plants = get_list_or_404(Myplant, user=user)
 
     serializer = MyplantListSerializer(plants, many=True)
@@ -50,7 +49,7 @@ import random
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def create_myplant(request, plantname):
+def create_myplant(request):
     
     user = request.user
 
@@ -68,9 +67,9 @@ def create_myplant(request, plantname):
 
     serializer = MyplantSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-
-        if Plants.objects.filter(name=plantname).exists():
-            name = Plants.objects.get(name=plantname)
+        name_id = request.data['name_id']
+        if Plants.objects.filter(pk=name_id).exists():
+            name = Plants.objects.get(pk=name_id)
             
             serializer.save(user=user, name=name, otp_code=otp_code)
         else:
