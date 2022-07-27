@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>600</height>
+    <width>1440</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
   <widget class="QLabel" name="label_otp">
    <property name="geometry">
     <rect>
-     <x>156</x>
-     <y>140</y>
+     <x>296</x>
+     <y>260</y>
      <width>200</width>
      <height>80</height>
     </rect>
@@ -45,10 +45,10 @@ color: rgb(101, 128, 93);</string>
   <widget class="QPushButton" name="button_back">
    <property name="geometry">
     <rect>
-     <x>950</x>
+     <x>1340</x>
      <y>10</y>
-     <width>51</width>
-     <height>51</height>
+     <width>71</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="font">
@@ -71,8 +71,8 @@ border-image: url(:/icon/img/home.svg);</string>
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>121</width>
-     <height>31</height>
+     <width>131</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
@@ -95,8 +95,8 @@ border-image: url(:/icon/img/home.svg);</string>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>16</x>
-     <y>240</y>
+     <x>156</x>
+     <y>360</y>
      <width>480</width>
      <height>20</height>
     </rect>
@@ -120,8 +120,8 @@ border-image: url(:/icon/img/home.svg);</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>310</y>
+     <x>200</x>
+     <y>430</y>
      <width>401</width>
      <height>71</height>
     </rect>
@@ -303,10 +303,10 @@ border-radius: 10px;
   <widget class="QWidget" name="layoutWidget1">
    <property name="geometry">
     <rect>
-     <x>600</x>
-     <y>100</y>
-     <width>301</width>
-     <height>371</height>
+     <x>750</x>
+     <y>160</y>
+     <width>411</width>
+     <height>491</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1,1,1" rowminimumheight="0,0,0,0">
