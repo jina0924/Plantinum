@@ -86,7 +86,7 @@ class PlantsSearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Plants
-        fields = ('name',)
+        fields = ('pk', 'name',)
 
 
 class SensingSerializer(serializers.ModelSerializer):

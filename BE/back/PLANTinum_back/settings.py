@@ -153,11 +153,11 @@ REST_FRAMEWORK = {
     ]
 }
 
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer'
-# }
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer'
+}
 
-# ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
+ACCOUNT_ADAPTER = 'accounts.adapters.CustomAccountAdapter'
 
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -167,3 +167,5 @@ MEDIA_URL = '/media/'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# OLD_PASSWORD_FIELD_ENABLED = True
