@@ -1,11 +1,22 @@
 <template>
   <div>
     <!-- 리스트가 있을 때 -->
-    <div class="yesplant row justify-content-center" v-if="myplant[0]">
+    <!-- 정렬 버튼 -->
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10 jsutify-content-center">
+        <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplant[0]">
+          <button class="sort-btn btn" @click="myplantSort">{{ sort_by }}</button>
+        </div>
+      </div>
+    </div>
+    <!-- 내 식물 카드 목록 -->
+    <div class="yesplant row" v-if="myplant[0]">
       <!-- <div class="col-md-2 px-0"></div> -->
-      <div class="col-10 row px-0 card-section justify-content-center">
-        <div class="card my-2 px-0 mx-2" v-for="plant in myplant" :key="plant.id">
-          <div class="plant-img d-flex">
+      <div class="col-1"></div>
+      <div class="col-10 row px-0 mx-0 card-section justify-content-center">
+        <div class="card my-2 px-0 mx-2" v-for="plant in myplants" :key="plant.id">
+          <div class="plant-img">
             <img :src="`${plant.photo}`" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
           </div>
           <div class="d-flex justify-content-between plant-info">
@@ -23,7 +34,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-2 px-0"></div> -->
+      <div class="col-1"></div>
     </div>
     <!-- 리스트가 없을 때 -->
     <div class="container">
@@ -40,9 +51,30 @@
 <script scoped>
 export default {
   name : 'MyplantList',
+  data() {
+    return {
+      sort_by : '등록순↓',
+      myplants : this.myplant
+    }
+  },
   props : {
     myplant: Array
-  }
+  },
+  methods : {
+    myplantSort() {
+      if (this.sort_by === '등록순↓') {
+        this.sort_by = '이름순↓'
+        this.myplants.sort(function(a, b){
+          return a.nickname - b.nickname
+        })
+      } else if (this.sort_by === '이름순↓') {
+        this.sort_by = '등록순↓'
+        this.myplants.sort(function(a, b){
+          return b - a
+        })
+      }
+    }
+  },
 }
 </script>
 
@@ -51,9 +83,15 @@ export default {
   padding: 1rem 2rem;
 }
 
-/* .card-section {
-  object-position: 50% 50%;
-} */
+.sort-btn {
+  background-color: white;
+  color: #B2C9AB;
+  border-color: #B2C9AB;
+  /* border-style: solid; */
+  /* border-radius: 5px; */
+  /* height: 2.5rem;
+  width: 5rem; */
+}
 
 .card {
   border-radius: 10px;
