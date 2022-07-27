@@ -64,7 +64,7 @@
         <div class="btnbox">
           <div class="btn-border">
             <div class="login d-flex justify-content-center">
-              <router-link :to="{ name: 'myplant', params: {usernickname} }" v-if="isLoggedIn">
+              <router-link :to="{ name: 'myplant', params: { nickname } }" v-if="isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
               <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
@@ -156,10 +156,24 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'HomeView',
-  components: {
-  }
+  computed: {
+    ...mapGetters(['currentUser', 'isLoggedIn']),
+    nickname() {
+      return this.currentUser.nickname
+    }
+  },
+  methods : {
+    ...mapActions(['fetchCurrentUser']),
+  },
+  created() {
+    this.fetchCurrentUser()
+    console.log(this.currentUser)
+    console.log(this.nickname)
+  },
 }
 </script>
 

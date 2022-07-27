@@ -11,7 +11,7 @@
       </div>
     </div>
     <!-- 내 식물 카드 목록 -->
-    <div class="yesplant row" v-if="myplant[0]">
+    <div class="yesplant row " v-if="myplant[0]">
       <!-- <div class="col-md-2 px-0"></div> -->
       <div class="col-1"></div>
       <div class="col-10 row px-0 mx-0 card-section justify-content-center">

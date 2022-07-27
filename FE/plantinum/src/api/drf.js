@@ -1,8 +1,8 @@
-const HOST = 'http://127.0.0.1:8000/'
+const HOST = 'http://127.0.0.1:8000/api/v1/'
 
 const ACCOUNTS = 'accounts/'
 
-const MYPLANT = 'plants/'
+const PLANTS = 'plants/myplant/'
 
 export default {
   accounts: {
@@ -10,11 +10,15 @@ export default {
     login: () => HOST + ACCOUNTS + 'login/',
     logout: () => HOST + ACCOUNTS + 'logout/',
     currentUserInfo: () => HOST + ACCOUNTS + 'user/',
-    profile: username => HOST + ACCOUNTS + 'profile/' + `${username}/`,
-    updateProfile: () => HOST + ACCOUNTS + 'profile/' + 'update/',
+    profile: () => HOST + ACCOUNTS + 'profile/',
+    updateProfile: () => HOST + ACCOUNTS + 'userinformation/',
     changePassword: () => HOST + ACCOUNTS + 'password/' + 'change/'
   },
   myplant: {
-    all : (usernickname) => HOST + MYPLANT + 'myplant/' + `${usernickname}`
+    plantSearch: (keyword) => HOST + PLANTS + 'search/' + `${keyword}`,
+    myplantList: (usernickname) => HOST + PLANTS + `${usernickname}`,
+    newMyplant: () => HOST + PLANTS, 
+    myplantDetail: (plantPk) => HOST + PLANTS + `${plantPk}` + 'detail/',
+    plantOTP: (plantPk) => HOST + PLANTS + `${plantPk}` + 'otp/',
   }
 }

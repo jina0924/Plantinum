@@ -1,7 +1,7 @@
 <template>
   <div class="myplant">
     <!-- 배경 화면 -->
-    <div class="container">
+    <div class="container my-0">
       <div class="banner-img">
       </div>
     </div>
