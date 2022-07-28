@@ -54,7 +54,7 @@ export const Account = {
         const token = res.data.key
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
-        // router.push({ name: '' })
+        // router.push({ name: 'myplant', params: {} })
       })
       .catch(err => {
         console.error(err.response.data)
@@ -72,7 +72,7 @@ export const Account = {
         const token = res.data.key
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
-        // router.push({ name: '' })
+        router.push({ name: 'home' })
       })
       .catch(err => {
         console.error(err.response.data)

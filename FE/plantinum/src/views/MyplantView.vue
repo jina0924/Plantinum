@@ -9,7 +9,7 @@
     <myplant-list :myplant='myplant'></myplant-list>
     <!-- 추가 버튼 (스티키 바텀) -->
     <div class="create-btn d-flex justify-content-end" v-if="mypage">
-      <router-link class="add px-5 mx-5 pb-5" :to="{  }">
+      <router-link class="add px-5 mx-5 pb-5" :to="{ name: 'myplantNew' }">
         <button class="btn">
           <span class="material-symbols-outlined">add</span>
         </button>
@@ -26,7 +26,7 @@ export default {
   name: 'MyplantView',
   data() {
     return {
-      myplantNickname : '',
+      myplantUsername : '',
       mypage : false,
     }
   },
@@ -34,29 +34,23 @@ export default {
     MyplantList,
   },
   methods : {
-    ...mapActions([
-      'setMyplant',
-      ]),
+    ...mapActions(['fetchMyplant']),
     isMypage() {
-      if (this.currentUser.usernickname === this.myplantNickname) {
+      if (this.currentUser.username === this.myplantUsername) {
         this.mypage = true
       }
     }
   },
   computed : {
-    ...mapGetters([
-      'myplant',
-      'currentUser'
-    ])
+    ...mapGetters(['myplant', 'currentUser'])
   },
   created() {
     this.mypage = false
-    const payload = { usernickname: this.$route.params.usernickname}
-    this.myplantNickname = payload.usernickname
-    this.setMyplant(payload)
+    const payload = { username: this.$route.params.username }
+    this.myplantUsername = payload.username
+    this.fetchMyplant(payload)
     this.isMypage()
-  }
-
+  },
 }
 </script>
 

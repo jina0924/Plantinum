@@ -53,7 +53,7 @@ const routes = [
   },
   // 내 식물
   {
-    path: '/myplant/:usernickname?',
+    path: '/myplant/:username?',
     name: 'myplant',
     component: MyplantView
   },
@@ -63,7 +63,7 @@ const routes = [
     component: MyplantNewView
   },
   {
-    path: '/myplant/:usernickname/:plantPk',
+    path: '/myplant/:username/:plantPk',
     name: 'myplantDetail',
     component: MyplantDetailView
   },

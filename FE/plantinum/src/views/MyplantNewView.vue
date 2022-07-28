@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <h1>내 식물 등록</h1>
+  </div>
 </template>
 
 <script>
