@@ -10,11 +10,11 @@
         </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
-          <p class="mb-0">Moonys</p>
+          <p class="mb-0">{{ profile.nickname }}</p>
         </div>
         <!-- 이메일 -->
         <div class="profile-email">
-          <p class="">dytjdkroea@naver.com</p>
+          <p class="">{{ profile.email }}</p>
         </div>
         <!-- 회원정보 수정 -->
         <div class="profile-update-btn" v-if="!myleaf82">
@@ -30,19 +30,19 @@
     <!-- body 부분 -->
     <div class="profile-body col-lg-8">
       <!-- 로그인/프로필 정보 - 기본형 -->
-      <div class="row px-3" v-if="!myleaf82">
+      <div class="px-3" v-if="!myleaf82">
         <div class="profile-info-on mt-5 offset-0 offset-md-3 offset-lg-0" v-if="!myleaf82">
           <span class="info pr-2">로그인 및 프로필</span>
           <span class="divider">|</span>
           <span class="myleaf82 pl-2" @click="changeMyleaf82">내 잎팔이 글</span>
         </div>
-        <br>
+
         <div class="comment mt-1 offset-0 offset-md-1 offset-lg-0" v-if="!myleaf82">
           <p>계정 보안 및 로그인하는데 문제가 있을 경우 설정을 변경하고 프로필을 관리합니다.</p>
         </div>
       </div>
       <div class="profile-list row mt-5" v-if="!myleaf82">
-        <div class="profile-list-left col-md-6 mx-0">
+        <div class="profile-list-left d-flex-justify-content-center col-md-6 mx-0">
           <div class="container p-0 pb-2">
             <div class="card nickname">
               <div class="card-head d-flex justify-content-between pt-3">
@@ -50,7 +50,7 @@
                 <span class="material-symbols-outlined icon pr-4">spa</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">Moonys</span>
+                <span class="card-content pl-4">{{ profile.nickname }}</span>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
                 <span class="material-symbols-outlined icon pr-4">email</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">dytjdkorea@naver.com</span>
+                <span class="card-content pl-4">{{ profile.email }}</span>
               </div>
             </div>
           </div>
@@ -72,20 +72,20 @@
                 <span class="material-symbols-outlined icon pr-4">phone</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">010-3440-8727</span>
+                <span class="card-content pl-4">{{ profile.phone_number }}</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="profile-list-right col-md-6 row mx-0">
+        <div class="profile-list-right d-flex-justify-content-center col-md-6 row mx-0">
           <div class="container p-0 pb-2">
             <div class="card nickname">
               <div class="card-head d-flex justify-content-between pt-3">
-                <span class="kind pl-4">비밀번호</span>
-                <span class="material-symbols-outlined icon pr-4">lock</span>
+                <span class="kind pl-4">함께한 시간</span>
+                <span class="material-symbols-outlined icon pr-4">calendar_month</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">최근 업데이트 : 2022.07.26</span>
+                <span class="card-content pl-4">365 일</span>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@
                 <span class="material-symbols-outlined icon pr-4">home</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">경기도 수원시</span>
+                <span class="card-content pl-4">{{ profile.addr }}</span>
               </div>
             </div>
           </div>
@@ -107,7 +107,7 @@
                 <span class="material-symbols-outlined icon pr-4">potted_plant</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">20</span>
+                <span class="card-content pl-4">{{ profile.myplant_count }}</span>
               </div>
             </div>
           </div>
@@ -152,6 +152,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'ProfileDetail',
   data() {
@@ -163,7 +165,10 @@ export default {
     changeMyleaf82() {
       this.myleaf82 = !this.myleaf82
     },
-  }
+  },
+  computed: {
+    ...mapGetters(['profile'])
+  },
 }
 </script>
 
@@ -257,6 +262,10 @@ export default {
   color:black
 }
 
+.container {
+  margin: 0;
+}
+
 .comment {
   color: #7E7E7E;
 }
@@ -264,6 +273,7 @@ export default {
 .card {
   border-radius: 15px;
   box-shadow: 0.2rem 0.2rem 0.2rem #CDCDCD;
+  width: 100%;
 }
 
 .card-head .kind {

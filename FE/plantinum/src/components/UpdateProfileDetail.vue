@@ -32,14 +32,14 @@
         </div>
         <!-- 회원정보 수정 -->
         <div class="btns row">
-          <div class="profile-update-btn col-3 d-flex justify-content-center">
+          <div class="profile-update-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center">
             <router-link :to="{  }">
               <button class="btn">
                 저장
               </button>
             </router-link>
           </div>
-          <div class="profile-cancel-btn col-3 d-flex justify-content-center">
+          <div class="profile-cancel-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center">
             <router-link :to="{ name : 'profile' }">
               <button class="btn">
                 취소
@@ -60,15 +60,16 @@
         <p>계정 보안 및 로그인하는데 문제가 있을 경우 설정을 변경하고 프로필을 관리합니다.</p>
       </div>
       <div class="profile-list row mt-5">
-        <div class="profile-list-left col-md-6 mx-0">
+        <div class="profile-list-left d-flex-justify-content-center col-md-6 mx-0">
           <div class="container p-0 pb-2">
             <div class="card nickname">
               <div class="card-head d-flex justify-content-between pt-3">
                 <span class="kind pl-4">닉네임</span>
                 <span class="material-symbols-outlined icon pr-4">spa</span>
               </div>
-              <div class="card-text pb-5">
-                <input type="text" class="card-input mx-4">
+              <div class="card-text row pb-5 mx-0">
+                <input type="text" class="card-input-nickname mx-4 mr-0">
+                <button class="nick-name-check">중복검사</button>
               </div>
             </div>
           </div>
@@ -78,8 +79,9 @@
                 <span class="kind pl-4">이메일</span>
                 <span class="material-symbols-outlined icon pr-4">email</span>
               </div>
-              <div class="card-text pb-5">
-                <input type="text" class="card-input mx-4">
+              <div class="card-text row pb-5 mx-0">
+                <input type="text" class="card-input-email mx-4 mr-0">
+                <button class="nick-email-check">중복검사</button>
               </div>
             </div>
           </div>
@@ -95,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="profile-list-right col-md-6 row mx-0">
+        <div class="profile-list-right d-flex-justify-content-center col-md-6 row mx-0">
           <div class="container p-0 pb-2">
             <div class="card nickname">
               <div class="card-head d-flex justify-content-between pt-3">
@@ -103,7 +105,7 @@
                 <span class="material-symbols-outlined icon pr-4">lock</span>
               </div>
               <div class="card-text pb-5">
-                <router-link :to="{  }">
+                <router-link :to="{ name : 'updatepassword' }">
                   <span class="card-content pl-4">비밀번호 변경</span>
                 </router-link>
               </div>
@@ -144,7 +146,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .profile-detail {
   font-family: 'SUIT' sans-serif;
   background-color: #FFFFFFCC;
@@ -221,6 +223,10 @@ input[type="file"] {
   font-weight: bold;
 }
 
+.container {
+  margin: 0;
+}
+
 .comment {
   color: #7E7E7E;
 }
@@ -228,6 +234,7 @@ input[type="file"] {
 .card {
   border-radius: 15px;
   box-shadow: 0.2rem 0.2rem 0.2rem #CDCDCD;
+  width: 100%;
 }
 
 .card-head .kind {
@@ -244,6 +251,30 @@ input[type="file"] {
   color: #7E7E7E;
   font-size: 0.9rem;
   width: 80%;
+}
+
+.card-text .card-input-nickname {
+  color: #7E7E7E;
+  font-size: 0.9rem;
+  width: 50%;
+}
+
+.nick-name-check {
+  font-size: 0.9rem;
+  border-style: none;
+  border-radius: 10%;
+}
+
+.card-text .card-input-email {
+  color: #7E7E7E;
+  font-size: 0.9rem;
+  width: 50%;
+}
+
+.nick-email-check {
+  font-size: 0.9rem;
+  border-style: none;
+  border-radius: 10%;
 }
 
 .myleaf-pic {
