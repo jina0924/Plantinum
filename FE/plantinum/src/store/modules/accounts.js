@@ -44,6 +44,14 @@ export const Account = {
       localStorage.setItem('token', '')
     },
 
+    resetCurrentUser({ commit }) {
+      commit('SET_CURRENT_USER', {})
+    },
+
+    resetProfile({ commit }) {
+      commit('SET_PROFILE', {})
+    },
+
     signup({ commit, dispatch }, credentials) {
       axios({
         url: drf.accounts.signup(),
@@ -54,7 +62,8 @@ export const Account = {
         const token = res.data.key
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
-        // router.push({ name: 'myplant', params: {} })
+        dispatch('fetchProfile')
+        router.push({ name: 'home' })
       })
       .catch(err => {
         console.error(err.response.data)
@@ -72,6 +81,7 @@ export const Account = {
         const token = res.data.key
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
+        dispatch('fetchProfile')
         router.push({ name: 'home' })
       })
       .catch(err => {
@@ -88,11 +98,14 @@ export const Account = {
       })
       .then(() => {
         dispatch('removeToken')
-        // alert('logout 되었습니다')
-        // router.push({ name: '' })
+        dispatch('resetCurrentUser')
+        dispatch('resetProfile')
+        alert('logout 되었습니다')
+        router.push({ name: 'home' })
       })
       // 에러 발생 시 어떻게 할 지 고민해야 함
       .catch(err => {
+        alert('잘못된 접근입니다.')
         console.log(err.response)
       })
     },
@@ -118,9 +131,9 @@ export const Account = {
       commit('SET_AUTH_ERROR', authState)
     },
 
-    fetchProfile({ commit, getters }, { nickname }) {
+    fetchProfile({ commit, getters },) {
       axios({
-        url: drf.accounts.profile(nickname),
+        url: drf.accounts.profile(),
         method: 'get',
         headers: getters.authHeader,
       })

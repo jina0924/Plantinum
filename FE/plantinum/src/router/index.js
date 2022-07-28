@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
-import LogoutView from '@/views/LogoutView.vue'
+// import LogoutView from '@/views/LogoutView.vue'
 import SignupView from '@/views/SignupView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import UpdatePasswordView from '@/views/UpdatePasswordView.vue'
@@ -26,11 +26,11 @@ const routes = [
     name: 'login',
     component: LoginView
   },
-  {
-    path: '/logout',
-    name: 'logout',
-    component: LogoutView
-  },
+  // {
+  //   path: '/logout',
+  //   name: 'logout',
+  //   component: LogoutView
+  // },
   {
     path: '/signup',
     name: 'signup',
@@ -53,7 +53,7 @@ const routes = [
   },
   // 내 식물
   {
-    path: '/myplant/:username?',
+    path: '/myplant/:usernickname?',
     name: 'myplant',
     component: MyplantView
   },
@@ -63,7 +63,7 @@ const routes = [
     component: MyplantNewView
   },
   {
-    path: '/myplant/:username/:plantPk',
+    path: '/myplant/:usernickname/:plantPk',
     name: 'myplantDetail',
     component: MyplantDetailView
   },
@@ -89,5 +89,23 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+// 페이지 이동할 때마다 검사함
+// router.beforeEach((to, from, next) => {
+//   store.commit('SET_AUTH_ERROR', null)
+
+//   const { isLoggedIn } = store.getters
+
+//   const noAuthPages = ['login', 'signup', 'home', 'leaf82', 'NotFound404',]
+  
+//   const isAuthRequired = !noAuthPages.includes(to.name)
+
+//   if (isAuthRequired && !isLoggedIn) {
+//     alert('로그인 필요합니다. 로그인 페이지로 이동합니다.')
+//     next({ name: 'login' })
+//   } else {
+//     next()
+//   }
+// })
 
 export default router
