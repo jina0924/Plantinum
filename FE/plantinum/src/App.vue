@@ -8,22 +8,15 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 
 export default {
   name: 'App',
   components: { NavBar },
-  methods: {
-      ...mapActions(['fetchCurrentUser',])
-    },
-    computed: {
-      ...mapGetters(['currentUser', 'isLoggedIn',])
-    },
-    created(){
-      this.fetchCurrentUser()
-
-    },
+  computed: {
+    ...mapGetters(['currentUser', 'isLoggedIn',])
+  },
 }
 </script>
 
