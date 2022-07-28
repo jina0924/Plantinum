@@ -147,8 +147,7 @@ export const Account = {
       })
     },
     
-    updateProfile({ commit, getters }, { nickname, email, address, phone_number, profile_img }) {
-      const info = { nickname, email, address, phone_number, profile_img }
+    updateProfile({ commit, getters }, info) {
       axios({
         url: drf.accounts.updateProfile(),
         method: 'put',
@@ -157,8 +156,11 @@ export const Account = {
       })
         .then(res => {
           commit('SET_PROFILE', res.data)
+          router.push({ name: 'profile' })
         })
         .catch(err => {
+          commit('SET_AUTH_ERROR', err.response.data)
+          router.push({ name: 'updateProfile' })
           if (err.response.status === 401) {
             router.push({ name: 'updateProfile' })
           }
