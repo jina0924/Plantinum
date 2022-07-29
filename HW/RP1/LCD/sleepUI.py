@@ -8,15 +8,15 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QPushButton, QSizePolicy,
-    QWidget)
+from PySide2.QtWidgets import (QApplication, QLabel, QPushButton, QSizePolicy,
+    QWidget,QGraphicsOpacityEffect)
 import myres_rc
 
 class Ui_Form(object):
@@ -42,6 +42,9 @@ class Ui_Form(object):
         self.wakeup_button.setObjectName(u"wakeup_button")
         self.wakeup_button.setGeometry(QRect(0, 0, 1366, 768))
         self.wakeup_button.setStyleSheet(u"background-color: rgba(255, 255, 255, 0);")
+        opacity_effect = QGraphicsOpacityEffect(self.wakeup_button)
+        opacity_effect.setOpacity(0)
+        self.wakeup_button.setGraphicsEffect(opacity_effect)
 
         self.retranslateUi(Form)
         self.wakeup_button.clicked.connect(Form.wakeup)
