@@ -143,23 +143,23 @@ export default {
   name: 'UpdateProfileDetail',
   data() {
     return {
-      oldInfo: {
-        nickname: '',
-        email: '',
-        addr: '',
-        zip_code: '',
-        phone_number: '',
-        dday: '',
-        myplant_count: '',
-      },
+      // oldInfo: {
+      //   nickname: '',
+      //   email: '',
+      //   addr: '',
+      //   zip_code: '',
+      //   phone_number: '',
+      //   dday: '',
+      //   myplant_count: '',
+      // },
       info :{
         nickname: '',
         email: '',
         addr: '',
         zip_code: '',
         phone_number: '',
-        dday: '',
-        myplant_count: '',
+        // dday: '',
+        // myplant_count: '',
       }
     }
   },
