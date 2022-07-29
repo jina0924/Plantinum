@@ -1,5 +1,5 @@
 <template>
-  <form class="profile-detail mt-5 row" @submit.prevent="onSubmit">
+  <form class="profile-detail mt-5 row" @submit.prevent="updateProfile(info)">
     <!-- 헤드부분 -->
     <div class="profile-head col-lg-4 row">
       <div class="col-2"></div>
@@ -24,20 +24,18 @@
           </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
-          <p class="mb-0">Moonys</p>
+          <p class="mb-0">{{ profile.nickname }}</p>
         </div>
         <!-- 이메일 -->
         <div class="profile-email">
-          <p class="">dytjdkroea@naver.com</p>
+          <p class="">{{ profile.email }}</p>
         </div>
         <!-- 회원정보 수정 -->
         <div class="btns row">
-          <div class="profile-update-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center">
-            <router-link :to="{  }">
-              <button class="btn">
+          <div class="profile-update-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center mr-2">
+              <button type="submit" class="btn">
                 저장
               </button>
-            </router-link>
           </div>
           <div class="profile-cancel-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center">
             <router-link :to="{ name : 'profile' }">
@@ -68,8 +66,7 @@
                 <span class="material-symbols-outlined icon pr-4">spa</span>
               </div>
               <div class="card-text row pb-5 mx-0">
-                <input type="text" class="card-input-nickname mx-4 mr-0">
-                <button class="nick-name-check">중복검사</button>
+                <input type="text" class="card-input mx-4" v-model="info.nickname">
               </div>
             </div>
           </div>
@@ -80,8 +77,7 @@
                 <span class="material-symbols-outlined icon pr-4">email</span>
               </div>
               <div class="card-text row pb-5 mx-0">
-                <input type="text" class="card-input-email mx-4 mr-0">
-                <button class="nick-email-check">중복검사</button>
+                <input type="text" class="card-input mx-4" v-model="info.email">
               </div>
             </div>
           </div>
@@ -92,7 +88,7 @@
                 <span class="material-symbols-outlined icon pr-4">phone</span>
               </div>
               <div class="card-text pb-5">
-                <input type="text" class="card-input mx-4">
+                <input type="text" class="card-input mx-4" v-model="info.phone_number">
               </div>
             </div>
           </div>
@@ -118,7 +114,7 @@
                 <span class="material-symbols-outlined icon pr-4">home</span>
               </div>
               <div class="card-text pb-5">
-                <input type="hidden" class="card-input mx-4">
+                <input type="hidden" class="card-input mx-4" v-model="info.addr">
                 <span class="card-input mx-4">주소 찾기</span>
               </div>
             </div>
@@ -141,8 +137,44 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
-  name: 'UpdateProfileDetail'
+  name: 'UpdateProfileDetail',
+  data() {
+    return {
+      oldInfo: {
+        nickname: '',
+        email: '',
+        addr: '',
+        zip_code: '',
+        phone_number: ''
+      },
+      info :{
+        nickname: '',
+        email: '',
+        addr: '',
+        zip_code: '',
+        phone_number: ''
+      }
+    }
+  },
+  methods: {
+    ...mapActions(['updateProfile', 'fetchCurrentUser']),
+    fillOldInfo() {
+      this.info.nickname = this.profile.nickname
+      this.info.email = this.profile.email
+      this.info.addr = this.profile.addr
+      this.info.zip_code = this.profile.zip_code
+      this.info.phone_number = this.profile.phone_number
+    }
+  },
+  computed: {
+    ...mapGetters(['profile'])
+  },
+  created() {
+    this.fillOldInfo()
+  }
 }
 </script>
 
@@ -194,6 +226,10 @@ input[type="file"] {
   font-size: 1rem;
   background-color: #b2c9ab;
   color: white;
+  width: 100%;
+}
+
+.profile-cancel-btn a {
   width: 100%;
 }
 

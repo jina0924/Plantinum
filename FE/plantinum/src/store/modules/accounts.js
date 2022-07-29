@@ -52,6 +52,10 @@ export const Account = {
       commit('SET_PROFILE', {})
     },
 
+    resetAuthError({ commit }) {
+      commit('SET_AUTH_ERROR', null)
+    },
+
     signup({ commit, dispatch }, credentials) {
       axios({
         url: drf.accounts.signup(),
@@ -63,6 +67,7 @@ export const Account = {
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
         dispatch('fetchProfile')
+        dispatch('resetAuthError')
         router.push({ name: 'home' })
       })
       .catch(err => {
@@ -82,6 +87,7 @@ export const Account = {
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
         dispatch('fetchProfile')
+        dispatch('resetAuthError')
         router.push({ name: 'home' })
       })
       .catch(err => {
@@ -147,8 +153,7 @@ export const Account = {
       })
     },
     
-    updateProfile({ commit, getters }, { nickname, email, address, phone_number, profile_img }) {
-      const info = { nickname, email, address, phone_number, profile_img }
+    updateProfile({ commit, getters }, info) {
       axios({
         url: drf.accounts.updateProfile(),
         method: 'put',
@@ -157,8 +162,11 @@ export const Account = {
       })
         .then(res => {
           commit('SET_PROFILE', res.data)
+          router.push({ name: 'profile' })
         })
         .catch(err => {
+          commit('SET_AUTH_ERROR', err.response.data)
+          router.push({ name: 'updateProfile' })
           if (err.response.status === 401) {
             router.push({ name: 'updateProfile' })
           }
