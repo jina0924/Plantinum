@@ -1,5 +1,6 @@
 <template>
   <div class="myplant">
+    <nav-bar></nav-bar>
     <!-- 배경 화면 -->
     <div class="container my-0">
       <div class="banner-img">
@@ -21,6 +22,9 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import MyplantList from '@/components/MyplantList.vue'
+import NavBar from '@/components/NavBar.vue'
+
+
 
 export default {
   name: 'MyplantView',
@@ -32,6 +36,7 @@ export default {
   },
   components : {
     MyplantList,
+    NavBar,
   },
   methods : {
     ...mapActions(['fetchMyplant']),
