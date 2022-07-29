@@ -8,15 +8,15 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+from PySide2.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QLabel, QPushButton,
-    QSizePolicy, QWidget)
+from PySide2.QtWidgets import (QApplication, QFrame, QLabel, QPushButton,
+    QSizePolicy, QWidget,QGraphicsOpacityEffect)
 import myres_rc
 
 class Ui_Form(object):
@@ -52,7 +52,9 @@ class Ui_Form(object):
         font1.setBold(True)
         font1.setUnderline(False)
         self.water.setFont(font1)
-        self.water.setStyleSheet(u"border-image: url(:/img/img/background_sand.jpg);")
+        #self.water.setStyleSheet(u"border-image: url(:/img/img/background_sand.jpg);")
+        #self.water.setStyleSheet(u"background-color : srgb(40,40,30);")
+        self.water.setStyleSheet(u"border-image:url(./img/icc_background_sand.png);")
         self.water.setFrameShape(QFrame.NoFrame)
         self.water.setScaledContents(False)
         self.water.setAlignment(Qt.AlignJustify|Qt.AlignVCenter)
@@ -60,13 +62,20 @@ class Ui_Form(object):
         self.detail_button = QPushButton(Form)
         self.detail_button.setObjectName(u"detail_button")
         self.detail_button.setGeometry(QRect(0, 0, 1366, 768))
-        self.detail_button.setStyleSheet(u"background-color: rgba(255, 255, 255, 0);\n"
-"alternate-background-color: rgba(255, 255, 255, 0);")
+        #self.detail_button.setStyleSheet(u"color: rgba(255, 255, 255, 0);background-ccolor:srgba(255,255,255,0);")
+        #self.detail_button.hide()
+        opacity_effect = QGraphicsOpacityEffect(self.detail_button)
+        opacity_effect.setOpacity(0)
+        self.detail_button.setGraphicsEffect(opacity_effect)
+        
+        self.detail_button.setStyleSheet(u'backgroud:transparent')
         self.wave = QLabel(Form)
         self.wave.setObjectName(u"wave")
         self.wave.setGeometry(QRect(0, 120, 1366, 768))
         self.wave.setFont(font1)
-        self.wave.setStyleSheet(u"border-image: url(:/img/img/wave.png);")
+        #self.wave.setStyleSheet(u"border-image: url(:/img/img/wave.png);")
+        #self.wave.setStyleSheet(u"background-color:rgb(40,40,180);")
+        self.wave.setStyleSheet(u"border-image:url(./img/icc_wave.png);")
         self.wave.setFrameShape(QFrame.NoFrame)
         self.wave.setScaledContents(False)
         self.wave.setAlignment(Qt.AlignJustify|Qt.AlignVCenter)
@@ -107,6 +116,7 @@ class Ui_Form(object):
         self.warn_label.setFont(font3)
         self.warn_label.setStyleSheet(u"color: rgb(255, 255, 255);")
         self.warn_label.setAlignment(Qt.AlignCenter)
+        
         self.water.raise_()
         self.wave.raise_()
         self.clock.raise_()

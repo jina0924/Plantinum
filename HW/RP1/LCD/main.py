@@ -1,5 +1,5 @@
-from PySide6.QtWidgets import *
-from PySide6.QtCore import *
+from PySide2.QtWidgets import *
+from PySide2.QtCore import *
 from entryUI import Ui_Form as Ui_EntryUI
 from mainUI import Ui_Form as Ui_MainUI
 from detailUI import Ui_Form as Ui_DetailUI
@@ -33,6 +33,11 @@ humi=0
 waveLV = 120
 #취침모드
 issleep=0
+
+
+#페이지 생성 확인용
+is_detail_page = 0
+is_sleep_page = 0
 
 #센서 측정 스레드_메인시작시 같이 시작
 class sensorThread(QThread):
@@ -89,7 +94,7 @@ def watering():
 
 
 #시작페이지
-class EntryPage(QMainWindow, Ui_EntryUI):
+class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -98,39 +103,20 @@ class EntryPage(QMainWindow, Ui_EntryUI):
     def dbset(self):
         #db커넥트
         global db
-        db = mysql.connector.connect(host="localhost",user='root', password='111111', database='testdb',buffered=True)
+        db = mysql.connector.connect(host="192.168.45.132",user='root', password='111111', database='testdb',buffered=True)
 
     def main(self):
         pass
 
     #새식물 등록
     def new_plant(self):
-        global otp_back
-        #otp 등록페이지로 이동
-        self.hide()
-        print("regist new plant!")
-        self.go_otp = OtpPage()
-        self.go_otp.exec_()
-        #성공적으로 연결시
-        if(success_acc == 1):
-            #oldplant통해 메인페이지 진입
-            self.old_plant()
-        elif (otp_back == 1):
-            #홈버튼 눌러서 돌아올때
-            otp_back = 0
-            self.show()
+
+        widget.setCurrentIndex(1)
 
     def old_plant(self):
         global success_acc
         global plant_id,nickname,water_amount
         global user_data,watering_cnt
-
-
-
-        #connect test
-        #json 파일로 전에 저장된 정보 불러옴
-        with open(userfilepath, "r", encoding = "utf-8") as file:
-            user_data = json.load(file)
 
         #쿼리요청
         self.cur = db.cursor()
@@ -142,25 +128,29 @@ class EntryPage(QMainWindow, Ui_EntryUI):
             if(result[0] == 1):
                 #connect == 1 이면 연결유지 상태 메인페이지 이동
                 print("go to main page!")
-                self.second = MainPage()
                 success_acc = 1
-                watering_cnt = len(user_data['recent_watering'])
-                self.cur.close()
-                self.hide()
-                self.second.show()
+                widget.addWidget(MainPage())
+                widget.setCurrentIndex(2)
             else:
                 #연결이 끊기면 오류메세지
                 msgBox = QMessageBox()
                 msgBox.setText("There are no connected plants")
                 msgBox.exec()
+                #연결이 끊겨있으므로 user_data정보 지워줌
 
-            print(result[0])
+                user_data['id'] = -1
+                user_data['nickname'] = ""
+                user_data['water_point'] = -1
+                user_data['recent_watering']= []
+
+                # 수정반영
+                with open(userfilepath, "w", encoding='utf-8') as file:
+                    json.dump(user_data, file, indent="\t", ensure_ascii=False)
+
+            #print(result[0])
 
         #다시 누를 것 대비_변경반영
         db.commit()
-#        self.second.exec_()
-        #self.close()
-        # 메인페이지가 끝나면 바로 종료
 
 #메인 페이지 _ 파도 화면
 class MainPage(QDialog, QWidget, Ui_MainUI):
@@ -169,37 +159,40 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
         self.setupUi(self)
         print("HI I'm MainPage")
         #시계를 위해 5초에 한번 화면 새로고침
-        self.timer = QTimer(self)
-        self.timer.setInterval(1000)  # 1초 => 나중에 5초에 한번으로 바꿀거임
-        self.timer.timeout.connect(self.show_clock)
 
-        #센서 스레드
-        #메인화면시작시 스레드 지정 => 이후 계속 동작
-        self.snsth = sensorThread()
-        self.warn_label.hide()
 
         self.main()
 
     def main(self):
-        self.timer.start()
-        self.snsth.start()
+        global snsth, clock_timer
+        self.warn_label.hide()
+
+        #시계 타이머
+        clock_timer = QTimer(self)
+        clock_timer.setInterval(1000)  # 1초 => 나중에 5초에 한번으로 바꿀거임
+        clock_timer.timeout.connect(self.show_clock)
+        clock_timer.start()
+
+        #센서 스레드
+        snsth = sensorThread()
+        snsth.start()
 
     def go_detailPage(self):
-        global detail_back
-        #self.hide()
-        self.close()
+        global detail_back,is_detail_page
         #화면 새로고침 필요없음
-        self.timer.stop()
+        clock_timer.stop()
         #디테일페이지 선언 및 화면 전환
-        self.detailpage = DetailPage()
-        print("go to detail page!")
-        self.detailpage.exec_()
+        if (is_detail_page == 0):
+            is_detail_page == 1
+            widget.addWidget(DetailPage())
+
+        widget.setCurrentIndex(3)
         # 뒤로가기 버튼으로 돌아왔을때
+        '''
         if(detail_back == 1):
             detail_back =0
-            self.show()
-            self.timer.start()
-
+            #self.timer.start()
+        '''
 
 #    def exit_program(self):
  #       print("Bye! - main")
@@ -244,6 +237,7 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
        pass
     #메인페이지로 돌아감
     def go_mainpage(self):
+        '''
         global detail_back
         print("Bye! - detail")
         #self.main = MainPage()
@@ -251,18 +245,29 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         detail_back = 1
         self.close()
         #self.main.exec_()
+        '''
+        global clock_timer
+        widget.setCurrentIndex(2)
+        clock_timer.start()
     #취침모드
     def sleep_mode(self):
-        global issleep
+        global issleep,is_sleep_page
 
         issleep = 1
+        '''
         self.close()
         self.sleeppage = SleepPage()
         print("go to sleep page!")
         self.sleeppage.exec_()
         issleep=0
+        '''
         #취침모드에서 벗어나면 바로 메인페이지로 돌아감
-        self.go_mainpage()
+        #self.go_mainpage()
+        if(is_sleep_page == 0):
+            is_sleep_page = 1
+            widget.addWidget(SleepPage())
+
+        widget.setCurrentIndex(4)
 
     #새로고침
     def redo(self):
@@ -292,13 +297,17 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         if(water_amount == 1):
             self.progressBar.setStyleSheet(
                 "QProgressBar::chunk { background-color : rgb(163, 77, 79) ; border-radius : 10px;} QProgressBar {background-color : rgb(255,255,255);border-radius : 15px;}")
+            self.progressBar.setValue(80)
         else:
             self.progressBar.setStyleSheet(
                 "QProgressBar::chunk { background-color : rgb(101, 128, 93) ; border-radius : 10px;} QProgressBar {background-color : rgb(255,255,255);border-radius : 15px;}")
-
+            self.progressBar.setValue(40)
     #프로그램 및 라즈베리파이 종료
     #코드 해제를 위함
     def turnoff(self):
+        global clock_timer, snsth
+        clock_timer.stop()
+        snsth.stop()
         quit()
         #라즈베리파이 종료 필요
         #배쉬파일 연결해야할듯 합니다
@@ -353,9 +362,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
                     self.cur.execute(self.sql_str)
 
                     #json 수정
-                    #한글 읽기 위하여 encoding 표시
-                    with open(userfilepath, "r", encoding="utf-8") as file:
-                        user_data = json.load(file)
+
 
 
 #                    print(self.user_data['id'], self.user_data['nickname']
@@ -377,7 +384,8 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
         #성공했을때_db에 정보존재
         if(self.flag == 1):
             success_acc = 1
-            self.close()
+            widget.addWidget(MainPage())
+            widget.setCurrentIndex(2)
         else:
             #실패했을때
             msgBox = QMessageBox()
@@ -396,10 +404,11 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
 
 
     def back_entry(self):
-        global otp_back
+        #global otp_back
         #메인으로 다시 돌아감
-        otp_back = 1
-        self.close()
+        #otp_back = 1
+        #self.close()
+        widget.setCurrentIndex(0)
 
     #숫자보드 입력
     def click_pad(self):
@@ -424,23 +433,34 @@ class SleepPage(QDialog, QWidget, Ui_SleepUI):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        print("HI I'm Detail Page")
+        print("HI I'm Sleep Page")
         #self.show()
-        self.main()
+        #self.main()
 
     def main(self):
        #self.testlabel.setText(str(a))
        #ScreenSaver
        pass
 
+    #화면 터치시 취침모드 종료 후 파도화면으로 돌아감
     def wakeup(self):
-        self.close()
+        #self.close()
+        clock_timer.start()
+        widget.setCurrentIndex(2)
 
 
 app=QApplication()
 main = EntryPage()
 
-#widget = QStackedWidget()
+widget = QStackedWidget()
+widget.addWidget(main)
+widget.addWidget(OtpPage())
+widget.setFixedHeight(768)
+widget.setFixedWidth(1366)
+#프로그램 실행 전 user_data 불러옴
+#한글 읽기 위하여 encoding 표시
+with open(userfilepath, "r", encoding="utf-8") as file:
+    user_data = json.load(file)
 
-main.show()
+widget.show()
 app.exec_()
