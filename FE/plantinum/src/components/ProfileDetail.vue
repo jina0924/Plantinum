@@ -6,7 +6,7 @@
       <!-- 프로필 사진 -->
       <div class="profile-head-content col-8">
         <div class="profile-img-box">
-          <img src="@/assets/ProfileView/background_img.jpg" alt="temporary img" class="profile-img">
+          <img :src="profile.photo" alt="temporary img" class="profile-img">
         </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
