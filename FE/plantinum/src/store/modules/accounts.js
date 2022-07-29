@@ -52,6 +52,10 @@ export const Account = {
       commit('SET_PROFILE', {})
     },
 
+    resetAuthError({ commit }) {
+      commit('SET_AUTH_ERROR', null)
+    },
+
     signup({ commit, dispatch }, credentials) {
       axios({
         url: drf.accounts.signup(),
@@ -63,6 +67,7 @@ export const Account = {
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
         dispatch('fetchProfile')
+        dispatch('resetAuthError')
         router.push({ name: 'home' })
       })
       .catch(err => {
@@ -82,6 +87,7 @@ export const Account = {
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
         dispatch('fetchProfile')
+        dispatch('resetAuthError')
         router.push({ name: 'home' })
       })
       .catch(err => {

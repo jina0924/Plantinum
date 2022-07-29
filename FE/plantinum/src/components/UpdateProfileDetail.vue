@@ -24,15 +24,15 @@
           </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
-          <p class="mb-0">Moonys</p>
+          <p class="mb-0">{{ profile.nickname }}</p>
         </div>
         <!-- 이메일 -->
         <div class="profile-email">
-          <p class="">dytjdkroea@naver.com</p>
+          <p class="">{{ profile.email }}</p>
         </div>
         <!-- 회원정보 수정 -->
         <div class="btns row">
-          <div class="profile-update-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center">
+          <div class="profile-update-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center mr-2">
               <button type="submit" class="btn">
                 저장
               </button>
@@ -137,12 +137,19 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'UpdateProfileDetail',
   data() {
     return {
+      oldInfo: {
+        nickname: '',
+        email: '',
+        addr: '',
+        zip_code: '',
+        phone_number: ''
+      },
       info :{
         nickname: '',
         email: '',
@@ -153,8 +160,21 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateProfile', 'fetchCurrentUser'])
+    ...mapActions(['updateProfile', 'fetchCurrentUser']),
+    fillOldInfo() {
+      this.info.nickname = this.profile.nickname
+      this.info.email = this.profile.email
+      this.info.addr = this.profile.addr
+      this.info.zip_code = this.profile.zip_code
+      this.info.phone_number = this.profile.phone_number
+    }
   },
+  computed: {
+    ...mapGetters(['profile'])
+  },
+  created() {
+    this.fillOldInfo()
+  }
 }
 </script>
 
@@ -206,6 +226,10 @@ input[type="file"] {
   font-size: 1rem;
   background-color: #b2c9ab;
   color: white;
+  width: 100%;
+}
+
+.profile-cancel-btn a {
   width: 100%;
 }
 
