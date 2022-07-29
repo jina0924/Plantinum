@@ -1,0 +1,24 @@
+[
+{
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$ZcAwegH60ApyaXFyD63uYV$HiSQOnnvy4oxcTIocuTWhpWc/HgL0uGsBJcFxi1hwQo=",
+        "last_login": "2022-07-26T07:04:45.924Z",
+        "is_superuser": false,
+        "username": "test1",
+        "first_name": "",
+        "last_name": "",
+        "email": "test1@ssafy.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-07-26T07:04:45.802Z",
+        "phone_number": "",
+        "addr": "",
+        "zip_code": "",
+        "nickname": "",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
