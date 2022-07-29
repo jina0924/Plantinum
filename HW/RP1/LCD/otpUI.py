@@ -66,22 +66,46 @@ class Ui_Form(object):
         self.label_2.setAlignment(Qt.AlignCenter)
         self.layoutWidget = QWidget(Form)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(100, 310, 321, 71))
+        self.layoutWidget.setGeometry(QRect(60, 310, 401, 71))
         self.gridLayout = QGridLayout(self.layoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setSizeConstraint(QLayout.SetNoConstraint)
         self.gridLayout.setVerticalSpacing(9)
         self.gridLayout.setContentsMargins(1, 0, 0, 0)
-        self.number_4 = QLabel(self.layoutWidget)
-        self.number_4.setObjectName(u"number_4")
+        self.number_3 = QLabel(self.layoutWidget)
+        self.number_3.setObjectName(u"number_3")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.number_4.sizePolicy().hasHeightForWidth())
-        self.number_4.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.number_3.sizePolicy().hasHeightForWidth())
+        self.number_3.setSizePolicy(sizePolicy)
         font4 = QFont()
         font4.setPointSize(26)
         font4.setBold(True)
+        self.number_3.setFont(font4)
+        self.number_3.setStyleSheet(u"background-color : white;\n"
+"border-radius: 10px;\n"
+"")
+        self.number_3.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.number_3, 0, 3, 1, 1)
+
+        self.number_5 = QLabel(self.layoutWidget)
+        self.number_5.setObjectName(u"number_5")
+        sizePolicy.setHeightForWidth(self.number_5.sizePolicy().hasHeightForWidth())
+        self.number_5.setSizePolicy(sizePolicy)
+        self.number_5.setFont(font4)
+        self.number_5.setStyleSheet(u"background-color : white;\n"
+"border-radius: 10px;\n"
+"")
+        self.number_5.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.number_5, 0, 5, 1, 1)
+
+        self.number_4 = QLabel(self.layoutWidget)
+        self.number_4.setObjectName(u"number_4")
+        sizePolicy.setHeightForWidth(self.number_4.sizePolicy().hasHeightForWidth())
+        self.number_4.setSizePolicy(sizePolicy)
         self.number_4.setFont(font4)
         self.number_4.setStyleSheet(u"background-color : white;\n"
 "border-radius: 10px;\n"
@@ -114,17 +138,17 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.number_2, 0, 2, 1, 1)
 
-        self.number_3 = QLabel(self.layoutWidget)
-        self.number_3.setObjectName(u"number_3")
-        sizePolicy.setHeightForWidth(self.number_3.sizePolicy().hasHeightForWidth())
-        self.number_3.setSizePolicy(sizePolicy)
-        self.number_3.setFont(font4)
-        self.number_3.setStyleSheet(u"background-color : white;\n"
+        self.number_6 = QLabel(self.layoutWidget)
+        self.number_6.setObjectName(u"number_6")
+        sizePolicy.setHeightForWidth(self.number_6.sizePolicy().hasHeightForWidth())
+        self.number_6.setSizePolicy(sizePolicy)
+        self.number_6.setFont(font4)
+        self.number_6.setStyleSheet(u"background-color : white;\n"
 "border-radius: 10px;\n"
 "")
-        self.number_3.setAlignment(Qt.AlignCenter)
+        self.number_6.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.number_3, 0, 3, 1, 1)
+        self.gridLayout.addWidget(self.number_6, 0, 6, 1, 1)
 
         self.layoutWidget1 = QWidget(Form)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
@@ -299,10 +323,12 @@ class Ui_Form(object):
         self.button_back.setText("")
         self.logo_label.setText("")
         self.label_2.setText(QCoreApplication.translate("Form", u"\uc6f9 \ud654\uba74\uc5d0 \ud45c\uc2dc\ub41c \uc22b\uc790\ub97c \uc785\ub825\ud574\uc8fc\uc138\uc694", None))
+        self.number_3.setText(QCoreApplication.translate("Form", u"1", None))
+        self.number_5.setText(QCoreApplication.translate("Form", u"1", None))
         self.number_4.setText(QCoreApplication.translate("Form", u"1", None))
         self.number_1.setText(QCoreApplication.translate("Form", u"1", None))
         self.number_2.setText(QCoreApplication.translate("Form", u"1", None))
-        self.number_3.setText(QCoreApplication.translate("Form", u"1", None))
+        self.number_6.setText(QCoreApplication.translate("Form", u"1", None))
         self.pad_3.setText(QCoreApplication.translate("Form", u"3", None))
         self.pad_1.setText(QCoreApplication.translate("Form", u"1", None))
         self.pad_7.setText(QCoreApplication.translate("Form", u"7", None))
