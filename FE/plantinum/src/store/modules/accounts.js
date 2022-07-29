@@ -153,7 +153,7 @@ export const Account = {
       })
     },
     
-    updateProfile({ commit, getters }, info) {
+    updateProfile({ commit, getters, }, info) {
       axios({
         url: drf.accounts.updateProfile(),
         method: 'put',
@@ -164,6 +164,10 @@ export const Account = {
           commit('SET_PROFILE', res.data)
           router.push({ name: 'profile' })
         })
+        // .then(() => {
+        //   dispatch('fetchProfile')
+        //   router.push({ name: 'profile' })
+        // })
         .catch(err => {
           commit('SET_AUTH_ERROR', err.response.data)
           router.push({ name: 'updateProfile' })

@@ -2,7 +2,8 @@
   <div class="boxes">
     <!-- first box -->
     <div class=first-box>
-      <div class="row">
+      <nav-bar></nav-bar>
+      <!-- <div class="row">
         <div class="col-md-3 home-logo">
           <router-link :to="{ name: 'home' }">
             <span>
@@ -10,7 +11,7 @@
             </span>
           </router-link>
         </div>
-      </div>
+      </div> -->
       <!-- 글귀 부분 -->
       <div class="row col-md-6 d-flex justify-content-center">
         <div class="contentbox">
@@ -157,9 +158,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'HomeView',
+  components: {
+    NavBar
+  },
   computed: {
     ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
   },

@@ -8,7 +8,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }">내 식물</router-link>
+          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }" v-if="!isLoggedIn">내 식물</router-link>
+          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">내 식물</router-link>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle pb-0 mx-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
