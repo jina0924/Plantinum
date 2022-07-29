@@ -1,0 +1,151 @@
+<template>
+  <div>
+    <!-- 리스트가 있을 때 -->
+    <!-- 정렬 버튼 -->
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-10 jsutify-content-center">
+        <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplant[0]">
+          <button class="sort-btn btn" @click="myplantSort">{{ sort_by }}</button>
+        </div>
+      </div>
+    </div>
+    <!-- 내 식물 카드 목록 -->
+    <div class="yesplant row " v-if="myplant[0]">
+      <!-- <div class="col-md-2 px-0"></div> -->
+      <div class="col-1"></div>
+      <div class="col-10 row px-0 mx-0 card-section justify-content-center">
+        <div class="card my-2 px-0 mx-2" v-for="plant in myplants" :key="plant.id">
+          <div class="plant-img">
+            <img :src="`${plant.photo}`" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
+          </div>
+          <div class="d-flex justify-content-between plant-info">
+            <div class="col-8">
+              <span class="plant-name">
+                {{ plant.nickname }}
+              </span>
+            </div>
+            <div class="col-4 d-flex justify-content-end align-items-center">
+              <span class="material-symbols-outlined humidity">water_drop</span>
+              <span class="humidity">{{ plant.습도 }} %</span>
+              <!-- <span class="material-symbols-outlined diary-count">description</span>
+              <span class="diary-count">{{ plant.일지수 }}</span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <!-- 리스트가 없을 때 -->
+    <div class="container">
+      <div class="noplant" v-if="!myplant[0]">
+        <span class="material-symbols-outlined noplant-icon">
+          macro_off
+        </span>
+        <p>등록된 식물이 없습니다.</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script scoped>
+export default {
+  name : 'MyplantList',
+  data() {
+    return {
+      sort_by : '등록순↓',
+      myplant_list : this.myplant
+    }
+  },
+  props : {
+    myplant: Array
+  },
+  computed : {
+    myplants() {
+      return this.myplant_list
+    }
+  },
+  methods : {
+    myplantSort() {
+      if (this.sort_by === '등록순↓') {
+        this.sort_by = '이름순↓'
+        this.myplant_list.sort(function(a, b){
+          return a.nickname.localeCompare(b.nickname)
+        })
+      } else if (this.sort_by === '이름순↓') {
+        this.sort_by = '등록순↓'
+        this.myplant_list.sort(function(a, b){
+          return b.id - a.id
+        })
+      }
+    }
+  },
+}
+</script>
+
+<style>
+.yesplant {
+  padding: 1rem 2rem;
+}
+
+.sort-btn {
+  background-color: white;
+  color: #B2C9AB;
+  border-color: #B2C9AB;
+  /* border-style: solid; */
+  /* border-radius: 5px; */
+  /* height: 2.5rem;
+  width: 5rem; */
+}
+
+.card {
+  border-radius: 10px;
+  border-style: none;
+  width: 16rem;
+}
+
+.plant-img img {
+  /* width: 95%;
+  height: 95%; */
+  width: 250px;
+  height: 250px;
+  padding: 0.5rem;
+  border-radius: 20px;
+}
+
+.plant-info {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+.diary-count {
+  font-size: 0.5rem;
+  color: #A17C6B;
+}
+
+.humidity {
+  font-size: 1rem;
+  color: #18A7DB;
+}
+
+.material-symbols-outlined {
+  font-size: 1.5rem;
+  /* margin: 0 0 1rem 0; */
+}
+
+.noplant-icon {
+  font-size: 14rem;
+  /* margin: 0 0 1rem 0; */
+}
+
+.container {
+  margin: 3rem auto;
+}
+
+.noplant {
+  color: #A6A6A6;
+  margin: 5rem, auto;
+  text-align: center;
+  font-size: 1.5rem;
+}
+</style>
