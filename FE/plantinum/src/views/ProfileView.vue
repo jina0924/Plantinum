@@ -1,5 +1,6 @@
 <template>
   <div class="profile">
+    <nav-bar></nav-bar>
     <div class="row mx-0">
       <!-- 여백 -->
       <div class="col-md-1 px-0 mx-0"></div>
@@ -13,11 +14,13 @@
 
 <script>
 import ProfileDetail from '@/components/ProfileDetail.vue'
+import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'ProfileView',
   components: {
-    ProfileDetail
+    ProfileDetail,
+    NavBar
   },
 }
 </script>
