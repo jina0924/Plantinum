@@ -25,7 +25,7 @@
           <div class="text-hello" v-if="isLoggedIn">
           <!-- <div class="text-hello"> -->
             <!-- user 정보 받아와야 함 -->
-            <p>안녕하세요, *** 님</p>
+            <p>안녕하세요, {{ profile.nickname }} 님</p>
         </div>
         <!-- 버튼 -->
         <div class="btnbox" v-if="!isLoggedIn">
@@ -156,23 +156,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'HomeView',
   computed: {
-    ...mapGetters(['currentUser', 'isLoggedIn']),
-    nickname() {
-      return this.currentUser.nickname
-    }
-  },
-  methods : {
-    ...mapActions(['fetchCurrentUser']),
-  },
-  created() {
-    this.fetchCurrentUser()
-    console.log(this.currentUser)
-    console.log(this.nickname)
+    ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
   },
 }
 </script>
