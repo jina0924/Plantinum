@@ -44,6 +44,18 @@ export const Account = {
       localStorage.setItem('token', '')
     },
 
+    resetCurrentUser({ commit }) {
+      commit('SET_CURRENT_USER', {})
+    },
+
+    resetProfile({ commit }) {
+      commit('SET_PROFILE', {})
+    },
+
+    resetAuthError({ commit }) {
+      commit('SET_AUTH_ERROR', null)
+    },
+
     signup({ commit, dispatch }, credentials) {
       axios({
         url: drf.accounts.signup(),
@@ -54,7 +66,9 @@ export const Account = {
         const token = res.data.key
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
-        // router.push({ name: '' })
+        dispatch('fetchProfile')
+        dispatch('resetAuthError')
+        router.push({ name: 'home' })
       })
       .catch(err => {
         console.error(err.response.data)
@@ -72,7 +86,9 @@ export const Account = {
         const token = res.data.key
         dispatch('saveToken', token)
         dispatch('fetchCurrentUser')
-        // router.push({ name: '' })
+        dispatch('fetchProfile')
+        dispatch('resetAuthError')
+        router.push({ name: 'home' })
       })
       .catch(err => {
         console.error(err.response.data)
@@ -88,11 +104,14 @@ export const Account = {
       })
       .then(() => {
         dispatch('removeToken')
-        // alert('logout 되었습니다')
-        // router.push({ name: '' })
+        dispatch('resetCurrentUser')
+        dispatch('resetProfile')
+        alert('logout 되었습니다')
+        router.push({ name: 'home' })
       })
       // 에러 발생 시 어떻게 할 지 고민해야 함
       .catch(err => {
+        alert('잘못된 접근입니다.')
         console.log(err.response)
       })
     },
@@ -114,9 +133,13 @@ export const Account = {
       }
     },
 
-    fetchProfile({ commit, getters }, { nickname }) {
+    fetchAuthError({ commit }, authState) {
+      commit('SET_AUTH_ERROR', authState)
+    },
+
+    fetchProfile({ commit, getters },) {
       axios({
-        url: drf.accounts.profile(nickname),
+        url: drf.accounts.profile(),
         method: 'get',
         headers: getters.authHeader,
       })
@@ -130,8 +153,7 @@ export const Account = {
       })
     },
     
-    updateProfile({ commit, getters }, { nickname, email, address, phone_number, profile_img }) {
-      const info = { nickname, email, address, phone_number, profile_img }
+    updateProfile({ commit, getters, }, info) {
       axios({
         url: drf.accounts.updateProfile(),
         method: 'put',
@@ -140,8 +162,15 @@ export const Account = {
       })
         .then(res => {
           commit('SET_PROFILE', res.data)
+          router.push({ name: 'profile' })
         })
+        // .then(() => {
+        //   dispatch('fetchProfile')
+        //   router.push({ name: 'profile' })
+        // })
         .catch(err => {
+          commit('SET_AUTH_ERROR', err.response.data)
+          router.push({ name: 'updateProfile' })
           if (err.response.status === 401) {
             router.push({ name: 'updateProfile' })
           }
