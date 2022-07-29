@@ -8,7 +8,7 @@
         <!-- 프로필 사진 -->
         <div class="profile-img-box">
           <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="temporary img" class="profile-img">
+            <img :src="profile.photo" alt="temporary img" class="profile-img">
           </div>
         </div>
           <div class="profile-pic d-flex justify-content-center">
