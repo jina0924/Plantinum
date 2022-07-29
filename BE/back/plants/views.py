@@ -23,9 +23,10 @@ def plants(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def read_myplant(request, usernickname):
-    user = get_object_or_404(User, nickname=usernickname)
-    plants = get_list_or_404(Myplant, user=user)
+def read_myplant(request, username):
+    user = get_object_or_404(User, username=username)
+    
+    plants = Myplant.objects.filter(user=user).order_by('-pk')
 
     serializer = MyplantListSerializer(plants, many=True)
     return Response(serializer.data)
@@ -53,27 +54,15 @@ def create_myplant(request):
     
     user = request.user
 
-    otp_code = ''
-
-    # while otp_code == '':
-
-    #     otp_code = random.randint(0, 9999)
-    #     otp_code = str(otp_code).zfill(4)
-
-    #     # print(otp_code)
-
-    #     if Myplant.objects.filter(otp_code=otp_code).exists():  # db 존재 여부 확인
-    #         otp_code = ''  # 재발급
-
     serializer = MyplantSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         name_id = request.data['name_id']
         if Plants.objects.filter(pk=name_id).exists():
             name = Plants.objects.get(pk=name_id)
             
-            serializer.save(user=user, name=name, otp_code=otp_code)
+            serializer.save(user=user, name=name)
         else:
-            serializer.save(user=user, otp_code=otp_code)
+            serializer.save(user=user)
 
         # def otp():
 
@@ -93,7 +82,7 @@ def create_myplant(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def create_otp(request, myplant_pk):
-    if Myplant.objects.filter(pk=myplant_pk, otp_code='', is_connected=False).exists():
+    if Myplant.objects.filter(pk=myplant_pk, otp_code=None, is_connected=False).exists():
 
         otp_code = ''
 
@@ -114,7 +103,7 @@ def create_otp(request, myplant_pk):
         # serializer = MyplantSerializer(myplant_s)
 
         def delete_otp():
-            myplant.update(otp_code='')
+            myplant.update(otp_code=None)
         Timer(301, delete_otp).start()  # 5분뒤 삭제 함수 실행
 
         # return Response(serializer.data)
@@ -156,7 +145,7 @@ def detail(request, myplant_pk):
 def diary(request, myplant_pk):
 
     def read_diary():
-        diary = get_list_or_404(Diary, my_plant_id=myplant_pk)
+        diary = Diary.objects.filter(my_plant_id=myplant_pk).order_by('-pk')
         serializer = DiarySerializer(diary, many=True)
         return Response(serializer.data)
 

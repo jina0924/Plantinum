@@ -98,11 +98,12 @@ export default {
         email: '',
         password1: '',
         password2 : '',
-      }
+      },
+      emailerror : ''
     }
   },
   computed: {
-    ...mapGetters(['authError'])
+    ...mapGetters(['authError']),
   },
   methods: {
     ...mapActions(['login', 'signup', 'fetchAuthError'])

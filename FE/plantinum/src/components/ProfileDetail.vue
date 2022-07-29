@@ -6,7 +6,7 @@
       <!-- 프로필 사진 -->
       <div class="profile-head-content col-8">
         <div class="profile-img-box">
-          <img src="@/assets/ProfileView/background_img.jpg" alt="temporary img" class="profile-img">
+          <img :src="profile.photo" alt="temporary img" class="profile-img">
         </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
@@ -85,7 +85,7 @@
                 <span class="material-symbols-outlined icon pr-4">calendar_month</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">365 일</span>
+                <span class="card-content pl-4">{{ profile.dday }} 일 째</span>
               </div>
             </div>
           </div>
