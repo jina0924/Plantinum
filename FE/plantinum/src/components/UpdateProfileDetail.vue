@@ -51,7 +51,7 @@
     <!-- body 부분 -->
     <div class="profile-body col-lg-8">
       <!-- 로그인/프로필 정보 - 기본형 -->
-      <div class="profile-info-on mt-5">
+      <div class="profile-info-on mt-5 offset-0 offset-md-3 offset-lg-0">
         <span class="info pr-2">로그인 및 프로필</span>
       </div>
       <div class="comment mt-1">
@@ -126,7 +126,7 @@
                 <span class="material-symbols-outlined icon pr-4">potted_plant</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">20</span>
+                <span class="card-content pl-4">{{ profile.myplant_count }}</span>
               </div>
             </div>
           </div>
@@ -148,14 +148,18 @@ export default {
         email: '',
         addr: '',
         zip_code: '',
-        phone_number: ''
+        phone_number: '',
+        dday: '',
+        myplant_count: '',
       },
       info :{
         nickname: '',
         email: '',
         addr: '',
         zip_code: '',
-        phone_number: ''
+        phone_number: '',
+        dday: '',
+        myplant_count: '',
       }
     }
   },
@@ -167,6 +171,8 @@ export default {
       this.info.addr = this.profile.addr
       this.info.zip_code = this.profile.zip_code
       this.info.phone_number = this.profile.phone_number
+      this.info.dday = this.profile.dday
+      this.info.myplant_count = this.profile.myplant_count
     }
   },
   computed: {

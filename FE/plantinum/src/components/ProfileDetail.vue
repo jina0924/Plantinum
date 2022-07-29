@@ -85,7 +85,7 @@
                 <span class="material-symbols-outlined icon pr-4">calendar_month</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">365 일</span>
+                <span class="card-content pl-4">{{ profile.dday }} 일 째</span>
               </div>
             </div>
           </div>
