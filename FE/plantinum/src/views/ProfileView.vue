@@ -13,19 +13,12 @@
 
 <script>
 import ProfileDetail from '@/components/ProfileDetail.vue'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'ProfileView',
   components: {
     ProfileDetail
   },
-  methods: {
-    ...mapActions(['fetchProfile'])
-  },
-  created() {
-    this.fetchProfile()
-  }
 }
 </script>
 

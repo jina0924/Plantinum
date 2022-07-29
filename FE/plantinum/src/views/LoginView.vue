@@ -108,7 +108,6 @@ export default {
   methods: {
     ...mapActions(['login', 'signup', 'fetchAuthError'])
   },
-  
 }
 </script>
 
