@@ -3,7 +3,7 @@
     <div class="title d-flex justify-content-center pb-5">
       비밀번호 변경
     </div>
-    <form class="pw-content">
+    <form class="pw-content" @submit.prevent="changePassword(update_credentials)">
       <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
@@ -12,7 +12,7 @@
               <p>새 비밀번호</p>
             </div>
             <div class="new1-input">
-              <input type="text">
+              <input type="text" v-bind="update_credentials.password1">
             </div>
           </div>
           <div class="new2">
@@ -20,12 +20,12 @@
               <p>비밀번호 확인</p>
             </div>
             <div class="new2-input">
-              <input type="text">
+              <input type="text" v-bind="update_credentials.password2">
             </div>
           </div>
           <div class="submit row mt-5">
             <div class="submit-yes col-6 d-flex justify-content-center">
-              <button class="btn"> 수정</button>
+              <button class="btn" type="submit"> 수정</button>
             </div>
             <div class="submit-no col-6 d-flex justify-content-center">
               <router-link :to="{ name : 'updateprofile' }" class="d-flex justify-content-center">
@@ -41,8 +41,21 @@
 </template>
 
 <script>
+import mapActions from 'vuex'
+
 export default {
-  name: 'UpdatePasswordDetail'
+  name: 'UpdatePasswordDetail',
+  data() {
+    return {
+      update_credentials : {
+        new_password1: '',
+        new_password2: '',
+      }
+    }
+  },
+  methods: {
+    ...mapActions(['changePassword'])
+  }
 }
 </script>
 
