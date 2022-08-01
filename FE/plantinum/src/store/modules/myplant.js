@@ -5,14 +5,17 @@ export const Myplant = {
   state: {
     myplants: [],
     myplant: {},
+    plant_list: [],
   },
   getters: {
     myplants: state => state.myplants,
     mypalnt: state => state.myplant,
+    plant_list: state => state.plant_list,
   },
   mutations: {
     SET_MYPLANTS: (state, myplants) => state.myplants = myplants,
     SET_MYPLANT: (state, myplant) => state.myplant = myplant,
+    SET_PLANTLIST: (state, plant_list) => state.plant_list = plant_list,
   },
   actions: {
     fetchMyplants({ commit, getters }, { username }) {
@@ -22,6 +25,16 @@ export const Myplant = {
         headers : getters.authHeader,
       })
       .then(res => commit('SET_MYPLANTS', res.data))
+      .catch(err => console.log(err.response))
+    },
+
+    searchPlant({ commit, getters }) {
+      axios ({
+        url : drf.myplant.plantSearch(),
+        method: 'get',
+        headers : getters.authHeader,
+      })
+      .then(res => commit('SET_PLANTLIST', res.data))
       .catch(err => console.log(err.response))
     },
 
