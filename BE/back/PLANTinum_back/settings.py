@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'plants',
     'accounts',
+    'leaf82',
 
     'corsheaders',
 

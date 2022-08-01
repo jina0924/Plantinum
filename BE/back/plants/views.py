@@ -42,6 +42,16 @@ def search(request, plantname):
     return Response(serializer.data)
 
 
+# 등록용 식물 검색
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def search_all(request):
+    plants = Plants.objects.all()
+    serializer = PlantsSearchSerializer(plants, many=True)
+    return Response(serializer.data)
+
+
 from threading import Timer
 import random
 
@@ -56,9 +66,9 @@ def create_myplant(request):
 
     serializer = MyplantSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        name_id = request.data['name_id']
-        if Plants.objects.filter(pk=name_id).exists():
-            name = Plants.objects.get(pk=name_id)
+        plantname = request.data['plantname']
+        if Plants.objects.filter(name=plantname).exists():
+            name = Plants.objects.get(name=plantname)
             
             serializer.save(user=user, name=name)
         else:

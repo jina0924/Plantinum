@@ -1,3 +1,9 @@
+# 0. 목차
+
+[TOC]
+
+
+
 # 1. 관리자 페이지
 
 ```
@@ -135,6 +141,43 @@ http://127.0.0.1:8000/api/v1/plants/
 
 
 
+### 등록용 식물 검색
+
+- 물주기 등록시 사용
+- 로그인 사용자 - 토큰 사용
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/plants/search/
+```
+
+- Response
+
+```
+[
+    {
+        "pk": 1,
+        "name": "가울테리아"
+    },
+    {
+        "pk": 2,
+        "name": "개운죽"
+    },
+    {
+        "pk": 3,
+        "name": "골드크레스트 '윌마'"
+    },
+    {
+        "pk": 4,
+        "name": "공작야자"
+    },
+    ...
+]
+```
+
+
+
 ### 식물 이름 검색
 
 - 물주기 등록시 사용
@@ -250,7 +293,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 | -------- | ------ | ---------------------------- | --------- | ------- |
 | nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
 | photo    | String | 물주기 등록 대상 식물의 사진 | 임시 X    |         |
-| name_id    | Int | 식물의 pk | O    | 2        |
+| plantname | String | 사용자가 선택한 식물 이름 | O    | 개운죽     |
 
 - Response
 
@@ -552,7 +595,7 @@ http://127.0.0.1:8000/api/v1/accounts/profile/
 
 
 ### 회원정보수정
-- 닉네임, 이메일, 핸드폰번호, 주소, 우편번호만 수정 가능
+- 닉네임, 이메일, 핸드폰번호, 주소, 우편번호, 사진만 수정 가능
 - 비밀번호 변경은 별개의 요청
 - 로그인 사용자 - 토큰 사용
 - PUT
@@ -566,21 +609,24 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
 
 | Key            | Type   | Description                   | Mandatory | Example            |
 | -------------- | ------ | ----------------------------- | --------- | ------------------ |
-| nickname        | String |                               |          | 새로운닉네임 |
-| email          | String |                               |     | ssafy@naver.com                   |
-| phone_number | Bool   |  |           | 01012341234                   |
-| addr | Bool   |  |           | seoul                   |
-| zip_code | String   |  |           | 12345                   |
+| nickname        | String |                               | O | 새로운닉네임 |
+| email          | String |                               | O | 12345@naver.com    |
+| phone_number | String |  | O | 01012341234                   |
+| addr | String |  | O | seoul                   |
+| zip_code | String |  | O | 12345                   |
+| photo | Text | | O | https://url.kr/s38eg6 |
 
 - Response
 ```
 {
     "pk": 1,
     "nickname": "새로운닉네임",
-    "email": "ssafy@naver.com",
+    "email": "12345@naver.com",
     "phone_number": "01012341234",
     "addr": "seoul",
-    "zip_code": "12345"
+    "zip_code": "12345",
+    "myplant_count": 0,
+    "photo": "https://url.kr/s38eg6"
 }
 ```
 
@@ -595,10 +641,46 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
 
 => 잎팔이 글 pk와 이미지url만 받아오기 (임시로 이미지 주소 보내기)
 
-
 휴대폰번호 형식 지정
 
 
 
-### 잎팔이
+식물 이름에 따옴표 삭제, 중복데이터 삭제
 
+
+
+# 4. 잎팔이 관련 페이지
+
+### 잎팔이 글 생성
+
+- 잎팔이 글 생성
+- 식물이름 입력 (제목x), 가격, 지역선택(드랍박스 시/군구),내용, 사진, 작성자(본인), 분류
+- 지역선택 동네선택 api 따로만들기
+
+
+
+### 잎팔이 글  전체 조회
+
+- 잎팔이 글 전체 조회
+
+
+
+검색기능 검색어포함 모두 보여주기
+
+
+
+### 잎팔이 글 상세 조회
+
+- 특정 잎팔이 글 pk에 해당하는 글 상세 조회
+
+
+
+### 잎팔이 글 수정
+
+- 
+
+
+
+### 잎팔이 글 삭제
+
+- 
