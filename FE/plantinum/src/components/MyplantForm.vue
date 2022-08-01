@@ -5,7 +5,7 @@
         <label for="plant"></label>
         <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요" class="form-control" v-model="newMyplant.name_id">
         <datalist id="search-plant-list">
-          <option v-for="(plant) in plant_list" :key="plant.pk">{{ plant.name }}</option>
+          <option v-for="(plant) in plant_list" :key="plant.pk" :value="plant.pk">{{ plant.name }}</option>
         </datalist>
       </div>
       <div class="mb-3">

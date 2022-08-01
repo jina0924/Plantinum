@@ -1,5 +1,6 @@
 import axios from 'axios'
 import drf from '@/api/drf'
+import router from '@/router'
 
 export const Myplant = {
   state: {
@@ -9,7 +10,7 @@ export const Myplant = {
   },
   getters: {
     myplants: state => state.myplants,
-    mypalnt: state => state.myplant,
+    myplant: state => state.myplant,
     plant_list: state => state.plant_list,
   },
   mutations: {
@@ -47,8 +48,12 @@ export const Myplant = {
       })
       .then(res => {
         console.log(res.data)
-        console.log(commit)
-        // commit('SET_MYPLANT', res.data)
+        commit('SET_MYPLANT', res.data)
+        console.log(getters.currentUser.username)
+        router.push({
+          name: 'myplantDetail',
+          params: { username: getters.currentUser.username, plantPk: getters.myplant.id }
+        })
       })
       .catch(error => {
         console.log(error.response)
