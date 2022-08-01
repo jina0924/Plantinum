@@ -45,8 +45,8 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'NavBar',
-  data() {
-  },
+  // data() {
+  // },
   computed: {
     ...mapGetters(['isLoggedIn', 'currentUser']),
     username() {
