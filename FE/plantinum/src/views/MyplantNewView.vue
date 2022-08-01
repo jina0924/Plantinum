@@ -1,0 +1,34 @@
+<template>
+  <div class="new-myplant">
+    <nav-bar></nav-bar>
+    <h1>내 식물 등록</h1>
+    <plant-search-bar></plant-search-bar>
+    <myplant-form :myplant="myplant" action="create"></myplant-form>
+  </div>
+</template>
+
+<script>
+import NavBar from '@/components/NavBar.vue'
+import MyplantForm from '@/components/MyplantForm.vue'
+import PlantSearchBar from '@/components/PlantSearchBar.vue'
+
+export default {
+  name: 'MyplantNewView',
+  components: { NavBar, MyplantForm, PlantSearchBar },
+  data() {
+    return {
+      myplant: {
+        nickname: '',
+        photo: '',
+        name_id: '',
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+.new-myplant{
+  background-color: #F8F5EE;
+}
+</style>

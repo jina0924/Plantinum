@@ -66,7 +66,11 @@ class Ui_Form(object):
         self.label_2.setAlignment(Qt.AlignCenter)
         self.layoutWidget = QWidget(Form)
         self.layoutWidget.setObjectName(u"layoutWidget")
+<<<<<<<< HEAD:HW/RP1/LCD_rp/otpUI.py
         self.layoutWidget.setGeometry(QRect(204, 420, 401, 71))
+========
+        self.layoutWidget.setGeometry(QRect(60, 310, 401, 71))
+>>>>>>>> dd59d92337821c0856a43995ac037c6523e6b59f:HW/RP1/LCD/otpUI.py
         self.gridLayout = QGridLayout(self.layoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setSizeConstraint(QLayout.SetNoConstraint)

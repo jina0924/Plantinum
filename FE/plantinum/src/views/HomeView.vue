@@ -2,7 +2,8 @@
   <div class="boxes">
     <!-- first box -->
     <div class=first-box>
-      <div class="row">
+      <nav-bar></nav-bar>
+      <!-- <div class="row">
         <div class="col-md-3 home-logo">
           <router-link :to="{ name: 'home' }">
             <span>
@@ -10,7 +11,7 @@
             </span>
           </router-link>
         </div>
-      </div>
+      </div> -->
       <!-- 글귀 부분 -->
       <div class="row col-md-6 d-flex justify-content-center">
         <div class="contentbox">
@@ -25,7 +26,7 @@
           <div class="text-hello" v-if="isLoggedIn">
           <!-- <div class="text-hello"> -->
             <!-- user 정보 받아와야 함 -->
-            <p>안녕하세요, *** 님</p>
+            <p>안녕하세요, {{ profile.nickname }} 님</p>
         </div>
         <!-- 버튼 -->
         <div class="btnbox" v-if="!isLoggedIn">
@@ -64,7 +65,7 @@
         <div class="btnbox">
           <div class="btn-border">
             <div class="login d-flex justify-content-center">
-              <router-link :to="{ name: 'myplant' }" v-if="isLoggedIn">
+              <router-link :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
               <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
@@ -156,10 +157,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import NavBar from '@/components/NavBar.vue'
+
 export default {
   name: 'HomeView',
   components: {
-  }
+    NavBar
+  },
+  computed: {
+    ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
+    username() {
+      return this.currentUser.username
+    }
+  },
 }
 </script>
 
