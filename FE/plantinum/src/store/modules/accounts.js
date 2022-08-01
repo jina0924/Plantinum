@@ -177,13 +177,7 @@ export const Account = {
         })
     },
 
-    changePassword({getters, dispatch}, user_pk, new_password1, new_password2) {
-      console.log(credentials)
-      const credentials = {
-        user_pk : user_pk,
-        new_password1 : new_password1,
-        new_password2 : new_password2,
-      }
+    changePassword({getters, dispatch}, credentials) {
       axios({
         url : drf.accounts.changePassword(),
         method : 'post',
