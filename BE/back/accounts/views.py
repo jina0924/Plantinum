@@ -52,6 +52,7 @@ def profile(request):
 @permission_classes([IsAuthenticated])
 def updateuserinformation(request):
     user = request.user
+    myplant_count = UpdateUserInformationSerializer(user).data.get('myplant_count')
     serializer = UpdateUserInformationSerializer(instance=user, data=request.data)
     
     new_email = request.data['email']
@@ -88,7 +89,7 @@ def updateuserinformation(request):
         # 이메일과 닉네임 모두 유저의 기존 값과 같은 경우 - 그대로 저장
         if email_user == user and nickname_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save()
+                serializer.save(myplant_count=myplant_count)
                 return Response(serializer.data)
 
     # 이메일이 이미 존재하는 경우
@@ -103,7 +104,7 @@ def updateuserinformation(request):
         # 이메일이 유저의 기존 값과 같은 경우
         if email_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save()
+                serializer.save(myplant_count=myplant_count)
                 return Response(serializer.data)
 
     # 닉네임이 이미 존재하는 경우
@@ -118,12 +119,12 @@ def updateuserinformation(request):
         # 닉네임이 유저의 기존 값과 같은 경우
         if nickname_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save()
+                serializer.save(myplant_count=myplant_count)
                 return Response(serializer.data)
 
     # 그 외 유효성검사에 걸리는 경우
     if serializer.is_valid(raise_exception=True):
         
-        serializer.save()
+        serializer.save(myplant_count=myplant_count)
         return Response(serializer.data)
 
