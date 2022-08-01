@@ -65,7 +65,7 @@
         <div class="btnbox">
           <div class="btn-border">
             <div class="login d-flex justify-content-center">
-              <router-link :to="{ name: 'myplant', params: { nickname } }" v-if="isLoggedIn">
+              <router-link :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
               <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
@@ -167,6 +167,9 @@ export default {
   },
   computed: {
     ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
+    username() {
+      return this.currentUser.username
+    }
   },
 }
 </script>

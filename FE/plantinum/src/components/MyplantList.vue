@@ -5,13 +5,13 @@
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10 jsutify-content-center">
-        <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplant[0]">
+        <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplants[0]">
           <button class="sort-btn btn" @click="myplantSort">{{ sort_by }}</button>
         </div>
       </div>
     </div>
     <!-- 내 식물 카드 목록 -->
-    <div class="yesplant row " v-if="myplant[0]">
+    <div class="yesplant row " v-if="myplants[0]">
       <!-- <div class="col-md-2 px-0"></div> -->
       <div class="col-1"></div>
       <div class="col-10 row px-0 mx-0 card-section justify-content-center">
@@ -38,7 +38,7 @@
     </div>
     <!-- 리스트가 없을 때 -->
     <div class="container">
-      <div class="noplant" v-if="!myplant[0]">
+      <div class="noplant" v-if="!myplants[0]">
         <span class="material-symbols-outlined noplant-icon">
           macro_off
         </span>
@@ -54,17 +54,17 @@ export default {
   data() {
     return {
       sort_by : '등록순↓',
-      myplant_list : this.myplant
+      myplant_list : this.myplants
     }
   },
   props : {
-    myplant: Array
+    myplants: Array
   },
-  computed : {
-    myplants() {
-      return this.myplant_list
-    }
-  },
+  // computed : {
+  //   myplant_list() {
+  //     return this.myplant_list
+  //   }
+  // },
   methods : {
     myplantSort() {
       if (this.sort_by === '등록순↓') {

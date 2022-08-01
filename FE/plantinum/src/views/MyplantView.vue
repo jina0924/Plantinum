@@ -7,7 +7,7 @@
       </div>
     </div>
     <!-- 리스트 -->
-    <myplant-list :myplant='myplant'></myplant-list>
+    <myplant-list :myplants='myplants'></myplant-list>
     <!-- 추가 버튼 (스티키 바텀) -->
     <div class="create-btn d-flex justify-content-end" v-if="mypage">
       <router-link class="add px-5 mx-5 pb-5" :to="{ name: 'myplantNew' }">
@@ -39,7 +39,7 @@ export default {
     NavBar,
   },
   methods : {
-    ...mapActions(['fetchMyplant']),
+    ...mapActions(['fetchMyplants']),
     isMypage() {
       if (this.currentUser.username === this.myplantUsername) {
         this.mypage = true
@@ -47,13 +47,13 @@ export default {
     }
   },
   computed : {
-    ...mapGetters(['myplant', 'currentUser'])
+    ...mapGetters(['myplants', 'currentUser'])
   },
   created() {
     this.mypage = false
     const payload = { username: this.$route.params.username }
     this.myplantUsername = payload.username
-    this.fetchMyplant(payload)
+    this.fetchMyplants(payload)
     this.isMypage()
   },
 }
