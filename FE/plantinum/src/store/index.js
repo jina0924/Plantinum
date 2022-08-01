@@ -1,11 +1,12 @@
 import { createStore } from 'vuex'
 import { Account } from './modules/accounts'
+import { Myplant } from './modules/myplant'
 
 // import accounts from './modules/accounts'
 
 export default createStore({
   modules: { 
-    Account
+    Account, Myplant
   }
 })
 

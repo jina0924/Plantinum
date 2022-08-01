@@ -1,0 +1,40 @@
+<RCC>
+  <qresource prefix="logo">
+    <file>img/ＯＴＰ＿ｐｌａｎｔｉｎｕｍ.png</file>
+    <file>img/logo.png</file>
+  </qresource>
+  <qresource prefix="icon">
+    <file>img/moon.svg</file>
+    <file>img/power-off.svg</file>
+    <file>img/redo.svg</file>
+    <file>img/humidity.svg</file>
+    <file>img/soil.svg</file>
+    <file>img/temperature_green.svg</file>
+    <file>img/backicon.png</file>
+    <file>img/bell.png</file>
+    <file>img/bell_white.png</file>
+    <file>img/home.png</file>
+    <file>img/home.svg</file>
+    <file>img/humidity.png</file>
+    <file>img/humidity_white.png</file>
+    <file>img/logo.png</file>
+    <file>img/moon.png</file>
+    <file>img/ocean.jpg</file>
+    <file>img/ＯＴＰ＿ｐｌａｎｔｉｎｕｍ.png</file>
+    <file>img/power-off.png</file>
+    <file>img/redo.png</file>
+    <file>img/return.png</file>
+    <file>img/return_green.png</file>
+    <file>img/temperature.png</file>
+    <file>img/temperature_white.png</file>
+    <file>img/water.png</file>
+    <file>img/water_white.png</file>
+    <file>img/home.svg</file>
+    <file>img/backicon.png</file>
+  </qresource>
+  <qresource prefix="img">
+    <file>img/시작화면_배경.png</file>
+    <file>img/ocean.jpg</file>
+    <file>img/background_supool_3.jpg</file>
+  </qresource>
+</RCC>
