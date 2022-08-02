@@ -1,6 +1,14 @@
 # 0. 목차
 
+### 목차
 [TOC]
+
+### 시작하기
+
+```python
+python manage.py migrate
+python manage.py loaddata plants.json juso.json
+```
 
 
 
@@ -195,6 +203,7 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
     "addr": "seoul",
     "zip_code": "12345",
     "myplant_count": 0,
+    "dday": 1,
     "photo": "https://url.kr/s38eg6"
 }
 ```
@@ -670,8 +679,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/diary/
 ### 잎팔이 글 생성
 
 - 잎팔이 글 생성
-- 식물이름 입력 (제목x), 가격, 지역선택(드랍박스 시/군구),내용, 사진, 작성자(본인), 분류
-- 지역선택 동네선택 api 따로만들기
+- 시도/시군구 순차적 검색
 
 
 
@@ -716,17 +724,9 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/diary/
 
 
 
-프로필 - 정보 수정하면 함께한시간 추가해서 리턴
-
-
-
 accounts/user/ 했을 때 나오는 정보 수정 가능한지
 
 
-
-### 데이터
-
-fixtures plants 중복있는지 확인하고 삭제하기, 따옴표 제거
 
 
 

@@ -29,7 +29,7 @@ def profile(request):
     date_joined = user.date_joined
     today = datetime.datetime.now(tz=utc)
     # today = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
-    dday = (today - date_joined).days
+    dday = (today - date_joined).days+1
     photo = user.photo
 
     data = {
@@ -40,7 +40,7 @@ def profile(request):
         'addr': addr,
         'zip_code': zip_code,
         'myplant_count': myplant_count,
-        'dday': dday+1,
+        'dday': dday,
         'photo': photo
     }
     
@@ -54,6 +54,10 @@ def updateuserinformation(request):
     user = request.user
     myplant_count = UpdateUserInformationSerializer(user).data.get('myplant_count')
     serializer = UpdateUserInformationSerializer(instance=user, data=request.data)
+    date_joined = user.date_joined
+    today = datetime.datetime.now(tz=utc)
+    # today = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
+    dday = (today - date_joined).days+1
     
     new_email = request.data['email']
     new_nickname = request.data['nickname']
@@ -89,7 +93,7 @@ def updateuserinformation(request):
         # 이메일과 닉네임 모두 유저의 기존 값과 같은 경우 - 그대로 저장
         if email_user == user and nickname_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save(myplant_count=myplant_count)
+                serializer.save(myplant_count=myplant_count, dday=dday)
                 return Response(serializer.data)
 
     # 이메일이 이미 존재하는 경우
@@ -104,7 +108,7 @@ def updateuserinformation(request):
         # 이메일이 유저의 기존 값과 같은 경우
         if email_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save(myplant_count=myplant_count)
+                serializer.save(myplant_count=myplant_count, dday=dday)
                 return Response(serializer.data)
 
     # 닉네임이 이미 존재하는 경우
@@ -119,12 +123,12 @@ def updateuserinformation(request):
         # 닉네임이 유저의 기존 값과 같은 경우
         if nickname_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save(myplant_count=myplant_count)
+                serializer.save(myplant_count=myplant_count, dday=dday)
                 return Response(serializer.data)
 
     # 그 외 유효성검사에 걸리는 경우
     if serializer.is_valid(raise_exception=True):
         
-        serializer.save(myplant_count=myplant_count)
+        serializer.save(myplant_count=myplant_count, dday=dday)
         return Response(serializer.data)
 
