@@ -15,7 +15,7 @@ export default {
     changePassword: () => HOST + ACCOUNTS + 'password/' + 'change/'
   },
   myplant: {
-    plantSearch: (keyword) => HOST + PLANTS + 'search/' + `${keyword}/`,
+    plantSearch: () => HOST + 'plants/' + 'search/',
     myplant: (username) => HOST + PLANTS + `${username}/`,
     newMyplant: () => HOST + PLANTS, 
     myplantDetail: (plantPk) => HOST + PLANTS + `${plantPk}` + 'detail/',
