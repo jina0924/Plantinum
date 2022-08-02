@@ -12,6 +12,10 @@ from datetime import datetime
 import time
 import sys
 
+import RPi.GPIO as GPIO
+import spidev
+import Adafruit_DHT
+
 
 #variable
 success_acc = 0
@@ -20,17 +24,20 @@ otp_back = 0
 
 userfilepath= "./user_setting.json"
 plant_id = -1
-
+user_data=[]
 #물임계점
-water_point = -1
+hum_threshold = -1
 #물통 양 디지털
 water_amount = 0
+
 #recnet_watering의 크기
 watering_cnt=0
 temp=0
 humi=0
+soil=0
 #파도 움직임
 waveLV = 120
+
 #취침모드
 issleep=0
 
@@ -39,49 +46,140 @@ issleep=0
 is_detail_page = 0
 is_sleep_page = 0
 
+#센서 정보
+t=0
+humSensor = Adafruit_DHT.DHT11
+humSensor_pin = 23
+waterLV_pin=24
+hum_max=0
+A1A = 5
+A1B = 6
+
+spi = spidev.SpiDev()
+spi.open(0,0)
+spi.max_speed_hz=500000
+
+
+#watering_stop
+watering_flag = 0
+
+def sensor_init():
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(A1A, GPIO.OUT)
+    GPIO.output(A1A, GPIO.LOW)
+    GPIO.setup(A1B, GPIO.OUT)
+    GPIO.output(A1B, GPIO.LOW)
+
+	#WATERLEVEL Sensor GPIO Setting
+    GPIO.setwarnings(False)
+	
+	#LED GPIO Setting
+    GPIO.setup(2, GPIO.OUT)
+    GPIO.setup(3, GPIO.OUT)
+    GPIO.output(2, GPIO.LOW)
+    GPIO.output(3, GPIO.LOW)
+
+	#WaterLevel Sensor GPIO Setting
+    GPIO.setup(waterLV_pin, GPIO.IN)
+
+
+def read_spi_adc(adcChannel):
+    global soil
+    adcValue=0
+    try:
+        buff=spi.xfer2([1,(8+adcChannel)<<4,0])
+        adcValue = ((buff[1]&3)<<8)+buff[2]
+        soil = int(map(adcValue,hum_max,1023,0,100))
+        soil = 100 - soil
+        print("soil: ",soil)
+    except:
+        print("can\'t read spi_adc")
+        return
+
+# Mapping 0 to 100  with  Analog Sensor Value
+def map(value, min_adc, max_adc, min_hum, max_hum):
+	adc_range = max_adc-min_adc
+	hum_range = max_hum - min_hum
+	scale_factor = float(adc_range)/float(hum_range)
+	return value/scale_factor
+
+def humidTemp():
+    global humi,temp
+    humi,temp = Adafruit_DHT.read_retry(humSensor,humSensor_pin)
+    humi = int(humi)
+    temp = int(temp)
+    print("temp : {}   humi : {} ",temp,humi)
+
+
+def check_waterlevel():
+    global water_amount
+    if water_amount != GPIO.input(waterLV_pin) : 
+        water_amount = GPIO.input(waterLV_pin)
+        user_data['water_amount'] = water_amount
+
+        with open(userfilepath,"w",encoding = 'utf-8') as file:
+            json.dump(user_data, file, indent = "\t",ensure_ascii=False)
+    print("water amount: " , water_amount)
+
 #센서 측정 스레드_메인시작시 같이 시작
 class sensorThread(QThread):
     global a,success_acc
 
     def __init__(self):
         super().__init__()
+        sensor_init()
         print("make thread")
 
     def stop(self):
+        GPIO.cleanup()
+        spi.close()
         self.quit()
         self.wait(1000)
         print("stop thread")
 
     def run(self):
-        global a,temp,humi,waveLV
+        global temp,humi,waveLV,watering_flag
         print("start thread")
-        a = 1
+        t = 0
         while(1):
             if(success_acc == 0):
                 continue
             else:
-                #code, code
+                try:
+                    read_spi_adc(0)
+                    check_waterlevel()
 
-                #print("A :",a)
-                #a += 1
-                #센서측정
-                temp += 1
-                humi += 1
+                    if(soil < hum_threshold):
+                        GPIO.output(A1A, GPIO.HIGH)
+                        GPIO.output(A1B, GPIO.LOW)
+                        watering_flag = 1
+                    else:
+                        GPIO.output(A1A, GPIO.LOW)
+                        GPIO.output(A1B,GPIO.LOW)
+                        if(watering_flag == 1):
+                            watering()
+                            watering_flag = 0
+                
+                    t += 1
+                #every 10sec
+                    if(t >= 100):
+                        humidTemp()
+                        t = 0
+                #every 1sec
+                    if(t%10 == 0):
+                        waveLV = ((100-soil)*7) + 120
 
-                #특정주기 센서
-                if(a>100):
-                    a=0
+                    time.sleep(0.1)
 
-                #파도 수위 변경
-                if (a% 5 ==0 ):
-                    #waveLV = a*6 + 150
-                    watering()
-                time.sleep(1)
-
+                except:
+                    GPIO.cleanup()
+                    spi.close()
+                    break
 
 #물줄때
 def watering():
-    global watering_cnt
+    global watering_cnt,user_data
     user_data['recent_watering'].append(datetime.now().strftime("%y.%m.%d %H:%M"));
     watering_cnt += 1
     if(watering_cnt > 3):
@@ -115,7 +213,7 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
 
     def old_plant(self):
         global success_acc
-        global plant_id,nickname,water_amount
+        global plant_id,nickname,water_amount,hum_threshold
         global user_data,watering_cnt
 
         #쿼리요청
@@ -128,6 +226,8 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
             if(result[0] == 1):
                 #connect == 1 이면 연결유지 상태 메인페이지 이동
                 print("go to main page!")
+                hum_threshold=user_data['hum_threshold']
+                watering_cnt = len(user_data['recent_watering'])
                 success_acc = 1
                 widget.addWidget(MainPage())
                 widget.setCurrentIndex(2)
@@ -140,9 +240,9 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
 
                 user_data['id'] = -1
                 user_data['nickname'] = ""
-                user_data['water_point'] = -1
+                user_data['hum_threshold'] = -1
                 user_data['recent_watering']= []
-
+                user_data['water_amount'] = 0
                 # 수정반영
                 with open(userfilepath, "w", encoding='utf-8') as file:
                     json.dump(user_data, file, indent="\t", ensure_ascii=False)
@@ -157,6 +257,12 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.now = datetime.now().strftime('%H : %M')
+        self.clock.setText(self.now)
+        #온습도 글씨
+        self.humi_label.setText(str(humi)+"%")
+        self.temp_label.setText(str(temp)+"ºC")
+
         print("HI I'm MainPage")
         #시계를 위해 5초에 한번 화면 새로고침
 
@@ -167,6 +273,8 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
         global snsth, clock_timer
         self.warn_label.hide()
 
+        self.now = datetime.now().strftime('%H : %M')
+        self.clock.setText(self.now)
         #시계 타이머
         clock_timer = QTimer(self)
         clock_timer.setInterval(1000)  # 1초 => 나중에 5초에 한번으로 바꿀거임
@@ -212,7 +320,10 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
         self.wave.setGeometry(QRect(0, waveLV , 1366, 768))
         #print(now_time)
 
-
+        if(water_amount == 0):
+            self.warn_label.show()
+        else:
+            self.warn_label.hide()
 
 
 
@@ -228,6 +339,10 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         self.label_9.clear()
         self.label_10.clear()
         self.label_11.setText(user_data['nickname'])
+        self.label_4.setText(str(temp)+"ºC")
+        self.label_5.setText(str(humi)+"%")
+        self.label_6.setText(str(soil)+"%")
+
         #화면 새로고침 한번 하고 시작
         self.redo()
         #self.main()
@@ -294,20 +409,29 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         db.commit()
 
         #물의 양
-        if(water_amount == 1):
+        if(water_amount == 0):
             self.progressBar.setStyleSheet(
-                "QProgressBar::chunk { background-color : rgb(163, 77, 79) ; border-radius : 10px;} QProgressBar {background-color : rgb(255,255,255);border-radius : 15px;}")
+                "QProgressBar::chunk { background-color : rgb(101, 128, 93) ; border-radius : 10px;} QProgressBar {background-color : rgb(255,255,255);border-radius : 15px;}")
             self.progressBar.setValue(80)
         else:
             self.progressBar.setStyleSheet(
-                "QProgressBar::chunk { background-color : rgb(101, 128, 93) ; border-radius : 10px;} QProgressBar {background-color : rgb(255,255,255);border-radius : 15px;}")
+                "QProgressBar::chunk { background-color : rgb(163, 77, 79) ; border-radius : 10px;} QProgressBar {background-color : rgb(255,255,255);border-radius : 15px;}")
             self.progressBar.setValue(40)
+
+
+        #humi,temp,soil
+        self.label_5.setText(str(humi)+"%")
+        self.label_4.setText(str(temp)+"ºC")
+        self.label_6.setText(str(soil)+"%")
+
     #프로그램 및 라즈베리파이 종료
     #코드 해제를 위함
     def turnoff(self):
         global clock_timer, snsth
         clock_timer.stop()
         snsth.stop()
+        GPIO.cleanup()
+        spi.close()
         quit()
         #라즈베리파이 종료 필요
         #배쉬파일 연결해야할듯 합니다
@@ -327,7 +451,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
 
     def check_otp(self):
         global success_acc
-        global plant_id, water_amount
+        global plant_id, water_amount, hum_threshold
         print(self.otp_code)
         self.flag=0
 
@@ -369,6 +493,9 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
                     user_data['id'] = self.plant_id
                     user_data['nickname'] = self.name
                     user_data['recent_watering'] = []
+                    user_data['water_amount']=0
+                    user_data['hum_threshold']=30
+                    hum_threshold = 30
 
                     #수정반영
                     with open(userfilepath, "w", encoding='utf-8') as file:
@@ -458,9 +585,11 @@ widget.addWidget(OtpPage())
 widget.setFixedHeight(768)
 widget.setFixedWidth(1366)
 #프로그램 실행 전 user_data 불러옴
+
 #한글 읽기 위하여 encoding 표시
 with open(userfilepath, "r", encoding="utf-8") as file:
     user_data = json.load(file)
+
 
 widget.show()
 app.exec_()
