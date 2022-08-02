@@ -183,14 +183,14 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
 
 - Body
 
-| Key          | Type   | Description | Mandatory | Example               |
-| ------------ | ------ | ----------- | --------- | --------------------- |
-| nickname     | String |             | O         | 새로운닉네임          |
-| email        | String |             | O         | 12345@naver.com       |
-| phone_number | String |             | O         | 01012341234           |
-| addr         | String |             | O         | seoul                 |
-| zip_code     | String |             | O         | 12345                 |
-| photo        | Text   |             | O         | https://url.kr/s38eg6 |
+| Key          | Type   | Description   | Mandatory | Example               |
+| ------------ | ------ | ------------- | --------- | --------------------- |
+| nickname     | String |               | O         | 새로운닉네임          |
+| email        | String |               | O         | 12345@naver.com       |
+| phone_number | String |               | O         | 01012341234           |
+| addr         | String |               | O         | seoul                 |
+| zip_code     | String |               | O         | 12345                 |
+| photo        | Text   | **수정 예정** | O         | https://url.kr/s38eg6 |
 
 - Response
 
@@ -272,7 +272,7 @@ http://127.0.0.1:8000/api/v1/plants/search/
     },
     {
         "pk": 3,
-        "name": "골드크레스트 '윌마'"
+        "name": "골드크레스트 윌마"
     },
     {
         "pk": 4,
@@ -398,7 +398,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 | Key      | Type   | Description                  | Mandatory | Example |
 | -------- | ------ | ---------------------------- | --------- | ------- |
 | nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
-| photo    | String | 물주기 등록 대상 식물의 사진 | 임시 X    |         |
+| photo    | String | 물주기 등록 대상 식물의 사진<br />**수정 예정** | 임시 X    |         |
 | plantname | String | 사용자가 선택한 식물 이름 | O    | 개운죽     |
 
 - Response
@@ -615,16 +615,16 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/diary/
 
 - Request Parameters
 
-| Name           | Type | Description             | Mandatory | Example |
-| -------------- | ---- | ----------------------- | --------- | ------- |
-| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 2       |
+| Name      | Type | Description | Mandatory | Example |
+| --------- | ---- | ----------- | --------- | ------- |
+| 내식물 pk | Int  |             | O         | 2       |
 
 - Body: POST
 
 | Key            | Type   | Description                   | Mandatory | Example            |
 | -------------- | ------ | ----------------------------- | --------- | ------------------ |
 | content        | String |                               | O         | 쑥쑥 자라는 가울이 |
-| photo          | String |                               | 임시 X    |                    |
+| photo          | String | **수정 예정**                 | 임시 X    |                    |
 | public_private | Bool   | default=False<br />False=공개 |           |                    |
 
 - Response
@@ -676,20 +676,334 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/diary/
 
 # 4. 잎팔이 관련 페이지
 
+### 지역(시도) 조회
+
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/leaf82/search/sido/
+```
+
+- Response
+
+```
+[
+    {
+        "sido": "서울특별시"
+    },
+    {
+        "sido": "부산광역시"
+    },
+    {
+        "sido": "대구광역시"
+    },
+    {
+        "sido": "인천광역시"
+    },
+    {
+        "sido": "광주광역시"
+    },
+    {
+        "sido": "대전광역시"
+    },
+    {
+        "sido": "울산광역시"
+    },
+    {
+        "sido": "경기도"
+    },
+    {
+        "sido": "강원도"
+    },
+    {
+        "sido": "충청북도"
+    },
+    {
+        "sido": "충청남도"
+    },
+    {
+        "sido": "전라북도"
+    },
+    {
+        "sido": "전라남도"
+    },
+    {
+        "sido": "경상북도"
+    },
+    {
+        "sido": "경상남도"
+    },
+    {
+        "sido": "제주특별자치도"
+    }
+]
+```
+
+
+
+### 동네(시군구) 조회
+
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/leaf82/search/{시도}/sigungu/
+```
+
+- Request Parameters
+
+| Name | Type   | Description | Mandatory | Example        |
+| ---- | ------ | ----------- | --------- | -------------- |
+| 시도 | String | 한글명      | O         | 제주특별자치도 |
+
+- Response
+
+```
+[
+    {
+        "pk": 259,
+        "sigungu": "제주시"
+    },
+    {
+        "pk": 260,
+        "sigungu": "서귀포시"
+    }
+]
+```
+
+
+
 ### 잎팔이 글 생성
 
-- 잎팔이 글 생성
-- 시도/시군구 순차적 검색
+- 시도/시군구 순차적 검색 필요
+- 로그인 사용자 - 토큰 사용
+- POST
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/leaf82/new/
+```
+
+- Body
+
+| Key            | Type   | Description                                | Mandatory | Example    |
+| -------------- | ------ | ------------------------------------------ | --------- | ---------- |
+| sido           | String | 시도                                       | O         | 서울특별시 |
+| sigungu        | String | 시군구                                     | O         | 종로구     |
+| plantname      | String | 식물이름                                   | O         | 산세베리아 |
+| content        | Text   | 내용                                       | O         | 채팅주세요 |
+| price          | Int    | 가격                                       | O         | 20000      |
+| category_class | String | 분양해요/분양받아요                        | O         | 분양해요   |
+| status_class   | String | 판매중/거래완료/예약중<br />default=판매중 |           |            |
+| photo          | Text   | **수정 예정**                              | 임시X     |            |
+
+- Response
+
+```
+{
+    "id": 1,
+    "user": {
+        "pk": 1,
+        "username": "test1",
+        "nickname": "새내기야자나무9690"
+    },
+    "addr": {
+        "id": 1,
+        "sido": "서울특별시",
+        "sigungu": "종로구"
+    },
+    "plantname": "산세베리아",
+    "photo": "https://url.kr/d1acln",
+    "created_at": "2022-08-02T13:48:16.955862Z",
+    "content": "채팅주세요",
+    "price": 20000,
+    "category_class": "분양해요",
+    "status_class": "판매중"
+}
+```
 
 
 
 ### 잎팔이 글  전체 조회
 
-- 잎팔이 글 전체 조회
+- 잎팔이 글 전체 조회 (지역 상관 X)
+- 최신순으로 조회
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/leaf82/
+```
+
+- Response
+
+```
+[
+    {
+        "id": 3,
+        "user": {
+            "pk": 1,
+            "username": "test1",
+            "nickname": "새내기야자나무9690"
+        },
+        "addr": {
+            "id": 23,
+            "sido": "서울특별시",
+            "sigungu": "강남구"
+        },
+        "plantname": "싱고니움",
+        "photo": "https://url.kr/d1acln",
+        "created_at": "2022-08-02T13:54:48.134980Z",
+        "content": "연락주세요",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중"
+    },
+    {
+        "id": 2,
+        "user": {
+            "pk": 1,
+            "username": "test1",
+            "nickname": "새내기야자나무9690"
+        },
+        "addr": {
+            "id": 5,
+            "sido": "서울특별시",
+            "sigungu": "광진구"
+        },
+        "plantname": "개운죽",
+        "photo": "https://url.kr/d1acln",
+        "created_at": "2022-08-02T13:53:43.047791Z",
+        "content": "건강해요",
+        "price": 10000,
+        "category_class": "분양해요",
+        "status_class": "판매중"
+    },
+    {
+        "id": 1,
+        "user": {
+            "pk": 1,
+            "username": "test1",
+            "nickname": "새내기야자나무9690"
+        },
+        "addr": {
+            "id": 1,
+            "sido": "서울특별시",
+            "sigungu": "종로구"
+        },
+        "plantname": "산세베리아",
+        "photo": "https://url.kr/d1acln",
+        "created_at": "2022-08-02T13:48:16.955862Z",
+        "content": "채팅주세요",
+        "price": 20000,
+        "category_class": "분양해요",
+        "status_class": "판매중"
+    }
+]
+```
 
 
 
-검색기능 검색어포함 모두 보여주기
+### 잎팔이 글 특정 지역/동네별 조회
+
+- 시도(지역)과 시군구(동네)를 함께 요청
+- `경기도 용인시` 같은 경우, `용인시`를 입력하면 `용인시/용인시 처인구/용인시 기흥구/용인시 수지구` 모두 검색
+- 최신순으로 조회
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/leaf82/{시도}/{시군구}/
+```
+
+- Request Parameters
+
+| Name   | Type   | Description | Mandatory | Example |
+| ------ | ------ | ----------- | --------- | ------- |
+| 시도   | String | 한글명      | O         | 경기도  |
+| 시군구 | String | 한글명      | O         | 용인시  |
+
+- Response
+
+```
+[
+    {
+        "id": 7,
+        "user": {
+            "pk": 3,
+            "username": "test3",
+            "nickname": "촉촉한올리브나무5182"
+        },
+        "addr": {
+            "id": 109,
+            "sido": "경기도",
+            "sigungu": "용인시 기흥구"
+        },
+        "plantname": "루스커스",
+        "photo": "https://url.kr/d1acln",
+        "created_at": "2022-08-02T15:37:44.139568Z",
+        "content": "연락주세요",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중"
+    },
+    {
+        "id": 6,
+        "user": {
+            "pk": 2,
+            "username": "test2",
+            "nickname": "싱싱한귤나무1120"
+        },
+        "addr": {
+            "id": 108,
+            "sido": "경기도",
+            "sigungu": "용인시 처인구"
+        },
+        "plantname": "싱고니움",
+        "photo": "https://url.kr/d1acln",
+        "created_at": "2022-08-02T15:37:32.734002Z",
+        "content": "연락주세요",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중"
+    },
+    {
+        "id": 5,
+        "user": {
+            "pk": 1,
+            "username": "test1",
+            "nickname": "새내기야자나무9690"
+        },
+        "addr": {
+            "id": 107,
+            "sido": "경기도",
+            "sigungu": "용인시"
+        },
+        "plantname": "호야",
+        "photo": "https://url.kr/d1acln",
+        "created_at": "2022-08-02T15:37:22.502227Z",
+        "content": "연락주세요",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중"
+    }
+]
+```
+
+
+
+### 잎팔이 검색
+
+- 식물이름/내용에 검색어를 포함하는 모든 글 조회
+- 최신순으로 조회
+
+- GET
+- URL
+
+```
+
+```
 
 
 

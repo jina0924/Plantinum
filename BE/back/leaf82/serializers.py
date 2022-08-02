@@ -22,6 +22,20 @@ class JusoSigunguSerializer(serializers.ModelSerializer):
 
 class Leaf82Serializer(serializers.ModelSerializer):
 
+    class UserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('pk', 'username', 'nickname',)
+
+    user = UserSerializer(read_only=True)
+
+    class JusoSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Juso
+            fields = '__all__'
+
+    addr = JusoSerializer(read_only=True)
+
     class Meta:
         model = Leaf82
         fields = '__all__'
