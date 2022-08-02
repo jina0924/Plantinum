@@ -185,14 +185,15 @@ export const Account = {
         headers : getters.authHeader
       })
         .then(res => {
-          console.log(res)
           const token = res.data.key
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
+          router.push({ name: 'profile' })
         })
         .catch(err => {
+          console.log(err)
           if (err.response.status === 401) {
-            router.push({ name: 'changePassword' })
+            router.push({ name: 'updatepassword' })
           }
         })
     } 
