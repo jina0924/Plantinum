@@ -55,6 +55,9 @@ export default {
   },
   methods: {
     ...mapActions(['logout',]),
+  },
+  mounted () {
+    console.log(this.currentUser)
   }
 }
 </script>
