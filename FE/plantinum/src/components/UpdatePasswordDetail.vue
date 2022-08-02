@@ -12,7 +12,7 @@
               <p>새 비밀번호</p>
             </div>
             <div class="new1-input">
-              <input type="text" v-bind="update_credentials.password1">
+              <input type="password" v-model="update_credentials.new_password1">
             </div>
           </div>
           <div class="new2">
@@ -20,7 +20,7 @@
               <p>비밀번호 확인</p>
             </div>
             <div class="new2-input">
-              <input type="text" v-bind="update_credentials.password2">
+              <input type="password" v-model="update_credentials.new_password2">
             </div>
           </div>
           <div class="submit row mt-5">
@@ -41,13 +41,13 @@
 </template>
 
 <script>
-import mapActions from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'UpdatePasswordDetail',
   data() {
     return {
-      update_credentials : {
+      update_credentials: {
         new_password1: '',
         new_password2: '',
       }
