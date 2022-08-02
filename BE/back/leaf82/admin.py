@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Juso
+from .models import Leaf82
 
-# Register your models here.
+
+admin.site.register(Juso)
+admin.site.register(Leaf82)

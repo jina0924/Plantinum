@@ -50,11 +50,12 @@ class MyProfileSerializer(serializers.ModelSerializer):
 class UpdateUserInformationSerializer(serializers.ModelSerializer):
 
     myplant_count = serializers.IntegerField(source='myplant_set.count', read_only=True)
+    dday = serializers.IntegerField(read_only=True)
 
     class Meta:
 
         model = User
-        fields = ('pk', 'nickname', 'email', 'phone_number', 'addr', 'zip_code', 'myplant_count', 'photo',)
+        fields = ('pk', 'nickname', 'email', 'phone_number', 'addr', 'zip_code', 'myplant_count', 'dday', 'photo',)
         
 
 
