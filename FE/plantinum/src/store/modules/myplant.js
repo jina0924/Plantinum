@@ -58,6 +58,21 @@ export const Myplant = {
       .catch(error => {
         console.log(error.response)
       })
+    },
+
+    fetchMyplant({ commit, getters }, plantPk) {
+      axios({
+        url: drf.myplant.myplantDetail(plantPk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => commit('SET_MYPLANT', res.data))
+      .catch(err => {
+        console.log(err.response)
+        // if (err.response.status === 404) {
+        //   router.push({ name: 'NotFound404' })
+        // }
+      })
     }
   },
 }
