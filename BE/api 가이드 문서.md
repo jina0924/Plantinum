@@ -76,7 +76,7 @@ http://127.0.0.1:8000/api/v1/accounts/login/
 
 
 
-- ### 로그아웃
+### 로그아웃
 
 - 로그인 사용자 - 토큰 사용
 
@@ -99,6 +99,103 @@ http://127.0.0.1:8000/api/v1/accounts/logout/
 ```
 {
     "detail": "Successfully logged out."
+}
+```
+
+
+
+### 비밀번호 변경
+
+- 로그인 사용자 - 토큰 사용
+- POST
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/accounts/password/change/
+```
+
+- Body
+
+| Key           | Type   | Description | Mandatory | Example |
+| ------------- | ------ | ----------- | --------- | ------- |
+| new_password1 | String |             | O         |         |
+| new_password1 | String |             | O         |         |
+
+- Response
+
+```
+{
+    "detail": "New password has been saved."
+}
+```
+
+
+
+### 마이페이지(프로필)
+
+- 잎팔이 글 전체 조회 추가예정
+- 나의 프로필만 확인 가능, 다른 사람의 프로필 확인 X
+- 로그인 사용자 - 토큰 사용
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/accounts/profile/
+```
+
+- Response
+
+```
+{
+    "pk": 1,
+    "nickname": "늘푸른소나무9865",
+    "email": "test1@test.com",
+    "phone_number": "",
+    "addr": "",
+    "zip_code": "",
+    "myplant_count": 0,
+    "dday": 1,
+    "photo": "https://url.kr/s38eg6"
+}
+```
+
+
+
+### 회원정보수정
+
+- 닉네임, 이메일, 핸드폰번호, 주소, 우편번호, 사진만 수정 가능
+- 비밀번호 변경은 별개의 요청
+- 로그인 사용자 - 토큰 사용
+- PUT
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/accounts/userinformation/
+```
+
+- Body
+
+| Key          | Type   | Description | Mandatory | Example               |
+| ------------ | ------ | ----------- | --------- | --------------------- |
+| nickname     | String |             | O         | 새로운닉네임          |
+| email        | String |             | O         | 12345@naver.com       |
+| phone_number | String |             | O         | 01012341234           |
+| addr         | String |             | O         | seoul                 |
+| zip_code     | String |             | O         | 12345                 |
+| photo        | Text   |             | O         | https://url.kr/s38eg6 |
+
+- Response
+
+```
+{
+    "pk": 1,
+    "nickname": "새로운닉네임",
+    "email": "12345@naver.com",
+    "phone_number": "01012341234",
+    "addr": "seoul",
+    "zip_code": "12345",
+    "myplant_count": 0,
+    "photo": "https://url.kr/s38eg6"
 }
 ```
 
@@ -178,24 +275,24 @@ http://127.0.0.1:8000/api/v1/plants/search/
 
 
 
-### 식물 이름 검색
+### ~~식물 이름 검색~~
 
-- 물주기 등록시 사용
-- 로그인 사용자 - 토큰 사용
-- GET
-- URL
+- ~~물주기 등록시 사용~~
+- ~~로그인 사용자 - 토큰 사용~~
+- ~~GET~~
+- ~~URL~~
 
 ```
 http://127.0.0.1:8000/api/v1/plants/search/{검색어}/
 ```
 
-- Request Parameters
+- ~~Request Parameters~~
 
-| Name     | Type   | Description                              | Mandatory | Example |
+| ~~Name~~ | ~~Type~~ | ~~Description~~                          | ~~Mandatory~~ | ~~Example~~ |
 | -------- | ------ | ---------------------------------------- | --------- | ------- |
-| 검색어 | String | 한글명, 검색어를 포함하는 모든 식물 검색 | O         | 백      |
+| ~~검색어~~ | ~~String~~ | ~~한글명, 검색어를 포함하는 모든 식물 검색~~ | ~~O~~     | ~~백~~  |
 
-- Response
+- ~~Response~~
 
 ```
 [
@@ -224,7 +321,7 @@ http://127.0.0.1:8000/api/v1/plants/search/{검색어}/
 
 
 
-### 내식물 전체 식물 조회
+### 내식물 전체 조회
 
 - 로그인 사용자 - 토큰 사용
 - GET
@@ -327,7 +424,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
     "nickname": "깨운이",
     "created_at": "2022-07-26T07:08:54.928651Z",
     "otp_code": "",
-    "photo": "",
+    "photo": "https://url.kr/d1acln",
     "is_connected": false
 }
 ```
@@ -568,87 +665,6 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/diary/
 
 
 
-### 마이페이지(프로필)
-- 플랜티넘과 함께한 날 수, 잎팔이 글 전체 조회 추가예정
-- 나의 프로필만 확인 가능, 다른 사람의 프로필 확인 X
-- 로그인 사용자 - 토큰 사용
-- GET
-- URL
-
-```
-http://127.0.0.1:8000/api/v1/accounts/profile/
-```
-
-- Response
-```
-{
-    "pk": 1,
-    "nickname": "",
-    "email": "test1@ssafy.com",
-    "phone_number": "",
-    "addr": "",
-    "zip_code": "",
-    "myplant_count": 2
-}
-```
-
-
-
-### 회원정보수정
-- 닉네임, 이메일, 핸드폰번호, 주소, 우편번호, 사진만 수정 가능
-- 비밀번호 변경은 별개의 요청
-- 로그인 사용자 - 토큰 사용
-- PUT
-- URL
-
-```
-http://127.0.0.1:8000/api/v1/accounts/userinformation/
-```
-
-- Body
-
-| Key            | Type   | Description                   | Mandatory | Example            |
-| -------------- | ------ | ----------------------------- | --------- | ------------------ |
-| nickname        | String |                               | O | 새로운닉네임 |
-| email          | String |                               | O | 12345@naver.com    |
-| phone_number | String |  | O | 01012341234                   |
-| addr | String |  | O | seoul                   |
-| zip_code | String |  | O | 12345                   |
-| photo | Text | | O | https://url.kr/s38eg6 |
-
-- Response
-```
-{
-    "pk": 1,
-    "nickname": "새로운닉네임",
-    "email": "12345@naver.com",
-    "phone_number": "01012341234",
-    "addr": "seoul",
-    "zip_code": "12345",
-    "myplant_count": 0,
-    "photo": "https://url.kr/s38eg6"
-}
-```
-
-
-
-
----------------------------------------------------------
-### 마이페이지 (로그인정보+잎팔이정보)
-
-
-내 잎팔이 글 전체 조회
-
-=> 잎팔이 글 pk와 이미지url만 받아오기 (임시로 이미지 주소 보내기)
-
-휴대폰번호 형식 지정
-
-
-
-식물 이름에 따옴표 삭제, 중복데이터 삭제
-
-
-
 # 4. 잎팔이 관련 페이지
 
 ### 잎팔이 글 생성
@@ -684,3 +700,33 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
 ### 잎팔이 글 삭제
 
 - 
+
+
+
+# 5. 추가 예정
+
+### 마이페이지 (로그인정보+잎팔이정보)
+
+
+내 잎팔이 글 전체 조회
+
+=> 잎팔이 글 pk와 이미지url만 받아오기 (임시로 이미지 주소 보내기)
+
+휴대폰번호 형식 지정
+
+
+
+프로필 - 정보 수정하면 함께한시간 추가해서 리턴
+
+
+
+accounts/user/ 했을 때 나오는 정보 수정 가능한지
+
+
+
+### 데이터
+
+fixtures plants 중복있는지 확인하고 삭제하기, 따옴표 제거
+
+
+

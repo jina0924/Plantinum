@@ -67,20 +67,19 @@ def create_myplant(request):
     serializer = MyplantSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         plantname = request.data['plantname']
+        
         if Plants.objects.filter(name=plantname).exists():
             name = Plants.objects.get(name=plantname)
-            
+
             serializer.save(user=user, name=name)
         else:
             serializer.save(user=user)
 
         # def otp():
-
         #     myplant = Myplant.objects.filter(pk=serializer.data['id'])
         #     # print(myplant.values('otp_code'))  otp code 존재
         #     myplant.update(otp_code='')
         #     # print(myplant.values('otp_code'))  otp code 삭제
-
         # Timer(301, otp).start()  # 5분 뒤 함수 실행
 
         return Response(serializer.data)
