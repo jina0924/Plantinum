@@ -3,9 +3,9 @@
     <form @submit.prevent="onSubmit">
       <div class="select-plant mb-3">
         <label for="plant"></label>
-        <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요" class="form-control" v-model="newMyplant.name_id">
+        <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요" class="form-control" v-model="newMyplant.plantname">
         <datalist id="search-plant-list">
-          <option v-for="(plant) in plant_list" :key="plant.pk" :value="plant.pk">{{ plant.name }}</option>
+          <option v-for="(plant) in plant_list" :key="plant.pk">{{ plant.name }}</option>
         </datalist>
       </div>
       <div class="mb-3">
@@ -14,8 +14,8 @@
       </div>
       <div class="mb-3">
         <label for="myplantPhoto" class="form-label">식물 사진</label>
-        <input v-model="newMyplant.photo" type="text" class="form-control" id="myplantPhoto">
         <!-- <input type="file" class="form-control" id="myplantPhoto"> -->
+        <input v-model="newMyplant.photo" type="text" class="form-control" id="myplantPhoto">
       </div>
       <div class="myplant-create-submit">
         <router-link :to="{ name: 'myplant', params: { username: currentUser.username } }">
@@ -41,7 +41,7 @@ export default {
       newMyplant: {
         nickname: this.myplant.nickname,
         photo: this.myplant.photo,
-        name_id: this.myplant.name_id,
+        plantname: this.myplant.plantname,
       },
     }
   },
