@@ -1,27 +1,29 @@
 <template>
   <div>
+    <nav-bar></nav-bar>
     <leaf-82-search-bar></leaf-82-search-bar>
-    <leaf-82-sell></leaf-82-sell>
-    <leaf-82-buy></leaf-82-buy>
+    <leaf-82-list></leaf-82-list>
   </div>
 </template>
 
 <script>
 import Leaf82SearchBar from '@/components/Leaf82SearchBar.vue'
-import Leaf82Buy from '@/components/Leaf82Buy.vue'
-import Leaf82Sell from '@/components/Leaf82Sell.vue'
+import Leaf82List from '@/components/Leaf82List.vue'
+import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'Leaf82View',
   components: {
+    NavBar,
     Leaf82SearchBar,
-    Leaf82Buy,
-    Leaf82Sell,
+    Leaf82List,
   },
 
 }
 </script>
 
-<style>
-
+<style scoped>
+div {
+  background-color: #F8F5EE;
+}
 </style>
