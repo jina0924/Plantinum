@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'accounts',
     'leaf82',
 
+    'django_filters',
+
     'corsheaders',
 
     'rest_framework',
