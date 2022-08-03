@@ -142,6 +142,7 @@ class sensorThread(QThread):
         global temp,humi,waveLV,watering_flag
         print("start thread")
         t = 0
+        self.send_datas=0
         while(1):
             if(success_acc == 0):
                 continue
@@ -165,6 +166,15 @@ class sensorThread(QThread):
                 #every 10sec
                     if(t >= 100):
                         humidTemp()
+                        #if 9oclock
+                        self.nowtime = datetime.now().strftime("%H:%M")
+
+                        if(self.nowtime == "09:00"):
+                            if(self.send_datas == 0):
+                                self.send_data()
+                        else if(self.send_datas == 1):
+                            self.send_datas = 0
+                            
                         t = 0
                 #every 1sec
                     if(t%10 == 0):
@@ -177,10 +187,18 @@ class sensorThread(QThread):
                     spi.close()
                     break
 
+
+    def send_data(self):
+        #self.cur = db.cursor()
+        #self.sql_str = ""
+        pass
+
+
 #물줄때
 def watering():
     global watering_cnt,user_data
-    user_data['recent_watering'].append(datetime.now().strftime("%y.%m.%d %H:%M"));
+    w_now_time = datetime.now().strftime("%y.%m.%d %H:%M")
+    user_data['recent_watering'].append(w_now_time)
     watering_cnt += 1
     if(watering_cnt > 3):
         del(user_data['recent_watering'][0])
@@ -189,7 +207,16 @@ def watering():
 
     with open(userfilepath, "w", encoding='utf-8') as file:
         json.dump(user_data, file, indent="\t",ensure_ascii=False)
-
+    
+    #db update
+    try:
+        wcur=db.cursor()
+        wsql_str = "update test set recent_watering = \"" + w_now_time + "\"  where id=" + str(user_data['id']) 
+        wcur.execute(wsql_str)
+        db.commit()
+    except Exception as e:
+        print("db update is impossible")
+        print(e)
 
 #시작페이지
 class EntryPage(QDialog, QWidget, Ui_EntryUI):
@@ -201,7 +228,7 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def dbset(self):
         #db커넥트
         global db
-        db = mysql.connector.connect(host="192.168.45.220",user='root', password='111111', database='testdb',buffered=True)
+        db = mysql.connector.connect(host="192.168.126.192",user='root', password='111111', database='testdb',buffered=True)
 
     def main(self):
         pass
@@ -466,7 +493,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
             # result = 1개
             if(self.cur.rowcount ==1):
                 #id, 닉네임, 물의 양 등 저장
-                for(id,name,otp,isconnect) in self.cur:
+                for(id,name,otp,isconnect,recent_watering) in self.cur:
                     print(id, name, otp, isconnect)
                     #Already connect
                     #이미 연결이 되어있는 식물의 경우
