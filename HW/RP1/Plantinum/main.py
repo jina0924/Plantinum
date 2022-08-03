@@ -23,6 +23,7 @@ detail_back =0
 otp_back = 0
 
 userfilepath= "./user_setting.json"
+screenfilepath = '/boot/cmdline.txt'
 plant_id = -1
 user_data=[]
 #물임계점
@@ -219,6 +220,19 @@ def watering():
         print("db update is impossible")
         print(e)
 
+
+#Change sreensaver
+
+def screen(timeout):
+    f=open(screenfilepath,'r')
+    file_data=f.readlines()
+    f.close()
+
+    f=open(screenfilepath,'w')
+    f.write(file_data[0])
+    f.write("consoleblank="+str(timeout))
+    f.close()
+
 #시작페이지
 class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def __init__(self):
@@ -412,6 +426,7 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
             is_sleep_page = 1
             widget.addWidget(SleepPage())
         '''
+        screen(20)
         widget.setCurrentIndex(4)
 
     #새로고침
@@ -604,6 +619,7 @@ class SleepPage(QDialog, QWidget, Ui_SleepUI):
     def wakeup(self):
         #self.close()
         clock_timer.start()
+        screen(0)
         widget.setCurrentIndex(2)
 
 
