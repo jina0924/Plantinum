@@ -40,7 +40,7 @@ waveLV = 120
 
 #취침모드
 issleep=0
-
+isfirst=0
 
 #페이지 생성 확인용
 is_detail_page = 0
@@ -172,8 +172,9 @@ class sensorThread(QThread):
                         if(self.nowtime == "09:00"):
                             if(self.send_datas == 0):
                                 self.send_data()
-                        else if(self.send_datas == 1):
+                        elif(self.send_datas == 1):
                             self.send_datas = 0
+                        
                             
                         t = 0
                 #every 1sec
@@ -222,6 +223,7 @@ def watering():
 class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def __init__(self):
         super().__init__()
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setupUi(self)
         self.dbset()
 
@@ -320,7 +322,7 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
         if (is_detail_page == 0):
             is_detail_page == 1
             widget.addWidget(DetailPage())
-
+            widget.addWidget(SleepPage())
         widget.setCurrentIndex(3)
         # 뒤로가기 버튼으로 돌아왔을때
         '''
@@ -389,8 +391,8 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         #self.main.exec_()
         '''
         global clock_timer
-        widget.setCurrentIndex(2)
         clock_timer.start()
+        widget.setCurrentIndex(2)
     #취침모드
     def sleep_mode(self):
         global issleep,is_sleep_page
@@ -405,10 +407,11 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         '''
         #취침모드에서 벗어나면 바로 메인페이지로 돌아감
         #self.go_mainpage()
+        '''
         if(is_sleep_page == 0):
             is_sleep_page = 1
             widget.addWidget(SleepPage())
-
+        '''
         widget.setCurrentIndex(4)
 
     #새로고침
@@ -436,7 +439,7 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         db.commit()
 
         #물의 양
-        if(water_amount == 0):
+        if(water_amount == 1):
             self.progressBar.setStyleSheet(
                 "QProgressBar::chunk { background-color : rgb(101, 128, 93) ; border-radius : 10px;} QProgressBar {background-color : rgb(255,255,255);border-radius : 15px;}")
             self.progressBar.setValue(80)
@@ -477,7 +480,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
 
 
     def check_otp(self):
-        global success_acc
+        global success_acc,isfirst
         global plant_id, water_amount, hum_threshold
         print(self.otp_code)
         self.flag=0
@@ -530,7 +533,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
 
                     plant_id = self.plant_id
                     water_amount = 0
-
+        
                     db.commit()
             else:
                 self.flag = 0
@@ -539,6 +542,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
         if(self.flag == 1):
             success_acc = 1
             widget.addWidget(MainPage())
+            isfirst = 1
             widget.setCurrentIndex(2)
         else:
             #실패했을때
@@ -609,8 +613,10 @@ main = EntryPage()
 widget = QStackedWidget()
 widget.addWidget(main)
 widget.addWidget(OtpPage())
-widget.setFixedHeight(768)
-widget.setFixedWidth(1366)
+#widget.setFixedHeight(768)
+#widget.setFixedWidth(1366)
+widget.setGeometry(0,0,1366,768)
+
 #프로그램 실행 전 user_data 불러옴
 
 #한글 읽기 위하여 encoding 표시
