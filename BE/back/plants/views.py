@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -87,54 +88,74 @@ def create_myplant(request):
 
 # 연결되지 않은 상태, otp도 없는 상태에서 otp 발급
 # 5분이 지나면 otp 삭제
-@api_view(['POST'])
+@api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def create_otp(request, myplant_pk):
-    if Myplant.objects.filter(pk=myplant_pk, otp_code=None, is_connected=False).exists():
 
-        otp_code = ''
-
-        while otp_code == '':
-
-            otp_code = random.randint(0, 999999)
-            otp_code = str(otp_code).zfill(6)
-
-            # print(otp_code)
-
-            if Myplant.objects.filter(otp_code=otp_code).exists():  # db 존재 여부 확인
-                otp_code = ''  # 재발급
-
+    if Myplant.objects.filter(pk=myplant_pk).exists():
         myplant = Myplant.objects.filter(pk=myplant_pk)
-        myplant.update(otp_code=otp_code)
 
-        # myplant_s = get_object_or_404(Myplant, pk=myplant_pk)
-        # serializer = MyplantSerializer(myplant_s)
+        me = request.user.id
+        user = myplant.values('user_id')[0]['user_id']
+        
+        if me == user:  # OTP 요청자와 식물 등록자가 같으면
+            if myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드가 발급되지 않았고 연결된 상태가 아니라면
 
-        def delete_otp():
-            myplant.update(otp_code=None)
-        Timer(301, delete_otp).start()  # 5분뒤 삭제 함수 실행
+                otp_code = ''
 
-        # return Response(serializer.data)
-        return Response({'otp_code': otp_code})
+                while otp_code == '':
 
+                    otp_code = random.randint(0, 999999)
+                    otp_code = str(otp_code).zfill(6)
+
+                    if Myplant.objects.filter(otp_code=otp_code).exists():  # db 존재 여부 확인
+                        otp_code = ''  # 이미 존재하면 재발급
+
+                myplant.update(otp_code=otp_code)
+
+                def delete_otp():
+                    myplant.update(otp_code=None)
+                Timer(301, delete_otp).start()  # 5분뒤 삭제 함수 실행
+
+                return Response({'otp_code': otp_code})
+            
+            elif myplant.values('otp_code')[0]['otp_code'] and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드는 존재하나 연결된 상태가 아니라면
+
+                otp_code = myplant.values('otp_code')[0]['otp_code']
+
+                return Response({'otp_code': otp_code})
+
+            elif myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == True:  # 해당 식물의 OTP 코드가 발급되지 않았으나 연결된 상태라면
+                
+                return Response({'result': '이미 연결되었습니다.'})
+
+        else:  # OTP 요청자와 식물 등록자가 다르면
+            return Response({'result': '잘못된 접근입니다.'})
     else:
-        return Response({'result': '이미 발급되었거나 연결되었습니다.'})
+        return Response({'result': '식물이 존재하지 않습니다.'})
 
 
 # 연결끊기
-@api_view(['POST'])
+@api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def disconnect(request, myplant_pk):
-    if Myplant.objects.filter(pk=myplant_pk, is_connected=True).exists():
-        myplant = Myplant.objects.filter(pk=myplant_pk, is_connected=True)
-        myplant.update(is_connected=False)
+    if Myplant.objects.filter(pk=myplant_pk).exists():
+        myplant = Myplant.objects.filter(pk=myplant_pk)
 
-        return Response({'is_connected': False})
+        me = request.user.id
+        user = myplant.values('user_id')[0]['user_id']
 
-    else:
-        return Response({'result': '연결상태를 확인해주세요.'})
+        if me == user:  # 연결끊기 요청자와 식물 등록자가 같으면
+            if myplant.values('is_connected')[0]['is_connected'] == True:
+                myplant.update(is_connected=False)
+                return Response({'is_connected': False})
+
+            else:
+                return Response({'result': '연결상태를 확인해주세요.'})
+        else:
+            return Response({'result': '잘못된 접근입니다.'})
 
 
 # 물주기 식물 상세페이지
