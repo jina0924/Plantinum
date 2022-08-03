@@ -69,9 +69,9 @@ def create_myplant(request):
         plantname = request.data['plantname']
         
         if Plants.objects.filter(name=plantname).exists():
-            name = Plants.objects.get(name=plantname)
+            plant_info = Plants.objects.get(name=plantname)
 
-            serializer.save(user=user, name=name)
+            serializer.save(user=user, plant_info=plant_info)
         else:
             serializer.save(user=user)
 
