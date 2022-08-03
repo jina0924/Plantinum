@@ -104,13 +104,22 @@ export default {
   width: 16rem;
 }
 
+.plant-img {
+  position: relative; 
+  width: 250px;
+  height: 250px;
+  margin: auto;
+}
+
 .plant-img img {
   /* width: 95%;
   height: 95%; */
-  width: 250px;
-  height: 250px;
   padding: 0.5rem;
   border-radius: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .plant-info {
