@@ -534,10 +534,11 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
 ### OTP 생성
 
 - 기기와 연결되지 않았고 OTP도 없는 상태에서 OTP 발급
-- 5분 후 자동으로 삭제 (blank)
+- 연결이 되지 않았는데 OTP가 있다면 현재 있는 값 보여주기
+- 5분 후 자동으로 삭제 (NULL)
 
 - 로그인 사용자 - 토큰 사용
-- POST
+- GET
 
 - URL
 
@@ -572,7 +573,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/otp/
 - 기기와 연결상태가 True인 경우 연결 해제
 - 로그인 사용자 - 토큰 사용
 
-- POST
+- GET
 - URL
 
 ```
