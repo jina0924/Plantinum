@@ -2,17 +2,14 @@ import RPi.GPIO as GPIO
 import datetime
 import time
 import spidev
-import adafruit_dht
-import board
-#import Adafruit_DHT
+import Adafruit_DHT
 
 # temp_timer
 t = 0
 
 #humSensor init
-#humSensor = Adafruit_DHT.DHT11
-#humSensor_pin = 23
-humSensor = adafruit_dht.DHT11(board.D23)
+humSensor = Adafruit_DHT.DHT11
+humSensor_pin = 23
 
 #WaterLevel Sensor init
 waterLevel_pin = 24
@@ -33,24 +30,24 @@ spi.max_speed_hz=500000
 #GPIO init
 def init():
 	#MOTOR DRIVE GPIO SETTING
-	GPIO.setwarnings(False)
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(A1A, GPIO.OUT)
-	GPIO.output(A1A, GPIO.LOW)
-	GPIO.setup(A1B, GPIO.OUT)
-	GPIO.output(A1B, GPIO.LOW)
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(A1A, GPIO.OUT)
+    GPIO.output(A1A, GPIO.LOW)
+    GPIO.setup(A1B, GPIO.OUT)
+    GPIO.output(A1B, GPIO.LOW)
 
 	#WATERLEVEL Sensor GPIO Setting
-	GPIO.setwarnings(False)
+    GPIO.setwarnings(False)
 	
 	#LED GPIO Setting
-	GPIO.setup(2, GPIO.OUT)
-	GPIO.setup(3, GPIO.OUT)
-	GPIO.output(2, GPIO.LOW)
+    GPIO.setup(2, GPIO.OUT)
+    GPIO.setup(3, GPIO.OUT)
+    GPIO.output(2, GPIO.LOW)
     GPIO.output(3, GPIO.LOW)
 
 	#WaterLevel Sensor GPIO Setting
-	GPIO.setup(waterLevel_pin, GPIO.IN)
+    GPIO.setup(waterLevel_pin, GPIO.IN)
 
 #Soil_Hum_Sensor code
 def read_spi_adc(adcChannel):
@@ -79,8 +76,7 @@ def map(value, min_adc, max_adc, min_hum, max_hum):
 #		print('HumidTemp Sensor Error!')
 
 def humidTemp():
-    humi = humSensor.humidity
-    temp = humSensor.temperature
+    humi, temp = Adafruit_DHT.read_retry(humSensor, humSensor_pin)
     print("Temp : {:.1f} C  Humi : {}%" , temp , humi)
 
 def waterlevel(pin):
@@ -91,30 +87,30 @@ def waterlevel(pin):
 
 #Main Code
 try:
-	init()
-	adcChannel = 0
-	while True:
-		adcValue = read_spi_adc(adcChannel)
+    init()
+    adcChannel = 0
+    while True:
+        adcValue = read_spi_adc(adcChannel)
 		
-		hum = int(map(adcValue, HUM_MAX, 1023, 0, 100))
-		now_hum = 100 - hum
+        hum = int(map(adcValue, HUM_MAX, 1023, 0, 100))
+        now_hum = 100 - hum
 		
-		print(now_hum)
-		if now_hum < HUM_THRESHOLD :
-			GPIO.output(A1A, GPIO.HIGH)
-			GPIO.output(A1B, GPIO.LOW)
-		else:
-			GPIO.output(A1A, GPIO.LOW)
-			GPIO.output(A1B, GPIO.LOW)
+        print(now_hum)
+        if now_hum < HUM_THRESHOLD :
+            GPIO.output(A1A, GPIO.HIGH)
+            GPIO.output(A1B, GPIO.LOW)
+        else:
+            GPIO.output(A1A, GPIO.LOW)
+            GPIO.output(A1B, GPIO.LOW)
 		
-		if waterlevel(waterLevel_pin) == 1 :
-			GPIO.output(2, GPIO.HIGH)
-			GPIO.output(3, GPIO.LOW)
-		else :
-			GPIO.output(2, GPIO.LOW)
-			GPIO.output(3, GPIO.HIGH)
+        if waterlevel(waterLevel_pin) == 1 :
+            GPIO.output(2, GPIO.HIGH)
+            GPIO.output(3, GPIO.LOW)
+        else :
+            GPIO.output(2, GPIO.LOW)
+            GPIO.output(3, GPIO.HIGH)
 
-		t += 1
+        t += 1
 
         time.sleep(1)
         
