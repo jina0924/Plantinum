@@ -18,7 +18,7 @@ export default {
     plantSearch: () => HOST + 'plants/' + 'search/',
     myplant: (username) => HOST + PLANTS + `${username}/`,
     newMyplant: () => HOST + PLANTS, 
-    myplantDetail: (plantPk) => HOST + PLANTS + `${plantPk}` + 'detail/',
+    myplantDetail: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'detail/',
     plantOTP: (plantPk) => HOST + PLANTS + `${plantPk}` + 'otp/',
   }
 }
