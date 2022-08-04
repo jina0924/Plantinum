@@ -4,6 +4,8 @@ const ACCOUNTS = 'accounts/'
 
 const PLANTS = 'plants/myplant/'
 
+const LEAF82 = 'leaf82/'
+
 export default {
   accounts: {
     signup: () => HOST + ACCOUNTS + 'signup/',
@@ -15,10 +17,16 @@ export default {
     changePassword: () => HOST + ACCOUNTS + 'password/' + 'change/'
   },
   myplant: {
-    plantSearch: (keyword) => HOST + PLANTS + 'search/' + `${keyword}/`,
+    plantSearch: () => HOST + 'plants/' + 'search/',
     myplant: (username) => HOST + PLANTS + `${username}/`,
     newMyplant: () => HOST + PLANTS, 
-    myplantDetail: (plantPk) => HOST + PLANTS + `${plantPk}` + 'detail/',
+    myplantDetail: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'detail/',
     plantOTP: (plantPk) => HOST + PLANTS + `${plantPk}` + 'otp/',
+  },
+  leaf82: {
+    leaf82Sell: (keyword) => HOST + LEAF82 + 'sell/' + `${keyword}`,
+    leaf82Buy: (keyword) => HOST + LEAF82 + 'buy/' + `${keyword}`,
+    sido: () => HOST + LEAF82 + 'search/sido/',
+    sigungu: (sido) => HOST + LEAF82 + `search/${sido}/` + 'sigungu' 
   }
 }
