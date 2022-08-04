@@ -27,3 +27,4 @@ class Leaf82(models.Model):
     status_class = models.CharField(max_length=4, choices=STATUS_CHOICES, default='판매중')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     addr = models.ForeignKey(Juso, on_delete=models.PROTECT)
+    posting_addr = models.IntegerField(default=0)
