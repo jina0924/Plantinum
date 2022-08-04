@@ -24,9 +24,9 @@ export default {
     plantOTP: (plantPk) => HOST + PLANTS + `${plantPk}` + 'otp/',
   },
   leaf82: {
-    leaf82Sell: (keyword) => HOST + LEAF82 + 'sell/' + `${keyword}`,
-    leaf82Buy: (keyword) => HOST + LEAF82 + 'buy/' + `${keyword}`,
+    leaf82: () => HOST + LEAF82,
     sido: () => HOST + LEAF82 + 'search/sido/',
-    sigungu: (sido) => HOST + LEAF82 + `search/${sido}/` + 'sigungu' 
+    sigungu: (sido) => HOST + LEAF82 + `search/${sido}/` + 'sigungu/',
+    search: () => HOST + LEAF82 + 'search'
   }
 }
