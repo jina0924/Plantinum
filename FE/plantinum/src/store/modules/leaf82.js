@@ -4,8 +4,6 @@ import drf from '@/api/drf'
 
 export const Leaf82 = {
   state: {
-    leaf82Sell: [],
-    leaf82Buy: [],
     sido: [],
     sigungu: [],
     searchList: []
