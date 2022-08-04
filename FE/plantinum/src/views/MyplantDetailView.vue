@@ -24,9 +24,9 @@
               <span class="col-lg-7 col-xl-8">{{ myplant.sensing.last_watering }}</span>
             </div>
             <div class="row">
+
               <div class="seasonal-manage-info">
                 <button class="btn plant-info-btn" type="button" @click="modal = 1">계절별 식물 관리 정보</button>
-
                 <!-- 모달 -->
                 <div class="black-bg" @click="close($event)" v-if="!!modal">
                   <myplant-modal :plantInfo="myplant.plant_info" :modal="modal" class="myplant-modal"></myplant-modal>
@@ -39,12 +39,13 @@
                   <myplant-modal :plantInfo="myplant.plant_info" :modal="modal" class="myplant-modal"></myplant-modal>
                 </div>
               </div>
+
               <div class="otp">
                 <div v-if="!myplant.is_connected">
-                  <button class="btn plant-info-btn plant-info-btn-end">OTP 발급</button>
+                  <button class="btn plant-info-btn plant-info-btn-end">SuPool 연결</button>
                 </div>
                 <div v-if="myplant.is_connected">
-                  <button>화분 연결 끊기</button>
+                  <button>SuPool 연결 끊기</button>
                 </div>
               </div>
             </div>
@@ -167,5 +168,8 @@ body {
 
 .myplant-modal {
   position: relative;
+  top: 150px;
+  /* position: fixed;
+  top: 100px; */
 }
 </style>
