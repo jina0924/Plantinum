@@ -59,19 +59,48 @@ def read_leaf82(request):
     return Response(serializer.data)
 
 
-# 잎팔이 특정 지역/동네 글 조회
-@api_view(['GET'])
-def sido_sigungu_leaf82(request, sido, sigungu):
+# # 잎팔이 특정 지역/동네 글 조회  => 제공 x
+# @api_view(['GET'])
+# def sido_sigungu_leaf82(request, sido, sigungu):
 
-    sido_sigungu = Juso.objects.filter(sido=sido, sigungu__contains=sigungu)
+#     sido_sigungu = Juso.objects.filter(sido=sido, sigungu__contains=sigungu)
     
-    leaves = Leaf82.objects.filter(addr__in=sido_sigungu).order_by('-pk')
+#     leaves = Leaf82.objects.filter(addr__in=sido_sigungu).order_by('-pk')
+#     serializer = Leaf82Serializer(leaves, many=True)
+#     return Response(serializer.data)
+
+
+# from rest_framework.views import APIView
+# class Leaf82View(APIView):
+#     def get(self, request):
+#         plantname = request.GET.get('plantname', '*')
+
+#         return Response({'result': '111111'})
+
+@api_view(['GET'])
+def search(request):
+    # 식물이름(검색어)/시도/시군구
+
+    plantname = request.GET.get('plantname', '*')
+    sido = request.GET.get('sido', '*')
+    sigungu = request.GET.get('sigungu', '*')
+
+    leaves = Leaf82.objects.filter().order_by('-pk')
+    if plantname != '*':
+        leaves = leaves.filter(plantname__contains=plantname)
+        
+    if sido != '*':
+        addr1 = Juso.objects.filter(sido=sido)
+        leaves = leaves.filter(addr__in=addr1)
+
+    if sigungu != '*':
+        addr2 = Juso.objects.filter(sigungu__contains=sigungu)
+        leaves = leaves.filter(addr__in=addr2)
+
     serializer = Leaf82Serializer(leaves, many=True)
     return Response(serializer.data)
 
 
-# from rest_framework import generics
-# from django_filters import rest_framework as filters
-# @api_view(['GET'])
-# def search_neighborhood(request):
-    
+@api_view(['GET'])
+def detail(request):
+    pass
