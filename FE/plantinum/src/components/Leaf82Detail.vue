@@ -7,7 +7,7 @@
       <!-- 좌측 -->
       <div class="left col-md-5">
         <div class="img-box d-flex justify-content-center">
-          <img :src="leaf82Detail.photo" alt="화분 사진">
+          <!-- <img :src="leaf82Detail.photo" alt="화분 사진">s -->
         </div>
       </div>
       <!-- 우측 -->
