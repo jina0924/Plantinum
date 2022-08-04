@@ -11,6 +11,7 @@ import json
 from datetime import datetime
 import time
 import sys
+import os,subprocess
 
 import RPi.GPIO as GPIO
 import spidev
@@ -223,17 +224,16 @@ def watering():
 
 #Change sreensaver
 
-def screen(timeout):
-    f=open(screenfilepath,'r')
-    file_data=f.readlines()
-    f.close()
+def screen(screen_mode):
+    #sleep_mode : 10sec
+    if(screen_mode == 1):
+        subprocess.run('xset s on',shell = True)
+        subprocess.run('xset s 10',shell = True)
+    else:
+        subprocess.run('xset s off',shell=True)
 
-    f=open(screenfilepath,'w')
-    f.write(file_data[0])
-    f.write("consoleblank="+str(timeout))
-    f.close()
 
-#시작페이지
+#시작 페이지 
 class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def __init__(self):
         super().__init__()
@@ -244,7 +244,7 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def dbset(self):
         #db커넥트
         global db
-        db = mysql.connector.connect(host="192.168.126.192",user='root', password='111111', database='testdb',buffered=True)
+        db = mysql.connector.connect(host="192.168.45.36",user='root', password='111111', database='testdb',buffered=True)
 
     def main(self):
         pass
@@ -303,6 +303,7 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
         self.now = datetime.now().strftime('%H : %M')
         self.clock.setText(self.now)
         #온습도 글씨
+        humidTemp()
         self.humi_label.setText(str(humi)+"%")
         self.temp_label.setText(str(temp)+"ºC")
 
@@ -356,6 +357,7 @@ class MainPage(QDialog, QWidget, Ui_MainUI):
         #now_time = str(now.hour) + ":" + str(now.minute) + ":" + str(now.second)
         self.clock.setText(self.now)
         #온습도 글씨
+        humidTemp()
         self.humi_label.setText(str(humi)+"%")
         self.temp_label.setText(str(temp)+"ºC")
 
@@ -426,7 +428,7 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
             is_sleep_page = 1
             widget.addWidget(SleepPage())
         '''
-        screen(20)
+        screen(1)
         widget.setCurrentIndex(4)
 
     #새로고침
@@ -617,9 +619,11 @@ class SleepPage(QDialog, QWidget, Ui_SleepUI):
 
     #화면 터치시 취침모드 종료 후 파도화면으로 돌아감
     def wakeup(self):
+        global issleep
         #self.close()
         clock_timer.start()
         screen(0)
+        issleep = 1
         widget.setCurrentIndex(2)
 
 
