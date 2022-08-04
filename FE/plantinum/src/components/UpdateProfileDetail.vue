@@ -332,22 +332,10 @@ input[type="file"] {
   width: 50%;
 }
 
-.nick-name-check {
-  font-size: 0.9rem;
-  border-style: none;
-  border-radius: 10%;
-}
-
 .card-text .card-input-email {
   color: #7E7E7E;
   font-size: 0.9rem;
   width: 50%;
-}
-
-.nick-email-check {
-  font-size: 0.9rem;
-  border-style: none;
-  border-radius: 10%;
 }
 
 .myleaf-pic {
