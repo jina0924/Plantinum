@@ -20,7 +20,7 @@ export default {
     return {
       myplant: {
         nickname: '',
-        photo: '',
+        photo: 'https://url.kr/d1acln',
         name_id: '',
       }
     }
