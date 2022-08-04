@@ -5,12 +5,12 @@
       <div class="plant-profile">
         <div class="profile-body row justify-content-center align-items-center">
 
-          <div class="col-lg-5 plant-profile-img">
+          <div class="plant-profile-img">
             <img :src="myplant.photo" :alt="`${myplant.nickname} 사진`" class="myplant-img">
           </div>
           <div class="col-lg-7 plant-profile-info">
             <h2 class="myplant-nickname">{{ myplant.nickname }}</h2>
-            <div class="myplant-data botanical-name">{{ myplant.name.name }}</div>
+            <div class="myplant-data botanical-name">{{ myplant.plant_info.name }}</div>
             <div class="myplant-data row">
               <span class="col-lg-5 col-xl-4">토양 습도</span>
               <span class="col-lg-7 col-xl-8">{{ myplant.sensing.moisture_level }}</span>
@@ -47,7 +47,7 @@
                 </div>
               </div>
               
-              <div class="special-manage-info" v-if="myplant.name.specl_manage_info">
+              <div class="special-manage-info" v-if="myplant.plant_info.specl_manage_info">
                 <button class="btn plant-info-btn">특별 관리 정보</button>
               </div>
               <div class="otp">
@@ -108,8 +108,14 @@ body {
   padding: 2.5rem;
 }
 
-.myplant-img {
+.plant-profile-img {
+  width: 20rem;
+  height: 20rem;
   border-radius: 100%;
+  overflow: hidden;
+}
+
+.myplant-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
