@@ -28,7 +28,7 @@
               </div>
               <div class="col-4 d-flex justify-content-end align-items-center">
                 <span class="material-symbols-outlined humidity">water_drop</span>
-                <span class="humidity">{{ plant.습도 }} %</span>
+                <span class="humidity">{{ plant.sensing.moisture_level }} %</span>
                 <!-- <span class="material-symbols-outlined diary-count">description</span>
                 <span class="diary-count">{{ plant.일지수 }}</span> -->
               </div>
