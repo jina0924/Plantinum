@@ -65,7 +65,7 @@
         <div class="btnbox">
           <div class="btn-border">
             <div class="login d-flex justify-content-center">
-              <div v-if="!!username">
+              <div class="new-box" v-if="!!username">
                 <router-link :to="{ name: 'myplant', params: { username } }">
                   <button class="btn">내 식물</button>
                 </router-link>
@@ -203,6 +203,11 @@ export default {
 </script>
 
 <style scoped>
+  div {
+    margin: 0;
+    padding: 0;
+  }
+
   .first-box {
     height: 1117px;
     background: url("../assets/HomeView/background_img.jpg") bottom right;
@@ -299,6 +304,10 @@ export default {
 
   .text-hello {
     font-size: 1.5rem;
+  }
+
+  .new-box {
+    width: 50%;
   }
 
   .btn{
