@@ -12,6 +12,7 @@ import MyplantDetailView from '@/views/MyplantDetailView.vue'
 import MyplantEditView from '@/views/MyplantEditView.vue'
 
 import Leaf82View from '@/views/Leaf82View.vue'
+import Leaf82NewView from '@/views/Leaf82NewView'
 import MessengerView from '@/views/MessengerView.vue'
 import UpdateProfileView from '@/views/UpdateProfileView.vue'
 
@@ -81,6 +82,11 @@ const routes = [
     path: '/leaf82',
     name: 'leaf82',
     component: Leaf82View
+  },
+  {
+    path: '/leaf82/new',
+    name: 'leaf82New',
+    component: Leaf82NewView
   },
   {
     path: '/messenger',
