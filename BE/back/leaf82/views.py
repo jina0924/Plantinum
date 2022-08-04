@@ -1,10 +1,15 @@
 from django.shortcuts import get_object_or_404
-from .serializers import JusoSidoSerializer, JusoSigunguSerializer, Leaf82Serializer
+from .serializers import JusoSidoSerializer, JusoSigunguSerializer, Leaf82Serializer, Leaf82ListSerializer
 from .models import Juso, Leaf82
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import get_user_model
+import random
+
+
+User = get_user_model()
 
 
 # 잎팔이 글 작성
@@ -15,13 +20,18 @@ def create_leaf82(request):
     sido = request.data['sido']
     sigungu = request.data['sigungu']
     addr = get_object_or_404(Juso, sido=sido, sigungu=sigungu)
-
     user = request.user
+    posting_addr = 0
+
+    while posting_addr == 0:
+        posting_addr = random.randint(100000, 999999)
+        if Leaf82.objects.filter(user=user, posting_addr=posting_addr).exists():  # 중복체크, 한 유저 내에서 중복x
+            posting_addr = 0
 
     serializer = Leaf82Serializer(data=request.data)
         
     if serializer.is_valid(raise_exception=True):
-        serializer.save(user=user, addr=addr)
+        serializer.save(user=user, addr=addr, posting_addr=posting_addr)
         return Response(serializer.data)
 
 
@@ -55,7 +65,7 @@ def search_sigungu(request, sido):
 def read_leaf82(request):
 
     leaves = Leaf82.objects.all().order_by('-pk')
-    serializer = Leaf82Serializer(leaves, many=True)
+    serializer = Leaf82ListSerializer(leaves, many=True)
     return Response(serializer.data)
 
 
@@ -97,10 +107,15 @@ def search(request):
         addr2 = Juso.objects.filter(sigungu__contains=sigungu)
         leaves = leaves.filter(addr__in=addr2)
 
-    serializer = Leaf82Serializer(leaves, many=True)
+    serializer = Leaf82ListSerializer(leaves, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-def detail(request):
-    pass
+def detail(request, username, posting_addr):
+    user = User.objects.filter(username=username)[0]
+    
+    leaf82 = get_object_or_404(Leaf82, user=user, posting_addr=posting_addr)
+
+    serializer = Leaf82Serializer(leaf82)
+    return Response(serializer.data)

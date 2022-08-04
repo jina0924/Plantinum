@@ -39,3 +39,19 @@ class Leaf82Serializer(serializers.ModelSerializer):
     class Meta:
         model = Leaf82
         fields = '__all__'
+        read_only_fields = ('posting_addr',)
+
+
+class Leaf82ListSerializer(serializers.ModelSerializer):
+
+    class JusoSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Juso
+            fields = '__all__'
+
+    addr = JusoSerializer(read_only=True)
+
+    class Meta:
+        model = Leaf82
+        fields = ('pk', 'plantname', 'photo', 'price', 'category_class', 'status_class', 'addr', 'posting_addr',)
+        read_only_fields = ('posting_addr',)
