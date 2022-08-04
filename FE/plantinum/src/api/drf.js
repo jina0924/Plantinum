@@ -27,6 +27,7 @@ export default {
     leaf82: () => HOST + LEAF82,
     sido: () => HOST + LEAF82 + 'search/sido/',
     sigungu: (sido) => HOST + LEAF82 + `search/${sido}/` + 'sigungu/',
-    search: () => HOST + LEAF82 + 'search'
+    search: () => HOST + LEAF82 + 'search',
+    detail: (info) => HOST + LEAF82 + `${info.username}/` + `${info.posting_addr}/`
   }
 }
