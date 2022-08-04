@@ -7,16 +7,19 @@ export const Myplant = {
     myplants: [],
     myplant: {},
     plant_list: [],
+    temp_OTP: '',
   },
   getters: {
     myplants: state => state.myplants,
     myplant: state => state.myplant,
     plant_list: state => state.plant_list,
+    temp_OTP: state => state.temp_OTP,
   },
   mutations: {
     SET_MYPLANTS: (state, myplants) => state.myplants = myplants,
     SET_MYPLANT: (state, myplant) => state.myplant = myplant,
     SET_PLANTLIST: (state, plant_list) => state.plant_list = plant_list,
+    SET_OTP: (state, otp) => state.temp_OTP = otp,
   },
   actions: {
     fetchMyplants({ commit, getters }, { username }) {
@@ -73,6 +76,15 @@ export const Myplant = {
         //   router.push({ name: 'NotFound404' })
         // }
       })
+    },
+
+    getOTP({ commit, getters }, plantPk) {
+      axios({
+        url: drf.myplant.plantOTP(plantPk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => console.log(res, commit))
     }
   },
 }
