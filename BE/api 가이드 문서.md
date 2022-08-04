@@ -337,14 +337,14 @@ http://127.0.0.1:8000/api/v1/plants/search/{검색어}/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{사용자 nickname}/
+http://127.0.0.1:8000/api/v1/plants/myplant/{username}/
 ```
 
 - Request Parameters
 
-| Name            | Type   | Description | Mandatory | Example |
-| --------------- | ------ | ----------- | --------- | ------- |
-| 사용자 nickname | String |             | O         | 식집사1 |
+| Name     | Type   | Description | Mandatory | Example  |
+| -------- | ------ | ----------- | --------- | -------- |
+| username | String | 유저id      | O         | testuser |
 
 - Response
 
@@ -803,24 +803,25 @@ http://127.0.0.1:8000/api/v1/leaf82/new/
 
 ```
 {
-    "id": 1,
+    "id": 3,
     "user": {
         "pk": 1,
         "username": "test1",
-        "nickname": "새내기야자나무9690"
+        "nickname": "새내기참나무4979"
     },
     "addr": {
-        "id": 1,
-        "sido": "서울특별시",
-        "sigungu": "종로구"
+        "id": 108,
+        "sido": "경기도",
+        "sigungu": "용인시 처인구"
     },
-    "plantname": "산세베리아",
+    "plantname": "싱고니움",
     "photo": "https://url.kr/d1acln",
-    "created_at": "2022-08-02T13:48:16.955862Z",
-    "content": "채팅주세요",
-    "price": 20000,
+    "created_at": "2022-08-04T06:25:01.655280Z",
+    "content": "연락주세요",
+    "price": 15000,
     "category_class": "분양해요",
-    "status_class": "판매중"
+    "status_class": "판매중",
+    "posting_addr": 207303
 }
 ```
 
@@ -842,64 +843,43 @@ http://127.0.0.1:8000/api/v1/leaf82/
 ```
 [
     {
-        "id": 3,
-        "user": {
-            "pk": 1,
-            "username": "test1",
-            "nickname": "새내기야자나무9690"
-        },
+        "pk": 3,
+        "plantname": "싱고니움",
+        "photo": "https://url.kr/d1acln",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
         "addr": {
             "id": 23,
             "sido": "서울특별시",
             "sigungu": "강남구"
-        },
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T13:54:48.134980Z",
-        "content": "연락주세요",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
+        }
     },
     {
-        "id": 2,
-        "user": {
-            "pk": 1,
-            "username": "test1",
-            "nickname": "새내기야자나무9690"
-        },
+        "pk": 2,
+        "plantname": "개운죽",
+        "photo": "https://url.kr/d1acln",
+        "price": 10000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
         "addr": {
             "id": 5,
             "sido": "서울특별시",
             "sigungu": "광진구"
-        },
-        "plantname": "개운죽",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T13:53:43.047791Z",
-        "content": "건강해요",
-        "price": 10000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
+        }
     },
     {
-        "id": 1,
-        "user": {
-            "pk": 1,
-            "username": "test1",
-            "nickname": "새내기야자나무9690"
-        },
+        "pk": 1,
+        "plantname": "산세베리아",
+        "photo": "https://url.kr/d1acln",
+        "price": 20000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
         "addr": {
             "id": 1,
             "sido": "서울특별시",
             "sigungu": "종로구"
-        },
-        "plantname": "산세베리아",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T13:48:16.955862Z",
-        "content": "채팅주세요",
-        "price": 20000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
+        }
     }
 ]
 ```
@@ -1013,75 +993,54 @@ http://127.0.0.1:8000/api/v1/leaf82/search
 
 - Params
 
-| Key       | Type   | Description                                | Mandatory | Example |
-| --------- | ------ | ------------------------------------------ | --------- | ------- |
-| plantname | String | 식물이름(검색어). 식물이름과 내용에서 검색 |           |         |
-| sido      | String | 시도                                       |           | 경기도  |
-| sigungu   | String | 시군구                                     |           | 용인시  |
+| Key       | Type   | Description      | Mandatory | Example |
+| --------- | ------ | ---------------- | --------- | ------- |
+| plantname | String | 식물이름(검색어) |           |         |
+| sido      | String | 시도             |           | 경기도  |
+| sigungu   | String | 시군구           |           | 용인시  |
 
 - Response
 
 ```
 [
     {
-        "id": 7,
-        "user": {
-            "pk": 1,
-            "username": "test3",
-            "nickname": "새내기야자나무9690"
-        },
+        "pk": 7,
+        "plantname": "싱고니움",
+        "photo": "https://url.kr/d1acln",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
         "addr": {
             "id": 109,
             "sido": "경기도",
             "sigungu": "용인시 기흥구"
-        },
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T15:37:44.139568Z",
-        "content": "연락주세요",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
+        }
     },
     {
-        "id": 6,
-        "user": {
-            "pk": 1,
-            "username": "test3",
-            "nickname": "새내기야자나무9690"
-        },
+        "pk": 6,
+        "plantname": "싱고니움",
+        "photo": "https://url.kr/d1acln",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
         "addr": {
             "id": 108,
             "sido": "경기도",
             "sigungu": "용인시 처인구"
-        },
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T15:37:32.734002Z",
-        "content": "연락주세요",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
+        }
     },
     {
-        "id": 5,
-        "user": {
-            "pk": 1,
-            "username": "test3",
-            "nickname": "새내기야자나무9690"
-        },
+        "pk": 5,
+        "plantname": "싱고니움",
+        "photo": "https://url.kr/d1acln",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
         "addr": {
             "id": 107,
             "sido": "경기도",
             "sigungu": "용인시"
-        },
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T15:37:22.502227Z",
-        "content": "연락주세요",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
+        }
     }
 ]
 ```
@@ -1095,14 +1054,41 @@ http://127.0.0.1:8000/api/v1/leaf82/search
 - URL
 
 ```
+http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 ```
 
 - Request Parameters
 
-| Name   | Type   | Description | Mandatory | Example |
-| ------ | ------ | ----------- | --------- | ------- |
-| 시도   | String | 한글명      | O         | 경기도  |
-| 시군구 | String | 한글명      | O         | 용인시  |
+| Name         | Type   | Description                                                  | Mandatory | Example |
+| ------------ | ------ | ------------------------------------------------------------ | --------- | ------- |
+| username     | String | 유저id                                                       | O         | test1   |
+| posting_addr | Int    | 잎팔이 글 작성시 부여되는 랜덤 값<br />한 유저 내에서 중복되지 않음 | O         | 426408  |
+
+- Response
+
+```
+{
+    "id": 2,
+    "user": {
+        "pk": 1,
+        "username": "test1",
+        "nickname": "새내기참나무4979"
+    },
+    "addr": {
+        "id": 108,
+        "sido": "경기도",
+        "sigungu": "용인시 처인구"
+    },
+    "plantname": "싱고니움",
+    "photo": "https://url.kr/d1acln",
+    "created_at": "2022-08-04T05:08:32.067416Z",
+    "content": "연락주세요",
+    "price": 15000,
+    "category_class": "분양해요",
+    "status_class": "판매중",
+    "posting_addr": 426408
+}
+```
 
 
 
