@@ -189,6 +189,7 @@ export const Account = {
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
           router.push({ name: 'profile' })
+          alert('비밀번호가 변경되었습니다.')
         })
         .catch(err => {
           console.log(err)
