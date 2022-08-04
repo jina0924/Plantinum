@@ -35,7 +35,7 @@
     "model": "plants.plants",
     "pk": 3,
     "fields": {
-        "name": "골드크레스트 '윌마'",
+        "name": "골드크레스트 윌마",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -316,7 +316,7 @@
         "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_winter": "053004",
         "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-        "specl_manage_info": "분흙의 물빠짐이 좋아야 한다. 지나친 과습과 건조는 잎을  황화시켜 떨어지게 한다."
+        "specl_manage_info": "분흙의 물빠짐이 좋아야 한다. 지나친 과습과 건조는 잎을 황화시켜 떨어지게 한다."
     }
 },
 {
@@ -524,7 +524,7 @@
         "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_winter": "053004",
         "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-        "specl_manage_info": "- 성장기인 5~9월엔 분흙의 상태를 보아 1주일을 기준으로 물관리함  흙이 마르지 않게 조절하되 과습하지 않도록 주의- 과습은 잎이 노랗게 마르면서 낙엽이 지거나 줄기가 썩는 원인 - 온도가 낮아지면 낙엽 지고, 봄이 되어야 잎이 나옴"
+        "specl_manage_info": "- 성장기인 5~9월엔 분흙의 상태를 보아 1주일을 기준으로 물관리함 흙이 마르지 않게 조절하되 과습하지 않도록 주의- 과습은 잎이 노랗게 마르면서 낙엽이 지거나 줄기가 썩는 원인 - 온도가 낮아지면 낙엽 지고, 봄이 되어야 잎이 나옴"
     }
 },
 {
@@ -547,7 +547,7 @@
     "model": "plants.plants",
     "pk": 35,
     "fields": {
-        "name": "드라세나  '송오브자마이카'",
+        "name": "드라세나 송오브자마이카",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -563,7 +563,7 @@
     "model": "plants.plants",
     "pk": 36,
     "fields": {
-        "name": "드라세나  '와네끼'",
+        "name": "드라세나 와네끼",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -579,7 +579,7 @@
     "model": "plants.plants",
     "pk": 37,
     "fields": {
-        "name": "드라세나 '송오브인디아'",
+        "name": "드라세나 송오브인디아",
         "watercycle_spring": "053002",
         "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
         "watercycle_summer": "053002",
@@ -595,7 +595,7 @@
     "model": "plants.plants",
     "pk": 38,
     "fields": {
-        "name": "드라세나 '자바'",
+        "name": "드라세나 자바",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -611,7 +611,7 @@
     "model": "plants.plants",
     "pk": 39,
     "fields": {
-        "name": "드라세나 '콤팩타'",
+        "name": "드라세나 콤팩타",
         "watercycle_spring": "053002",
         "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
         "watercycle_summer": "053002",
@@ -627,7 +627,7 @@
     "model": "plants.plants",
     "pk": 40,
     "fields": {
-        "name": "드라세나 '트리컬러 레인보우'",
+        "name": "드라세나 트리컬러 레인보우",
         "watercycle_spring": "053002",
         "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
         "watercycle_summer": "053002",
@@ -707,7 +707,7 @@
     "model": "plants.plants",
     "pk": 45,
     "fields": {
-        "name": "드라세나 산데리아나 '세레스'",
+        "name": "드라세나 산데리아나 세레스",
         "watercycle_spring": "053002",
         "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
         "watercycle_summer": "053002",
@@ -755,7 +755,7 @@
     "model": "plants.plants",
     "pk": 48,
     "fields": {
-        "name": "디펜바키아 '마리안느'",
+        "name": "디펜바키아 마리안느",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -771,7 +771,7 @@
     "model": "plants.plants",
     "pk": 49,
     "fields": {
-        "name": "디펜바키아 '트로픽스노우'",
+        "name": "디펜바키아 트로픽스노우",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -1075,7 +1075,7 @@
     "model": "plants.plants",
     "pk": 68,
     "fields": {
-        "name": "무늬쉐플레라'홍콩'",
+        "name": "무늬쉐플레라 홍콩",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -1155,7 +1155,7 @@
     "model": "plants.plants",
     "pk": 73,
     "fields": {
-        "name": "무늬푸밀라고무나무 ",
+        "name": "무늬푸밀라고무나무",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -1283,7 +1283,7 @@
     "model": "plants.plants",
     "pk": 81,
     "fields": {
-        "name": "벤자민고무나무 '킹'",
+        "name": "벤자민고무나무 킹",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -1459,7 +1459,7 @@
     "model": "plants.plants",
     "pk": 92,
     "fields": {
-        "name": "산세베리아 '골든 하니'",
+        "name": "산세베리아 골든 하니",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -1507,7 +1507,7 @@
     "model": "plants.plants",
     "pk": 95,
     "fields": {
-        "name": "상록넉줄고사리 '후마타'",
+        "name": "상록넉줄고사리 후마타",
         "watercycle_spring": "053002",
         "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
         "watercycle_summer": "053002",
@@ -1612,7 +1612,7 @@
         "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_winter": "053004",
         "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-        "specl_manage_info": "뜰에서 재배가능한 제주도를 제외한 나머지 지역에서는 온실이나 집안에서 가꾸는 관상수이다. 꽃은 단성화이며 노란빛을 띤 색으로 6~8월에 암수딴그루로 핀다. 수꽃차례는 원줄기 끝에 원기둥 모양으로 달리며, 길이 50~60cm, 지름 5~8cm이고, 암꽃차례는 원줄기에 끝에 둥글게 모여 달린다. 열매는 구과로 10월에 익는데 관상용, 식용, 약용으로 쓴다.  "
+        "specl_manage_info": "뜰에서 재배가능한 제주도를 제외한 나머지 지역에서는 온실이나 집안에서 가꾸는 관상수이다. 꽃은 단성화이며 노란빛을 띤 색으로 6~8월에 암수딴그루로 핀다. 수꽃차례는 원줄기 끝에 원기둥 모양으로 달리며, 길이 50~60cm, 지름 5~8cm이고, 암꽃차례는 원줄기에 끝에 둥글게 모여 달린다. 열매는 구과로 10월에 익는데 관상용, 식용, 약용으로 쓴다. "
     }
 },
 {
@@ -1676,7 +1676,7 @@
         "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_winter": "053004",
         "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-        "specl_manage_info": "열대식물이지만 10℃이상에서 월동하여 온실에서 겨울을   나고 그늘이나 직사광선에서도 잘 자란다."
+        "specl_manage_info": "열대식물이지만 10℃이상에서 월동하여 온실에서 겨울을 나고 그늘이나 직사광선에서도 잘 자란다."
     }
 },
 {
@@ -1699,7 +1699,7 @@
     "model": "plants.plants",
     "pk": 107,
     "fields": {
-        "name": "쉐플레라 '홍콩'",
+        "name": "쉐플레라 홍콩",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -1932,7 +1932,7 @@
         "watercycle_autumn_nm": "항상 흙을 축축하게 유지함(물에 잠김)",
         "watercycle_winter": "053003",
         "watercycle_winter_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "specl_manage_info": "한여름의 직사광선은 피하고 습도유지가 되어야 잘 자람.   새로운 엽상체는 잘 찢어지므로 취급시 주의한다."
+        "specl_manage_info": "한여름의 직사광선은 피하고 습도유지가 되어야 잘 자람. 새로운 엽상체는 잘 찢어지므로 취급시 주의한다."
     }
 },
 {
@@ -2579,22 +2579,6 @@
     "model": "plants.plants",
     "pk": 162,
     "fields": {
-        "name": "크로톤",
-        "watercycle_spring": "053003",
-        "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_summer": "053003",
-        "watercycle_summer_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_autumn": "053003",
-        "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_winter": "053004",
-        "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-        "specl_manage_info": ""
-    }
-},
-{
-    "model": "plants.plants",
-    "pk": 163,
-    "fields": {
         "name": "크립탄서스",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
@@ -2609,7 +2593,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 164,
+    "pk": 163,
     "fields": {
         "name": "클레마티스",
         "watercycle_spring": "053002",
@@ -2625,7 +2609,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 165,
+    "pk": 164,
     "fields": {
         "name": "털달개비",
         "watercycle_spring": "053004",
@@ -2641,7 +2625,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 166,
+    "pk": 165,
     "fields": {
         "name": "털머위",
         "watercycle_spring": "053003",
@@ -2657,7 +2641,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 167,
+    "pk": 166,
     "fields": {
         "name": "테이블야자",
         "watercycle_spring": "053002",
@@ -2673,7 +2657,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 168,
+    "pk": 167,
     "fields": {
         "name": "틸란드시아",
         "watercycle_spring": "053003",
@@ -2689,7 +2673,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 169,
+    "pk": 168,
     "fields": {
         "name": "파키라",
         "watercycle_spring": "053003",
@@ -2705,7 +2689,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 170,
+    "pk": 169,
     "fields": {
         "name": "파피오페딜럼",
         "watercycle_spring": "053004",
@@ -2721,7 +2705,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 171,
+    "pk": 170,
     "fields": {
         "name": "팔레놉시스(호접란)",
         "watercycle_spring": "053003",
@@ -2737,7 +2721,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 172,
+    "pk": 171,
     "fields": {
         "name": "팔손이나무",
         "watercycle_spring": "053003",
@@ -2753,7 +2737,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 173,
+    "pk": 172,
     "fields": {
         "name": "팬더 고무나무",
         "watercycle_spring": "053003",
@@ -2769,7 +2753,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 174,
+    "pk": 173,
     "fields": {
         "name": "팻츠헤데라",
         "watercycle_spring": "053003",
@@ -2785,7 +2769,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 175,
+    "pk": 174,
     "fields": {
         "name": "페페로미아 오브투시폴리아",
         "watercycle_spring": "053003",
@@ -2801,7 +2785,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 176,
+    "pk": 175,
     "fields": {
         "name": "페페로미아 클루시폴리아",
         "watercycle_spring": "053003",
@@ -2817,7 +2801,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 177,
+    "pk": 176,
     "fields": {
         "name": "페페로미아 푸테올라타",
         "watercycle_spring": "053003",
@@ -2833,7 +2817,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 178,
+    "pk": 177,
     "fields": {
         "name": "포인세티아",
         "watercycle_spring": "053002",
@@ -2849,7 +2833,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 179,
+    "pk": 178,
     "fields": {
         "name": "폴리시아스",
         "watercycle_spring": "053003",
@@ -2865,7 +2849,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 180,
+    "pk": 179,
     "fields": {
         "name": "푸밀라고무나무",
         "watercycle_spring": "053002",
@@ -2881,7 +2865,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 181,
+    "pk": 180,
     "fields": {
         "name": "프테리스",
         "watercycle_spring": "053002",
@@ -2897,7 +2881,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 182,
+    "pk": 181,
     "fields": {
         "name": "피라칸사",
         "watercycle_spring": "053002",
@@ -2913,7 +2897,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 183,
+    "pk": 182,
     "fields": {
         "name": "피토니아 핑크스타",
         "watercycle_spring": "053003",
@@ -2929,7 +2913,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 184,
+    "pk": 183,
     "fields": {
         "name": "피토니아 화이트스타",
         "watercycle_spring": "053003",
@@ -2945,7 +2929,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 185,
+    "pk": 184,
     "fields": {
         "name": "픽투라툼 접란",
         "watercycle_spring": "053003",
@@ -2961,7 +2945,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 186,
+    "pk": 185,
     "fields": {
         "name": "필레아 글라우카(타라, 블루체인)",
         "watercycle_spring": "053003",
@@ -2977,9 +2961,25 @@
 },
 {
     "model": "plants.plants",
+    "pk": 186,
+    "fields": {
+        "name": "필로덴드론 선라이트",
+        "watercycle_spring": "053003",
+        "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
+        "watercycle_summer": "053003",
+        "watercycle_summer_nm": "토양 표면이 말랐을때 충분히 관수함",
+        "watercycle_autumn": "053003",
+        "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
+        "watercycle_winter": "053004",
+        "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
+        "specl_manage_info": ""
+    }
+},
+{
+    "model": "plants.plants",
     "pk": 187,
     "fields": {
-        "name": "필로덴드론 '선라이트'",
+        "name": "필로덴드론 제나두",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -2995,7 +2995,7 @@
     "model": "plants.plants",
     "pk": 188,
     "fields": {
-        "name": "필로덴드론 '제나두'",
+        "name": "필로덴드론 고엘디",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -3011,7 +3011,7 @@
     "model": "plants.plants",
     "pk": 189,
     "fields": {
-        "name": "필로덴드론 고엘디",
+        "name": "필로덴드론 레몬라임",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -3027,7 +3027,7 @@
     "model": "plants.plants",
     "pk": 190,
     "fields": {
-        "name": "필로덴드론 레몬라임",
+        "name": "필로덴드론 셀로움",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -3043,7 +3043,7 @@
     "model": "plants.plants",
     "pk": 191,
     "fields": {
-        "name": "필로덴드론 셀로움",
+        "name": "필로덴드론 옥시카르디움",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -3059,7 +3059,7 @@
     "model": "plants.plants",
     "pk": 192,
     "fields": {
-        "name": "필로덴드론 옥시카르디움",
+        "name": "필로덴드론 콩고",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
         "watercycle_summer": "053003",
@@ -3075,22 +3075,6 @@
     "model": "plants.plants",
     "pk": 193,
     "fields": {
-        "name": "필로덴드론 콩고",
-        "watercycle_spring": "053003",
-        "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_summer": "053003",
-        "watercycle_summer_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_autumn": "053003",
-        "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_winter": "053004",
-        "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-        "specl_manage_info": ""
-    }
-},
-{
-    "model": "plants.plants",
-    "pk": 194,
-    "fields": {
         "name": "해마리아",
         "watercycle_spring": "053002",
         "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
@@ -3105,7 +3089,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 195,
+    "pk": 194,
     "fields": {
         "name": "행운목",
         "watercycle_spring": "053002",
@@ -3121,7 +3105,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 196,
+    "pk": 195,
     "fields": {
         "name": "헤미오니티스(하트펀)",
         "watercycle_spring": "053002",
@@ -3137,7 +3121,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 197,
+    "pk": 196,
     "fields": {
         "name": "헤테로파낙스 프라그란스 (해피트리)",
         "watercycle_spring": "053003",
@@ -3153,7 +3137,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 198,
+    "pk": 197,
     "fields": {
         "name": "협죽도",
         "watercycle_spring": "053003",
@@ -3169,7 +3153,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 199,
+    "pk": 198,
     "fields": {
         "name": "형광스킨답서스",
         "watercycle_spring": "053003",
@@ -3185,7 +3169,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 200,
+    "pk": 199,
     "fields": {
         "name": "호야",
         "watercycle_spring": "053003",
@@ -3201,7 +3185,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 201,
+    "pk": 200,
     "fields": {
         "name": "호주매",
         "watercycle_spring": "053004",
@@ -3217,7 +3201,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 202,
+    "pk": 201,
     "fields": {
         "name": "황금마삭줄",
         "watercycle_spring": "053003",
@@ -3233,7 +3217,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 203,
+    "pk": 202,
     "fields": {
         "name": "황금죽",
         "watercycle_spring": "053003",
@@ -3249,7 +3233,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 204,
+    "pk": 203,
     "fields": {
         "name": "후피향나무",
         "watercycle_spring": "053003",
@@ -3265,7 +3249,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 205,
+    "pk": 204,
     "fields": {
         "name": "흰꽃나도사프란",
         "watercycle_spring": "053004",
@@ -3281,7 +3265,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 206,
+    "pk": 205,
     "fields": {
         "name": "흰줄무늬달개비(트라데스칸티아)",
         "watercycle_spring": "053003",
@@ -3297,7 +3281,7 @@
 },
 {
     "model": "plants.plants",
-    "pk": 207,
+    "pk": 206,
     "fields": {
         "name": "히포에스테스",
         "watercycle_spring": "053002",
