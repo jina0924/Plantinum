@@ -9,6 +9,6 @@ urlpatterns = [
     path('search/sido/', views.search_sido),
     path('search/<sido>/sigungu/', views.search_sigungu),
     path('search', views.search),
-    path('<int:leaf82_pk>/detail/', views.detail),
+    path('<username>/<int:posting_addr>/', views.detail),
 
 ]
