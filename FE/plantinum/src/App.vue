@@ -9,6 +9,7 @@
 <script>
 // import NavBar from '@/components/NavBar.vue'
 // import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 
 export default {
@@ -17,12 +18,11 @@ export default {
   // computed: {
   //   ...mapGetters(['currentUser', 'isLoggedIn',])
   // },
-  // methods: {
-  //   ...mapActions(['fetchCurrentUser', 'fetchProfile'])
-  // },
+  methods: {
+    ...mapActions(['fetchCurrentUser', 'fetchProfile'])
+  },
   created () {
-    // this.fetchCurrentUser()
-    // this.fetchProfile()
+    this.fetchCurrentUser()
   }
 }
 </script>
