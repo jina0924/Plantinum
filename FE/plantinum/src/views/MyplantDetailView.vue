@@ -42,12 +42,16 @@
 
               <div class="otp">
                 <div v-if="!myplant.is_connected">
-                  <button class="btn plant-info-btn plant-info-btn-end">SuPool 연결</button>
+                  <button @click="getOTP(myplantPk)" class="btn plant-info-btn plant-info-btn-end">SuPool 연결</button>
                 </div>
                 <div v-if="myplant.is_connected">
                   <button>SuPool 연결 끊기</button>
                 </div>
               </div>
+            </div>
+            <div v-if="!myplant.is_connected" class="supool-info d-flex align-items-center">
+              <span class="material-symbols-outlined supool-icon">potted_plant</span>
+              SuPool은 Plantinum에서 제작한 자동화 화분입니다
             </div>
           </div>
         </div>
@@ -79,13 +83,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchMyplant']),
+    ...mapActions(['fetchMyplant', 'getOTP']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
       }
-    }
-
+    },
   },
   created() {
     this.fetchMyplant(this.$route.params.plantPk)
@@ -169,7 +172,15 @@ body {
 .myplant-modal {
   position: relative;
   top: 150px;
-  /* position: fixed;
-  top: 100px; */
+}
+
+.supool-info {
+  font-size: 0.9rem;
+  color: #845A49;
+  margin-top: 0.7rem;
+}
+
+.supool-icon {
+  margin-right: 0.7rem;
 }
 </style>
