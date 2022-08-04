@@ -6,7 +6,7 @@
       <div class="col-1"></div>
       <div class="col-10 jsutify-content-center">
         <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplants[0]">
-          <button class="sort-btn btn" @click="myplantSort">{{ sort_by }}</button>
+          <button class="sort-btn btn" @click="myplantSort()">{{ sort_by }}</button>
         </div>
       </div>
     </div>
@@ -15,23 +15,25 @@
       <!-- <div class="col-md-2 px-0"></div> -->
       <div class="col-1"></div>
       <div class="col-10 row px-0 mx-0 card-section justify-content-center">
-        <div class="card my-2 px-0 mx-2" v-for="plant in myplants" :key="plant.id">
-          <div class="plant-img">
-            <img :src="`${plant.photo}`" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
-          </div>
-          <div class="d-flex justify-content-between plant-info">
-            <div class="col-8">
-              <span class="plant-name">
-                {{ plant.nickname }}
-              </span>
+        <div class="card my-2 px-0 mx-2" v-for="plant in myplants" :key="plant.pk">
+          <router-link class="" :to="{ name: 'myplantDetail', params: { username: username, plantPk: plant.pk } }">
+            <div class="plant-img">
+              <img :src="plant.photo" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
             </div>
-            <div class="col-4 d-flex justify-content-end align-items-center">
-              <span class="material-symbols-outlined humidity">water_drop</span>
-              <span class="humidity">{{ plant.습도 }} %</span>
-              <!-- <span class="material-symbols-outlined diary-count">description</span>
-              <span class="diary-count">{{ plant.일지수 }}</span> -->
+            <div class="d-flex justify-content-between plant-info">
+              <div class="col-8">
+                <span class="plant-name">
+                  {{ plant.nickname }}
+                </span>
+              </div>
+              <div class="col-4 d-flex justify-content-end align-items-center">
+                <span class="material-symbols-outlined humidity">water_drop</span>
+                <span class="humidity">{{ plant.sensing.moisture_level }} %</span>
+                <!-- <span class="material-symbols-outlined diary-count">description</span>
+                <span class="diary-count">{{ plant.일지수 }}</span> -->
+              </div>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
       <div class="col-1"></div>
@@ -49,6 +51,8 @@
 </template>
 
 <script scoped>
+import { mapGetters } from 'vuex'
+
 export default {
   name : 'MyplantList',
   data() {
@@ -58,13 +62,16 @@ export default {
     }
   },
   props : {
-    myplants: Array
+    myplants: {
+      type: Array,
+    }
   },
-  // computed : {
-  //   myplant_list() {
-  //     return this.myplant_list
-  //   }
-  // },
+  computed : {
+    ...mapGetters(['currentUser']),
+    username() {
+      return this.currentUser.username
+    }
+  },
   methods : {
     myplantSort() {
       if (this.sort_by === '등록순↓') {
@@ -104,13 +111,27 @@ export default {
   width: 16rem;
 }
 
+.card a {
+  text-decoration-line: none;
+  color: black;
+}
+
+.plant-img {
+  position: relative; 
+  width: 250px;
+  height: 250px;
+  margin: auto;
+}
+
 .plant-img img {
   /* width: 95%;
   height: 95%; */
-  width: 250px;
-  height: 250px;
   padding: 0.5rem;
   border-radius: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .plant-info {

@@ -65,9 +65,14 @@
         <div class="btnbox">
           <div class="btn-border">
             <div class="login d-flex justify-content-center">
-              <router-link :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">
+              <div v-if="!!username">
+                <router-link :to="{ name: 'myplant', params: { username } }">
+                  <button class="btn">내 식물</button>
+                </router-link>
+              </div>
+              <!-- <router-link :to="{ name: 'myplant', params: { username } }" v-if="!!username">
                 <button class="btn">내 식물</button>
-              </router-link>
+              </router-link> -->
               <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
                 <button class="btn">내 식물</button>
               </router-link>
@@ -162,15 +167,38 @@ import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'HomeView',
+  // data() {
+  //   return {
+  //     username : 'guest'
+  //   }
+  // },
   components: {
     NavBar
   },
+  // methods : {
+  //   abc() {
+  //     this.username = this.currentUser.username
+  //   }
+  // },
   computed: {
     ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
+    // username: function () {
+    //   return this.currentUser.username
+    // }
+
     username() {
       return this.currentUser.username
     }
   },
+  // created () {
+  //   console.log(this.currentUser)
+  //   this.abc()
+  // },
+  // watch: {
+  //   currentUser: function() {
+  //     this.abc()
+  //   }
+  // }
 }
 </script>
 

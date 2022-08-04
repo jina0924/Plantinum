@@ -47,7 +47,7 @@ export default {
     }
   },
   computed : {
-    ...mapGetters(['myplants', 'currentUser'])
+    ...mapGetters(['myplants', 'currentUser', 'isLoggedIn'])
   },
   created() {
     this.mypage = false
@@ -55,6 +55,8 @@ export default {
     this.myplantUsername = payload.username
     this.fetchMyplants(payload)
     this.isMypage()
+    console.log(this.currentUser)
+    console.log(this.isLoggedIn)
   },
 }
 </script>
