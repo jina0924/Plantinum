@@ -2,10 +2,10 @@
   <div>
     <div class="search row">
       <div class="col-sm-2 col-md-4 col-0"></div>
-      <!-- <input class="search-input" type="text" v-model="info.keyword" placeholder="식물명을 입력해주세요" @keyup.enter="fetchLeaf82(info)">
+      <!-- <input class="search-input" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="fetchLeaf82(info)">
       <button class="search-btn" type="submit" @click="fetchLeaf82(info)"></button> -->
       <div class="search-box col-sm-8 col-md-4 col-12 d-flex justify-content-center">
-        <input class="search-input" type="text" v-model="info.keyword" placeholder="식물명을 입력해주세요">
+        <input class="search-input" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요">
         <button class="search-btn" type="submit">
           <span class="d-flex align-items-center justify-content-center">검색</span>
         </button>
@@ -49,7 +49,7 @@ export default {
   data () {
     return {
       info: {
-        keyword: '',
+        plantname: '',
         sido: '',
         sigungu: '',
       }
