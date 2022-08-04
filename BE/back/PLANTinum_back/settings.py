@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'plants',
     'accounts',
+    'leaf82',
 
     'corsheaders',
 
@@ -150,7 +151,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
