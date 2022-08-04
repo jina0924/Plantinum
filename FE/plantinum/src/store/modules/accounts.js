@@ -177,13 +177,7 @@ export const Account = {
         })
     },
 
-    changePassword({getters, dispatch}, user_pk, new_password1, new_password2) {
-      console.log(credentials)
-      const credentials = {
-        user_pk : user_pk,
-        new_password1 : new_password1,
-        new_password2 : new_password2,
-      }
+    changePassword({getters, dispatch}, credentials) {
       axios({
         url : drf.accounts.changePassword(),
         method : 'post',
@@ -191,14 +185,16 @@ export const Account = {
         headers : getters.authHeader
       })
         .then(res => {
-          console.log(res)
           const token = res.data.key
           dispatch('saveToken', token)
           dispatch('fetchCurrentUser')
+          router.push({ name: 'profile' })
+          alert('비밀번호가 변경되었습니다.')
         })
         .catch(err => {
+          console.log(err)
           if (err.response.status === 401) {
-            router.push({ name: 'changePassword' })
+            router.push({ name: 'updatepassword' })
           }
         })
     } 

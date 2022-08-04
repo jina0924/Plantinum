@@ -19,7 +19,8 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    // props: true
   },
   {
     path: '/login',
@@ -55,7 +56,8 @@ const routes = [
   {
     path: '/myplant/:username',
     name: 'myplant',
-    component: MyplantView
+    component: MyplantView,
+    props: true
   },
   {
     path: '/myplant/new',
@@ -65,12 +67,14 @@ const routes = [
   {
     path: '/myplant/:username/:plantPk',
     name: 'myplantDetail',
-    component: MyplantDetailView
+    component: MyplantDetailView,
+    props: true
   },
   {
     path: '/myplant/:plantPk/edit',
     name: 'myplantEdit',
-    component: MyplantEditView
+    component: MyplantEditView,
+    props: true
   },
   // 잎팔이
   {

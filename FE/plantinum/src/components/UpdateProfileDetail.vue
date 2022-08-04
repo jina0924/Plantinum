@@ -114,8 +114,13 @@
                 <span class="material-symbols-outlined icon pr-4">home</span>
               </div>
               <div class="card-text pb-5">
-                <input type="hidden" class="card-input mx-4" v-model="info.addr">
-                <span class="card-input mx-4">주소 찾기</span>
+                <input type="text" class="card-addr ml-4" v-model="info.addr" id="sample6_address">
+                <input type="hidden" class="card-input mx-4" v-model="info.zip_code" id="sample6_postcode">
+                <!-- <input type="text" class="card-input mx-4"  id="sample6_detailAddress"> -->
+                <!-- <input type="text" class="card-input mx-4"  id="sample6_extraAddress"> -->
+
+
+                <input type="button" @click="findAddr" value="주소찾기">
               </div>
             </div>
           </div>
@@ -173,6 +178,25 @@ export default {
       this.info.phone_number = this.profile.phone_number
       this.info.dday = this.profile.dday
       this.info.myplant_count = this.profile.myplant_count
+    },
+    findAddr() {
+      new window.daum.Postcode({
+            oncomplete: (data) => {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    this.info.addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    this.info.addr = data.jibunAddress;
+                }
+                this.info.zip_code = data.zonecode
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = this.info.addr;
+            }
+        }).open();
     }
   },
   computed: {
@@ -294,6 +318,13 @@ input[type="file"] {
   font-size: 0.9rem;
   width: 80%;
 }
+
+.card-text .card-addr {
+  color: #7E7E7E;
+  font-size: 0.9rem;
+  width: 50%;
+}
+
 
 .card-text .card-input-nickname {
   color: #7E7E7E;
