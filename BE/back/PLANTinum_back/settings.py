@@ -36,8 +36,6 @@ INSTALLED_APPS = [
     'accounts',
     'leaf82',
 
-    'django_filters',
-
     'corsheaders',
 
     'rest_framework',
@@ -153,7 +151,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
 }
 
 REST_AUTH_REGISTER_SERIALIZERS = {
