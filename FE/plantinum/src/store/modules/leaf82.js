@@ -76,6 +76,7 @@ export const Leaf82 = {
 
     // 게시글 등록
     createLeaf82({ commit, getters }, credentials) {
+      console.log(credentials)
       axios({
         url: drf.leaf82.new(),
         method: 'post',

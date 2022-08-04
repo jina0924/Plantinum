@@ -24,10 +24,10 @@
       <!-- 우측 -->
       <div class="right col-md-7 mt-3 px-5">
         <div class="title d-flex justify-content-start py-1">
-          <input type="text" v-model="plantname" placeholder="식물명을 입력해주세요">
+          <input type="text" v-model="credentials.plantname" placeholder="식물명을 입력해주세요">
         </div>
         <div class="price d-flex justify-content-start py-1">
-          <input type="text" v-model="price" placeholder="가격">
+          <input type="text" v-model="credentials.price" placeholder="가격">
         </div>
         <div class="addr d-flex justify-content-start py-1">
           <select name="sido" id="" @change="beforeFetchSigungu($event)" class="mr-1">
@@ -37,7 +37,7 @@
           <!-- 시도가 선택되면 활성화 -->
           <select name="sigungu" id="" @change="selectSigungu($event)" v-if="this.credentials.sido" class="mr-1">
             <option selected>동네를 선택해주세요</option>
-            <option value="" v-for="(loc) in sigungu" :key="loc.pk">{{ loc.sigungu }}</option>
+            <option v-for="(loc2) in sigungu" :key="loc2.pk" :value="loc2.sigungu">{{ loc2.sigungu }}</option>
           </select>
           <!-- 비활성화 -->
           <select name="sigungu" id="" v-if="!this.credentials.sido" disabled class="mr-1">
@@ -51,7 +51,7 @@
           </select>
         </div>
         <div class="content d-flex justify-content-start py-1">
-          <textarea name="content" id="content" cols="30" rows="10" v-model="content" placeholder="회원님의 식물을 소개해주세요"></textarea>
+          <textarea name="content" id="content" cols="30" rows="10" v-model="credentials.content" placeholder="회원님의 식물을 소개해주세요"></textarea>
         </div>
         <div class="btns row d-flex justify-content-start py-3">
           <div class="submit col-2 d-flex justify-content-start mr-3">
@@ -83,7 +83,7 @@ export default {
         price: '',
         sido: '',
         sigungu: '',
-        category_class: '',
+        category_class: '분양해요',
         content: '',
       }
     }
@@ -91,17 +91,21 @@ export default {
   methods: {
     ...mapActions(['fetchSido', 'fetchSigungu', 'createLeaf82']),
     beforeFetchSigungu(event) {
-      const sido = event.target.value
-      this.credentials.sido = sido
-      this.fetchSigungu(sido)
+      let tmp = event.target.value
+      this.credentials.sido = tmp
+      this.fetchSigungu(this.credentials.sido)
     },
     selectSigungu(event) {
-      const sigungu = event.target.value
-      this.credentials.sigungu = sigungu
+      let tmp = event.target.value
+      console.log(tmp)
+      this.credentials.sigungu = tmp
+      console.log(this.credentials.sigungu)
     },
     selectCategory(event) {
-      const category_class = event.target.value
-      this.credentials.category_class = category_class
+      let tmp = event.target.value
+      console.log(tmp)
+      this.credentials.category_class = tmp
+      console.log(this.credentials.category_class)
     }
   },
   computed: {
