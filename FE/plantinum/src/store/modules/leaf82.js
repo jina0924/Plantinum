@@ -87,12 +87,26 @@ export const Leaf82 = {
         commit('SET_LEAF82DETAIL', res.data)
         router.push({
           name: 'leaf82Detail',
-          params: { pk: getters.leaf82Detail.id }
-        }).
-        catch(err => {
-          alert('잘못된 경로입니다.')
-          console.log(err)
+          params: { username: getters.currentUser.username , posting_addr: getters.leaf82Detail.posting_addr }
         })
+      })
+      .catch(err => {
+        alert('잘못된 접근입니다.')
+        console.log(err)
+      })
+    },
+
+    fetchLeaf82Detail({ commit, }, info) {
+      axios({
+        url: drf.leaf82.detail(info),
+        method: 'get',
+      })
+      .then(res => {
+        console.log(res)
+        commit('SET_LEAF82DETAIL', res.data)
+      })
+      .catch(err => {
+        console.log(err)
       })
     }
   },

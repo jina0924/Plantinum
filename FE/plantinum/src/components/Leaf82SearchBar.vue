@@ -14,7 +14,7 @@
       <div class="select row d-flex justify-content-between col-sm-8 col-12">
         <div class="create">
           <!-- 생성버튼 -->
-          <router-link :to="{ name : 'leaf82New' }">
+          <router-link :to="{ name : 'leaf82New' }" v-if="isLoggedIn">
             <button class="create-btn">
               등록
             </button>
@@ -90,7 +90,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['sido', 'sigungu'])
+    ...mapGetters(['sido', 'sigungu', 'isLoggedIn'])
   },
   created() {
     this.fetchLeaf82()
