@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/v1/accounts/', include('dj_rest_auth.urls')),
     path('api/v1/accounts/signup/', include('dj_rest_auth.registration.urls')),
     path('api/v1/plants/', include('plants.urls')),
+    path('api/v1/leaf82/', include('leaf82.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

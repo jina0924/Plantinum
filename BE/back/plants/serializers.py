@@ -35,8 +35,8 @@ class MyplantSerializer(serializers.ModelSerializer):
             model = Plants
             fields = ('pk', 'name', 'watercycle_spring_nm', 'watercycle_summer_nm', 'watercycle_autumn_nm', 'watercycle_winter_nm', 'specl_manage_info',)
 
-    name = PlantsSerializer(read_only=True)
-    name_id = serializers.IntegerField(write_only=True)
+    plant_info = PlantsSerializer(read_only=True)
+    plantname = serializers.CharField(read_only=True)
 
     class SensingSerializer(serializers.ModelSerializer):
         class Meta:
