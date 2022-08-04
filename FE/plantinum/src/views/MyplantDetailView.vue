@@ -24,38 +24,28 @@
               <span class="col-lg-7 col-xl-8">{{ myplant.sensing.last_watering }}</span>
             </div>
             <div class="row">
-              <div class="seasonal-manage-info">
-                <button class="btn plant-info-btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">계절별 식물 관리 정보</button>
 
+              <div class="seasonal-manage-info">
+                <button class="btn plant-info-btn" type="button" @click="modal = 1">계절별 식물 관리 정보</button>
                 <!-- 모달 -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        ...
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
+                <div class="black-bg" @click="close($event)" v-if="!!modal">
+                  <myplant-modal :plantInfo="myplant.plant_info" :modal="modal" class="myplant-modal"></myplant-modal>
                 </div>
               </div>
               
               <div class="special-manage-info" v-if="myplant.plant_info.specl_manage_info">
-                <button class="btn plant-info-btn">특별 관리 정보</button>
+                <button class="btn plant-info-btn" @click="modal = 2">특별 관리 정보</button>
+                <div class="black-bg" @click="close($event)" v-if="!!modal">
+                  <myplant-modal :plantInfo="myplant.plant_info" :modal="modal" class="myplant-modal"></myplant-modal>
+                </div>
               </div>
+
               <div class="otp">
                 <div v-if="!myplant.is_connected">
-                  <button class="btn plant-info-btn plant-info-btn-end">OTP 발급</button>
+                  <button class="btn plant-info-btn plant-info-btn-end">SuPool 연결</button>
                 </div>
                 <div v-if="myplant.is_connected">
-                  <button>화분 연결 끊기</button>
+                  <button>SuPool 연결 끊기</button>
                 </div>
               </div>
             </div>
@@ -64,24 +54,24 @@
       </div>
     </div>
     <!-- 식물 일지 부분 -->
-
-
-
+    <!-- 모달 부분 -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import NavBar from '@/components/NavBar.vue'
+import MyplantModal from '@/components/MyplantModal.vue'
 
 export default {
   name: 'MyplantDetailView',
   data() {
     return {
-      myplantPk: this.$route.params.plantPk
+      myplantPk: this.$route.params.plantPk,
+      modal: 0,
     }
   },
-  components: { NavBar },
+  components: { NavBar, MyplantModal },
   computed: {
     ...mapGetters(['myplant']),
     myplantCreatedAt() {
@@ -89,7 +79,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchMyplant'])
+    ...mapActions(['fetchMyplant']),
+    close(event) {
+      if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
+        this.modal = 0
+      }
+    }
+
   },
   created() {
     this.fetchMyplant(this.$route.params.plantPk)
@@ -131,7 +127,7 @@ body {
 }
 
 .botanical-name {
-  color: #65805D;
+  color: #b2c9ab;
   font-family: 'MaruBuri';
   font-size: 1.1rem;
   font-style: italic;
@@ -161,5 +157,19 @@ body {
   border-color: #845A49;
 }
 
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
 
+.myplant-modal {
+  position: relative;
+  top: 150px;
+  /* position: fixed;
+  top: 100px; */
+}
 </style>
