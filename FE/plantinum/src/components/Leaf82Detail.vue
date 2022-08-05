@@ -7,33 +7,45 @@
       <!-- 좌측 -->
       <div class="left col-md-5">
         <div class="img-box d-flex justify-content-center">
-          <!-- <img :src="leaf82Detail.photo" alt="화분 사진">s -->
+          <img :src="leaf82Detail.photo" alt="화분 사진">
+        </div>
+        <div class="update row d-flex justify-content-center">
+        <!-- <div class="update row d-flex justify-content-center" v-if="leaf82Detail.user.username === currentUser.username"> -->
+          <div class="update-box mx-3 my-2">
+            <router-link class="update-a" :to="{}">
+              <button class="update-btn">수정</button>
+            </router-link>
+          </div>
+          <div class="delete-box mx-3 my-2">
+            <button class="delete-btn">삭제</button>
+          </div>
         </div>
       </div>
       <!-- 우측 -->
-      <div class="right col-md-7 mt-3 px-5">
-        <div class="title d-flex justify-content-start py-1">
-          <p>{ leaf82Detail.plantname } { leaf82Detail.category_class }</p>
+      <div class="right col-md-7 mt-1 px-5">
+        <div class="plantname d-flex justify-content-start py-1">
+          <p>{{ leaf82Detail.plantname }} {{ leaf82Detail.category_class }}</p>
         </div>
-        <div class="username d-flex justify-content-start py-1">
-          <p>{ leaf82Detail.user.nickname }</p>
+        <hr>
+        <div class="nickname d-flex justify-content-start py-1">
+          <p>{{ leaf82Detail.user }}</p>
         </div>
         <div class="price d-flex justify-content-start py-1">
-          <p>{ leaf82Detail.price } 원</p>
-        </div>
-        <div class="addr d-flex justify-content-start py-1">
-          <p>{ leaf82Detail.addr.sido } { leaf82Detail.addr.sigungu }</p>
+          <p>{{ leaf82Detail.price }} 원</p>
         </div>
         <div class="status d-flex justify-content-start py-1">
-          <p>{ leaf82Detail.status }</p>
+          <p>{{ leaf82Detail.status_class }}</p>
         </div>
-        <div class="content d-flex justify-content-start py-1">
-          <p>{ leaf82Detail.content }</p>
+        <div class="addr d-flex justify-content-start py-1">
+          <p>{{ leaf82Detail.addr }} {{ leaf82Detail.addr }}</p>
         </div>
-        <div class="btns d-flex justify-content-start py-3">
+        <div class="content d-flex justify-content-start py-1 my-5">
+          <p>{{ leaf82Detail.content }}</p>
+        </div>
+        <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '판매중'">
           <div class="message">
-            <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-start">
-              <button>채팅하러 가기</button>
+            <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-center">
+              <button class="py-2">채팅하러 가기</button>
             </router-link>
           </div>
         </div>
@@ -49,8 +61,31 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Leaf82Detail',
+  data() {
+    return {
+      user: {
+        pk: 0,
+        username: '',
+        nickname: ''
+      },
+      addr: {
+        id: 0,
+        sido: '',
+        sigungu: ''
+      }
+    }
+  },
+  methods: {
+    fillData() {
+      this.user = this.leaf82Detail.user
+      this.addr = this.leaf82Detail.addr
+    }
+  },
   computed: {
-    ...mapGetters(['leaf82Detail']),
+    ...mapGetters(['leaf82Detail', 'currentUser']),
+  },
+  mounted() {
+    this.fillData()
   }
 }
 </script>
@@ -72,7 +107,53 @@ div {
   border-radius: 1rem;
 }
 
+.update-btn {
+  color: white;
+  background-color: #b2c9ab;
+  border-radius: 5px;
+  border: none;
+  width: 5rem;
+  height: 1.8rem;
+}
+
+.delete-btn {
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  border-width: 1px;
+  width: 5rem;
+  height: 1.8rem;
+}
+
 /* 오른쪽 */
+p {
+  margin: 0;
+}
+
+.plantname p {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.nickname p {
+}
+
+.price p {
+  font-weight: bold;
+}
+
+.status p {
+  font-size: 0.8rem;
+  color: gray;
+}
+
+.addr p {
+
+}
+
+.content p {
+  font-size: 0.9rem;
+}
 
 .message {
   width: 100%;
@@ -83,7 +164,7 @@ div {
   text-decoration: none;
 }
 .message a button {
-  width: 100%;
+  width: 80%;
   background-color: white;
   border-radius: 0.5rem;
   color: gray;

@@ -29,6 +29,6 @@ export default {
     sigungu: (sido) => HOST + LEAF82 + `search/${sido}/` + 'sigungu/',
     search: () => HOST + LEAF82 + 'search',
     new: () => HOST + LEAF82 + 'new/',
-    detail: (info) => HOST + LEAF82 + `${info.username}/` + `${info.posting_addr}/`
+    detail: (username, posting_addr) => HOST + LEAF82 + `${username}/` + `${posting_addr}/`
   }
 }
