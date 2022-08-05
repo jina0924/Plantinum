@@ -1,4 +1,3 @@
-import re
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -158,16 +157,47 @@ def disconnect(request, myplant_pk):
             return Response({'result': '잘못된 접근입니다.'})
 
 
-# 물주기 식물 상세페이지
-@api_view(['GET'])
+# 물주기 식물 상세페이지 조회/수정/삭제
+@api_view(['GET', 'PUT', 'DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def detail(request, myplant_pk):
     myplant = get_object_or_404(Myplant, pk=myplant_pk)
-    serializer = MyplantSerializer(myplant)
-    return Response(serializer.data)
+    user = myplant.user
+    
+    def read():
+        serializer = MyplantSerializer(myplant)
+        return Response(serializer.data)
+
+    def update():
+        if request.user == user:
+            serializer = MyplantSerializer(instance=myplant, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+
+                serializer.save()
+
+                return Response(serializer.data)
+
+        else:
+            return Response({'result': '잘못된 접근입니다.'})
+
+    def delete():
+        if request.user == user:
+            myplant.delete()
+            return Response({'result': '내식물이 삭제되었습니다.'})
+
+        else:
+            return Response({'result': '잘못된 접근입니다.'})
+
+    if request.method == 'GET':
+        return read()
+    elif request.method == 'PUT':
+        return update()
+    elif request.method == 'DELETE':
+        return delete()
 
 
+# 수정필요
 # 물주기 각 식물 별 다이어리-식물 별 전체조회/다이어리 작성
 @api_view(['GET', 'POST'])
 @authentication_classes([TokenAuthentication])
