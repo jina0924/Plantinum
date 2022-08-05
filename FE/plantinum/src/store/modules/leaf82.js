@@ -71,6 +71,7 @@ export const Leaf82 = {
       .then(res => {
         console.log(res)
         commit('SET_SEARCHLIST', res.data)
+        
       })
     },
 
@@ -86,6 +87,7 @@ export const Leaf82 = {
       .then(res => {
         console.log(res)
         commit('SET_LEAF82DETAIL', res.data)
+        console.log(getters.currentUser.username)
         router.push({
           name: 'leaf82Detail',
           params: { username: getters.currentUser.username , posting_addr: getters.leaf82Detail.posting_addr }
@@ -97,9 +99,32 @@ export const Leaf82 = {
       })
     },
 
-    fetchLeaf82Detail({ commit, }, info) {
+    updateLeaf82({ commit, getters }, credentials, {username, posting_addr}) {
+      console.log(credentials)
       axios({
-        url: drf.leaf82.detail(info),
+        url: drf.leaf82.detail(username, posting_addr),
+        method: 'put',
+        data: credentials,
+        headers: getters.authHeader
+      })
+      .then(res => {
+        console.log(res)
+        commit('SET_LEAF82DETAIL', res.data)
+        console.log(getters.currentUser.username)
+        router.push({
+          name: 'leaf82Detail',
+          params: { username: getters.currentUser.username , posting_addr: getters.leaf82Detail.posting_addr }
+        })
+      })
+      .catch(err => {
+        alert('잘못된 접근입니다.')
+        console.log(err)
+      })
+    },
+
+    fetchLeaf82Detail({ commit, }, {username, posting_addr}) {
+      axios({
+        url: drf.leaf82.detail(username, posting_addr),
         method: 'get',
       })
       .then(res => {

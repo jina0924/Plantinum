@@ -24,10 +24,10 @@
       <!-- 우측 -->
       <div class="right col-md-7 mt-3 px-5">
         <div class="title d-flex justify-content-start py-1">
-          <input type="text" v-model="credentials.plantname" placeholder="식물명을 입력해주세요">
+          <input type="text" v-model="credentials.plantname">
         </div>
         <div class="price d-flex justify-content-start py-1">
-          <input type="text" v-model="credentials.price" placeholder="가격">
+          <input type="text" v-model="credentials.price">
         </div>
         <div class="addr d-flex justify-content-start py-1">
           <select name="sido" id="" @change="beforeFetchSigungu($event)" class="mr-1">
@@ -49,16 +49,21 @@
             <option value="분양해요">분양해요</option>
             <option value="분양받아요">분앙받아요</option>
           </select>
+          <select name="status_class" id="status_class" @change="selectStatus($event)" class="mr-1">
+            <option value="판매중">판매중</option>
+            <option value="예약중">예약중</option>
+            <option value="거래완료">거래완료</option>
+          </select>
         </div>
         <div class="content d-flex justify-content-start py-1">
           <textarea name="content" id="content" cols="30" rows="10" v-model="credentials.content" placeholder="회원님의 식물을 소개해주세요"></textarea>
         </div>
         <div class="btns row d-flex justify-content-start py-3">
           <div class="submit col-2 d-flex justify-content-start mr-3">
-            <button @click="beforecreateLeaf82(credentials)">등록</button>
+            <button @click="beforeUpdateLeaf82(credentials)">등록</button>
           </div>
           <div class="cancel col-2">
-            <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-start">
+            <router-link :to="{ name : 'leaf82Detail' , params : { username: info.username , posting_addr: info.posting_addr } }" class="d-flex justify-content-start">
               <button>취소</button>
             </router-link>
           </div>
@@ -71,25 +76,26 @@
 </template>
 
 <script>
-import { mapActions , mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'Leaf82NewForm',
+  name: 'Leaf82Edit',
   data() {
     return {
+      info: {
+        username: this.$route.params.username,
+        posting_addr: this.$route.params.posting_addr
+      },
       credentials: {
-        photo: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Diversity_of_plants_%28Streptophyta%29_version_2.png',
-        plantname: '',
-        price: '',
-        sido: '',
-        sigungu: '',
-        category_class: '분양해요',
-        content: '',
+
       }
     }
   },
   methods: {
-    ...mapActions(['fetchSido', 'fetchSigungu', 'createLeaf82']),
+    ...mapActions(['updateLeaf82', 'fetchSido', 'fetchSigungu']),
+    fillCredentials() {
+      this.credentials = this.leaf82Detail
+    },
     beforeFetchSigungu(event) {
       let tmp = event.target.value
       this.credentials.sido = tmp
@@ -107,7 +113,13 @@ export default {
       this.credentials.category_class = tmp
       console.log(this.credentials.category_class)
     },
-    beforecreateLeaf82(credentials) {
+    selectStatus(event) {
+      let tmp = event.target.value
+      console.log(tmp)
+      this.credentials.status_class = tmp
+      console.log(this.credentials.status_class)
+    },
+    beforeUpdateLeaf82(credentials) {
       if (credentials.plantname === '') {
         alert('이름을 입력해주세요.')
       } else if (credentials.price === '') {
@@ -117,15 +129,22 @@ export default {
       } else if (credentials.content === '') {
         alert('식물을 소개해주세요')
       } else {
-        this.createLeaf82(credentials)
+        this.updateLeaf82(credentials, this.info)
       }
     }
   },
   computed: {
-    ...mapGetters(['sido', 'sigungu'])
+    ...mapGetters(['leaf82Detail', 'sido', 'sigungu']),
   },
   created() {
     this.fetchSido()
+    // this.fillCredentials()
+    // console.log(this.credentials)
+  },
+  watch: {
+    leaf82Detail() {
+      this.fillCredentials()
+    }
   }
 }
 </script>
