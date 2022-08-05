@@ -14,6 +14,7 @@ import MyplantEditView from '@/views/MyplantEditView.vue'
 import Leaf82View from '@/views/Leaf82View.vue'
 import Leaf82NewView from '@/views/Leaf82NewView.vue'
 import Leaf82DetailView from'@/views/Leaf82DetailView.vue'
+import Leaf82EditView from '@/views/Leaf82EditView'
 import MessengerView from '@/views/MessengerView.vue'
 import UpdateProfileView from '@/views/UpdateProfileView.vue'
 
@@ -93,6 +94,12 @@ const routes = [
     path: '/leaf82/:username/:posting_addr',
     name: 'leaf82Detail',
     component: Leaf82DetailView,
+    props: true
+  },
+  {
+    path: '/leaf82/edit/:username/:posting_addr',
+    name: 'leaf82Edit',
+    component: Leaf82EditView,
     props: true
   },
   {
