@@ -11,6 +11,10 @@
       <h5>특별 관리 정보</h5>
       <p>{{ plantInfo.specl_manage_info }}</p>
     </div>
+    <!-- <div v-if="modal===3">
+      <h5>화분 연결 OTP</h5>
+      <p>{{ otpCode }}</p>
+    </div> -->
     <button class="modal-close-btn">닫기</button>
   </div>
 </template>
@@ -24,7 +28,7 @@ export default {
     },
     modal: {
       type: Number
-    }
+    },
   }
 }
 </script>
