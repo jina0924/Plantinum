@@ -44,6 +44,13 @@ class Leaf82Serializer(serializers.ModelSerializer):
 
 class Leaf82ListSerializer(serializers.ModelSerializer):
 
+    class UserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('pk', 'username',)
+
+    user = UserSerializer(read_only=True)
+
     class JusoSerializer(serializers.ModelSerializer):
         class Meta:
             model = Juso
@@ -53,5 +60,5 @@ class Leaf82ListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Leaf82
-        fields = ('pk', 'plantname', 'photo', 'price', 'category_class', 'status_class', 'addr', 'posting_addr',)
+        fields = ('pk', 'plantname', 'photo', 'price', 'category_class', 'status_class', 'addr', 'posting_addr', 'user',)
         read_only_fields = ('posting_addr',)
