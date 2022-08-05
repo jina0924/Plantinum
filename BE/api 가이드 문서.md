@@ -445,7 +445,6 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 - 물주기 식물 별 상세페이지
 - 로그인 사용자 - 토큰 사용
 - GET
-- PUT/DELETE는 추후 추가 예정
 - URL
 
 ```
@@ -526,6 +525,98 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
     "otp_code": "",
     "photo": "",
     "is_connected": false
+}
+```
+
+
+
+### 내식물 수정
+
+- 닉네임과 사진만 수정 가능
+
+- 로그인 사용자 - 토큰 사용
+
+- PUT
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
+```
+
+- Request Parameters
+
+| Name           | Type | Description             | Mandatory | Example |
+| -------------- | ---- | ----------------------- | --------- | ------- |
+| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 2       |
+
+- Body
+
+| Key      | Type   | Description                                     | Mandatory | Example |
+| -------- | ------ | ----------------------------------------------- | --------- | ------- |
+| nickname | String | 물주기 등록 대상 식물의 애칭                    | O         | 깨운이  |
+| photo    | String | 물주기 등록 대상 식물의 사진<br />**수정 예정** | 임시 X    |         |
+
+- Response
+
+```
+{
+    "id": 1,
+    "user": {
+        "pk": 2,
+        "username": "test2",
+        "nickname": "싱싱한올리브나무6759"
+    },
+    "plant_info": {
+        "pk": 2,
+        "name": "개운죽",
+        "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_summer_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_autumn_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_winter_nm": "토양 표면이 말랐을때 충분히 관수함",
+        "specl_manage_info": "수경은 물주기가 필요 없으나, 화분은 1-2주에 한번씩 충분히 관수한다."
+    },
+    "sensing": {
+        "id": 1,
+        "remaining_water": false,
+        "state_led": false,
+        "moisture_level": 0,
+        "last_watering": "",
+        "my_plant": 1
+    },
+    "diary_set": [],
+    "diary_count": 0,
+    "nickname": "깨운이",
+    "created_at": "2022-08-05T04:54:49.012014Z",
+    "otp_code": null,
+    "photo": "https://url.kr/d1acln",
+    "is_connected": false
+}
+```
+
+
+
+### 내식물 삭제
+
+- 로그인 사용자 - 토큰 사용
+
+- DELETE
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
+```
+
+- Request Parameters
+
+| Name           | Type | Description             | Mandatory | Example |
+| -------------- | ---- | ----------------------- | --------- | ------- |
+| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 2       |
+
+- Response
+
+```
+{
+    "result": "내식물이 삭제되었습니다."
 }
 ```
 
@@ -843,6 +934,24 @@ http://127.0.0.1:8000/api/v1/leaf82/
 ```
 [
     {
+        "pk": 4,
+        "plantname": "싱고니움",
+        "photo": "https://url.kr/d1acln",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
+        "addr": {
+            "id": 108,
+            "sido": "경기도",
+            "sigungu": "용인시 처인구"
+        },
+        "posting_addr": 426408,
+        "user": {
+            "pk": 1,
+            "username": "test1"
+        }
+    },
+    {
         "pk": 3,
         "plantname": "싱고니움",
         "photo": "https://url.kr/d1acln",
@@ -850,35 +959,32 @@ http://127.0.0.1:8000/api/v1/leaf82/
         "category_class": "분양해요",
         "status_class": "판매중",
         "addr": {
-            "id": 23,
-            "sido": "서울특별시",
-            "sigungu": "강남구"
+            "id": 108,
+            "sido": "경기도",
+            "sigungu": "용인시 처인구"
+        },
+        "posting_addr": 207303,
+        "user": {
+            "pk": 1,
+            "username": "test1"
         }
     },
     {
         "pk": 2,
-        "plantname": "개운죽",
+        "plantname": "싱고니움",
         "photo": "https://url.kr/d1acln",
-        "price": 10000,
+        "price": 15000,
         "category_class": "분양해요",
         "status_class": "판매중",
         "addr": {
-            "id": 5,
-            "sido": "서울특별시",
-            "sigungu": "광진구"
-        }
-    },
-    {
-        "pk": 1,
-        "plantname": "산세베리아",
-        "photo": "https://url.kr/d1acln",
-        "price": 20000,
-        "category_class": "분양해요",
-        "status_class": "판매중",
-        "addr": {
-            "id": 1,
-            "sido": "서울특별시",
-            "sigungu": "종로구"
+            "id": 108,
+            "sido": "경기도",
+            "sigungu": "용인시 처인구"
+        },
+        "posting_addr": 426408,
+        "user": {
+            "pk": 1,
+            "username": "test1"
         }
     }
 ]
@@ -1005,19 +1111,42 @@ http://127.0.0.1:8000/api/v1/leaf82/search
 [
     {
         "pk": 7,
-        "plantname": "싱고니움",
+        "plantname": "산세베리아",
         "photo": "https://url.kr/d1acln",
         "price": 15000,
         "category_class": "분양해요",
         "status_class": "판매중",
         "addr": {
-            "id": 109,
+            "id": 108,
             "sido": "경기도",
             "sigungu": "용인시 기흥구"
+        },
+        "posting_addr": 336921,
+        "user": {
+            "pk": 2,
+            "username": "test2"
         }
     },
     {
         "pk": 6,
+        "plantname": "산세베리아",
+        "photo": "https://url.kr/d1acln",
+        "price": 15000,
+        "category_class": "분양해요",
+        "status_class": "판매중",
+        "addr": {
+            "id": 107,
+            "sido": "경기도",
+            "sigungu": "용인시"
+        },
+        "posting_addr": 615947,
+        "user": {
+            "pk": 2,
+            "username": "test2"
+        }
+    },
+    {
+        "pk": 2,
         "plantname": "싱고니움",
         "photo": "https://url.kr/d1acln",
         "price": 15000,
@@ -1027,19 +1156,11 @@ http://127.0.0.1:8000/api/v1/leaf82/search
             "id": 108,
             "sido": "경기도",
             "sigungu": "용인시 처인구"
-        }
-    },
-    {
-        "pk": 5,
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중",
-        "addr": {
-            "id": 107,
-            "sido": "경기도",
-            "sigungu": "용인시"
+        },
+        "posting_addr": 426408,
+        "user": {
+            "pk": 1,
+            "username": "test1"
         }
     }
 ]
@@ -1093,6 +1214,8 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 
 
 ### 잎팔이 글 수정
+
+- 로그인 사용자 - 토큰 사용
 
 - PUT
 - URL
@@ -1157,6 +1280,8 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 
 
 ### 잎팔이 글 삭제
+
+- 로그인 사용자 - 토큰 사용
 
 - DELETE
 - URL
