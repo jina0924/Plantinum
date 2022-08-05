@@ -8,7 +8,7 @@
     </div>
     <!-- 분양해요 목록들 -->
     <div class="leaf82-list-box row" v-if="isSell">
-      <div class="col-sm-2 col-md-3 col-0"></div>
+      <div class="col-sm-2 col-md-3 col-0" v-if="!!sellItems"></div>
       <!-- 리스트가 있을 때 -->
       <div class="leaf82-list col-sm-8 col-md-6 col-0 row d-flex justify-content-center" v-if="!!sellItems">
         <div class="item px-2 pb-2" v-for="leaf82 in sellItems" :key="leaf82.pk">
@@ -26,8 +26,10 @@
           </router-link>
         </div>
       </div>
+      <div class="col-sm-2 col-md-3 col-0" v-if="!!sellItems"></div>
       <!-- 리스트가 없을때 -->
-      <div class="leaf82-list col-sm-8 col-md-6 col-0 mt-5" v-if="!sellItems">
+      <div class="col-sm-2 col-md-3 col-0" v-if="!sellItems[0]"></div>
+      <div class="leaf82-list col-sm-8 col-md-6 col-0 mt-5" v-if="!sellItems[0]">
         <div class="d-flex justify-content-center">
           <span class="material-symbols-outlined noplant-icon">macro_off</span>
         </div>
@@ -35,8 +37,7 @@
           <p>등록된 식물이 없습니다.</p>
         </div>
       </div>
-      <div class="col-sm-2 col-md-3 col-0"></div>
-      <div class="col-sm-2 col-md-3 col-0"></div>
+      <div class="col-sm-2 col-md-3 col-0" v-if="!sellItems[0]"></div>
     </div>
 
     <!-- 분양받아요 활성화 -->
@@ -45,8 +46,9 @@
       <span class="divider">|</span>
       <span class="buy-on">분양받아요</span>
     </div>
+    <!-- 분양받아요 목록들 -->
     <div class="leaf82-list-box row" v-if="!isSell">
-      <div class="col-sm-2 col-md-3 col-0"></div>
+      <div class="col-sm-2 col-md-3 col-0" v-if="!!buyItems"></div>
       <!-- 리스트가 있을 때 -->
       <div class="leaf82-list col-sm-8 col-md-6 col-0 row d-flex justify-content-center" v-if="!!buyItems">
         <div class="item px-2 pb-2" v-for="leaf82 in buyItems" :key="leaf82.pk">
@@ -64,8 +66,10 @@
           </router-link>
         </div>
       </div>
+      <div class="col-sm-2 col-md-3 col-0" v-if="!!buyItems"></div>
       <!-- 리스트가 없을때 -->
-      <div class="leaf82-list col-sm-8 col-md-6 col-0 mt-5" v-if="!buyItems">
+      <div class="col-sm-2 col-md-3 col-0" v-if="!buyItems[0]"></div>
+      <div class="leaf82-list col-sm-8 col-md-6 col-0 mt-5" v-if="!buyItems[0]">
         <div class="d-flex justify-content-center">
           <span class="material-symbols-outlined noplant-icon">macro_off</span>
         </div>
@@ -73,8 +77,7 @@
           <p>등록된 식물이 없습니다.</p>
         </div>
       </div>
-      <div class="col-sm-2 col-md-3 col-0"></div>
-      <div class="col-sm-2 col-md-3 col-0"></div>
+      <div class="col-sm-2 col-md-3 col-0" v-if="buyItems[0]"></div>
     </div>
   </div>
 </template>
