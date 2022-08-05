@@ -1,19 +1,17 @@
 <template>
   <nav-bar></nav-bar>
-  <div class="leaf82-detail-view">
-    <leaf-82-detail></leaf-82-detail>
-  </div>
+  <leaf-82-edit></leaf-82-edit>
 </template>
 
 <script>
-import Leaf82Detail from '@/components/Leaf82Detail.vue'
+import Leaf82Edit from '@/components/Leaf82Edit.vue'
 import NavBar from '@/components/NavBar.vue'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
-  name: 'Leaf82DetailView',
+  name: 'Leaf82EditView',
   components: {
-    Leaf82Detail,
+    Leaf82Edit,
     NavBar
   },
   data() {
@@ -25,10 +23,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchLeaf82Detail']),
-  },
-  computed: {
-    ...mapGetters(['leaf82Detail'])
+    ...mapActions(['fetchLeaf82Detail'])
   },
   created() {
     this.fetchLeaf82Detail(this.info)

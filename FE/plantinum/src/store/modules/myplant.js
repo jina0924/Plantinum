@@ -7,7 +7,7 @@ export const Myplant = {
     myplants: [],
     myplant: {},
     plant_list: [],
-    temp_OTP: '',
+    temp_OTP: null,
   },
   getters: {
     myplants: state => state.myplants,
@@ -78,13 +78,20 @@ export const Myplant = {
       })
     },
 
-    getOTP({ commit, getters }, plantPk) {
+    fetchOTP({ commit, getters }, plantPk) {
       axios({
         url: drf.myplant.plantOTP(plantPk),
         method: 'get',
         headers: getters.authHeader,
       })
-      .then(res => console.log(res, commit))
-    }
+      .then(res => commit('SET_OTP', res.data.otp_code))
+      .catch(err => {
+        console.log(err.response)
+      })
+    },
+
+    resetOTP({ commit }) {
+      commit('SET_OTP', null)
+    },
   },
 }
