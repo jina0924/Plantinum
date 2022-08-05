@@ -9,37 +9,42 @@
         <div class="img-box d-flex justify-content-center">
           <img :src="leaf82Detail.photo" alt="화분 사진">
         </div>
-        <div class="update row d-flex justify-content-center">
-        <!-- <div class="update row d-flex justify-content-center" v-if="leaf82Detail.user.username === currentUser.username"> -->
+        <!-- <div class="update row d-flex justify-content-center"> -->
+        <div class="update row d-flex justify-content-center" v-if="this.$route.params.username === currentUser.username">
           <div class="update-box mx-3 my-2">
-            <router-link class="update-a" :to="{}">
+            <router-link class="update-a" :to="{ name: 'leaf82Edit' , params: { username: this.$route.params.username , posting_addr: this.$route.params.posting_addr } }">
               <button class="update-btn">수정</button>
             </router-link>
           </div>
           <div class="delete-box mx-3 my-2">
-            <button class="delete-btn">삭제</button>
+            <button class="delete-btn" @click="deleteLeaf82(deleteInfo)">삭제</button>
           </div>
         </div>
       </div>
       <!-- 우측 -->
-      <div class="right col-md-7 mt-1 px-5">
-        <div class="plantname d-flex justify-content-start py-1">
+      <div class="right col-md-7 mt-3 px-5">
+        <div class="plantname d-flex justify-content-start">
           <p>{{ leaf82Detail.plantname }} {{ leaf82Detail.category_class }}</p>
         </div>
         <hr>
-        <div class="nickname d-flex justify-content-start py-1">
-          <p>{{ leaf82Detail.user }}</p>
+        <div class="nickname d-flex justify-content-start pb-1">
+          <router-link :to="{ name: 'myplant' , params: { username: this.$route.params.username } }" class="nickname-route">
+            <img :src="user.photo" :alt="`${ user.nickname }의 프로필 사진입니다.`" class="user-photo mr-1">
+          </router-link>
+          <router-link :to="{ name: 'myplant' , params: { username: this.$route.params.username } }" class="nickname-route">
+            <p>{{ user.nickname }}</p>
+          </router-link>
         </div>
-        <div class="price d-flex justify-content-start py-1">
+        <div class="price d-flex justify-content-start pb-1">
           <p>{{ leaf82Detail.price }} 원</p>
         </div>
-        <div class="status d-flex justify-content-start py-1">
+        <div class="addr d-flex justify-content-start pb-1">
+          <p>{{ addr.sido }} {{ addr.sigungu }}</p>
+        </div>
+        <div class="status d-flex justify-content-start pb-1">
           <p>{{ leaf82Detail.status_class }}</p>
         </div>
-        <div class="addr d-flex justify-content-start py-1">
-          <p>{{ leaf82Detail.addr }} {{ leaf82Detail.addr }}</p>
-        </div>
-        <div class="content d-flex justify-content-start py-1 my-5">
+        <div class="content d-flex justify-content-start py-1 my-3">
           <p>{{ leaf82Detail.content }}</p>
         </div>
         <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '판매중'">
@@ -57,35 +62,60 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters , mapActions } from 'vuex'
 
 export default {
   name: 'Leaf82Detail',
   data() {
     return {
       user: {
-        pk: 0,
-        username: '',
-        nickname: ''
       },
       addr: {
-        id: 0,
-        sido: '',
-        sigungu: ''
+      },
+      info: {
+        id: null,
+        user: {
+          nickname: '',
+          photo: '',
+          pk: null,
+          username: '',
+        },
+        addr: {
+          id: null,
+          sido: '',
+          sigungu: '',
+        },
+        plantname: '',
+        photo: '',
+        created_at: '',
+        content: '',
+        price: '',
+        category_class: '',
+        status_class: '',
+        posting_addr: null
+      },
+      deleteInfo: {
+        username: this.$route.params.username,
+        posting_addr: this.$route.params.posting_addr
       }
     }
   },
   methods: {
+    ...mapActions(['deleteLeaf82']),
     fillData() {
       this.user = this.leaf82Detail.user
       this.addr = this.leaf82Detail.addr
+      this.info = this.leaf82Detail
+      this.info.price = this.info.price.toLocaleString('ko-KR')
     }
   },
   computed: {
     ...mapGetters(['leaf82Detail', 'currentUser']),
   },
-  mounted() {
-    this.fillData()
+  watch: {
+    leaf82Detail() {
+      this.fillData()
+    }
   }
 }
 </script>
@@ -135,7 +165,14 @@ p {
   font-weight: bold;
 }
 
-.nickname p {
+.nickname-route {
+  text-decoration: none;
+  color: black;
+}
+
+.user-photo {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .price p {
