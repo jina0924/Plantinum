@@ -2,8 +2,8 @@
     <div class="search row">
       <div class="col-sm-2 col-md-4 col-0"></div>
       <div class="search-box col-sm-8 col-md-4 col-12 d-flex justify-content-center">
-        <input class="search-input" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="fetchLeaf82(info)">
-        <button class="search-btn" type="submit" @click="fetchLeaf82(info)">
+        <input class="search-input" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
+        <button class="search-btn" type="submit" @click="beforeSearch()">
           <span class="d-flex align-items-center justify-content-center">검색</span>
         </button>
       </div>
@@ -29,7 +29,7 @@
           <!-- 시도가 선택되면 활성화 -->
           <select class="sigungu" @change="beforeFetchSearch($event)" v-if="this.info.sido">
             <option selected>동네를 선택해주세요</option>
-            <option value="" v-for="(loc) in sigungu" :key="loc.pk">{{ loc.sigungu }}</option>
+            <option v-for="(loc) in sigungu" :key="loc.pk" :value="loc.sigungu">{{ loc.sigungu }}</option>
           </select>
           <select class="sigungu" v-if="!this.info.sido" disabled>
             <option selected>동네를 선택해주세요</option>
@@ -55,16 +55,22 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchLeaf82', 'fetchSido', 'fetchSigungu', 'search']),
+    ...mapActions(['fetchSigungu', 'search']),
     // 필터링 없이
     beforeSearch() {
-      if (this.info.sido === '' || this.info.sigungu === '') {
+      if (!!this.info.plantname === true && !!this.info.sido === true && !!this.info.sigungu === true) {
+        const params = this.info
+        this.search(params)
+      } else if (!!this.info.plantname === true && !!this.info.sigungu === false) {
         const params = {
           plantname : this.info.plantname
         }
         this.search(params)
-      } else {
-        const params = this.info
+      } else if (!!this.info.plantname === false && !!this.info.sido === true && !!this.info.sigungu === true) {
+        const params = {
+          sido: this.info.sido,
+          sigungu: this.info.sigungu
+        }
         this.search(params)
       }
     },
@@ -93,8 +99,6 @@ export default {
     ...mapGetters(['sido', 'sigungu', 'isLoggedIn'])
   },
   created() {
-    this.fetchLeaf82()
-    this.fetchSido()
   },
 
 }
