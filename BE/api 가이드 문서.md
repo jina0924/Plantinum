@@ -1094,13 +1094,97 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 
 ### 잎팔이 글 수정
 
-- 
+- PUT
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
+```
+
+- Request Parameters
+
+| Name         | Type   | Description                                                  | Mandatory | Example |
+| ------------ | ------ | ------------------------------------------------------------ | --------- | ------- |
+| username     | String | 유저id                                                       | O         | test1   |
+| posting_addr | Int    | 잎팔이 글 작성시 부여되는 랜덤 값<br />한 유저 내에서 중복되지 않음 | O         | 426408  |
+
+- Body
+
+| Key            | Type   | Description                                | Mandatory | Example    |
+| -------------- | ------ | ------------------------------------------ | --------- | ---------- |
+| sido           | String | 시도                                       | O         | 서울특별시 |
+| sigungu        | String | 시군구                                     | O         | 종로구     |
+| plantname      | String | 식물이름                                   | O         | 싱고니움   |
+| content        | Text   | 내용                                       | O         | 연락주세요 |
+| price          | Int    | 가격                                       | O         | 15000      |
+| category_class | String | 분양해요/분양받아요                        | O         | 분양해요   |
+| status_class   | String | 판매중/거래완료/예약중<br />default=판매중 | O         | 거래완료   |
+| photo          | Text   | **수정예정**                               | O         |
+
+- Response
+
+```
+{
+    "id": 1,
+    "user": {
+        "pk": 1,
+        "username": "test1",
+        "nickname": "새내기참나무4979",
+        "photo": "https://url.kr/s38eg6"
+    },
+    "addr": {
+        "id": 1,
+        "sido": "서울특별시",
+        "sigungu": "종로구"
+    },
+    "plantname": "싱고니움",
+    "photo": "https://url.kr/d1acln",
+    "created_at": "2022-08-04T04:20:42.359078Z",
+    "content": "연락주세요",
+    "price": 15000,
+    "category_class": "분양해요",
+    "status_class": "거래완료",
+    "posting_addr": 323845
+}
+```
+
+```
+{
+    "result": "잘못된 접근입니다."
+}
+```
 
 
 
 ### 잎팔이 글 삭제
 
-- 
+- DELETE
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
+```
+
+- Request Parameters
+
+| Name         | Type   | Description                                                  | Mandatory | Example |
+| ------------ | ------ | ------------------------------------------------------------ | --------- | ------- |
+| username     | String | 유저id                                                       | O         | test1   |
+| posting_addr | Int    | 잎팔이 글 작성시 부여되는 랜덤 값<br />한 유저 내에서 중복되지 않음 | O         | 426408  |
+
+- Response
+
+```
+{
+    "result": "게시글이 삭제되었습니다."
+}
+```
+
+```
+{
+    "result": "잘못된 접근입니다."
+}
+```
 
 
 

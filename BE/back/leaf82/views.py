@@ -111,11 +111,40 @@ def search(request):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def detail(request, username, posting_addr):
-    user = User.objects.filter(username=username)[0]
-    
+@api_view(['GET', 'PUT', 'DELETE'])
+def detail_update_delete(request, username, posting_addr):
+    user = get_object_or_404(User, username=username)
     leaf82 = get_object_or_404(Leaf82, user=user, posting_addr=posting_addr)
 
-    serializer = Leaf82Serializer(leaf82)
-    return Response(serializer.data)
+    def detail():
+    
+        serializer = Leaf82Serializer(leaf82)
+        return Response(serializer.data)
+
+
+    def update():
+        if request.user == user:
+            sido = request.data['sido']
+            sigungu = request.data['sigungu']
+            addr = get_object_or_404(Juso, sido=sido, sigungu=sigungu)
+            serializer = Leaf82Serializer(instance=leaf82, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr)
+                return Response(serializer.data)
+        else:
+            return Response({'result': '잘못된 접근입니다.'})
+
+
+    def delete():
+        if request.user == user:
+            leaf82.delete()
+            return Response({'result': '게시글이 삭제되었습니다.'})
+        else:
+            return Response({'result': '잘못된 접근입니다.'})
+
+    if request.method == 'GET':
+        return detail()
+    elif request.method == 'PUT':
+        return update()
+    elif request.method == 'DELETE':
+        return delete()
