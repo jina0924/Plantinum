@@ -157,7 +157,7 @@ export default {
       //   dday: '',
       //   myplant_count: '',
       // },
-      info :{
+      info: {
         nickname: '',
         email: '',
         addr: '',
@@ -171,13 +171,7 @@ export default {
   methods: {
     ...mapActions(['updateProfile', 'fetchCurrentUser']),
     fillOldInfo() {
-      this.info.nickname = this.profile.nickname
-      this.info.email = this.profile.email
-      this.info.addr = this.profile.addr
-      this.info.zip_code = this.profile.zip_code
-      this.info.phone_number = this.profile.phone_number
-      this.info.dday = this.profile.dday
-      this.info.myplant_count = this.profile.myplant_count
+      this.info = this.profile
     },
     findAddr() {
       new window.daum.Postcode({
