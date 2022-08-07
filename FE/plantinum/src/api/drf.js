@@ -22,6 +22,7 @@ export default {
     newMyplant: () => HOST + PLANTS, 
     myplantDetail: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'detail/',
     plantOTP: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'otp/',
+    disconnect: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'disconnect/',
   },
   leaf82: {
     leaf82: () => HOST + LEAF82,
