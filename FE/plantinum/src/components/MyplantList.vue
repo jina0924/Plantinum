@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .yesplant {
   padding: 1rem 2rem;
 }
