@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import NavBar from '@/components/NavBar.vue'
 
 export default {
@@ -175,11 +175,14 @@ export default {
   components: {
     NavBar
   },
-  // methods : {
-  //   abc() {
-  //     this.username = this.currentUser.username
-  //   }
-  // },
+  methods : {
+    ...mapActions(['fetchProfile']),
+    beforeFetchProfile() {
+      if (this.isLoggedIn === true) {
+        this.fetchProfile()
+      }
+    }
+  },
   computed: {
     ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
     // username: function () {
@@ -190,10 +193,9 @@ export default {
       return this.currentUser.username
     }
   },
-  // created () {
-  //   console.log(this.currentUser)
-  //   this.abc()
-  // },
+  created () {
+    this.beforeFetchProfile()
+  },
   // watch: {
   //   currentUser: function() {
   //     this.abc()
@@ -216,6 +218,7 @@ export default {
 
   .second-box {
     height: 1117px;
+    background-color: white;
   }
 
   .third-box {

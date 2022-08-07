@@ -87,14 +87,28 @@ export default {
         posting_addr: this.$route.params.posting_addr
       },
       credentials: {
-
+        sido: '',
+        sigungu: '',
+        plantname: '',
+        content: '',
+        price: '',
+        category_class: '',
+        status_class: '',
+        photo: '',
       }
     }
   },
   methods: {
-    ...mapActions(['updateLeaf82', 'fetchSido', 'fetchSigungu']),
+    ...mapActions(['updateLeaf82', 'fetchSido', 'fetchSigungu',]),
     fillCredentials() {
-      this.credentials = this.leaf82Detail
+      this.credentials.sido = this.leaf82Detail.addr.sido
+      this.credentials.sigungu = this.leaf82Detail.addr.sigungu
+      this.credentials.plantname = this.leaf82Detail.plantname
+      this.credentials.content = this.leaf82Detail.content
+      this.credentials.price = this.leaf82Detail.price
+      this.credentials.category_class = this.leaf82Detail.category_class
+      this.credentials.status_class = this.leaf82Detail.status_class
+      this.credentials.photo = this.leaf82Detail.photo
     },
     beforeFetchSigungu(event) {
       let tmp = event.target.value
@@ -122,14 +136,18 @@ export default {
     beforeUpdateLeaf82(credentials) {
       if (credentials.plantname === '') {
         alert('이름을 입력해주세요.')
-      } else if (credentials.price === '') {
+      } else if (credentials.price === '' || !Number.isInteger(parseInt(credentials.price))) {
         alert('가격을 확인해주세요.')
       } else if (credentials.sigungu === '') {
         alert('주소를 선택해주세요.')
       } else if (credentials.content === '') {
         alert('식물을 소개해주세요')
       } else {
-        this.updateLeaf82(credentials, this.info)
+        const updateInfo = {
+          credentials,
+          info: this.info
+        }
+        this.updateLeaf82(updateInfo)
       }
     }
   },

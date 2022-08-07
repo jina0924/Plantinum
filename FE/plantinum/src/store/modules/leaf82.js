@@ -27,6 +27,10 @@ export const Leaf82 = {
       commit('SET_SIGUNGU', [])
     },
 
+    resetLeaf82Detail({ commit }) {
+      commit('SET_LEAF82DETAIL', {})
+    },
+
     fetchLeaf82({ commit }) {
       axios({
         url: drf.leaf82.leaf82(),
@@ -75,9 +79,7 @@ export const Leaf82 = {
       })
     },
 
-    // 게시글 등록
     createLeaf82({ commit, getters }, credentials) {
-      console.log(credentials)
       axios({
         url: drf.leaf82.new(),
         method: 'post',
@@ -99,8 +101,9 @@ export const Leaf82 = {
       })
     },
 
-    updateLeaf82({ commit, getters }, credentials, {username, posting_addr}) {
-      console.log(credentials)
+    updateLeaf82({ commit, getters }, {credentials, info}) {
+      const username = info.username
+      const posting_addr = info.posting_addr
       axios({
         url: drf.leaf82.detail(username, posting_addr),
         method: 'put',
@@ -108,12 +111,10 @@ export const Leaf82 = {
         headers: getters.authHeader
       })
       .then(res => {
-        console.log(res)
         commit('SET_LEAF82DETAIL', res.data)
-        console.log(getters.currentUser.username)
         router.push({
           name: 'leaf82Detail',
-          params: { username: getters.currentUser.username , posting_addr: getters.leaf82Detail.posting_addr }
+          params: { username: username , posting_addr: posting_addr }
         })
       })
       .catch(err => {
@@ -122,13 +123,29 @@ export const Leaf82 = {
       })
     },
 
+    deleteLeaf82({ getters }, { username, posting_addr }) {
+      if (confirm('정말로 삭제하시겠습니까?')) {
+        axios({
+          url: drf.leaf82.detail(username, posting_addr),
+          method: 'delete',
+          headers: getters.authHeader,
+        })
+        .then(() => {
+          router.push({ name: 'leaf82' })
+          }
+        )
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    },
+
     fetchLeaf82Detail({ commit, }, {username, posting_addr}) {
       axios({
         url: drf.leaf82.detail(username, posting_addr),
         method: 'get',
       })
       .then(res => {
-        console.log(res)
         commit('SET_LEAF82DETAIL', res.data)
       })
       .catch(err => {

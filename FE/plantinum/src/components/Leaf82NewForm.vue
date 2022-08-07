@@ -110,7 +110,7 @@ export default {
     beforecreateLeaf82(credentials) {
       if (credentials.plantname === '') {
         alert('이름을 입력해주세요.')
-      } else if (credentials.price === '') {
+      } else if (credentials.price === '' || !Number.isInteger(parseInt(credentials.price))) {
         alert('가격을 확인해주세요.')
       } else if (credentials.sigungu === '') {
         alert('주소를 선택해주세요.')
