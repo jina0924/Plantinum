@@ -218,6 +218,7 @@ export default {
 
   .second-box {
     height: 1117px;
+    background-color: white;
   }
 
   .third-box {
