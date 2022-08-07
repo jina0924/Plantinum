@@ -7,7 +7,7 @@
       <span class="buy-off" @click="onoff()">분양받아요</span>
     </div>
     <!-- 분양해요 목록들 -->
-    <div class="leaf82-list-box row" v-if="isSell">
+    <div class="leaf82-list-box row mb-5" v-if="isSell">
       <div class="col-sm-2 col-md-3 col-0" v-if="!!sellItems"></div>
       <!-- 리스트가 있을 때 -->
       <div class="leaf82-list col-sm-8 col-md-6 col-0 row d-flex justify-content-center" v-if="!!sellItems">
@@ -47,7 +47,7 @@
       <span class="buy-on">분양받아요</span>
     </div>
     <!-- 분양받아요 목록들 -->
-    <div class="leaf82-list-box row" v-if="!isSell">
+    <div class="leaf82-list-box row mb-5" v-if="!isSell">
       <div class="col-sm-2 col-md-3 col-0" v-if="!!buyItems"></div>
       <!-- 리스트가 있을 때 -->
       <div class="leaf82-list col-sm-8 col-md-6 col-0 row d-flex justify-content-center" v-if="!!buyItems">
