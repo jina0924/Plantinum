@@ -13,7 +13,8 @@
             <div class="myplant-data botanical-name">{{ myplant.plant_info.name }}</div>
             <div class="myplant-data row">
               <span class="col-lg-5 col-xl-4">토양 습도</span>
-              <span class="col-lg-7 col-xl-8">{{ myplant.sensing.moisture_level }}</span>
+              <span class="col-lg-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
+              <span class="col-lg-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
             </div>
             <div class="myplant-data row">
               <span class="col-lg-5 col-xl-4">등록 날짜</span>
@@ -21,7 +22,8 @@
             </div>
             <div class="myplant-data row">
               <span class="col-lg-5 col-xl-4">최근 관수 날짜</span>
-              <span class="col-lg-7 col-xl-8">{{ myplant.sensing.last_watering }}</span>
+              <span class="col-lg-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.last_watering }}</span>
+              <span class="col-lg-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
             </div>
             <div class="row">
 
@@ -41,13 +43,16 @@
               </div>
 
               <div class="otp">
-                <div v-if="!myplant.otp_code">
+                <div v-if="!!myplant.is_connected">
+                  <button @click="disconnectMyplant(myplantPk)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
+                </div>
+                <div v-if="!myplant.is_connected && !myplant.otp_code">
                   <button @click="[fetchOTP(myplantPk), startTimer()]" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
                   <!-- <div class="black-bg" @click="close($event)" v-if="!!modal">
                     <myplant-modal :otpCode="myplant.otp_code" :modal="modal" class="myplant-modal"></myplant-modal>
                   </div> -->
                 </div>
-                <div v-if="!!myplant.otp_code">
+                <div v-if="!myplant.is_connected && !!myplant.otp_code">
                   <button class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
                 </div>
               </div>
@@ -57,8 +62,11 @@
               SuPool은 Plantinum에서 제작한 자동화 화분입니다
             </div>
             <div v-if="!myplant.is_connected && !!myplant.otp_code" class="otp-timer">
-              <div>{{ myplant.otp_code }}</div>
-              <div>{{ otpTimer }}</div>
+              <span>다음 숫자를 화분에 입력해주세요 : {{ myplant.otp_code }}</span>
+              <span>.......{{ otpTimer }}</span>
+              <div>
+                <progress value=otpTimer max="10"></progress>
+              </div>
             </div>
           </div>
         </div>
@@ -103,7 +111,7 @@ export default {
   //   }
   },
   methods: {
-    ...mapActions(['fetchMyplant', 'fetchOTP', 'resetOTP']),
+    ...mapActions(['fetchMyplant', 'fetchOTP', 'disconnectMyplant']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
@@ -118,6 +126,8 @@ export default {
         this.fetchMyplant(this.$route.params.plantPk)
         this.otpTimer--
         if (this.otpTimer <= 0 && this.myplant.otp_code === null) {
+          this.stopTimer(interval)
+        } else if (this.myplant.is_connected) {
           this.stopTimer(interval)
         }
       }, 1000)
@@ -176,6 +186,10 @@ body {
 .myplant-data {
   line-height: 2rem;
   font-size: 1.1rem;
+}
+
+.not-connected {
+  color: #a6a6a6;
 }
 
 .plant-info-btn {
