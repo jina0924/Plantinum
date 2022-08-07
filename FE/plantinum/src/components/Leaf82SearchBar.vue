@@ -4,7 +4,8 @@
       <div class="search-box col-sm-8 col-md-4 col-12 d-flex justify-content-center">
         <input class="search-input" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
         <button class="search-btn" type="submit" @click="beforeSearch()">
-          <span class="d-flex align-items-center justify-content-center">검색</span>
+          <span class="material-symbols-outlined d-flex align-items-center justify-content-center">search</span>
+          
         </button>
       </div>
       <div class="col-sm-2 col-md-4 col-0"></div>
@@ -117,24 +118,27 @@ div {
 
 .search-box {
   position: relative;
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0rem 1rem #d2d2d2;
+
 }
 
 .search-input {
-  width: 80%;
+  width: 90%;
   height: 2.5rem;
   border: 0;
-  border-radius: 0.5rem;
-  box-shadow: 0rem 0rem 1rem #d2d2d2;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   font-size: 1.2rem;
 }
 
 .search-btn {
-  width: 20%;
+  width: 10%;
   border: 0;
-  background-color: #b2c9ab;
-  border-radius: 0.5rem;
-  color: white;
-  box-shadow: 0rem 0rem 1rem #d2d2d2;
+  background-color: white;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  color: black;
 }
 
 .search-btn:hover {
