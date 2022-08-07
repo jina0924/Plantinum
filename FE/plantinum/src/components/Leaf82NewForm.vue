@@ -97,15 +97,11 @@ export default {
     },
     selectSigungu(event) {
       let tmp = event.target.value
-      console.log(tmp)
       this.credentials.sigungu = tmp
-      console.log(this.credentials.sigungu)
     },
     selectCategory(event) {
       let tmp = event.target.value
-      console.log(tmp)
       this.credentials.category_class = tmp
-      console.log(this.credentials.category_class)
     },
     beforecreateLeaf82(credentials) {
       if (credentials.plantname === '') {
