@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer, MyplantListSerializer
+from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer, MyplantListSerializer, OtpcodeSerializer
 from .models import Myplant, Plants, Diary
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -133,6 +133,24 @@ def create_otp(request, myplant_pk):
             return Response({'result': '잘못된 접근입니다.'})
     else:
         return Response({'result': '식물이 존재하지 않습니다.'})
+
+
+# otp코드 조회
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def otp_status(request, myplant_pk):
+    myplant = Myplant.objects.get(pk=myplant_pk)
+    me = request.user.id
+    user = myplant.user_id
+    
+    if me == user:
+
+        serializer = OtpcodeSerializer(myplant)
+        return Response(serializer.data)
+
+    else:
+        return Response({'result': '잘못된 접근입니다.'})
 
 
 # 연결끊기

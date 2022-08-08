@@ -104,3 +104,9 @@ class SensingSerializer(serializers.ModelSerializer):
         model = Sensing
         fields = '__all__'
 
+
+class OtpcodeSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Myplant
+        fields = ('otp_code',)
