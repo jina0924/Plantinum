@@ -48,8 +48,13 @@
           <p>{{ leaf82Detail.content }}</p>
         </div>
         <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '판매중'">
-          <div class="message">
+          <div class="message" v-if="isLoggedIn">
             <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-center">
+              <button class="py-2">채팅하러 가기</button>
+            </router-link>
+          </div>
+          <div class="message" v-if="!isLoggedIn">
+            <router-link :to="{}" class="d-flex justify-content-center" @click="loginRequired()">
               <button class="py-2">채팅하러 가기</button>
             </router-link>
           </div>
@@ -63,6 +68,7 @@
 
 <script>
 import { mapGetters , mapActions } from 'vuex'
+import router from '@/router'
 
 export default {
   name: 'Leaf82Detail',
@@ -107,6 +113,10 @@ export default {
       this.addr = this.leaf82Detail.addr
       this.info = this.leaf82Detail
       this.info.price = this.info.price.toLocaleString('ko-KR')
+    },
+    loginRequired() {
+      alert('로그인이 필요한 서비스입니다.')
+      router.push({ name: 'login' })
     }
   },
   computed: {

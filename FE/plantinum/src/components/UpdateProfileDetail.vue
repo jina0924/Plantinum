@@ -113,14 +113,10 @@
                 <span class="kind pl-4">주소</span>
                 <span class="material-symbols-outlined icon pr-4">home</span>
               </div>
-              <div class="card-text pb-5">
+              <div class="card-text pb-5 d-flex justify-content center">
                 <input type="text" class="card-addr ml-4" v-model="info.addr" id="sample6_address">
                 <input type="hidden" class="card-input mx-4" v-model="info.zip_code" id="sample6_postcode">
-                <!-- <input type="text" class="card-input mx-4"  id="sample6_detailAddress"> -->
-                <!-- <input type="text" class="card-input mx-4"  id="sample6_extraAddress"> -->
-
-
-                <input type="button" @click="findAddr" value="주소찾기">
+                <input type="button" class="find-addr" @click="findAddr" value="주소찾기">
               </div>
             </div>
           </div>
@@ -319,6 +315,10 @@ input[type="file"] {
   width: 50%;
 }
 
+.find-addr {
+
+}
+
 
 .card-text .card-input-nickname {
   color: #7E7E7E;
@@ -340,5 +340,14 @@ input[type="file"] {
   width: 10rem;
   height: 10rem;
   border-radius: 5%;
+}
+
+.card-content {
+  color: #7E7E7E;
+  font-size: 0.9rem;
+}
+
+.card-text a {
+  text-decoration: none;
 }
 </style>

@@ -37,7 +37,6 @@ export const Leaf82 = {
         method: 'get',
       })
       .then(res => {
-        console.log(res)
         commit('SET_SEARCHLIST', res.data)
       })
       .catch(err => {
@@ -61,7 +60,6 @@ export const Leaf82 = {
         method: 'get'
       })
       .then(res=> {
-        console.log(res)
         commit('SET_SIGUNGU', res.data)
       })
 
@@ -73,7 +71,6 @@ export const Leaf82 = {
         params
       })
       .then(res => {
-        console.log(res)
         commit('SET_SEARCHLIST', res.data)
         
       })
@@ -87,9 +84,7 @@ export const Leaf82 = {
         headers: getters.authHeader
       })
       .then(res => {
-        console.log(res)
         commit('SET_LEAF82DETAIL', res.data)
-        console.log(getters.currentUser.username)
         router.push({
           name: 'leaf82Detail',
           params: { username: getters.currentUser.username , posting_addr: getters.leaf82Detail.posting_addr }
