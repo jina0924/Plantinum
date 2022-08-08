@@ -1,8 +1,6 @@
 <template>
   <div class="new-myplant">
     <nav-bar></nav-bar>
-    <h1>내 식물 등록</h1>
-    <!-- <plant-search-bar></plant-search-bar> -->
     <myplant-form :myplant="myplant" action="create"></myplant-form>
   </div>
 </template>
