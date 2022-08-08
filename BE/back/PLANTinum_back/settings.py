@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'accounts',
     'leaf82',
 
+    'storages',
+
     'corsheaders',
 
     'rest_framework',
@@ -170,3 +172,22 @@ MEDIA_URL = '/media/'
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
 # OLD_PASSWORD_FIELD_ENABLED = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
