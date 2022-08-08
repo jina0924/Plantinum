@@ -33,9 +33,9 @@
                 <!-- 연결 끊기 -->
                 <button v-if="!!myplant.is_connected" @click="disconnectMyplant(myplantPk)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
                 <!-- SuPool 연결 -->
-                <button v-if="!myplant.is_connected && !myplant.otp_code" @click="[fetchOTP(myplantPk), fetchMyplant(myplantPk), startTimer(), changeModal(3)]" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
+                <button v-if="!myplant.is_connected && !temp_OTP" @click="[fetchOTP(myplantPk), fetchMyplant(myplantPk), startTimer(), changeModal(3)]" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
                 <!-- 연결중 -->
-                <button v-if="!myplant.is_connected && !!myplant.otp_code" @click="changeModal(3)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
+                <button v-if="!myplant.is_connected && !!temp_OTP" @click="changeModal(3)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
               </div>
 
               <!-- 모달 -->
@@ -56,9 +56,9 @@
                   </div>
                   <!-- OTP 모달 -->
                   <div v-if="modal===3">
-                    <div v-if="!myplant.is_connected && !!myplant.otp_code" class="otp-timer">
+                    <div v-if="!myplant.is_connected && !!temp_OTP" class="otp-timer">
                       <div>다음 숫자를 화분에 입력해주세요</div>
-                      <div class="otp-number">{{ myplant.otp_code }}</div>
+                      <div class="otp-number">{{ temp_OTP }}</div>
                       <div>{{ otpTimer }}</div>
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="20" class="progress-bar"></progress>
@@ -123,7 +123,7 @@ export default {
   //   }
   },
   methods: {
-    ...mapActions(['fetchMyplant', 'fetchOTP', 'disconnectMyplant']),
+    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
@@ -135,10 +135,11 @@ export default {
     startTimer() {
       this.otpTimer = 20
       const interval = setInterval(() => {
-        this.fetchMyplant(this.$route.params.plantPk)
+        this.checkOTP(this.myplantPk)
         this.otpTimer --
-        if (this.otpTimer <= 15 && this.myplant.otp_code === null) {
+        if (this.otpTimer <= 15 && this.temp_OTP === null) {
           this.stopTimer(interval)
+          this.fetchMyplant(this.myplantPk)
         } else if (this.myplant.is_connected) {
           this.stopTimer(interval)
         }
