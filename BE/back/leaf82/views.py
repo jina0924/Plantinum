@@ -80,13 +80,6 @@ def read_leaf82(request):
 #     return Response(serializer.data)
 
 
-# from rest_framework.views import APIView
-# class Leaf82View(APIView):
-#     def get(self, request):
-#         plantname = request.GET.get('plantname', '*')
-
-#         return Response({'result': '111111'})
-
 @api_view(['GET'])
 def search(request):
     # 식물이름(검색어)/시도/시군구
