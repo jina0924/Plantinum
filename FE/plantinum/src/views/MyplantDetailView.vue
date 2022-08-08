@@ -27,33 +27,45 @@
             </div>
             <div class="row">
 
-              <div class="seasonal-manage-info">
-                <button class="btn plant-info-btn" type="button" @click="changeModal(1)">계절별 식물 관리 정보</button>
-                <!-- 모달 -->
-                <div class="black-bg" @click="close($event)" v-if="!!modal">
-                  <myplant-modal :plantInfo="myplant.plant_info" :modal="modal" class="myplant-modal"></myplant-modal>
-                </div>
-              </div>
-              
-              <div class="special-manage-info" v-if="myplant.plant_info.specl_manage_info">
-                <button class="btn plant-info-btn" @click="changeModal(2)">특별 관리 정보</button>
-                <div class="black-bg" @click="close($event)" v-if="!!modal">
-                  <myplant-modal :plantInfo="myplant.plant_info" :modal="modal" class="myplant-modal"></myplant-modal>
-                </div>
+              <button class="btn plant-info-btn" type="button" @click="changeModal(1)">계절별 식물 관리 정보</button>
+              <button v-if="myplant.plant_info.specl_manage_info" class="btn plant-info-btn" @click="changeModal(2)">특별 관리 정보</button>
+              <div class="otp">
+                <!-- 연결 끊기 -->
+                <button v-if="!!myplant.is_connected" @click="disconnectMyplant(myplantPk)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
+                <!-- SuPool 연결 -->
+                <button v-if="!myplant.is_connected && !myplant.otp_code" @click="[fetchOTP(myplantPk), fetchMyplant(myplantPk), startTimer(), changeModal(3)]" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
+                <!-- 연결중 -->
+                <button v-if="!myplant.is_connected && !!myplant.otp_code" @click="changeModal(3)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
               </div>
 
-              <div class="otp">
-                <div v-if="!!myplant.is_connected">
-                  <button @click="disconnectMyplant(myplantPk)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
-                </div>
-                <div v-if="!myplant.is_connected && !myplant.otp_code">
-                  <button @click="[fetchOTP(myplantPk), startTimer()]" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
-                  <!-- <div class="black-bg" @click="close($event)" v-if="!!modal">
-                    <myplant-modal :otpCode="myplant.otp_code" :modal="modal" class="myplant-modal"></myplant-modal>
-                  </div> -->
-                </div>
-                <div v-if="!myplant.is_connected && !!myplant.otp_code">
-                  <button class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
+              <!-- 모달 -->
+              <div class="black-bg" @click="close($event)" v-if="!!modal">
+                <div class="modal-bg myplant-modal">
+                  <!-- 계절별 식물 관리 정보 모달 -->
+                  <div v-if="modal===1">
+                    <h5>계절별 식물 관리 정보</h5>
+                    <div class="season">봄</div>{{ myplant.plant_info.watercycle_spring_nm }}
+                    <div class="season">여름</div>{{ myplant.plant_info.watercycle_summer_nm }}
+                    <div class="season">가을</div>{{ myplant.plant_info.watercycle_autumn_nm }}
+                    <div class="season">겨울</div>{{ myplant.plant_info.watercycle_winter_nm }}
+                  </div>
+                  <!-- 특별 관리 정보 모달 -->
+                  <div v-if="modal===2">
+                    <h5>특별 관리 정보</h5>
+                    <p>{{ myplant.plant_info.specl_manage_info }}</p>
+                  </div>
+                  <!-- OTP 모달 -->
+                  <div v-if="modal===3">
+                    <div v-if="!myplant.is_connected && !!myplant.otp_code" class="otp-timer">
+                      <div>다음 숫자를 화분에 입력해주세요</div>
+                      <div class="otp-number">{{ myplant.otp_code }}</div>
+                      <div>{{ otpTimer }}</div>
+                      <div class="d-flex justify-content-center">
+                        <progress :value=otpTimer max="20" class="progress-bar"></progress>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="modal-close-btn">닫기</button>
                 </div>
               </div>
             </div>
@@ -61,13 +73,13 @@
               <span class="material-symbols-outlined supool-icon">potted_plant</span>
               SuPool은 Plantinum에서 제작한 자동화 화분입니다
             </div>
-            <div v-if="!myplant.is_connected && !!myplant.otp_code" class="otp-timer">
+            <!-- <div v-if="!myplant.is_connected && !!myplant.otp_code" class="otp-timer">
               <span>다음 숫자를 화분에 입력해주세요 : {{ myplant.otp_code }}</span>
               <span>.......{{ otpTimer }}</span>
               <div>
-                <progress value=otpTimer max="10"></progress>
+                <progress :value=otpTimer max="10"></progress>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -80,7 +92,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import NavBar from '@/components/NavBar.vue'
-import MyplantModal from '@/components/MyplantModal.vue'
+// import MyplantModal from '@/components/MyplantModal.vue'
 
 export default {
   name: 'MyplantDetailView',
@@ -88,10 +100,10 @@ export default {
     return {
       myplantPk: this.$route.params.plantPk,
       modal: 0,
-      otpTimer: 10,
+      otpTimer: 20,
     }
   },
-  components: { NavBar, MyplantModal },
+  components: { NavBar },
   computed: {
     ...mapGetters(['myplant', 'temp_OTP']),
     myplantCreatedAt() {
@@ -121,11 +133,11 @@ export default {
       this.modal = num
     }, 
     startTimer() {
-      this.otpTimer = 10
+      this.otpTimer = 20
       const interval = setInterval(() => {
         this.fetchMyplant(this.$route.params.plantPk)
-        this.otpTimer--
-        if (this.otpTimer <= 0 && this.myplant.otp_code === null) {
+        this.otpTimer --
+        if (this.otpTimer <= 15 && this.myplant.otp_code === null) {
           this.stopTimer(interval)
         } else if (this.myplant.is_connected) {
           this.stopTimer(interval)
@@ -134,7 +146,8 @@ export default {
       return interval},
     stopTimer(Timer) {
       clearInterval(Timer)
-      this.otpTimer = 10
+      this.otpTimer = 20
+      this.modal = 0
     }
   },
   created() {
@@ -223,6 +236,77 @@ body {
 .myplant-modal {
   position: relative;
   top: 150px;
+}
+
+.modal-bg {
+  width: 80vw;
+  max-width: 450px;
+  margin: 2rem auto;
+  background: white ;
+  border-radius: 15px;
+  padding: 2rem 2rem 1rem 2rem;
+}
+
+h5 {
+  text-align: center;
+}
+
+.season { 
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: #845A49;
+  margin: 0.5rem 0;
+}
+
+.modal-close-btn {
+  cursor: pointer;
+  border: none;
+  background-color: #b2c9ab;
+  color: white;
+  font-weight: 500;
+  margin: 0.5rem;
+  padding: 0 1rem;
+  border-radius: 13px;
+  height: 45px;
+  font-size: 1rem;
+  margin-left: auto;
+  display: block;
+  margin-top: 1.5rem;
+}
+
+.modal-close-btn:hover {
+  background-color: #65805d;
+  /* transform: scale(1.1); */
+  transition: all 0.5s;
+}
+
+.otp-timer {
+  text-align: center;
+}
+
+.otp-number{
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0.5rem;
+  letter-spacing: 1rem;
+}
+
+.progress-bar {
+  appearance: none;
+  background-color: white;
+  text-align: center;
+  width: 80%;
+}
+.progress-bar::-webkit-progress-bar {
+  background:#e9e9e9;
+  border-radius:10px;
+  /* box-shadow: inset 3px 3px 10px #ccc; */
+}
+.progress-bar::-webkit-progress-value {
+  border-radius:10px;
+  background: #1D976C;
+  background: #B2C9AB;
+  transition: width 1s linear;
 }
 
 .supool-info {
