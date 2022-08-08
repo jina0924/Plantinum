@@ -634,14 +634,14 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/otp/
+http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/otp/
 ```
 
 - Request Parameters
 
 | Name           | Type | Description             | Mandatory | Example |
 | -------------- | ---- | ----------------------- | --------- | ------- |
-| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 1       |
+| 내식물 식물 pk | Int  | 내식물 등록한 식물의 pk | O         | 1       |
 
 - Response
 
@@ -654,6 +654,40 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/otp/
 ```
 {
     "result": "이미 발급되었거나 연결되었습니다."
+}
+```
+
+
+
+### OTP 상태 조회
+
+- 식물의 OTP 상태 조회
+- 값이 있으면 해당 값 리턴, 없으면 null 리턴
+- 로그인 사용자 - 토큰 사용
+- GET
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/otp/status/
+```
+
+- Request Parameters
+
+| Name           | Type | Description             | Mandatory | Example |
+| -------------- | ---- | ----------------------- | --------- | ------- |
+| 내식물 식물 pk | Int  | 내식물 등록한 식물의 pk | O         | 1       |
+
+- Response
+
+```
+{
+    "otp_code": "636631"
+}
+```
+
+```
+{
+    "otp_code": null
 }
 ```
 
