@@ -6,19 +6,19 @@ export const Myplant = {
   state: {
     myplants: [],
     myplant: {},
-    plant_list: [],
+    // plant_list: [],
     // temp_OTP: null,
   },
   getters: {
     myplants: state => state.myplants,
     myplant: state => state.myplant,
-    plant_list: state => state.plant_list,
+    // plant_list: state => state.plant_list,
     // temp_OTP: state => state.temp_OTP,
   },
   mutations: {
     SET_MYPLANTS: (state, myplants) => state.myplants = myplants,
     SET_MYPLANT: (state, myplant) => state.myplant = myplant,
-    SET_PLANTLIST: (state, plant_list) => state.plant_list = plant_list,
+    // SET_PLANTLIST: (state, plant_list) => state.plant_list = plant_list,
     // SET_OTP: (state, otp) => state.temp_OTP = otp,
   },
   actions: {

@@ -103,4 +103,9 @@ export default {
   background-color: #b2c9ab;
   color: white;
 }
+
+.btn:hover {
+  background-color: #65805d;
+  transition: all 0.5s;
+}
 </style>
