@@ -59,7 +59,7 @@
               </div>
 
               <!-- OTP 모달 -->
-              <div class="black-bg" v-if="modal===3">
+              <div class="black-bg" v-if="!!temp_OTP">
                 <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
                   <div>
@@ -67,7 +67,7 @@
                       <div>다음 숫자를 화분에 입력해주세요</div>
                       <div class="otp-number">{{ temp_OTP }}</div>
                       <div v-if="otpTimer > 0">{{ otpTimer }}</div>
-                      <div v-if="otpTimer <= 0">{{ 0 }}</div>
+                      <div v-if="otpTimer <= 0">0</div>
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="20" class="progress-bar"></progress>
                       </div>
@@ -161,6 +161,10 @@ export default {
   },
   created() {
     this.fetchMyplant(this.$route.params.plantPk)
+    if (this.temp_OTP) {
+      this.startTimer()
+    }
+
   },
 }
 </script>
