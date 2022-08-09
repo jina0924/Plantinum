@@ -8,4 +8,4 @@ class User(AbstractUser):
     addr = models.CharField(max_length=100, blank=True)
     zip_code = models.CharField(max_length=5, blank=True)
     nickname = models.CharField(max_length=15, unique=True)
-    photo = models.FileField(blank=True)
+    photo = models.ImageField(blank=True)
