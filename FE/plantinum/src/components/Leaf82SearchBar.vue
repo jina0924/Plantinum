@@ -5,7 +5,6 @@
         <input class="search-input" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
         <button class="search-btn" type="submit" @click="beforeSearch()">
           <span class="material-symbols-outlined d-flex align-items-center justify-content-center">search</span>
-          
         </button>
       </div>
       <div class="col-sm-2 col-md-4 col-0"></div>
