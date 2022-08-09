@@ -12,18 +12,18 @@
             <h2 class="myplant-nickname">{{ myplant.nickname }}</h2>
             <div class="myplant-data botanical-name">{{ myplant.plant_info.name }}</div>
             <div class="myplant-data row">
-              <span class="col-lg-5 col-xl-4">토양 습도</span>
-              <span class="col-lg-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
-              <span class="col-lg-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
+              <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
+              <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
+              <span class="col-md-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
             </div>
             <div class="myplant-data row">
-              <span class="col-lg-5 col-xl-4">등록 날짜</span>
-              <span class="col-lg-7 col-xl-8">{{ myplantCreatedAt }}</span>
+              <span class="col-md-5 col-xl-4 info-title">등록 날짜</span>
+              <span class="col-md-7 col-xl-8">{{ myplantCreatedAt }}</span>
             </div>
             <div class="myplant-data row">
-              <span class="col-lg-5 col-xl-4">최근 관수 날짜</span>
-              <span class="col-lg-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.last_watering }}</span>
-              <span class="col-lg-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
+              <span class="col-md-5 col-xl-4 info-title">최근 관수 날짜</span>
+              <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.last_watering }}</span>
+              <span class="col-md-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
             </div>
             <div class="row plant-btn-group">
 
@@ -78,7 +78,7 @@
             </div>
             <div v-if="!myplant.is_connected && !myplant.otp_code" class="supool-info d-flex align-items-center">
               <span class="material-symbols-outlined supool-icon">potted_plant</span>
-              SuPool은 Plantinum에서 제작한 자동화 화분입니다
+              <span>SuPool은 Plantinum에서 제작한 자동화 화분입니다</span>
             </div>
             <!-- <div v-if="!myplant.is_connected && !!myplant.otp_code" class="otp-timer">
               <span>다음 숫자를 화분에 입력해주세요 : {{ myplant.otp_code }}</span>
@@ -214,6 +214,10 @@ body {
   font-size: 1.1rem;
 }
 
+.info-title {
+  font-weight: 450;
+}
+
 .not-connected {
   color: #a6a6a6;
 }
@@ -223,7 +227,7 @@ body {
 }
 
 .plant-info-btn {
-  margin: 0.5rem;
+  margin: 0.5rem 1rem 0.5rem 0;
   padding: 0 1rem;
   border-radius: 13px;
   height: 45px;
@@ -235,10 +239,22 @@ body {
   border-width: thin;
 }
 
+.plant-info-btn:hover {
+  background-color: #a6a6a6;
+  color: white;
+  transition: all 0.5s;
+}
+
 .plant-info-btn-end {
-  margin: 0.5rem 0 0.5rem 0.5rem;
+  margin-right: 0;
   color: #845A49;
   border-color: #845A49;
+}
+
+.plant-info-btn-end:hover {
+  color: white;
+  background-color: #845A49;
+  transition: all 0.5s;
 }
 
 .black-bg {
