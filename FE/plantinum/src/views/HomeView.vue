@@ -26,7 +26,7 @@
           <div class="text-hello" v-if="isLoggedIn">
           <!-- <div class="text-hello"> -->
             <!-- user 정보 받아와야 함 -->
-            <p>안녕하세요, {{ profile.nickname }} 님</p>
+            <p>안녕하세요, <b>{{ profile.nickname }}</b> 님</p>
         </div>
         <!-- 버튼 -->
         <div class="btnbox" v-if="!isLoggedIn">
@@ -51,15 +51,15 @@
       <div class="row col-md-6 d-flex justify-content-center">
         <div class="contentbox">
           <div class="text-main">
-            <p>식물과의 이야기,</p>
-            <p>다이어리</p>
+            <p>내 식물이 들려주는 이야기,</p>
+            <p>내 식물...</p>
           </div>
           <div class="text-detail">
-            <p>그동안 하지 못했던 말,</p>
-            <p>다이어리를 통해 전달해주세요.</p>
+            <p>언제 어디서든 소중한 반려식물의 성장과정을</p>
+            <p>놓치지 않을 수 있어요.</p>
             <br>
             <br>
-            <p>따뜻한 마음을 남겨 반려식물과 소통합니다.</p>
+            <p>일상 속, 반려 식물과 함께하세요.</p>
           </div>
         <!-- 버튼 -->
         <div class="btnbox">
@@ -255,25 +255,25 @@ export default {
   }
 
   .second-box .contentbox {
-    margin-top: 20rem;
+    margin-top: 15rem;
     margin-bottom: 3rem;
     font-family: 'SUIT', sans-serif;
   }
   
   .third-box .contentbox {
-    margin-top: 20rem;
+    margin-top: 13rem;
     margin-bottom: 3rem;
     font-family: 'SUIT', sans-serif;
   }
 
   .fourth-box .contentbox {
-    margin-top: 10rem;
+    margin-top: 9rem;
     margin-bottom: 3rem;
     font-family: 'SUIT', sans-serif;
   }
 
   .text-main {
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
   }
 
   .text-main p {
@@ -315,8 +315,9 @@ export default {
 
   .btn{
     border-radius: 5px;
-    height: 44px;
-    font-size: 1rem;
+    height: 53px;
+    font-size: 1.3rem;  /*1rem*/
+    margin-bottom: 3rem;
     background-color: #b2c9ab;
     color: white;
     width: 100%;
@@ -327,7 +328,7 @@ export default {
   }
 
   .fourth-box .btn a {
-    width: 75%
+    width: 75%;
   }
 
   .second-box img {
@@ -354,4 +355,11 @@ export default {
     font-size: 4rem;
     font-family: 'Dancing Script', cursive;
   }
+
+  .btn:hover{  
+  background-color: #65805d;
+  color: #ffffff;
+  /*box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);*/
+}
+
 </style>>
