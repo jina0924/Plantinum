@@ -2,17 +2,23 @@ import { createStore } from 'vuex'
 import { Account } from './modules/accounts'
 import { Myplant } from './modules/myplant'
 import { Leaf82 } from './modules/leaf82'
-// import createPersistedState from "vuex-persistedstate"
+import { Timer } from './modules/timer'
+import createPersistedState from "vuex-persistedstate"
 
 // import accounts from './modules/accounts'
 
 export default createStore({
   modules: { 
-    Account, Myplant, Leaf82
+    Account, Myplant, Leaf82, Timer,
   },
-  // plugins: [createPersistedState({
-  //   paths: ['Account', 'Myplant',]
-  // })],
+  plugins: [createPersistedState({
+    // paths: ['Account', 'Myplant',]
+    paths: ['Timer',]
+    // storage: window.sessionStorage,
+    // reducer : state => ({
+    //   otptimer: 20,
+    // })
+  })],
 })
 
 
