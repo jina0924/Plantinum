@@ -274,12 +274,27 @@ export default {
 
   .text-main {
     margin-bottom: 4rem;
+
   }
+
+/*
+    @media (min-width: 300px) {
+      html {
+        font-size: 10px;
+      }
+    }
+*/
 
   .text-main p {
     margin-bottom: 0;
     font-size: 3rem;
     font-weight: bold;
+/*
+    font-size: 3vw;
+    font-size: 50%;
+    width: 40vw;
+    min-width: 30vw;
+*/
   }
 
   .text-sub {
@@ -333,12 +348,13 @@ export default {
 
   .second-box img {
     width: 100%;
-    height: 50%;
+    /*height: 50%;*/
   }
 
   .third-box img {
     width: 70%;
-    height: 70%;
+    /* height: 70%; */
+    margin: auto;
   }
 
   .fourth-box img {
