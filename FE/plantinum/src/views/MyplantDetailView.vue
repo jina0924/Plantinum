@@ -25,7 +25,7 @@
               <span class="col-lg-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.last_watering }}</span>
               <span class="col-lg-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
             </div>
-            <div class="row">
+            <div class="row plant-btn-group">
 
               <button class="btn plant-info-btn" type="button" @click="changeModal(1)">계절별 식물 관리 정보</button>
               <button v-if="myplant.plant_info.specl_manage_info" class="btn plant-info-btn" @click="changeModal(2)">특별 관리 정보</button>
@@ -38,8 +38,8 @@
                 <button v-if="!myplant.is_connected && !!temp_OTP" @click="changeModal(3)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
               </div>
 
-              <!-- 모달 -->
-              <div class="black-bg" @click="close($event)" v-if="!!modal">
+              <!-- 정보 모달 -->
+              <div class="black-bg" @click="close($event)" v-if="modal===1 | modal===2">
                 <div class="modal-bg myplant-modal">
                   <!-- 계절별 식물 관리 정보 모달 -->
                   <div v-if="modal===1">
@@ -54,18 +54,25 @@
                     <h5>특별 관리 정보</h5>
                     <p>{{ myplant.plant_info.specl_manage_info }}</p>
                   </div>
+                  <button class="modal-close-btn">닫기</button>
+                </div>
+              </div>
+
+              <!-- OTP 모달 -->
+              <div class="black-bg" v-if="modal===3">
+                <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
-                  <div v-if="modal===3">
+                  <div>
                     <div v-if="!myplant.is_connected && !!temp_OTP" class="otp-timer">
                       <div>다음 숫자를 화분에 입력해주세요</div>
                       <div class="otp-number">{{ temp_OTP }}</div>
-                      <div>{{ otpTimer }}</div>
+                      <div v-if="otpTimer > 0">{{ otpTimer }}</div>
+                      <div v-if="otpTimer <= 0">{{ 0 }}</div>
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="20" class="progress-bar"></progress>
                       </div>
                     </div>
                   </div>
-                  <button class="modal-close-btn">닫기</button>
                 </div>
               </div>
             </div>
@@ -100,12 +107,12 @@ export default {
     return {
       myplantPk: this.$route.params.plantPk,
       modal: 0,
-      otpTimer: 20,
+      // otpTimer: 20,
     }
   },
   components: { NavBar },
   computed: {
-    ...mapGetters(['myplant', 'temp_OTP']),
+    ...mapGetters(['myplant', 'temp_OTP', 'otpTimer']),
     myplantCreatedAt() {
       return this.myplant.created_at.substr(0, 10)
     },
@@ -113,7 +120,7 @@ export default {
       // return this.myplant.otp_code ? 'SuPool 연결 끊기' : 'SuPool 연결'
       if (this.myplant.is_connected) { 
         return 'SuPool 연결 끊기'
-      } else if (this.myplant.otp_code && this.myplant.is_connected === false) {
+      } else if (this.temp_OTP !== null && this.myplant.is_connected === false) {
         return 'SuPool 연결중'
       } else {
         return 'SuPool 연결'
@@ -123,7 +130,7 @@ export default {
   //   }
   },
   methods: {
-    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant']),
+    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
@@ -133,21 +140,22 @@ export default {
       this.modal = num
     }, 
     startTimer() {
-      this.otpTimer = 20
       const interval = setInterval(() => {
         this.checkOTP(this.myplantPk)
-        this.otpTimer --
+        this.countTime(this.otpTimer - 1)
         if (this.otpTimer <= 15 && this.temp_OTP === null) {
           this.stopTimer(interval)
           this.fetchMyplant(this.myplantPk)
+          this.modal = 0
         } else if (this.myplant.is_connected) {
           this.stopTimer(interval)
+          this.modal = 0
         }
       }, 1000)
       return interval},
     stopTimer(Timer) {
       clearInterval(Timer)
-      this.otpTimer = 20
+      this.countTime(20)
       this.modal = 0
     }
   },
@@ -204,6 +212,10 @@ body {
 
 .not-connected {
   color: #a6a6a6;
+}
+
+.plant-btn-group {
+  margin: .5rem 0;
 }
 
 .plant-info-btn {
@@ -297,6 +309,7 @@ h5 {
   background-color: white;
   text-align: center;
   width: 80%;
+  margin: 1rem 0;
 }
 .progress-bar::-webkit-progress-bar {
   background:#e9e9e9;

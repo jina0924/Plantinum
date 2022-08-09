@@ -7,19 +7,19 @@ export const Myplant = {
     myplants: [],
     myplant: {},
     plant_list: [],
-    temp_OTP: null,
+    // temp_OTP: null,
   },
   getters: {
     myplants: state => state.myplants,
     myplant: state => state.myplant,
     plant_list: state => state.plant_list,
-    temp_OTP: state => state.temp_OTP,
+    // temp_OTP: state => state.temp_OTP,
   },
   mutations: {
     SET_MYPLANTS: (state, myplants) => state.myplants = myplants,
     SET_MYPLANT: (state, myplant) => state.myplant = myplant,
     SET_PLANTLIST: (state, plant_list) => state.plant_list = plant_list,
-    SET_OTP: (state, otp) => state.temp_OTP = otp,
+    // SET_OTP: (state, otp) => state.temp_OTP = otp,
   },
   actions: {
     fetchMyplants({ commit, getters }, { username }) {
@@ -78,29 +78,29 @@ export const Myplant = {
       })
     },
 
-    fetchOTP({ commit, getters }, plantPk) {
-      axios({
-        url: drf.myplant.plantOTP(plantPk),
-        method: 'get',
-        headers: getters.authHeader,
-      })
-      .then(res => commit('SET_OTP', res.data.otp_code))
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
+  //   fetchOTP({ commit, getters }, plantPk) {
+  //     axios({
+  //       url: drf.myplant.plantOTP(plantPk),
+  //       method: 'get',
+  //       headers: getters.authHeader,
+  //     })
+  //     .then(res => commit('SET_OTP', res.data.otp_code))
+  //     .catch(err => {
+  //       console.log(err.response)
+  //     })
+  //   },
 
-  checkOTP({ commit, getters }, plantPk) {
-      axios({
-        url: drf.myplant.otpStatus(plantPk),
-        method: 'get',
-        headers: getters.authHeader,
-      })
-      .then(res => commit('SET_OTP', res.data.otp_code))
-      .catch(err => {
-        console.log(err.response)
-      })
-    },
+  // checkOTP({ commit, getters }, plantPk) {
+  //     axios({
+  //       url: drf.myplant.otpStatus(plantPk),
+  //       method: 'get',
+  //       headers: getters.authHeader,
+  //     })
+  //     .then(res => commit('SET_OTP', res.data.otp_code))
+  //     .catch(err => {
+  //       console.log(err.response)
+  //     })
+  //   },
 
   disconnectMyplant({ commit, getters }, plantPk) {
     if (confirm('정말 연결을 해제하시겠습니까?')) {
