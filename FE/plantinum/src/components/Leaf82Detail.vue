@@ -120,7 +120,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['leaf82Detail', 'currentUser']),
+    ...mapGetters(['leaf82Detail', 'currentUser', 'isLoggedIn']),
   },
   watch: {
     leaf82Detail() {
