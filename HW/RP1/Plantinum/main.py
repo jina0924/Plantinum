@@ -60,8 +60,8 @@ A1B = 6
 spi = spidev.SpiDev()
 spi.open(0,0)
 spi.max_speed_hz=500000
-LED1 = 20
-LED2 = 21
+#LED1 = 20
+#LED2 = 21
 
 #watering_stop
 watering_flag = 0
@@ -78,10 +78,10 @@ def sensor_init():
     GPIO.setwarnings(False)
 	
 	#LED GPIO Setting
-    GPIO.setup(LED1, GPIO.OUT)
-    GPIO.setup(LED2, GPIO.OUT)
-    GPIO.output(LED1, GPIO.LOW)
-    GPIO.output(LED2, GPIO.LOW)
+    #GPIO.setup(LED1, GPIO.OUT)
+    #GPIO.setup(LED2, GPIO.OUT)
+    #GPIO.output(LED1, GPIO.LOW)
+    #GPIO.output(LED2, GPIO.LOW)
 
 	#WaterLevel Sensor GPIO Setting
     GPIO.setup(waterLV_pin, GPIO.IN)
@@ -146,8 +146,9 @@ class sensorThread(QThread):
         print("start thread")
         t = 0
         self.send_datas=0
-        GPIO.output(LED1, GPIO.HIGH)
-        GPIO.output(LED2, GPIO.HIGH)
+        #GPIO.output(LED1, GPIO.HIGH)
+        #GPIO.output(LED2, GPIO.HIGH)
+        screen(0)
         while(1):
             if(success_acc == 0):
                 continue
@@ -230,13 +231,15 @@ def watering():
 def screen(screen_mode):
     #sleep_mode : 10sec
     if(screen_mode == 1):
-        GPIO.output(LED1, GPIO.LOW)
-        GPIO.output(LED2, GPIO.LOW)
+        #GPIO.output(LED1, GPIO.LOW)
+        #GPIO.output(LED2, GPIO.LOW)
+        subprocess.run("sudo python3 ./led_off.py",shell=True)
         subprocess.run('xset s on',shell = True)
         subprocess.run('xset s 10',shell = True)
     else:
-        GPIO.output(LED1, GPIO.HIGH)
-        GPIO.output(LED2, GPIO.HIGH)
+        #GPIO.output(LED1, GPIO.HIGH)
+        #GPIO.output(LED2, GPIO.HIGH)
+        subprocess.run("sudo python3 ./led_on.py",shell=True)
         subprocess.run('xset s off',shell=True)
 
 
@@ -251,7 +254,7 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def dbset(self):
         #db커넥트
         global db
-        db = mysql.connector.connect(host="192.168.45.36",user='root', password='111111', database='testdb',buffered=True)
+        db = mysql.connector.connect(host="192.168.45.85",user='root', password='111111', database='testdb',buffered=True)
 
     def main(self):
         pass
@@ -486,6 +489,7 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
         snsth.stop()
         GPIO.cleanup()
         spi.close()
+        subprocess.run("sudo python3 ./led_off.py",shell=True)
         quit()
         #라즈베리파이 종료 필요
         #배쉬파일 연결해야할듯 합니다
