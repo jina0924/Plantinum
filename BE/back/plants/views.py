@@ -6,6 +6,7 @@ from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerial
 from .models import Myplant, Plants, Diary
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 
 
 User = get_user_model()
@@ -82,7 +83,7 @@ def create_myplant(request):
         #     # print(myplant.values('otp_code'))  otp code 삭제
         # Timer(301, otp).start()  # 5분 뒤 함수 실행
 
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # 연결되지 않은 상태, otp도 없는 상태에서 otp 발급
@@ -127,12 +128,12 @@ def create_otp(request, myplant_pk):
 
             elif myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == True:  # 해당 식물의 OTP 코드가 발급되지 않았으나 연결된 상태라면
                 
-                return Response({'result': '이미 연결되었습니다.'})
+                return Response({'result': '이미 연결되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
         else:  # OTP 요청자와 식물 등록자가 다르면
-            return Response({'result': '잘못된 접근입니다.'})
+            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
-        return Response({'result': '식물이 존재하지 않습니다.'})
+        return Response({'result': '식물이 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 # otp코드 조회
@@ -150,7 +151,7 @@ def otp_status(request, myplant_pk):
         return Response(serializer.data)
 
     else:
-        return Response({'result': '잘못된 접근입니다.'})
+        return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 
 # 연결끊기
@@ -170,9 +171,9 @@ def disconnect(request, myplant_pk):
                 return Response({'is_connected': False})
 
             else:
-                return Response({'result': '연결상태를 확인해주세요.'})
+                return Response({'result': '연결상태를 확인해주세요.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'result': '잘못된 접근입니다.'})
+            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 
 # 물주기 식물 상세페이지 조회/수정/삭제
@@ -201,7 +202,7 @@ def detail(request, myplant_pk):
                 return Response(serializer.data)
 
         else:
-            return Response({'result': '잘못된 접근입니다.'})
+            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     def delete():
         if request.user == user:
@@ -209,7 +210,7 @@ def detail(request, myplant_pk):
             return Response({'result': '내식물이 삭제되었습니다.'})
 
         else:
-            return Response({'result': '잘못된 접근입니다.'})
+            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'GET':
         return read()
@@ -236,7 +237,7 @@ def diary(request, myplant_pk):
         serializer = DiarySerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(my_plant=my_plant)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     if request.method == 'GET':
         return read_diary()

@@ -7,6 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 import random
+from rest_framework import status
 
 
 User = get_user_model()
@@ -32,7 +33,7 @@ def create_leaf82(request):
         
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=user, addr=addr, posting_addr=posting_addr)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # 시도(지역) 검색
@@ -125,7 +126,7 @@ def detail_update_delete(request, username, posting_addr):
                 serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr)
                 return Response(serializer.data)
         else:
-            return Response({'result': '잘못된 접근입니다.'})
+            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 
     def delete():
@@ -133,7 +134,7 @@ def detail_update_delete(request, username, posting_addr):
             leaf82.delete()
             return Response({'result': '게시글이 삭제되었습니다.'})
         else:
-            return Response({'result': '잘못된 접근입니다.'})
+            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'GET':
         return detail()
