@@ -154,15 +154,18 @@ div {
   background-color: #b2c9ab;
   color: white;
   border-radius: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .create-btn:hover {
   cursor: pointer;
+  background-color: #65805d;
+  transition: all 0.5s;
 }
+
 
 select {
   border-radius: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 </style>

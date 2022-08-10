@@ -249,6 +249,12 @@ input[type="file"] {
   width: 100%;
 }
 
+.profile-update-btn .btn:hover {
+  cursor: pointer;
+  background-color: #65805d;
+  transition: all 0.5s;
+}
+
 .profile-cancel-btn a {
   width: 100%;
 }
@@ -259,6 +265,12 @@ input[type="file"] {
   font-size: 1rem;
   color: black;
   width: 100%;
+}
+
+.profile-cancel-btn .btn:hover {
+  cursor: pointer;
+  background-color: #d2d2d2;
+  transition: all 0.5s;
 }
 
 .profile-nickname {

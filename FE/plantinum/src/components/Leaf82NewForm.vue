@@ -1,15 +1,18 @@
 <template>
   <div class="leaf82-new-form row">
     <!-- 여백 -->
-    <div class="col-md-1 col-0"></div>
+    <div class="col-md-3 col-0"></div>
     <!-- 메인 -->
-    <div class="main col-md-10 row py-5 my-5">
-      <!-- 좌측 -->
-      <div class="left col-md-5">
+    <div class="main col-md-6 py-5 my-5">
+      <div class="title-box col-12 d-flex justify-content-center py-3">
+        <p class="title">잎팔이 등록하기</p>
+      </div>
+      <!-- 상단 -->
+      <div class="left">
         <div class="img-box d-flex justify-content-center">
           <img :src="credentials.photo" alt="등록될 사진입니다.">
         </div>
-        <div class="img-add-box d-flex justify-content-center pt-3">
+        <div class="img-add-box d-flex justify-content-center pt-2">
           <label for="pic-file" class="img-add mb-0">
             <span class="material-symbols-outlined">
               photo_camera
@@ -21,52 +24,54 @@
           <input type="file" id="pic-file">
         </div>
       </div>
-      <!-- 우측 -->
-      <div class="right col-md-7 mt-3 px-5">
-        <div class="title d-flex justify-content-start py-1">
-          <input type="text" v-model="credentials.plantname" placeholder="식물명을 입력해주세요">
-        </div>
-        <div class="price d-flex justify-content-start py-1">
-          <input type="text" v-model="credentials.price" placeholder="가격">
-        </div>
-        <div class="addr d-flex justify-content-start py-1">
-          <select name="sido" id="" @change="beforeFetchSigungu($event)" class="mr-1">
-            <option selected>지역을 선택해주세요</option>
-            <option v-for="(loc) in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
-          </select>
-          <!-- 시도가 선택되면 활성화 -->
-          <select name="sigungu" id="" @change="selectSigungu($event)" v-if="this.credentials.sido" class="mr-1">
-            <option selected>동네를 선택해주세요</option>
-            <option v-for="(loc2) in sigungu" :key="loc2.pk" :value="loc2.sigungu">{{ loc2.sigungu }}</option>
-          </select>
-          <!-- 비활성화 -->
-          <select name="sigungu" id="" v-if="!this.credentials.sido" disabled class="mr-1">
-            <option selected>동네를 선택해주세요</option>
-          </select>
-        </div>
-        <div class="category pb-1 d-flex justify-content-start">
-          <select name="category_class" id="category_class" @change="selectCategory($event)" class="mr-1">
-            <option value="분양해요">분양해요</option>
-            <option value="분양받아요">분앙받아요</option>
-          </select>
-        </div>
-        <div class="content d-flex justify-content-start py-1">
-          <textarea name="content" id="content" cols="30" rows="10" v-model="credentials.content" placeholder="회원님의 식물을 소개해주세요"></textarea>
-        </div>
-        <div class="btns row d-flex justify-content-start py-3">
-          <div class="submit col-2 d-flex justify-content-start mr-3">
-            <button @click="beforecreateLeaf82(credentials)">등록</button>
+      <!-- 하단 -->
+      <div class="right mt-3 row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 col-12">
+          <div class="plantname d-flex justify-content-start py-2">
+            <input type="text" v-model="credentials.plantname" placeholder="식물명을 입력해주세요">
           </div>
-          <div class="cancel col-2">
-            <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-start">
-              <button>취소</button>
-            </router-link>
+          <div class="price d-flex justify-content-start py-2">
+            <input type="text" v-model="credentials.price" placeholder="가격">
+          </div>
+          <div class="addr d-flex justify-content-start py-2">
+            <select name="sido" id="" @change="beforeFetchSigungu($event)" class="mr-1">
+              <option selected>지역을 선택해주세요</option>
+              <option v-for="(loc) in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
+            </select>
+            <!-- 시도가 선택되면 활성화 -->
+            <select name="sigungu" id="" @change="selectSigungu($event)" v-if="this.credentials.sido" class="mr-1">
+              <option selected>동네를 선택해주세요</option>
+              <option v-for="(loc2) in sigungu" :key="loc2.pk" :value="loc2.sigungu">{{ loc2.sigungu }}</option>
+            </select>
+            <!-- 비활성화 -->
+            <select name="sigungu" id="" v-if="!this.credentials.sido" disabled class="mr-1">
+              <option selected>동네를 선택해주세요</option>
+            </select>
+            <select name="category_class" id="category_class" @change="selectCategory($event)" class="mr-1">
+              <option value="분양해요">분양해요</option>
+              <option value="분양받아요">분앙받아요</option>
+            </select>
+          </div>
+          <div class="content d-flex justify-content-start py-2">
+            <textarea name="content" id="content" cols="30" rows="10" v-model="credentials.content" placeholder="회원님의 식물을 소개해주세요"></textarea>
+          </div>
+          <div class="btns row d-flex justify-content-end py-3">
+            <div class="submit col-2 d-flex justify-content-end">
+              <button @click="beforecreateLeaf82(credentials)">등록</button>
+            </div>
+            <div class="cancel col-2">
+              <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-end">
+                <button>취소</button>
+              </router-link>
+            </div>
           </div>
         </div>
+        <div class="col-md-2"></div>
       </div>
     </div>
     <!-- 여백 -->
-    <div class="col-md-1 col-0"></div>
+    <div class="col-md-3 col-0"></div>
   </div>
 </template>
 
@@ -134,9 +139,14 @@ div {
 
 .main {
   background-color: white;
+  border-radius: 15px;
 }
 
-/* 왼쪽 */
+.title{
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 .img-box img{
   height: 300px;
   width: 300px;
@@ -160,27 +170,65 @@ input[type="file"] {
   border: 0;
 }
 
-/* 오른쪽 */
+/* 하단 */
 .right input {
   width: 100%;
   border-radius: 0.5rem;
+  height: 2.5rem;
 }
 
 .right select {
   border-radius: 0.5rem;
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #efefef;
+  border-radius: 0.25rem;
+  box-shadow: 0.5rem 0.5rem 0.5rem #efefef;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 input {
-  border-style: solid;
-  border-color: black;
-  border-width: 1px;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #efefef;
+  border-radius: 0.25rem;
+  box-shadow: 0.5rem 0.5rem 0.5rem #efefef;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+input:focus {
+  outline: none;
+  border-color: rgba(178, 201, 171, 20% ) ;
+  box-shadow: 0.5rem 0.3rem 0.5rem rgba(178, 201, 171, 50% ); 
 }
 
 textarea {
+  display: block;
   width: 100%;
-  
-  border-radius: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #efefef;
+  border-radius: 0.25rem;
+  box-shadow: 0.5rem 0.5rem 0.5rem #efefef;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   resize: none;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: rgba(178, 201, 171, 20% ) ;
+  box-shadow: 0.5rem 0.3rem 0.5rem rgba(178, 201, 171, 50% ); 
 }
 
 .content {
@@ -192,12 +240,18 @@ textarea {
 }
 
 .submit button{
-  width: 100%;
+  width: 80%;
   background-color: #b2c9ab;
   border-radius: 0.5rem;
   color: white;
   border: none;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  height: 2rem;
+}
+
+.submit button:hover {
+  background-color: #65805d;
+  transition: all 0.5s;
 }
 
 .cancel {
@@ -208,17 +262,25 @@ textarea {
   width: 100%;
   text-decoration: none;
 }
+
 .cancel a button {
-  width: 100%;
+  width: 80%;
   background-color: white;
   border-radius: 0.5rem;
   color: gray;
   border-width: 1px;
-  border-color: gray;
-  font-size: 0.8rem;
+  border-color: rgb(170, 170, 170);
+  font-size: 1rem;
+  height: 2rem;
+  border-style: solid;
 }
 
 button:hover {
   cursor: pointer;
+}
+
+.cancel a button:hover{
+  background-color: #d2d2d2;
+  transition: all 0.5s;
 }
 </style>
