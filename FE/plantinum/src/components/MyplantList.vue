@@ -58,7 +58,8 @@ export default {
   data() {
     return {
       sort_by : '등록순↓',
-      myplant_list : this.myplants
+      myplant_list : this.myplants,
+      username: 'guest',
     }
   },
   props : {
@@ -68,9 +69,9 @@ export default {
   },
   computed : {
     ...mapGetters(['currentUser']),
-    username() {
-      return this.currentUser.username
-    }
+    // username() {
+    //   return this.currentUser.username
+    // }
   },
   methods : {
     myplantSort() {
@@ -85,8 +86,14 @@ export default {
           return b.pk - a.pk
         })
       }
+    },
+    fetchUsername() {
+      this.username = this.currentUser.username
     }
   },
+  mounted() {
+    this.fetchUsername()
+  }
 }
 </script>
 
