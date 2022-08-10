@@ -47,9 +47,9 @@ export default {
 .plantinum {
     font-family: 'Dancing Script', cursive;
     color: black;
-    font-size: 2.5rem;
-    margin-top: 50%;
-    margin-bottom: 10%;
+    font-size: 3rem;
+    margin-top: 60%;
+    margin-bottom: 20%;
 }
 
 .text1 {
@@ -61,16 +61,16 @@ export default {
 .btn {
     border-radius: 5px;
     border: 0;
-    height: 35px;
+    height: 40px;
     font-size: 1rem;
     background-color: #b2c9ab;
     color: white;
     width: 6rem;
     align-items: center;
-    margin-bottom: 0;
+    margin-bottom: 20%;
 }
 
-.btn1:hover {
+.btn:hover {
     background-color: #65805d;
     color: #ffffff;
 }
@@ -83,6 +83,6 @@ export default {
     text-shadow: 2px 2px 5px rgba(16, 39, 112, .2);
     /* background-color: #65805d; */
     align-items: center;
-    margin-bottom: 50%;
+
 }
 </style>
