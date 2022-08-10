@@ -67,7 +67,7 @@ def create_myplant(request):
     serializer = MyplantSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         plantname = request.data['plantname']
-        
+
         if Plants.objects.filter(name=plantname).exists():
             plant_info = Plants.objects.get(name=plantname)
 
