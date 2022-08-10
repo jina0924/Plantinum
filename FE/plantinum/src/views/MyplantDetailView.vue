@@ -87,6 +87,12 @@
                 <progress :value=otpTimer max="10"></progress>
               </div>
             </div> -->
+            <div v-if="isOwner" class="owner-btn">
+              <router-link :to="{ name: 'myplantEdit', params: { plantPk: myplantPk } }">
+                <button>수정</button>
+              </router-link>
+              <button @click="deleteMyplant(myplantPk)">삭제</button>
+            </div>
           </div>
         </div>
       </div>
@@ -112,7 +118,7 @@ export default {
   },
   components: { NavBar },
   computed: {
-    ...mapGetters(['myplant', 'temp_OTP', 'otpTimer']),
+    ...mapGetters(['myplant', 'isOwner', 'temp_OTP', 'otpTimer']),
     myplantCreatedAt() {
       return this.myplant.created_at.substr(0, 10)
     },
@@ -130,7 +136,7 @@ export default {
   //   }
   },
   methods: {
-    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime']),
+    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
@@ -164,7 +170,7 @@ export default {
     if (this.temp_OTP) {
       this.startTimer()
     }
-
+    this.fetchMyplant(this.myplantPk)
   },
 }
 </script>

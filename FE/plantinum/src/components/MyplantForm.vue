@@ -5,18 +5,14 @@
       <form @submit.prevent="onSubmit">
         <!-- 식물 사진 -->
         <div class="mb-3">
-          <!-- <label for="myplantPhoto" class="form-label">식물 사진</label> -->
-          <!-- <input type="file" class="form-control" id="myplantPhoto"> -->
-          <input @change="onInputImage()" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
+          <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
         </div>
         <!-- 식물 닉네임 -->
         <div class="mb-3">
-          <!-- <label for="myplantNickname" class="form-label">식물 닉네임</label> -->
           <input v-model="newMyplant.nickname" type="text" class="form-input" id="myplantNickname" placeholder="식물 닉네임을 입력해주세요.">
         </div>
         <!-- 식물 이름 검색 -->
         <div class="select-plant mb-3">
-          <!-- <label for="plant">식물 종류</label> -->
           <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요." class="form-input" v-model="newMyplant.plantname">
           <datalist id="search-plant-list">
             <option v-for="(plant) in plant_list" :key="plant.pk">{{ plant.name }}</option>
@@ -56,7 +52,7 @@ export default {
     ...mapGetters(['currentUser', 'plant_list'])
   },
   methods: {
-    ...mapActions(['createMyplant', 'searchPlant']),
+    ...mapActions(['createMyplant', 'searchPlant', 'updateMyplant']),
     onInputImage() {
       this.newMyplant.photo = this.$refs.newMyplantImage.files[0]
     },
@@ -68,6 +64,12 @@ export default {
       console.log(this.myplant)
       if (this.action === 'create') {
         this.createMyplant(this.newMyplant)
+      } else if (this.action === 'update') {
+        const payload ={
+          plantPk: this.myplant.id,
+          ...this.newMyplant,
+        }
+        this.updateMyplant(payload)
       }
     },
   },
