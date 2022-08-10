@@ -115,7 +115,7 @@ def create_otp(request, myplant_pk):
 
                 def delete_otp():
                     myplant.update(otp_code=None)
-                Timer(301, delete_otp).start()  # 5분뒤 삭제 함수 실행
+                Timer(20, delete_otp).start()  # 20초뒤 삭제 함수 실행
 
                 return Response({'otp_code': otp_code})
             
@@ -191,8 +191,12 @@ def detail(request, myplant_pk):
         if request.user == user:
             serializer = MyplantSerializer(instance=myplant, data=request.data)
             if serializer.is_valid(raise_exception=True):
+                if request.data['photo'] != '':
 
-                serializer.save()
+                    serializer.save()
+
+                else:
+                    serializer.save(photo='static/monstera.jpg')
 
                 return Response(serializer.data)
 
