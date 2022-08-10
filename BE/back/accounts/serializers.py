@@ -1,3 +1,5 @@
+from datetime import datetime
+import email
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 import random
@@ -27,8 +29,11 @@ class CustomRegisterSerializer(RegisterSerializer):
             full_nickname = nick1+nick2+nick3
             if User.objects.filter(nickname=full_nickname).exists():
                 full_nickname = ''
+        
 
         data = super().get_cleaned_data()
+
+
         # data['phone_number'] = self._validated_data.get('phone_number', '')
         # data['addr'] = self._validated_data.get('addr', '')
         # data['zip_code'] = self._validated_data.get('zip_code', '')
