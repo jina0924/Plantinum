@@ -209,6 +209,12 @@ export default {
   width: 100%;
 }
 
+.btn:hover{
+  cursor: pointer;
+  background-color: #65805d;
+  transition: all 0.5s;
+}
+
 .profile-nickname {
   font-size: 1.2rem;
   font-weight: bold;
