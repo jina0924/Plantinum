@@ -103,11 +103,11 @@ export const Account = {
         headers: getters.authHeader,
       })
       .then(() => {
+        router.push({ name: 'home' })
         dispatch('removeToken')
         dispatch('resetCurrentUser')
         dispatch('resetProfile')
         alert('logout 되었습니다')
-        router.push({ name: 'home' })
       })
       // 에러 발생 시 어떻게 할 지 고민해야 함
       .catch(err => {
