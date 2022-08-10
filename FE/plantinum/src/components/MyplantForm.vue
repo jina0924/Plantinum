@@ -7,7 +7,7 @@
         <div class="mb-3">
           <!-- <label for="myplantPhoto" class="form-label">식물 사진</label> -->
           <!-- <input type="file" class="form-control" id="myplantPhoto"> -->
-          <input v-model="newMyplant.photo" type="text" class="form-input" id="myplantPhoto">
+          <input @change="onInputImage()" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
         </div>
         <!-- 식물 닉네임 -->
         <div class="mb-3">
@@ -57,6 +57,9 @@ export default {
   },
   methods: {
     ...mapActions(['createMyplant', 'searchPlant']),
+    onInputImage() {
+      this.newMyplant.photo = this.$refs.newMyplantImage.files
+    },
     onSubmit() {
       if (this.action === 'create') {
         console.log(this.newMyplant)
