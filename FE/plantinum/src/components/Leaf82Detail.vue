@@ -120,7 +120,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['leaf82Detail', 'currentUser']),
+    ...mapGetters(['leaf82Detail', 'currentUser', 'isLoggedIn']),
   },
   watch: {
     leaf82Detail() {
@@ -138,6 +138,7 @@ div {
 
 .main {
   background-color: white;
+  border-radius: 15px;
 }
 
 /* 왼쪽 */
@@ -156,13 +157,29 @@ div {
   height: 1.8rem;
 }
 
+.update-btn:hover {
+  cursor: pointer;
+  background-color: #65805d;
+  transition: all 0.5s;
+}
+
+
 .delete-btn {
   color: black;
   background-color: white;
+  border-color: rgb(170, 170, 170);
+  border-style: solid;
+  color: gray;
   border-radius: 5px;
   border-width: 1px;
   width: 5rem;
   height: 1.8rem;
+}
+
+.delete-btn:hover {
+  cursor: pointer;
+  background-color: #d2d2d2;
+  transition: all 0.5s;
 }
 
 /* 오른쪽 */
@@ -210,6 +227,7 @@ p {
   width: 100%;
   text-decoration: none;
 }
+
 .message a button {
   width: 80%;
   background-color: white;
@@ -217,10 +235,13 @@ p {
   color: gray;
   border-width: 1px;
   border-color: gray;
+  border-style: solid;
   font-size: 0.8rem;
 }
 
-button:hover {
+.message a button:hover {
   cursor: pointer;
+  background-color: rgb(206, 206, 206);
+  transition: all 0.5s;
 }
 </style>
