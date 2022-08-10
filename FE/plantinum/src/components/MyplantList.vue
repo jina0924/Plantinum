@@ -16,7 +16,7 @@
       <div class="col-1"></div>
       <div class="col-10 row px-0 mx-0 card-section justify-content-center">
         <div class="card my-2 px-0 mx-2" v-for="plant in myplant_list" :key="plant.pk">
-          <router-link class="" :to="{ name: 'myplantDetail', params: { username: currentUser.username, plantPk: plant.pk } }">
+          <router-link class="" :to="{ name: 'myplantDetail', params: { username: username, plantPk: plant.pk } }">
             <div class="plant-img">
               <img :src="plant.photo" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
             </div>
@@ -59,7 +59,7 @@ export default {
     return {
       sort_by : '등록순↓',
       myplant_list : this.myplants,
-      // username: 'guest',
+      username: 'guest',
     }
   },
   props : {
@@ -87,12 +87,13 @@ export default {
         })
       }
     },
-    // fetchUsername() {
-    //   this.username = this.currentUser.username
-    // }
+    fetchUsername() {
+      this.username = this.currentUser.username
+    }
   },
   created() {
-    // this.fetchUsername()
+    this.fetchUsername()
+    console.log(this.myplants)
     console.log(this.myplant_list)
   }
 }
