@@ -21,8 +21,7 @@ class Myplant(models.Model):
     otp_code = models.CharField(max_length=6, unique=True, null=True)
     plant_info = models.ForeignKey(Plants, on_delete=models.PROTECT, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # photo = models.ImageField(upload_to='images/', blank=True)
-    photo = models.ImageField(upload_to='images/', blank=True, default='images/chunhello.png')
+    photo = models.ImageField(upload_to='images/myplant/', default='static/monstera.jpg')
     is_connected = models.BooleanField(default=False)
 
 from annoying.fields import AutoOneToOneField
@@ -38,7 +37,7 @@ class Sensing(models.Model):
 
 class Diary(models.Model):
     content = models.CharField(max_length=1000)
-    photo = models.ImageField(upload_to='images/', blank=True)
+    photo = models.ImageField(upload_to='images/diary/', default='static/monstera.jpg')
     diary_created_at = models.DateTimeField(auto_now_add=True)
     public_private = models.BooleanField(default=False)
     my_plant = models.ForeignKey(Myplant, on_delete=models.CASCADE)
