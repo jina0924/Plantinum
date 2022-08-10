@@ -15,7 +15,7 @@
       <!-- <div class="col-md-2 px-0"></div> -->
       <div class="col-1"></div>
       <div class="col-10 row px-0 mx-0 card-section justify-content-center">
-        <div class="card my-2 px-0 mx-2" v-for="plant in myplants" :key="plant.pk">
+        <div class="card my-2 px-0 mx-2" v-for="plant in myplant_list" :key="plant.pk">
           <router-link class="" :to="{ name: 'myplantDetail', params: { username: username, plantPk: plant.pk } }">
             <div class="plant-img">
               <img :src="plant.photo" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
@@ -58,7 +58,8 @@ export default {
   data() {
     return {
       sort_by : '등록순↓',
-      myplant_list : this.myplants
+      myplant_list : this.myplants,
+      username: 'guest',
     }
   },
   props : {
@@ -68,9 +69,9 @@ export default {
   },
   computed : {
     ...mapGetters(['currentUser']),
-    username() {
-      return this.currentUser.username
-    }
+    // username() {
+    //   return this.currentUser.username
+    // }
   },
   methods : {
     myplantSort() {
@@ -82,11 +83,17 @@ export default {
       } else if (this.sort_by === '이름순↓') {
         this.sort_by = '등록순↓'
         this.myplant_list.sort(function(a, b){
-          return b.id - a.id
+          return b.pk - a.pk
         })
       }
+    },
+    fetchUsername() {
+      this.username = this.currentUser.username
     }
   },
+  mounted() {
+    this.fetchUsername()
+  }
 }
 </script>
 
@@ -103,6 +110,14 @@ export default {
   /* border-radius: 5px; */
   /* height: 2.5rem;
   width: 5rem; */
+}
+
+.sort-btn:focus {
+  background-color: white;
+  color: #B2C9AB;
+  border-color: white;
+  box-shadow: 0 0 .5rem #B2C9AB;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .card {
