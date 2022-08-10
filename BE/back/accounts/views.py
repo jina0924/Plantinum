@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
-from pytz import utc
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
@@ -27,13 +26,10 @@ def profile(request):
     zip_code = user.zip_code
     myplant_count = serializer.data.get('myplant_count')
     date_joined = user.date_joined
-    today = datetime.datetime.now(tz=utc)
-    # today = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
+    today = datetime.datetime.now()
     dday = (today - date_joined).days+1
-    if user.photo == True:
-        photo = user.photo
-    else:
-        photo = None
+    img_juso = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/' + str(user.photo)
+    photo = img_juso
 
     data = {
         'pk': pk,
@@ -58,8 +54,7 @@ def updateuserinformation(request):
     myplant_count = UpdateUserInformationSerializer(user).data.get('myplant_count')
     serializer = UpdateUserInformationSerializer(instance=user, data=request.data)
     date_joined = user.date_joined
-    today = datetime.datetime.now(tz=utc)
-    # today = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
+    today = datetime.datetime.now()
     dday = (today - date_joined).days+1
     
     new_email = request.data['email']
