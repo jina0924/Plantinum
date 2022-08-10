@@ -18,6 +18,8 @@ import Leaf82EditView from '@/views/Leaf82EditView'
 import MessengerView from '@/views/MessengerView.vue'
 import UpdateProfileView from '@/views/UpdateProfileView.vue'
 
+import NotFound404 from '@/views/NotFound404.vue'
+
 const routes = [
   {
     path: '/',
@@ -107,6 +109,16 @@ const routes = [
     name: 'messenger',
     component: MessengerView
   },
+  //404
+  {
+    path: '/404',
+    name: 'NotFound404',
+    component: NotFound404,
+  },
+  // {
+  //   path: '*',
+  //   redirect: "/404",
+  // },
 ]
 
 const router = createRouter({

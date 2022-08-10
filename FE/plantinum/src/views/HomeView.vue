@@ -51,15 +51,15 @@
       <div class="row col-md-6 d-flex justify-content-center">
         <div class="contentbox">
           <div class="text-main">
-            <p>내 식물이 들려주는 이야기,</p>
-            <p>내 식물...</p>
+            <p>오늘은 상태가 어떠니?</p>
+            <p>식물이 들려주는 이야기</p>
           </div>
           <div class="text-detail">
-            <p>언제 어디서든 소중한 반려식물의 성장과정을</p>
+            <p>소중한 반려식물의 변화를</p>
             <p>놓치지 않을 수 있어요.</p>
             <br>
             <br>
-            <p>일상 속, 반려 식물과 함께하세요.</p>
+            <p>언제 어디서든 반려 식물과 함께하세요.</p>
           </div>
         <!-- 버튼 -->
         <div class="btnbox">
@@ -252,42 +252,45 @@ export default {
     margin-top: 12rem;
     margin-bottom: 3rem;
     font-family: 'SUIT', sans-serif;
+    padding-right: 2rem;
   }
 
   .second-box .contentbox {
     margin-top: 15rem;
     margin-bottom: 3rem;
     font-family: 'SUIT', sans-serif;
+    padding-left: 2rem;
   }
   
   .third-box .contentbox {
     margin-top: 13rem;
     margin-bottom: 3rem;
     font-family: 'SUIT', sans-serif;
+    padding-right: 2rem;
   }
 
   .fourth-box .contentbox {
     margin-top: 9rem;
     margin-bottom: 3rem;
     font-family: 'SUIT', sans-serif;
+    
   }
 
   .text-main {
     margin-bottom: 4rem;
-
   }
 
-/*
+
     @media (min-width: 300px) {
       html {
-        font-size: 10px;
+        font-size: 3srem;
       }
     }
-*/
+
 
   .text-main p {
     margin-bottom: 0;
-    font-size: 3rem;
+    font-size: 4vw;
     font-weight: bold;
 /*
     font-size: 3vw;
@@ -348,7 +351,7 @@ export default {
 
   .second-box img {
     width: 100%;
-    /*height: 50%;*/
+    margin-left: 0;
   }
 
   .third-box img {
@@ -358,7 +361,8 @@ export default {
   }
 
   .fourth-box img {
-    width: 70%;
+    width: 100%;
+    background-position: auto;
   }
   
   .title-supool {
