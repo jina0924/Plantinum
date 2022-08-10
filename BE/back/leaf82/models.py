@@ -19,7 +19,7 @@ class Leaf82(models.Model):
     )
 
     plantname = models.CharField(max_length=100)
-    photo = models.TextField(blank=True, default='https://url.kr/d1acln')
+    photo = models.ImageField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=1000)
     price = models.IntegerField()
