@@ -6,6 +6,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .serializers import MyProfileSerializer, UpdateUserInformationSerializer
 import datetime
+from rest_framework import status
 
 
 User = get_user_model()
@@ -74,19 +75,19 @@ def updateuserinformation(request):
             return Response({
                 'email': '이메일잘못됨',
                 'nickname': '닉네임 잘못됨'
-                })
+                }, status=status.HTTP_409_CONFLICT)
 
         # 이메일은 유저의 기존 값과 동일, 닉네임은 유저의 기존 값과 다른 경우
         if email_user == user and nickname_user != user:
             return Response({
             'nickname': '닉네임 잘못됨'
-            })
+            }, status=status.HTTP_409_CONFLICT)
 
         # 이메일은 유저의 기존 값과 다르고, 닉네임은 유저의 기존 값과 동일한 경우
         if email_user != user and nickname_user == user:
             return Response({
             'email': '이메일잘못됨',
-            })
+            }, status=status.HTTP_409_CONFLICT)
 
         # 이메일과 닉네임 모두 유저의 기존 값과 같은 경우 - 그대로 저장
         if email_user == user and nickname_user == user:
@@ -101,7 +102,7 @@ def updateuserinformation(request):
         if email_user != user:
             return Response({
                 'email': '이메일잘못됨',
-                })
+                }, status=status.HTTP_409_CONFLICT)
 
         # 이메일이 유저의 기존 값과 같은 경우
         if email_user == user:
@@ -116,7 +117,7 @@ def updateuserinformation(request):
         if nickname_user != user:
             return Response({
                 'nickname': '닉네임 잘못됨'
-                })
+                }, status=status.HTTP_409_CONFLICT)
 
         # 닉네임이 유저의 기존 값과 같은 경우
         if nickname_user == user:
