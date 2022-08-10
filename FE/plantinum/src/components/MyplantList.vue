@@ -5,18 +5,18 @@
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10 jsutify-content-center">
-        <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplants[0]">
+        <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplant_list[0]">
           <button class="sort-btn btn" @click="myplantSort()">{{ sort_by }}</button>
         </div>
       </div>
     </div>
     <!-- 내 식물 카드 목록 -->
-    <div class="yesplant row " v-if="myplants[0]">
+    <div class="yesplant row " v-if="myplant_list[0]">
       <!-- <div class="col-md-2 px-0"></div> -->
       <div class="col-1"></div>
       <div class="col-10 row px-0 mx-0 card-section justify-content-center">
         <div class="card my-2 px-0 mx-2" v-for="plant in myplant_list" :key="plant.pk">
-          <router-link class="" :to="{ name: 'myplantDetail', params: { username: username, plantPk: plant.pk } }">
+          <router-link class="" :to="{ name: 'myplantDetail', params: { username: currentUser.username, plantPk: plant.pk } }">
             <div class="plant-img">
               <img :src="plant.photo" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
             </div>
@@ -59,7 +59,7 @@ export default {
     return {
       sort_by : '등록순↓',
       myplant_list : this.myplants,
-      username: 'guest',
+      // username: 'guest',
     }
   },
   props : {
@@ -87,12 +87,13 @@ export default {
         })
       }
     },
-    fetchUsername() {
-      this.username = this.currentUser.username
-    }
+    // fetchUsername() {
+    //   this.username = this.currentUser.username
+    // }
   },
-  mounted() {
-    this.fetchUsername()
+  created() {
+    // this.fetchUsername()
+    console.log(this.myplant_list)
   }
 }
 </script>
