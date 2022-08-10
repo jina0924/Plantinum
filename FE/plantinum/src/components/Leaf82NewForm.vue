@@ -170,7 +170,7 @@ input[type="file"] {
   border: 0;
 }
 
-/* 오른쪽 */
+/* 하단 */
 .right input {
   width: 100%;
   border-radius: 0.5rem;
@@ -262,6 +262,7 @@ textarea:focus {
   width: 100%;
   text-decoration: none;
 }
+
 .cancel a button {
   width: 80%;
   background-color: white;

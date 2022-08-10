@@ -171,6 +171,7 @@ p {
 
 .noplant-icon {
   color: #7E7E7E;
+  font-size: 10rem;
 }
 
 .noplant-text {
