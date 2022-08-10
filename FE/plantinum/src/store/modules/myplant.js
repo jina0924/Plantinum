@@ -43,11 +43,18 @@ export const Myplant = {
     },
 
     createMyplant({ commit, getters }, myplant) {
+      console.log({
+        ...getters.authHeader,
+        'Content-Type': 'multipart/form-data',
+      })
       axios({
         url: drf.myplant.newMyplant(),
         method: 'post',
         data: myplant,
-        headers: getters.authHeader,
+        headers: {
+          ...getters.authHeader,
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .then(res => {
         console.log(res.data)
@@ -102,23 +109,23 @@ export const Myplant = {
   //     })
   //   },
 
-  disconnectMyplant({ commit, getters }, plantPk) {
-    if (confirm('정말 연결을 해제하시겠습니까?')) {
-      axios({
-        url: drf.myplant.disconnect(plantPk),
-        method: 'get',
-        headers: getters.authHeader,
-      })
-      .then((res) => {
-        console.log(res.data)
-        console.log(commit)
-        alert('화분의 전원을 꺼주세요.')
-        router.go()
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
+    disconnectMyplant({ commit, getters }, plantPk) {
+      if (confirm('정말 연결을 해제하시겠습니까?')) {
+        axios({
+          url: drf.myplant.disconnect(plantPk),
+          method: 'get',
+          headers: getters.authHeader,
+        })
+        .then((res) => {
+          console.log(res.data)
+          console.log(commit)
+          alert('화분의 전원을 꺼주세요.')
+          router.go()
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+      }
     }
-  }
   },
 }

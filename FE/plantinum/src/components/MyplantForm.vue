@@ -7,7 +7,7 @@
         <div class="mb-3">
           <!-- <label for="myplantPhoto" class="form-label">식물 사진</label> -->
           <!-- <input type="file" class="form-control" id="myplantPhoto"> -->
-          <input @change="onInputImage()" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
+          <input @change="onInputImage()" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
         </div>
         <!-- 식물 닉네임 -->
         <div class="mb-3">
@@ -58,18 +58,22 @@ export default {
   methods: {
     ...mapActions(['createMyplant', 'searchPlant']),
     onInputImage() {
-      this.newMyplant.photo = this.$refs.newMyplantImage.files
+      this.newMyplant.photo = this.$refs.newMyplantImage.files[0]
     },
     onSubmit() {
+      // if (this.newMyplant.photo.length < 1) {
+      //   // this.newMyplant.photo = '../assets/'
+      // }
+      console.log(this.newMyplant.photo)
+      console.log(this.myplant)
       if (this.action === 'create') {
-        console.log(this.newMyplant)
         this.createMyplant(this.newMyplant)
       }
     },
   },
   created() {
     this.searchPlant()
-  }
+  },
 }
 </script>
 
@@ -130,6 +134,12 @@ input:focus {
 .back-btn:hover {
   background-color: #d2d2d2;
   transition: all 0.5s;
+}
+
+.back-btn:active {
+  background-color: #d2d2d2;
+  transition: all 0.5s;
+  border: none;
 }
 
 .myplant-create-submit-btn {
