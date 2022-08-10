@@ -183,14 +183,14 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
 
 - Body
 
-| Key          | Type   | Description   | Mandatory | Example               |
-| ------------ | ------ | ------------- | --------- | --------------------- |
-| nickname     | String |               | O         | 새로운닉네임          |
-| email        | String |               | O         | 12345@naver.com       |
-| phone_number | String |               | O         | 01012341234           |
-| addr         | String |               | O         | seoul                 |
-| zip_code     | String |               | O         | 12345                 |
-| photo        | Text   | **수정 예정** | O         | https://url.kr/s38eg6 |
+| Key          | Type   | Description | Mandatory | Example         |
+| ------------ | ------ | ----------- | --------- | --------------- |
+| nickname     | String |             | O         | 새로운닉네임    |
+| email        | String |             | O         | 12345@naver.com |
+| phone_number | String |             | O         | 01012341234     |
+| addr         | String |             | O         | seoul           |
+| zip_code     | String |             | O         | 12345           |
+| photo        | Text   |             | O         |                 |
 
 - Response
 
@@ -398,7 +398,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 | Key      | Type   | Description                  | Mandatory | Example |
 | -------- | ------ | ---------------------------- | --------- | ------- |
 | nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
-| photo    | String | 물주기 등록 대상 식물의 사진<br />**수정 예정** | 임시 X    |         |
+| photo    | String | 물주기 등록 대상 식물의 사진 | 기본값존재 |         |
 | plantname | String | 사용자가 선택한 식물 이름 | O    | 개운죽     |
 
 - Response
@@ -551,10 +551,10 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
 
 - Body
 
-| Key      | Type   | Description                                     | Mandatory | Example |
-| -------- | ------ | ----------------------------------------------- | --------- | ------- |
-| nickname | String | 물주기 등록 대상 식물의 애칭                    | O         | 깨운이  |
-| photo    | String | 물주기 등록 대상 식물의 사진<br />**수정 예정** | 임시 X    |         |
+| Key      | Type   | Description                  | Mandatory | Example |
+| -------- | ------ | ---------------------------- | --------- | ------- |
+| nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
+| photo    | String | 물주기 등록 대상 식물의 사진 | ?         |         |
 
 - Response
 
@@ -913,16 +913,16 @@ http://127.0.0.1:8000/api/v1/leaf82/new/
 
 - Body
 
-| Key            | Type   | Description                                | Mandatory | Example    |
-| -------------- | ------ | ------------------------------------------ | --------- | ---------- |
-| sido           | String | 시도                                       | O         | 서울특별시 |
-| sigungu        | String | 시군구                                     | O         | 종로구     |
-| plantname      | String | 식물이름                                   | O         | 산세베리아 |
-| content        | Text   | 내용                                       | O         | 채팅주세요 |
-| price          | Int    | 가격                                       | O         | 20000      |
-| category_class | String | 분양해요/분양받아요                        | O         | 분양해요   |
-| status_class   | String | 판매중/거래완료/예약중<br />default=판매중 |           |            |
-| photo          | Text   | **수정 예정**                              | 임시X     |            |
+| Key            | Type   | Description                                | Mandatory  | Example    |
+| -------------- | ------ | ------------------------------------------ | ---------- | ---------- |
+| sido           | String | 시도                                       | O          | 서울특별시 |
+| sigungu        | String | 시군구                                     | O          | 종로구     |
+| plantname      | String | 식물이름                                   | O          | 산세베리아 |
+| content        | Text   | 내용                                       | O          | 채팅주세요 |
+| price          | Int    | 가격                                       | O          | 20000      |
+| category_class | String | 분양해요/분양받아요                        | O          | 분양해요   |
+| status_class   | String | 판매중/거래완료/예약중<br />default=판매중 |            |            |
+| photo          | Text   |                                            | 기본값존재 |            |
 
 - Response
 
@@ -1276,7 +1276,7 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 | price          | Int    | 가격                                       | O         | 15000      |
 | category_class | String | 분양해요/분양받아요                        | O         | 분양해요   |
 | status_class   | String | 판매중/거래완료/예약중<br />default=판매중 | O         | 거래완료   |
-| photo          | Text   | **수정예정**                               | O         |
+| photo          | Text   |                                | ?         ||
 
 - Response
 
