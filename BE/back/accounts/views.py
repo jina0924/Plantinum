@@ -30,7 +30,10 @@ def profile(request):
     today = datetime.datetime.now(tz=utc)
     # today = datetime.datetime.now(pytz.timezone('Asia/Seoul'))
     dday = (today - date_joined).days+1
-    photo = user.photo
+    if user.photo == True:
+        photo = user.photo
+    else:
+        photo = None
 
     data = {
         'pk': pk,
