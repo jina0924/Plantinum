@@ -18,18 +18,21 @@
           <input v-model="newMyplant.nickname" type="text" class="form-input" id="myplantNickname" placeholder="식물 닉네임을 입력해주세요.">
         </div>
         <!-- 식물 이름 검색 -->
-        <div class="select-plant mb-3">
+        <div class="select-plant mb-3" v-if="action==='create'">
           <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요." class="form-input" v-model="newMyplant.plantname">
           <datalist id="search-plant-list">
             <option v-for="(plant) in plant_list" :key="plant.pk">{{ plant.name }}</option>
           </datalist>
+        </div>
+        <div class="select-plant mb-3" v-if="action==='update'">
+          <input type="text" id="plant" :placeholder="myplant.plant_info.name" class="form-input disabled-input" disabled>
         </div>
         <!-- 등록 버튼 -->
         <div class="myplant-create-submit">
           <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="action==='create'">
             <button class="form-btn back-btn">뒤로가기</button>
           </router-link>
-          <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="action==='update'">
+          <router-link :to="{ name: 'myplantDetail', params: { username: username, plantPk: myplant.id } }" v-if="action==='update'">
             <button class="form-btn back-btn">뒤로가기</button>
           </router-link>
           <button class="form-btn myplant-create-submit-btn">등록</button>
@@ -53,7 +56,7 @@ export default {
       newMyplant: {
         nickname: this.myplant.nickname,
         photo: this.myplant.photo,
-        plantname: this.myplant.plantname,
+        plantname: this.myplant.plant_info.name,
       },
       newMyplantImage: '',
       // username: 'guest',
@@ -150,6 +153,10 @@ input:focus {
   outline: none;
   border-color: rgba(178, 201, 171, 20% ) ;
   box-shadow: 0.5rem 0.3rem 0.5rem rgba(178, 201, 171, 50% ); 
+}
+
+.disabled-input {
+  background-color: #f5f5f5;
 }
 
 .myplant-create-submit {
