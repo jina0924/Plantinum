@@ -1,6 +1,8 @@
 <template>
-  <nav-bar></nav-bar>
-  <leaf-82-edit></leaf-82-edit>
+  <div class="leaf82-edit">
+    <nav-bar></nav-bar>
+    <leaf-82-edit></leaf-82-edit>
+  </div>
 </template>
 
 <script>
@@ -32,5 +34,7 @@ export default {
 </script>
 
 <style scoped>
-
+.leaf82-edit {
+  background-color: #F8F5EE;
+}
 </style>

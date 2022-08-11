@@ -4,6 +4,7 @@ import LoginView from '@/views/LoginView.vue'
 // import LogoutView from '@/views/LogoutView.vue'
 import SignupView from '@/views/SignupView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import UpdateProfileView from '@/views/UpdateProfileView.vue'
 import UpdatePasswordView from '@/views/UpdatePasswordView.vue'
 
 import MyplantView from '@/views/MyplantView.vue'
@@ -15,8 +16,9 @@ import Leaf82View from '@/views/Leaf82View.vue'
 import Leaf82NewView from '@/views/Leaf82NewView.vue'
 import Leaf82DetailView from'@/views/Leaf82DetailView.vue'
 import Leaf82EditView from '@/views/Leaf82EditView'
+
 import MessengerView from '@/views/MessengerView.vue'
-import UpdateProfileView from '@/views/UpdateProfileView.vue'
+import MessengerDetailView from '@/views/MessengerDetailView.vue'
 
 const routes = [
   {
@@ -106,6 +108,11 @@ const routes = [
     path: '/messenger',
     name: 'messenger',
     component: MessengerView
+  },
+  {
+    path: '/messenger/:nickname',
+    name: 'messengerDetail',
+    component: MessengerDetailView
   },
 ]
 

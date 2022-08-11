@@ -152,6 +152,9 @@ export default {
       } else if (credentials.content === '') {
         alert('식물을 소개해주세요')
       } else {
+        if (typeof credentials.photo === 'string' || credentials.photo instanceof String) {
+          this.credentials.photo = ''
+        }
         const updateInfo = {
           credentials,
           info: this.info
@@ -191,6 +194,11 @@ div {
 .main {
   background-color: white;
   border-radius: 15px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
 .img-box img{
