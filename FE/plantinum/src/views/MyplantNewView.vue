@@ -1,7 +1,7 @@
 <template>
   <div class="new-myplant">
     <nav-bar></nav-bar>
-    <myplant-form :myplant="myplant" action="create"></myplant-form>
+    <myplant-form :myplant="myplant" action="create" class="mt-3"></myplant-form>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
     return {
       myplant: {
         nickname: '',
-        photo: null,
+        photo: '',
         name_id: '',
       }
     }

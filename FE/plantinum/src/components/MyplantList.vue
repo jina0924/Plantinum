@@ -11,12 +11,12 @@
       </div>
     </div>
     <!-- 내 식물 카드 목록 -->
-    <div class="yesplant row " v-if="myplant_list[0]">
+    <div class="yesplant" v-if="myplant_list[0]">
       <!-- <div class="col-md-2 px-0"></div> -->
       <div class="col-1"></div>
-      <div class="col-10 row px-0 mx-0 card-section justify-content-center">
-        <div class="card my-2 px-0 mx-2" v-for="plant in myplant_list" :key="plant.pk">
-          <router-link class="" :to="{ name: 'myplantDetail', params: { username: currentUser.username, plantPk: plant.pk } }">
+      <div class="col-10 row px-0 card-section">
+        <div class="card" v-for="plant in myplant_list" :key="plant.pk">
+          <router-link class="" :to="{ name: 'myplantDetail', params: { username: username, plantPk: plant.pk } }">
             <div class="plant-img">
               <img :src="plant.photo" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
             </div>
@@ -58,20 +58,20 @@ export default {
   data() {
     return {
       sort_by : '등록순↓',
-      myplant_list : this.myplants,
-      // username: 'guest',
+      myplant_list : [],
+      username: 'guest',
     }
   },
   props : {
-    myplants: {
-      type: Array,
-    }
+    myplants: Array,
   },
   computed : {
     ...mapGetters(['currentUser']),
-    // username() {
-    //   return this.currentUser.username
-    // }
+  },
+  watch: {
+    myplants() {
+      this.myplant_list = this.myplants
+    }
   },
   methods : {
     myplantSort() {
@@ -87,20 +87,21 @@ export default {
         })
       }
     },
-    // fetchUsername() {
-    //   this.username = this.currentUser.username
-    // }
+    fetchUsername() {
+      this.username = this.$route.params.username
+    },
   },
   created() {
-    // this.fetchUsername()
-    console.log(this.myplant_list)
+    this.fetchUsername()
   }
 }
 </script>
 
 <style scoped>
 .yesplant {
-  padding: 1rem 2rem;
+  position: flex;
+  justify-content: center;
+  margin: auto;
 }
 
 .sort-btn {
@@ -121,10 +122,19 @@ export default {
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.card-section {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .card {
   border-radius: 10px;
   border-style: none;
   width: 16rem;
+  margin: 1rem;
+  padding: 0 auto;
+  box-shadow: 0 0 .5rem #edeae2;
 }
 
 .card a {
