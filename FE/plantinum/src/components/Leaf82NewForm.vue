@@ -10,7 +10,7 @@
       <!-- 상단 -->
       <div class="left">
         <div class="img-box d-flex justify-content-center">
-          <img :src="credentials.photo" alt="등록될 사진입니다.">
+          <img :src="preview" alt="등록될 사진입니다.">
         </div>
         <div class="img-add-box d-flex justify-content-center pt-2">
           <label for="pic-file" class="img-add mb-0">
@@ -83,14 +83,15 @@ export default {
   data() {
     return {
       credentials: {
-        photo: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Diversity_of_plants_%28Streptophyta%29_version_2.png',
+        photo: '',
         plantname: '',
         price: '',
         sido: '',
         sigungu: '',
         category_class: '분양해요',
         content: '',
-      }
+      },
+      preview: 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg'
     }
   },
   methods: {
@@ -122,8 +123,10 @@ export default {
       }
     },
     onInputImage() {
-      console.log(this.$refs.leaf82Image.files[0])
+      // console.log(this.$refs.leaf82Image.files[0])
       this.credentials.photo = this.$refs.leaf82Image.files[0]
+      const url = URL.createObjectURL(this.credentials.photo)
+      this.preview = url
     },
   },
   computed: {
@@ -131,7 +134,7 @@ export default {
   },
   created() {
     this.fetchSido()
-  }
+  },
 }
 </script>
 

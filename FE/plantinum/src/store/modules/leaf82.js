@@ -81,7 +81,10 @@ export const Leaf82 = {
         url: drf.leaf82.new(),
         method: 'post',
         data: credentials,
-        headers: getters.authHeader
+        headers: {
+          ...getters.authHeader,
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .then(res => {
         commit('SET_LEAF82DETAIL', res.data)
@@ -103,7 +106,10 @@ export const Leaf82 = {
         url: drf.leaf82.detail(username, posting_addr),
         method: 'put',
         data: credentials,
-        headers: getters.authHeader
+        headers: {
+          ...getters.authHeader,
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .then(res => {
         commit('SET_LEAF82DETAIL', res.data)
