@@ -169,7 +169,7 @@ export default {
 }
 </script>
 
-<style scpoed>
+<style scoped>
 body {
   background-color: #F8F5EE;
 }
