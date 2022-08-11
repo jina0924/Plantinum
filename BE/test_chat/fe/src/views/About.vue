@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3> ID : {{ uid }} </h3>
+    <h3> ID : {{ this.$store.state.uid }} </h3>
 
     <input v-model="receiver" placeholder="보낼 사람을 입력하세요">
     <!-- 이 채팅 시작이 잎팔이에서 채팅하러가기 가 될 것 같아요-->
@@ -46,6 +46,7 @@ export default {
     })
     //소켓연결후 id(pk) 건내줌
     this.socket.emit('makeSocketName',this.$store.state.uid);
+
     
     // 여기까지 3줄이 회원가입 시 줄것 : uid대신 pk로 주면 될 것 같아요
     
@@ -64,6 +65,9 @@ export default {
     // 그건 이제 코드를 새로 짜야함
     this.socket.on('getRooms',(data)=>{
       this.rooms[data.with_who] = data.room_num;
+      console.log("who",data.with_who)
+      console.log("room",data.room_num)
+      console.log("rooms",this.rooms);
     })
   },
   computed : {
