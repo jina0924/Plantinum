@@ -1,7 +1,7 @@
 <template>
   <div class="edit-myplant">
     <nav-bar></nav-bar>
-    <myplant-form :myplant="myplant" action="update"></myplant-form>
+    <myplant-form :myplant="myplant" action="update" class="mt-3"></myplant-form>
   </div>
 </template>
 
@@ -16,11 +16,11 @@ export default {
   computed: {
     ...mapGetters(['myplant'])
   },
-  methos: {
+  methods: {
     ...mapActions(['fetchMyplant'])
   },
   created() {
-    this.fetchMyplant(this.$route.params.plankPk)
+    this.fetchMyplant(this.$route.params.plantPk)
   }
 }
 </script>

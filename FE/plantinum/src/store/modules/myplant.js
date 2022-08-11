@@ -15,7 +15,7 @@ export const Myplant = {
     plant_list: state => state.plant_list,
     // temp_OTP: state => state.temp_OTP,
     isOwner: (state, getters) => {
-      return state.myplant.user?.username === getters.currentUser.username
+      return state.myplants.user?.username === getters.currentUser.username
     }
   },
   mutations: {

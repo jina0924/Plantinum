@@ -5,6 +5,9 @@
       <form @submit.prevent="onSubmit">
         <!-- 식물 사진 -->
         <div class="mb-3">
+          <div v-if="!!newMyplantImage" class="preview-section">
+            <img :src="newMyplantImage" alt="내식물 등록 이미지" class="preview-myplant-image">
+          </div>
           <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
         </div>
         <!-- 식물 닉네임 -->
@@ -20,7 +23,7 @@
         </div>
         <!-- 등록 버튼 -->
         <div class="myplant-create-submit">
-          <router-link :to="{ name: 'myplant', params: { username: currentUser.username } }">
+          <router-link :to="{ name: 'myplant', params: { username: username } }">
             <button class="form-btn back-btn">뒤로가기</button>
           </router-link>
           <button class="form-btn myplant-create-submit-btn">등록</button>
@@ -46,22 +49,30 @@ export default {
         photo: this.myplant.photo,
         plantname: this.myplant.plantname,
       },
+      newMyplantImage: '',
+      username: 'guest',
     }
   },
   computed: {
     ...mapGetters(['currentUser', 'plant_list'])
   },
+  watch: {
+    username() {
+      this.username = this.currentUser.username
+    }
+  },
   methods: {
     ...mapActions(['createMyplant', 'searchPlant', 'updateMyplant']),
     onInputImage() {
       this.newMyplant.photo = this.$refs.newMyplantImage.files[0]
+      this.newMyplant.photo
+      const url = URL.createObjectURL(this.newMyplant.photo)
+      this.newMyplantImage = url
     },
     onSubmit() {
       // if (this.newMyplant.photo.length < 1) {
       //   // this.newMyplant.photo = '../assets/'
       // }
-      console.log(this.newMyplant.photo)
-      console.log(this.myplant)
       if (this.action === 'create') {
         this.createMyplant(this.newMyplant)
       } else if (this.action === 'update') {
@@ -94,7 +105,20 @@ export default {
   text-align: center;
   font-weight: 700;
   color: #65805D;
-;
+}
+
+.preview-section {
+  width: 20rem;
+  height: 20rem;
+  overflow: hidden;
+  margin: auto;
+}
+
+.preview-myplant-image {
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .form-input {
@@ -123,7 +147,7 @@ input:focus {
   justify-content: flex-end;
 }
 
-.form-btn{
+.form-btn {
   cursor: pointer;
   border: none;
   margin: 0.5rem 1rem 0.5rem 0;
@@ -133,15 +157,13 @@ input:focus {
   height: 45px;
 }
 
+.form-btn:focus {
+  outline: none;
+}
+
 .back-btn:hover {
   background-color: #d2d2d2;
   transition: all 0.5s;
-}
-
-.back-btn:active {
-  background-color: #d2d2d2;
-  transition: all 0.5s;
-  border: none;
 }
 
 .myplant-create-submit-btn {
@@ -154,4 +176,5 @@ input:focus {
   background-color: #65805d;
   transition: all 0.5s;
 }
+
 </style>
