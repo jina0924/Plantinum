@@ -16,12 +16,15 @@ const io = new Server(http, {
   }
 })
 
+
+
 let rooms_count = 0;
 const messages_send = [];
 const chattingRooms = [];
+const user_rooms={}
 //연결된 소켓 관리, {id,uid}
 let sockets_count = 0;
-// pk - socket
+// pk : socket
 const connected_sockets={};
 
 
@@ -41,15 +44,31 @@ class ChatInfo{
 // 이벤트를 발생 혹은 수신할 수 있는 메서드가 있다.
 io.on('connection', socket => {
   console.log("Socket is connect!! : " ,socket.id);
+  //console.log(socket);
 
   //소켓이랑 이름 매칭
   //나중에 db로 저장필요
   socket.on('makeSocketName',data=>{
     //let isexist = 0;
     // pk - socket 형태
+    // 만약 참여하는 방이 존재한다.
+    // 기존 채팅룸이 존재하는가? => 찾아내서 보내줌
+    
+    if(data in user_rooms === true){  
+      console.log(user_rooms[data]);  
+      for ( chatroom of user_rooms[data]){
+        console.log(chatroom)
+        socket.join(String(chatroom[1]));
+        socket.emit('getRooms',{with_who:chatroom[0] , room_num:chatroom[1]});
+      }
+    }
+
+    // 정보 입력
     connected_sockets[data] = socket;
     socket.user_name = data;
     console.log(data);
+    
+
     //기존 소켓 존재 
     /*
     for (let i=0;i<sockets_count;i++){
@@ -81,7 +100,23 @@ io.on('connection', socket => {
     //상대 채팅방 참여
     connected_sockets[data.receiver].join(String(rooms_count));
     connected_sockets[data.receiver].emit('getRooms',{with_who:socket.user_name, room_num:rooms_count});
+    
+    //user_rooms에 채팅방 저장
+    if((socket.user_name in user_rooms) === true){
+      user_rooms[socket.user_name].push([data.receiver,rooms_count]);
+    }else{
+      user_rooms[socket.user_name]=[[data.receiver,rooms_count]];
+    }
+    console.log(socket.user_name)
+
+    //받는 사람도
+    if((data.receiver in user_rooms) === true){
+      user_rooms[data.receiver].push([socket.user_name,rooms_count]);
+    }else{
+      user_rooms[data.receiver]=[[socket.user_name,rooms_count]];
+    }
     //받은 유저 탐색후 그 소켓 채팅방 참여
+    
     /*
     for (let i=0 ; i<sockets_count;i++){
       if(connected_sockets[i].user_name == data.receiver){
@@ -104,7 +139,7 @@ io.on('connection', socket => {
     
     message = "["+socket.user_name+"] "+data.msg;
     console.log(message);
-    console.log(data.room_num, chattingRooms[data.room_num])
+    console.log(data.room_num, chattingRooms[data.room_num]);
     chattingRooms[data.room_num].messages.push(message);
     //chattingRooms[data.room_num].messages.push(message);
     //messages_send.push(message);
@@ -114,6 +149,11 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     console.log("socket disconnect : ",socket.id,socket.user_name);
+    // 채팅 room에서 소켓 제거 필요
+    for ( chatroom in user_rooms[socket.user_name]){
+      socket.leave(String(chatroom[1]));
+    }
+
   });
 })
 
