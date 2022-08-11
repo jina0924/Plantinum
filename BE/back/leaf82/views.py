@@ -123,7 +123,12 @@ def detail_update_delete(request, username, posting_addr):
             addr = get_object_or_404(Juso, sido=sido, sigungu=sigungu)
             serializer = Leaf82Serializer(instance=leaf82, data=request.data)
             if serializer.is_valid(raise_exception=True):
-                serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr)
+                if request.data['photo'] != '':
+                    serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr)
+
+                else:
+                    photo = leaf82.photo
+                    serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr, photo=photo)
                 return Response(serializer.data)
         else:
             return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
