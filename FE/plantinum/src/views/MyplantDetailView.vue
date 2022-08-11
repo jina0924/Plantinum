@@ -10,7 +10,7 @@
           </div>
           <div class="col-lg-7 plant-profile-info">
             <h2 class="myplant-nickname">{{ myplant.nickname }}</h2>
-            <div class="myplant-data botanical-name">{{ myplant.plant_info.name }}</div>
+            <div class="myplant-data botanical-name">{{ plant_info.name }}</div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
               <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
@@ -114,7 +114,11 @@ export default {
       myplantPk: this.$route.params.plantPk,
       modal: 0,
       // otpTimer: 20,
+      plant_info: {},
     }
+  },
+  props: {
+    username: String,
   },
   components: { NavBar },
   computed: {
@@ -131,9 +135,12 @@ export default {
       } else {
         return 'SuPool 연결'
       }
+    },
   },
-  // watch: {
-  //   }
+  watch: {
+    myplant() {
+      this.plant_info = this.myplant.plant_info
+    }
   },
   methods: {
     ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant']),
@@ -170,7 +177,6 @@ export default {
     if (this.temp_OTP) {
       this.startTimer()
     }
-    this.fetchMyplant(this.myplantPk)
   },
 }
 </script>
