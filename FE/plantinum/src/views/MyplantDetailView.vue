@@ -14,6 +14,7 @@
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
               <progress :value="myplant.sensing.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
+
               <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
               <!-- <span class="col-md-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span> -->
             </div>
@@ -182,11 +183,7 @@ export default {
 }
 </script>
 
-<style scpoed>
-body {
-  background-color: #F8F5EE;
-}
-
+<style scoped>
 .profile-body { 
   background-color: white;
   border-radius: 15px;
@@ -236,7 +233,8 @@ body {
   background-color: white;
   text-align: center;
   margin: auto 0;
-  max-width: 10rem;
+  max-width: 11rem;
+  height: 1rem;
 }
 .moisture-level::-webkit-progress-bar {
   background:#E9E9E9;

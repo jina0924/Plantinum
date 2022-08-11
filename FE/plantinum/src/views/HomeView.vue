@@ -184,14 +184,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
+    ...mapGetters(['username', 'isLoggedIn', 'profile']),
+    // ...mapGetters(['currentUser', 'isLoggedIn', 'profile']),
     // username: function () {
     //   return this.currentUser.username
     // }
 
-    username() {
-      return this.currentUser.username
-    }
+    // username() {
+    //   return this.currentUser.username
+    // }
   },
   created () {
     this.beforeFetchProfile()
