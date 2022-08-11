@@ -8,6 +8,9 @@
           <div v-if="!!newMyplantImage" class="preview-section">
             <img :src="newMyplantImage" alt="내식물 등록 이미지" class="preview-myplant-image">
           </div>
+          <div v-if="!!myplant.photo & !newMyplantImage" class="preview-section">
+            <img :src="myplant.photo" alt="내식물 등록 이미지" class="preview-myplant-image">
+          </div>
           <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
         </div>
         <!-- 식물 닉네임 -->
@@ -23,7 +26,10 @@
         </div>
         <!-- 등록 버튼 -->
         <div class="myplant-create-submit">
-          <router-link :to="{ name: 'myplant', params: { username: username } }">
+          <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="action==='create'">
+            <button class="form-btn back-btn">뒤로가기</button>
+          </router-link>
+          <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="action==='update'">
             <button class="form-btn back-btn">뒤로가기</button>
           </router-link>
           <button class="form-btn myplant-create-submit-btn">등록</button>
@@ -50,17 +56,18 @@ export default {
         plantname: this.myplant.plantname,
       },
       newMyplantImage: '',
-      username: 'guest',
+      // username: 'guest',
     }
   },
   computed: {
-    ...mapGetters(['currentUser', 'plant_list'])
+    // ...mapGetters(['currentUser', 'plant_list'])
+    ...mapGetters(['username', 'plant_list'])
   },
-  watch: {
-    username() {
-      this.username = this.currentUser.username
-    }
-  },
+  // watch: {
+  //   username() {
+  //     this.username = this.currentUser.username
+  //   }
+  // },
   methods: {
     ...mapActions(['createMyplant', 'searchPlant', 'updateMyplant']),
     onInputImage() {
@@ -76,6 +83,9 @@ export default {
       if (this.action === 'create') {
         this.createMyplant(this.newMyplant)
       } else if (this.action === 'update') {
+        if (this.newMyplant.photo === this.myplant.photo) {
+          this.newMyplant.photo = ''
+        }
         const payload ={
           plantPk: this.myplant.id,
           ...this.newMyplant,
