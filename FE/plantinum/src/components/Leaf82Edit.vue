@@ -10,7 +10,7 @@
       <!-- 상단 -->
       <div class="left">
         <div class="img-box d-flex justify-content-center">
-          <img :src="credentials.photo" alt="등록될 사진입니다.">
+          <img :src="preview" alt="등록될 사진입니다.">
         </div>
         <div class="img-add-box d-flex justify-content-center pt-2">
           <label for="pic-file" class="img-add mb-0">
@@ -21,7 +21,7 @@
               사진 변경하기
             </span>
           </label>
-          <input type="file" id="pic-file">
+          <input type="file" id="pic-file" @change="onInputImage()" accept="image/*" ref="leaf82Image">
         </div>
       </div>
       <!-- 하단 -->
@@ -100,7 +100,8 @@ export default {
         category_class: '',
         status_class: '',
         photo: '',
-      }
+      },
+      preview: ''
     }
   },
   methods: {
@@ -114,6 +115,9 @@ export default {
       this.credentials.category_class = this.leaf82Detail.category_class
       this.credentials.status_class = this.leaf82Detail.status_class
       this.credentials.photo = this.leaf82Detail.photo
+    },
+    makeImgUrl() {
+      this.preview = this.credentials.photo
     },
     beforeFetchSigungu(event) {
       let tmp = event.target.value
@@ -154,7 +158,12 @@ export default {
         }
         this.updateLeaf82(updateInfo)
       }
-    }
+    },
+    onInputImage() {
+      this.credentials.photo = this.$refs.leaf82Image.files[0]
+      const url = URL.createObjectURL(this.credentials.photo)
+      this.preview = url
+    },
   },
   computed: {
     ...mapGetters(['leaf82Detail', 'sido', 'sigungu']),
@@ -167,6 +176,7 @@ export default {
   watch: {
     leaf82Detail() {
       this.fillCredentials()
+      this.makeImgUrl()
     }
   }
 }

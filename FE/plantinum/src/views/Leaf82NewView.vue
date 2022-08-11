@@ -1,7 +1,9 @@
 <template>
-  <nav-bar></nav-bar>
-  <div class="leaf82-new">
-    <leaf-82-new-form></leaf-82-new-form>
+  <div class="leaf82-view">
+    <nav-bar></nav-bar>
+    <div class="leaf82-new">
+      <leaf-82-new-form></leaf-82-new-form>
+    </div>
   </div>
 </template>
 
@@ -19,5 +21,7 @@ export default {
 </script>
 
 <style scoped>
-
+.leaf82-view {
+  background-color: #F8F5EE;
+}
 </style>
