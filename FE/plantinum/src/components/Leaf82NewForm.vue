@@ -21,7 +21,7 @@
               사진 변경하기
             </span>
           </label>
-          <input type="file" id="pic-file">
+          <input type="file" id="pic-file" @change="onInputImage()" accept="image/*" ref="leaf82Image">
         </div>
       </div>
       <!-- 하단 -->
@@ -120,7 +120,11 @@ export default {
       } else {
         this.createLeaf82(credentials)
       }
-    }
+    },
+    onInputImage() {
+      console.log(this.$refs.leaf82Image.files[0])
+      this.credentials.photo = this.$refs.leaf82Image.files[0]
+    },
   },
   computed: {
     ...mapGetters(['sido', 'sigungu'])
