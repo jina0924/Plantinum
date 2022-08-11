@@ -162,10 +162,10 @@ export const Myplant = {
       .then(res => {
         commit('SET_MYPLANT', res.data)
         router.push({
-          name: 'myplantdetail',
+          name: 'myplantDetail',
           params: {
-            username: getters.currentUser.username,
-            plantPk: getters.myplant.id
+            username: getters.username,
+            plantPk: plantPk
           }
         })
       })
