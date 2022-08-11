@@ -7,9 +7,9 @@
       </div>
     </div>
     <!-- 리스트 -->
-    <myplant-list :myplants='myplants'></myplant-list>
+    <myplant-list :myplants='myplants_data'></myplant-list>
     <!-- 추가 버튼 (스티키 바텀) -->
-    <div class="create-btn d-flex justify-content-end" v-if="mypage">
+    <div class="create-btn" v-if="mypage">
       <router-link class="add px-5 mx-5 pb-5" :to="{ name: 'myplantNew' }">
         <button class="btn">
           <span class="material-symbols-outlined">add</span>
@@ -32,6 +32,7 @@ export default {
     return {
       myplantUsername : '',
       mypage : false,
+      myplants_data: [],
     }
   },
   components : {
@@ -44,10 +45,21 @@ export default {
       if (this.currentUser.username === this.myplantUsername) {
         this.mypage = true
       }
+    },
+    fillMyplants() {
+      this.myplants_data = this.myplants
     }
   },
   computed : {
-    ...mapGetters(['myplants', 'currentUser', 'isLoggedIn'])
+    ...mapGetters(['myplants', 'currentUser', 'isLoggedIn',])
+  },
+  watch: {
+    myplants() {
+      this.fillMyplants()
+    },
+    currentUser() {
+      this.isMypage()
+    }
   },
   created() {
     this.mypage = false
@@ -55,8 +67,6 @@ export default {
     this.myplantUsername = payload.username
     this.fetchMyplants(payload)
     this.isMypage()
-    console.log(this.currentUser)
-    console.log(this.isLoggedIn)
   },
 }
 </script>
@@ -95,6 +105,12 @@ export default {
   margin: 0;
   line-height: 2.5rem;
 }
+
+.create-btn {
+  position: sticky;
+  bottom: 15px;
+  text-align: end;
+  }
 
 .btn{
   border-radius: 100%;

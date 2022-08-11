@@ -10,7 +10,7 @@
           </div>
           <div class="col-lg-7 plant-profile-info">
             <h2 class="myplant-nickname">{{ myplant.nickname }}</h2>
-            <div class="myplant-data botanical-name">{{ myplant.plant_info.name }}</div>
+            <div class="myplant-data botanical-name">{{ plant_info.name }}</div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
               <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
@@ -87,6 +87,12 @@
                 <progress :value=otpTimer max="10"></progress>
               </div>
             </div> -->
+            <div v-if="isOwner" class="owner-btn">
+              <router-link :to="{ name: 'myplantEdit', params: { plantPk: myplantPk } }">
+                <button>수정</button>
+              </router-link>
+              <button @click="deleteMyplant(myplantPk)">삭제</button>
+            </div>
           </div>
         </div>
       </div>
@@ -108,11 +114,15 @@ export default {
       myplantPk: this.$route.params.plantPk,
       modal: 0,
       // otpTimer: 20,
+      plant_info: {},
     }
+  },
+  props: {
+    username: String,
   },
   components: { NavBar },
   computed: {
-    ...mapGetters(['myplant', 'temp_OTP', 'otpTimer']),
+    ...mapGetters(['myplant', 'isOwner', 'temp_OTP', 'otpTimer']),
     myplantCreatedAt() {
       return this.myplant.created_at.substr(0, 10)
     },
@@ -125,12 +135,15 @@ export default {
       } else {
         return 'SuPool 연결'
       }
+    },
   },
-  // watch: {
-  //   }
+  watch: {
+    myplant() {
+      this.plant_info = this.myplant.plant_info
+    }
   },
   methods: {
-    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime']),
+    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
@@ -164,7 +177,6 @@ export default {
     if (this.temp_OTP) {
       this.startTimer()
     }
-
   },
 }
 </script>
