@@ -158,7 +158,10 @@ export const Account = {
         url: drf.accounts.updateProfile(),
         method: 'put',
         data: info,
-        headers: getters.authHeader
+        headers: {
+          ...getters.authHeader,
+          'Content-Type': 'multipart/form-data',
+        },
       })
         .then(res => {
           commit('SET_PROFILE', res.data)
