@@ -14,6 +14,9 @@ export const Myplant = {
     myplant: state => state.myplant,
     plant_list: state => state.plant_list,
     // temp_OTP: state => state.temp_OTP,
+    isOwner: (state, getters) => {
+      return state.myplants.user?.username === getters.currentUser.username
+    }
   },
   mutations: {
     SET_MYPLANTS: (state, myplants) => state.myplants = myplants,
@@ -126,6 +129,44 @@ export const Myplant = {
           console.log(err.response)
         })
       }
+    },
+
+    deleteMyplant({ commit, getters }, plantPk) {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        axios({
+          url: drf.myplant.myplantDetail(plantPk),
+          method: 'delete',
+          headers: getters.authHeader,
+        })
+        .then(() => {
+          commit('SET_MYPLANT', {})
+          router.push({
+            name: 'myplant',
+            params: {username: getters.currentUser.username}
+          })
+        })
+        .catch(err => console.error(err.response))
+      }
+    },
+
+    updateMyplant({ commit, getters }, { plantPk, nickname, photo, plantname }) {
+      axios({
+        url: drf.myplant.myplantDetail(plantPk),
+        method: 'put',
+        data: { nickname, photo, plantname },
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_MYPLANT', res.data)
+        router.push({
+          name: 'myplantdetail',
+          params: {
+            username: getters.currentUser.username,
+            plantPk: getters.myplant.id
+          }
+        })
+      })
+      .catch(err => console.error(err.response))
     }
   },
 }
