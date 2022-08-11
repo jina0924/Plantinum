@@ -16,6 +16,7 @@ export const Account = {
     currentUser: {},
     authError: null,
     profile: {},
+    username: 'guest',
   },
 
   getters: {
@@ -24,11 +25,15 @@ export const Account = {
     authError: state => state.authError,
     authHeader: state => ({ Authorization: `Token ${state.token}`}),
     profile: state => state.profile,
+    username: state => state.username,
   },
 
   mutations: {
     SET_TOKEN: (state, token) => state.token = token,
-    SET_CURRENT_USER: (state, user) => state.currentUser = user,
+    SET_CURRENT_USER: (state, user) => {
+      state.currentUser = user
+      state.username = user.username
+    },
     SET_AUTH_ERROR: (state, error) => state.authError = error,
     SET_PROFILE: (state, profile) => state.profile = profile,
   },
@@ -197,6 +202,6 @@ export const Account = {
             router.push({ name: 'updatepassword' })
           }
         })
-    } 
+    },
   }
 }

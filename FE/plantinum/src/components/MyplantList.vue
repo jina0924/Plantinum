@@ -59,14 +59,15 @@ export default {
     return {
       sort_by : '등록순↓',
       myplant_list : [],
-      username: 'guest',
+      // username: 'guest',
     }
   },
   props : {
     myplants: Array,
   },
   computed : {
-    ...mapGetters(['currentUser']),
+    // ...mapGetters(['currentUser']),
+    ...mapGetters(['username']),
   },
   watch: {
     myplants() {
@@ -87,13 +88,13 @@ export default {
         })
       }
     },
-    fetchUsername() {
-      this.username = this.$route.params.username
-    },
+    // fetchUsername() {
+    //   this.username = this.$route.params.username
+    // },
   },
-  created() {
-    this.fetchUsername()
-  }
+  // created() {
+  //   this.fetchUsername()
+  // }
 }
 </script>
 
