@@ -191,13 +191,15 @@ def detail(request, myplant_pk):
     def update():
         if request.user == user:
             serializer = MyplantSerializer(instance=myplant, data=request.data)
+
             if serializer.is_valid(raise_exception=True):
                 if request.data['photo'] != '':
 
                     serializer.save()
 
                 else:
-                    serializer.save(photo='static/monstera.jpg')
+                    photo = myplant.photo
+                    serializer.save(photo=photo)
 
                 return Response(serializer.data)
 
