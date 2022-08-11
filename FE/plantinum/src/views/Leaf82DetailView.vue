@@ -1,7 +1,9 @@
 <template>
-  <nav-bar></nav-bar>
-  <div class="leaf82-detail-view">
-    <leaf-82-detail></leaf-82-detail>
+  <div class="leaf82-detail">
+    <nav-bar></nav-bar>
+    <div class="leaf82-detail-view">
+      <leaf-82-detail></leaf-82-detail>
+    </div>
   </div>
 </template>
 
@@ -37,5 +39,7 @@ export default {
 </script>
 
 <style scoped>
-
+.leaf82-detail {
+  background-color: #F8F5EE;
+}
 </style>
