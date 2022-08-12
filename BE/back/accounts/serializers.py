@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer
 import random
+from leaf82.models import Leaf82
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -41,10 +42,19 @@ class MyProfileSerializer(serializers.ModelSerializer):
 
     myplant_count = serializers.IntegerField(source='myplant_set.count', read_only=True)
 
+    class Leaf82Serializer(serializers.ModelSerializer):
+
+        class Meta:
+
+            model = Leaf82
+            fields = ('pk', 'photo', 'posting_addr', 'plantname',)
+
+    leaf82_set = Leaf82Serializer(many=True, read_only=True)
+
     class Meta:
 
         model = User
-        fields = ('pk', 'nickname', 'email', 'phone_number', 'addr', 'zip_code', 'myplant_count', 'photo',)
+        fields = ('pk', 'nickname', 'email', 'phone_number', 'addr', 'zip_code', 'myplant_count', 'photo', 'leaf82_set',)
 
 
 class UpdateUserInformationSerializer(serializers.ModelSerializer):
