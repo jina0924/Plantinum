@@ -13,8 +13,10 @@
             <div class="myplant-data botanical-name">{{ plant_info.name }}</div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
+              <progress :value="myplant.sensing.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
+
               <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
-              <span class="col-md-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
+              <!-- <span class="col-md-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span> -->
             </div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">등록 날짜</span>
@@ -182,10 +184,6 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background-color: #F8F5EE;
-}
-
 .profile-body { 
   background-color: white;
   border-radius: 15px;
@@ -228,6 +226,25 @@ body {
 
 .info-title {
   font-weight: 450;
+}
+
+.moisture-level {
+  appearance: none;
+  background-color: white;
+  text-align: center;
+  margin: auto 0;
+  max-width: 11rem;
+  height: 1rem;
+}
+.moisture-level::-webkit-progress-bar {
+  background:#E9E9E9;
+  border-radius:10px;
+  /* box-shadow: inset 3px 3px 10px #ccc; */
+}
+.moisture-level::-webkit-progress-value {
+  border-radius:10px;
+  background: #18A7DB;
+  transition: width 1s linear;
 }
 
 .not-connected {
@@ -350,7 +367,6 @@ h5 {
 }
 .progress-bar::-webkit-progress-value {
   border-radius:10px;
-  background: #1D976C;
   background: #B2C9AB;
   transition: width 1s linear;
 }

@@ -19,7 +19,7 @@ export default {
       myplant: {
         nickname: '',
         photo: '',
-        name_id: '',
+        plantname: '',
       }
     }
   }
