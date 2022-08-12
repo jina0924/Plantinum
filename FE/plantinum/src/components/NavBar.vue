@@ -7,7 +7,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" v-if="!!username">
+        <li class="nav-item" v-if="isLoggedIn">
           <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }" v-if="!isLoggedIn">내 식물</router-link> -->
           <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">내 식물</router-link> -->
           <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }">내 식물</router-link>
@@ -57,10 +57,10 @@ export default {
   //   }
   // },
   computed: {
-    ...mapGetters(['isLoggedIn', 'currentUser']),
-    username() {
-      return this.currentUser.username
-    }
+    ...mapGetters(['isLoggedIn', 'username']),
+    // username() {
+    //   return this.currentUser.username
+    // }
   },
   methods: {
     ...mapActions(['logout',]),
@@ -68,10 +68,10 @@ export default {
     //   this.username = this.currentUser.username
     // }
   },
-  created () {
+  // created () {
     // console.log(this.currentUser)
     // this.abc()
-  }
+  // }
 }
 </script>
 
