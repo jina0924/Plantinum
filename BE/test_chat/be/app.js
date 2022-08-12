@@ -20,12 +20,13 @@ const io = new Server(http, {
 
 let rooms_count = 0;
 const messages_send = [];
-const chattingRooms = [];
-const user_rooms={}
+const chattingRooms = {};
+const user_rooms={A:{},B:{},C:{}};
 //연결된 소켓 관리, {id,uid}
-let sockets_count = 0;
-// pk : socket
-const connected_sockets={};
+//let sockets_count = 0;
+// pk : socket(list)
+
+const connected_sockets={A:null,B:null,C:null};
 
 
 class ChatInfo{
@@ -53,16 +54,16 @@ io.on('connection', socket => {
     // pk - socket 형태
     // 만약 참여하는 방이 존재한다.
     // 기존 채팅룸이 존재하는가? => 찾아내서 보내줌
-    
+    /*
     if(data in user_rooms === true){  
       console.log(user_rooms[data]);  
       for ( chatroom of user_rooms[data]){
         console.log(chatroom)
         socket.join(String(chatroom[1]));
-        socket.emit('getRooms',{with_who:chatroom[0] , room_num:chatroom[1]});
+        socket.emit('sendRooms',{with_who:chatroom[0] , room_num:chatroom[1]});
       }
     }
-
+*/
     // 정보 입력
     connected_sockets[data] = socket;
     socket.user_name = data;
@@ -92,30 +93,51 @@ io.on('connection', socket => {
 
   socket.on('startchat',(data)=>{
     console.log("make chattingrooms");
+    console.log(socket.user_name,data)
     //처음 채팅방이 만들어짐
-    chattingRooms.push(new ChatInfo(socket.user_name,data.receiver));
-    //보낸 소켓 먼저 채팅방 참여
-    socket.join(String(rooms_count));
-    socket.emit('getRooms',{with_who:data.receiver , room_num:rooms_count});
-    //상대 채팅방 참여
-    connected_sockets[data.receiver].join(String(rooms_count));
-    connected_sockets[data.receiver].emit('getRooms',{with_who:socket.user_name, room_num:rooms_count});
+    chattingRooms[rooms_count]=new ChatInfo(socket.user_name,data);
     
     //user_rooms에 채팅방 저장
+    //console.log(user_rooms[socket.user_name]);
+    //user_rooms[socket.user_name].setAttribute(data,rooms_count);
+    //console.log(user_rooms);
+    //user_rooms[socket.user_name][data]=rooms_count;
+    //user_rooms[data][socket.user_name]=rooms_count;
+    
     if((socket.user_name in user_rooms) === true){
-      user_rooms[socket.user_name].push([data.receiver,rooms_count]);
+      user_rooms[socket.user_name][data]=rooms_count;
+      //user_rooms[socket.user_name].push([data.receiver,rooms_count]);
     }else{
-      user_rooms[socket.user_name]=[[data.receiver,rooms_count]];
+      user_rooms[socket.user_name]={};
+      user_rooms[socket.user_name][data]=rooms_count;
+      //user_rooms[socket.user_name]=[[data.receiver,rooms_count]];
     }
-    console.log(socket.user_name)
+    console.log(user_rooms);
+
+    
+    //console.log(socket.user_name)
 
     //받는 사람도
     if((data.receiver in user_rooms) === true){
-      user_rooms[data.receiver].push([socket.user_name,rooms_count]);
+      user_rooms[data][socket.user_name]=rooms_count;
     }else{
-      user_rooms[data.receiver]=[[socket.user_name,rooms_count]];
+      user_rooms[data]={};
+      user_rooms[data][socket.user_name]=rooms_count;
     }
+    
     //받은 유저 탐색후 그 소켓 채팅방 참여
+
+    //보낸 소켓 채팅방 참여
+    socket.join(String(rooms_count));
+    socket.emit('sendRooms',{with_who:data, room_num:rooms_count});
+    //상대 채팅방 참여(현재 접속시)
+    if((connected_sockets[data] in io.sockets.sockets) == true){
+      connected_sockets[data].join(String(rooms_count));
+      connected_sockets[data].emit('sendRooms',{with_who:socket.user_name, room_num:rooms_count});
+
+    }
+    //connected_sockets[data.receiver].join(String(rooms_count));
+    //connected_sockets[data.receiver].emit('sendRooms',{with_who:socket.user_name, room_num:rooms_count});
     
     /*
     for (let i=0 ; i<sockets_count;i++){
@@ -135,25 +157,56 @@ io.on('connection', socket => {
     rooms_count++;
   });
 
+  socket.on('getRooms',data=>{
+
+    if(data in user_rooms === true){  
+      console.log(user_rooms[data]);  
+      for ( chatroom in user_rooms[data]){
+        console.log(chatroom)
+        // 채팅방 반환 및 참여.
+        const num = user_rooms[data][chatroom]
+        socket.join(String(num));
+        socket.emit('sendRooms',{with_who:chatroom , room_num:num});
+      }
+    }
+
+  });
+
+  socket.on('joinInChat',()=>{
+    //현재 소켓이 참여한 채팅방 정보 불러오기
+    for (chatroom of user_rooms[socket.user_name]){
+      // 0 : 상대 정보, 1: 채팅방 번호
+      socket.join(String(chatroom[1]));
+    }
+
+  });
+
+  socket.on('getMessages', data =>{
+    socket.emit('messages',chattingRooms[data].messages);
+  });
+
   socket.on('send', data => {
     
     message = "["+socket.user_name+"] "+data.msg;
     console.log(message);
-    console.log(data.room_num, chattingRooms[data.room_num]);
+    //console.log(data.room_num, chattingRooms[data.room_num]);
     chattingRooms[data.room_num].messages.push(message);
     //chattingRooms[data.room_num].messages.push(message);
     //messages_send.push(message);
-    io.to(String(data.room_num)).emit('messages', chattingRooms[data.room_num].messages);
+    io.to(String(data.room_num)).emit('message', message);
   });
 
-
+  
   socket.on('disconnect', () => {
     console.log("socket disconnect : ",socket.id,socket.user_name);
+    console.log(user_rooms);
+    console.log(user_rooms[socket.user_name]);
     // 채팅 room에서 소켓 제거 필요
-    for ( chatroom in user_rooms[socket.user_name]){
-      socket.leave(String(chatroom[1]));
+    if((socket.user_name in user_rooms) == true){
+      for ( partner in user_rooms[socket.user_name]){
+        socket.leave(String(user_rooms[socket.user_name][partner]));
+      }
     }
-
   });
 })
 
@@ -162,6 +215,6 @@ app.get("/", (req,res) => {
   res.send(messages);
 })
 // app.listen이 아닌 http.listen를 사용한다.
-http.listen(8000, () => {
+http.listen(3000, () => {
   console.log('started server')
 })
