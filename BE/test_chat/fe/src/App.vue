@@ -1,17 +1,38 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <!-- <nav-bar v-if="isLoggedIn"></nav-bar> -->
+    <!-- <nav-bar></nav-bar> -->
+    <router-view></router-view>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<script>
+// import NavBar from '@/components/NavBar.vue'
+// import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
+
+
+export default {
+  name: 'App',
+  // components: { NavBar },
+  // computed: {
+  //   ...mapGetters(['currentUser', 'isLoggedIn',])
+  // },
+  methods: {
+    ...mapActions(['fetchCurrentUser', 'fetchProfile'])
+  },
+  created () {
+    this.fetchCurrentUser()
+  }
 }
+</script>
+
+<style>
+  #app {
+    font-family: 'SUIT';
+  }
+
+  body {
+    background-color: #F8F5EE;
+  }
 </style>
