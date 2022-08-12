@@ -241,6 +241,12 @@ input[type="file"] {
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.right select:focus {
+  outline: none;
+  border-color: rgba(178, 201, 171, 20% ) ;
+  box-shadow: 0.5rem 0.3rem 0.5rem rgba(178, 201, 171, 50% ); 
+}
+
 input {
   display: block;
   width: 100%;

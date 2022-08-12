@@ -198,10 +198,16 @@ export default {
       this.preview = url
     },
     beforeUpdateProfile(info) {
-      if (typeof info.photo == 'string' || info.photo instanceof String) {
-          info.photo = ''
+      if (info.nickname.length > 15) {
+        alert('닉네임은 최대 15글자입니다.')
+      } else if (info.nickname === '') {
+        alert('닉네임을 입력해주세요.')
+      } else {
+        if (typeof info.photo == 'string' || info.photo instanceof String) {
+            info.photo = ''
+        }
+        this.updateProfile(info)
       }
-      this.updateProfile(info)
     }
   },
   computed: {
@@ -271,6 +277,10 @@ input[type="file"] {
   transition: all 0.5s;
 }
 
+.profile-update-btn .btn:focus {
+  outline: none;
+}
+
 .profile-cancel-btn a {
   width: 100%;
 }
@@ -287,6 +297,10 @@ input[type="file"] {
   cursor: pointer;
   background-color: #d2d2d2;
   transition: all 0.5s;
+}
+
+.profile-cancel-btn .btn:focus {
+  outline: none;
 }
 
 .profile-nickname {

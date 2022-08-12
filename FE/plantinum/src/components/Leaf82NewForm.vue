@@ -111,13 +111,17 @@ export default {
     },
     beforecreateLeaf82(credentials) {
       if (credentials.plantname === '') {
-        alert('이름을 입력해주세요.')
+        alert('식물이름을 입력해주세요')
+      } else if (credentials.plantname.length > 20) {
+        alert('식물이름은 최대 20글자입니다.')
+      } else if (parseInt(credentials.price) > 10000000) {
+        alert('최대 등록 금액은 10,000,000원입니다.')
       } else if (credentials.price === '' || !Number.isInteger(parseInt(credentials.price))) {
-        alert('가격을 확인해주세요.')
+        alert('가격은 숫자만 입력이 가능합니다.')
       } else if (credentials.sigungu === '') {
-        alert('주소를 선택해주세요.')
+        alert('지역 및 동네를 선택해주세요.')
       } else if (credentials.content === '') {
-        alert('식물을 소개해주세요')
+        alert('식물 소개글을 작성해주세요')
       } else {
         if (typeof credentials.photo == 'string' || credentials.photo instanceof String) {
           credentials.photo = ''
@@ -200,6 +204,10 @@ input[type="file"] {
   border-radius: 0.25rem;
   box-shadow: 0.5rem 0.5rem 0.5rem #efefef;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+select:focus {
+  outline: none;
 }
 
 input {
