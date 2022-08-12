@@ -1,5 +1,5 @@
 <template>
-  <form class="profile-detail mt-5 row" @submit.prevent="updateProfile(info)">
+  <form class="profile-detail mt-5 row" @submit.prevent="beforeUpdateProfile(info)">
     <!-- 헤드부분 -->
     <div class="profile-head col-lg-4 row">
       <div class="col-2"></div>
@@ -197,6 +197,12 @@ export default {
       const url = URL.createObjectURL(this.info.photo)
       this.preview = url
     },
+    beforeUpdateProfile(info) {
+      if (typeof info.photo == 'string' || info.photo instanceof String) {
+          info.photo = ''
+      }
+      this.updateProfile(info)
+    }
   },
   computed: {
     ...mapGetters(['profile'])

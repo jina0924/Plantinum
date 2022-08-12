@@ -2,7 +2,7 @@
     <div class="search row">
       <div class="col-sm-2 col-md-4 col-0"></div>
       <div class="search-box col-sm-8 col-md-4 col-12 d-flex justify-content-center">
-        <input class="search-input" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
+        <input class="search-input pl-3" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
         <button class="search-btn" type="submit" @click="beforeSearch()">
           <span class="material-symbols-outlined d-flex align-items-center justify-content-center">search</span>
         </button>
@@ -131,6 +131,10 @@ div {
   font-size: 1.2rem;
 }
 
+.search-input:focus {
+  outline: none;
+}
+
 .search-btn {
   width: 10%;
   border: 0;
@@ -138,6 +142,10 @@ div {
   border-top-right-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   color: black;
+}
+
+.search-btn:focus {
+  outline: none;
 }
 
 .search-btn:hover {
@@ -154,7 +162,11 @@ div {
   background-color: #b2c9ab;
   color: white;
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.3rem;
+}
+
+.create-btn:focus {
+  outline: none;
 }
 
 .create-btn:hover {
@@ -166,6 +178,11 @@ div {
 
 select {
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.3rem;
+  border-color: rgb(191, 191, 191);  
+}
+
+select:focus {
+  outline: none;
 }
 </style>
