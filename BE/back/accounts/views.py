@@ -31,6 +31,7 @@ def profile(request):
     dday = (today - date_joined).days+1
     img_juso = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/' + str(user.photo)
     photo = img_juso
+    leaf82_set = serializer.data.get('leaf82_set')
 
     data = {
         'pk': pk,
@@ -41,7 +42,8 @@ def profile(request):
         'zip_code': zip_code,
         'myplant_count': myplant_count,
         'dday': dday,
-        'photo': photo
+        'photo': photo,
+        'leaf82_set': leaf82_set
     }
     
     return Response(data)
