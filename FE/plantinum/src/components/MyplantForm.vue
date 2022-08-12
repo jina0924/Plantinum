@@ -5,13 +5,16 @@
       <form @submit.prevent="onSubmit">
         <!-- 식물 사진 -->
         <div class="mb-3">
-          <div v-if="!!newMyplantImage" class="preview-section">
+          <div class="preview-section">
             <img :src="newMyplantImage" alt="내식물 등록 이미지" class="preview-myplant-image">
           </div>
-          <div v-if="!!myplant.photo & !newMyplantImage" class="preview-section">
-            <img :src="myplant.photo" alt="내식물 등록 이미지" class="preview-myplant-image">
+          <div class="img-add">
+            <label for="myplantPhoto" class="img-add">
+              <span class="material-symbols-outlined">photo_camera</span>
+              <span>사진 변경하기</span>
+            </label>
+            <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
           </div>
-          <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
         </div>
         <!-- 식물 닉네임 -->
         <div class="mb-3">
@@ -56,10 +59,9 @@ export default {
       newMyplant: {
         nickname: this.myplant.nickname,
         photo: this.myplant.photo,
-        plantname: this.myplant.plant_info.name,
+        plantname: this.myplant.plant_info?.name,
       },
-      newMyplantImage: '',
-      // username: 'guest',
+      newMyplantImage: 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg',
     }
   },
   computed: {
@@ -132,6 +134,30 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.img-add {
+  display: flex;
+  justify-content: center;
+  margin-top: .3rem;
+}
+
+.img-add span {
+  font-size: 1rem;
+  margin: auto .2rem;
+}
+
+.img-add:hover {
+  cursor: pointer;
+}
+
+input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
 }
 
 .form-input {
