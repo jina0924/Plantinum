@@ -69,12 +69,14 @@ def create_myplant(request):
     if serializer.is_valid(raise_exception=True):
         plantname = request.data['plantname']
 
-        if Plants.objects.filter(name=plantname).exists():
+        if Plants.objects.exclude(name='직접 입력하기').filter(name=plantname).exists():
             plant_info = Plants.objects.get(name=plantname)
 
             serializer.save(user=user, plant_info=plant_info)
         else:
-            serializer.save(user=user)
+            plant_info = Plants.objects.get(name='직접 입력하기')
+
+            serializer.save(user=user, plant_info=plant_info)
 
         # def otp():
         #     myplant = Myplant.objects.filter(pk=serializer.data['id'])
@@ -128,12 +130,12 @@ def create_otp(request, myplant_pk):
 
             elif myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == True:  # 해당 식물의 OTP 코드가 발급되지 않았으나 연결된 상태라면
                 
-                return Response({'result': '이미 연결되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'detail': '이미 연결되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
         else:  # OTP 요청자와 식물 등록자가 다르면
-            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
-        return Response({'result': '식물이 존재하지 않습니다.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'detail': '찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 # otp코드 조회
@@ -141,7 +143,7 @@ def create_otp(request, myplant_pk):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def otp_status(request, myplant_pk):
-    myplant = Myplant.objects.get(pk=myplant_pk)
+    myplant = get_object_or_404(Myplant, pk=myplant_pk)
     me = request.user.id
     user = myplant.user_id
     
@@ -151,7 +153,7 @@ def otp_status(request, myplant_pk):
         return Response(serializer.data)
 
     else:
-        return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+        return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 
 # 연결끊기
@@ -171,9 +173,11 @@ def disconnect(request, myplant_pk):
                 return Response({'is_connected': False})
 
             else:
-                return Response({'result': '연결상태를 확인해주세요.'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'detail': '연결상태를 확인해주세요.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+    else:
+        return Response({'detail': '찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
 # 물주기 식물 상세페이지 조회/수정/삭제
@@ -204,15 +208,15 @@ def detail(request, myplant_pk):
                 return Response(serializer.data)
 
         else:
-            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     def delete():
         if request.user == user:
             myplant.delete()
-            return Response({'result': '내식물이 삭제되었습니다.'})
+            return Response({'detail': '내식물이 삭제되었습니다.'})
 
         else:
-            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'GET':
         return read()
