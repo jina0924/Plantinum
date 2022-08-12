@@ -18,7 +18,8 @@
               <span @click="deleteMyplant(myplantPk)" class="material-symbols-outlined delete-btn">delete</span>
             </div>
 
-            <div class="myplant-data botanical-name">{{ myplant.plant_info?.name }}</div>
+            <div v-if="myplant.plant_info?.name!=='직접 입력하기'" class="myplant-data botanical-name">{{ myplant.plant_info?.name }}</div>
+            <div v-if="myplant.plant_info?.name==='직접 입력하기'" class="myplant-data botanical-name tmp-name">{{ myplant.tmp }}</div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
               <progress :value="myplant.sensing?.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
@@ -108,8 +109,6 @@ export default {
     return {
       myplantPk: this.$route.params.plantPk,
       modal: 0,
-      // otpTimer: 20,
-      // plant_info: {},
     }
   },
   props: {
@@ -180,7 +179,8 @@ export default {
 .profile-body { 
   background-color: white;
   border-radius: 15px;
-  padding: 2.5rem;
+  padding: 3.5rem 2rem;
+  margin-top: 3rem;
 }
 
 .plant-profile-img {
@@ -233,6 +233,10 @@ export default {
   font-family: 'MaruBuri';
   font-size: 1.1rem;
   font-style: italic;
+}
+
+.tmp-name {
+  color: #f7d489;
 }
 
 .myplant-data {
