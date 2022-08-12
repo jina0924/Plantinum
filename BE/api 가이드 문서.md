@@ -400,6 +400,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 | nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
 | photo    | String | 물주기 등록 대상 식물의 사진 | 기본값존재 |         |
 | plantname | String | 사용자가 선택한 식물 이름 | O    | 개운죽     |
+| tmp | String | 직접 입력하기 선택시 기입 |  |  |
 
 - Response
 
