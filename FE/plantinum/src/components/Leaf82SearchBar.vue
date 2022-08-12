@@ -23,7 +23,7 @@
         <div class="filter d-flex justify-content-center">
           <!-- 검색버튼 -->
           <select class="sido mr-1" @change="beforeFetchSigungu($event)">
-            <option selected>지역을 선택해주세요</option>
+            <option value="null">지역을 선택해주세요</option>
             <option v-for="(loc) in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
           </select>
           <!-- 시도가 선택되면 활성화 -->
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+// import router from '@/router'
 import { mapActions , mapGetters } from 'vuex'
 
 export default {
@@ -55,7 +56,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchSigungu', 'search']),
+    ...mapActions(['fetchSigungu', 'search', 'fetchLeaf82']),
     // 필터링 없이
     beforeSearch() {
       if (!!this.info.plantname === true && !!this.info.sido === true && !!this.info.sigungu === true) {
@@ -76,9 +77,25 @@ export default {
     },
     // 필터링
     beforeFetchSigungu(event) {
+      console.log(event.target.value)
       const sido = event.target.value
-      this.info.sido = sido
-      this.fetchSigungu(sido)
+      if (sido === 'null') {
+        if (this.info.plantname !== '') {
+          this.info.sido = ''
+          this.info.sigungu = ''
+          const params = {
+            plantname: this.info.plantname
+          }
+          this.search(params)
+        } else {
+          this.info.sido = ''
+          this.info.sigungu = ''
+          this.fetchLeaf82()
+        }       
+      } else {
+        this.info.sido = sido
+        this.fetchSigungu(sido)
+      }
     },
     beforeFetchSearch(event) {
       const sigungu = event.target.value

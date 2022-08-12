@@ -166,17 +166,17 @@ p {
 
 .item-info .message {
   font-size: 0.7rem;
-  color: #7E7E7E;
+  color: #A6A6A6;
 }
 
 .noplant-icon {
-  color: #7E7E7E;
-  font-size: 20rem;
+  color: #A6A6A6;
+  font-size: 15rem;
 }
 
 .noplant-text {
-  color: #7E7E7E;
-  font-size: 1rem;
+  color: #A6A6A6;
+  font-size: 1.2rem;
 }
 
 a {
