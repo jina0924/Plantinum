@@ -15,7 +15,7 @@ export const Myplant = {
     plant_list: state => state.plant_list,
     // temp_OTP: state => state.temp_OTP,
     isOwner: (state, getters) => {
-      return state.myplants.user?.username === getters.currentUser.username
+      return state.myplant.user?.username === getters.currentUser.username
     }
   },
   mutations: {
@@ -154,15 +154,18 @@ export const Myplant = {
         url: drf.myplant.myplantDetail(plantPk),
         method: 'put',
         data: { nickname, photo, plantname },
-        headers: getters.authHeader,
+        headers: {
+          ...getters.authHeader,
+          'Content-Type': 'multipart/form-data',
+        },
       })
       .then(res => {
         commit('SET_MYPLANT', res.data)
         router.push({
-          name: 'myplantdetail',
+          name: 'myplantDetail',
           params: {
-            username: getters.currentUser.username,
-            plantPk: getters.myplant.id
+            username: getters.username,
+            plantPk: plantPk
           }
         })
       })
