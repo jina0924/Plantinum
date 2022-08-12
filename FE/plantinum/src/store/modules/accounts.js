@@ -77,10 +77,11 @@ export const Account = {
       })
       .catch(err => {
         console.error(err.response.data)
+        alert('다시 한 번 작성해주세요.')
         commit('SET_AUTH_ERROR', err.response.data)
       })
     },
-
+    
     login({ commit, dispatch }, credentials) {
       axios ({
         url: drf.accounts.login(),
@@ -97,6 +98,7 @@ export const Account = {
       })
       .catch(err => {
         console.error(err.response.data)
+        alert('다시 한 번 작성해주세요.')
         commit('SET_AUTH_ERROR', err.response.data)
       })
     },
