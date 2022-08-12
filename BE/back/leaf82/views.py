@@ -131,15 +131,15 @@ def detail_update_delete(request, username, posting_addr):
                     serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr, photo=photo)
                 return Response(serializer.data)
         else:
-            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 
     def delete():
         if request.user == user:
             leaf82.delete()
-            return Response({'result': '게시글이 삭제되었습니다.'})
+            return Response({'detail': '게시글이 삭제되었습니다.'})
         else:
-            return Response({'result': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     if request.method == 'GET':
         return detail()

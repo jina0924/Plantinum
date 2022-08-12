@@ -18,7 +18,7 @@ class Leaf82(models.Model):
         ('예약중', '예약중')
     )
 
-    plantname = models.CharField(max_length=100)
+    plantname = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='images/leaf82/', default='static/monstera.jpg')
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=1000)
