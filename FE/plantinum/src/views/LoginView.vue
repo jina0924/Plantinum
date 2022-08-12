@@ -14,10 +14,9 @@
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">로그인</h4>
 											<!-- <h4 class="mb-4">로그인</h4> -->
-                      <account-error-list v-if="authError"></account-error-list>
+                      <!-- <account-error-list v-if="authError"></account-error-list> -->
                       <form @submit.prevent="login(login_credentials)">
                         <div class="form-group">
-                          <!-- account error -->
                           <input v-model="login_credentials.username" type="text" name="login-username" class="form-style" placeholder="Your ID" id="login-username" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">person</span>
                         </div>
@@ -28,7 +27,7 @@
                         <button class="mt-4 btn" type=submit>로그인</button>
                       </form>
                       <!-- router link  -->
-                      <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a></p>
+                      <!-- <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a></p> -->
                     </div>
                   </div>
                 </div>
@@ -37,7 +36,7 @@
 										<div class="section text-center">
 											<!-- <h4 class="mb-4 pb-3">회원가입</h4> -->
 											<h4 class="mb-4">회원가입</h4>
-                      <account-error-list v-if="authError"></account-error-list>
+                      <!-- <account-error-list v-if="authError"></account-error-list> -->
                       <form @submit.prevent="signup(signup_credentials)">
                         <div class="form-group">
                           <input v-model="signup_credentials.username" type="text" name="username" class="form-style" placeholder="Your ID" id="username" autocomplete="off">
@@ -80,13 +79,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import AccountErrorList from '@/components/AccountErrorList.vue'
+// import AccountErrorList from '@/components/AccountErrorList.vue'
 
 export default {
   name: 'LoginView',
-  components: {
-    AccountErrorList,
-  },
+  // components: {
+  //   AccountErrorList,
+  // },
   data() {
     return {
       login_credentials: {
@@ -185,7 +184,7 @@ h5 span{
   border-radius: 50%;
   color: #ffffff;
   background-color: #b2c9ab;
-  content: '↖';
+  content: '\2196';
   z-index: 20;
   top: -10px;
   left: -10px;
