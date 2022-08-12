@@ -20,6 +20,8 @@ import UpdateProfileView from '@/views/UpdateProfileView.vue'
 
 import NotFound404 from '@/views/NotFound404.vue'
 
+import store from '../store'
+
 const routes = [
   {
     path: '/',
@@ -115,10 +117,11 @@ const routes = [
     name: 'NotFound404',
     component: NotFound404,
   },
-  // {
-  //   path: '*',
-  //   redirect: "/404",
-  // },
+  {
+    path: "/:catchAll(.*)",
+    name: 'catch-all',
+    redirect: '/404'
+  },
 ]
 
 const router = createRouter({
@@ -127,21 +130,23 @@ const router = createRouter({
 })
 
 // 페이지 이동할 때마다 검사함
-// router.beforeEach((to, from, next) => {
-//   store.commit('SET_AUTH_ERROR', null)
+// to 내가 가려고 하는 부분(내식물, 입팔이 등등)
+// from은 어디서 오냐를 본다
+router.beforeEach((to, from, next) => {
+  store.commit('SET_AUTH_ERROR', null)
 
-//   const { isLoggedIn } = store.getters
+  const { isLoggedIn } = store.getters
 
-//   const noAuthPages = ['login', 'signup', 'home', 'leaf82', 'NotFound404',]
+  const noAuthPages = ['login', 'signup', 'home', 'leaf82', 'NotFound404', 'leaf82Detail']
   
-//   const isAuthRequired = !noAuthPages.includes(to.name)
+  const isAuthRequired = !noAuthPages.includes(to.name)
 
-//   if (isAuthRequired && !isLoggedIn) {
-//     alert('로그인 필요합니다. 로그인 페이지로 이동합니다.')
-//     next({ name: 'login' })
-//   } else {
-//     next()
-//   }
-// })
+  if (isAuthRequired && !isLoggedIn) {
+    alert('로그인 필요합니다. 로그인 페이지로 이동합니다.')
+    next({ name: 'login' })
+  } else {
+    next()
+  }
+})
 
 export default router
