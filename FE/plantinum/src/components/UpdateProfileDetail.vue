@@ -8,7 +8,7 @@
         <!-- 프로필 사진 -->
         <div class="profile-img-box">
           <div>
-            <img :src="profile.photo" alt="temporary img" class="profile-img">
+            <img :src="preview" alt="회원님의 사진입니다." class="profile-img">
           </div>
         </div>
           <div class="profile-pic d-flex justify-content-center">
@@ -20,15 +20,15 @@
                 사진 변경하기
               </span>
             </label>
-            <input type="file" id="pic-file">
+            <input type="file" id="pic-file" @change="onInputImage()" accept="image/*" ref="profileImage">
           </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
-          <p class="mb-0">{{ profile.nickname }}</p>
+          <p class="mb-0">{{ info.nickname }}</p>
         </div>
         <!-- 이메일 -->
         <div class="profile-email">
-          <p class="">{{ profile.email }}</p>
+          <p class="">{{ info.email }}</p>
         </div>
         <!-- 회원정보 수정 -->
         <div class="btns row">
@@ -161,7 +161,8 @@ export default {
         phone_number: '',
         // dday: '',
         // myplant_count: '',
-      }
+      },
+      preview: ''
     }
   },
   methods: {
@@ -169,31 +170,40 @@ export default {
     fillOldInfo() {
       this.info = this.profile
     },
+    makeImgUrl() {
+      this.preview = this.profile.photo
+    },
     findAddr() {
       new window.daum.Postcode({
-            oncomplete: (data) => {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+        oncomplete: (data) => {
+          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    this.info.addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    this.info.addr = data.jibunAddress;
-                }
-                this.info.zip_code = data.zonecode
+          //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+          if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+              this.info.addr = data.roadAddress;
+          } else { // 사용자가 지번 주소를 선택했을 경우(J)
+              this.info.addr = data.jibunAddress;
+          }
+          this.info.zip_code = data.zonecode
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = this.info.addr;
-            }
-        }).open();
-    }
+          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          document.getElementById('sample6_postcode').value = data.zonecode;
+          document.getElementById("sample6_address").value = this.info.addr;
+        }
+      }).open();
+    },
+    onInputImage() {
+      this.info.photo = this.$refs.profileImage.files[0]
+      const url = URL.createObjectURL(this.info.photo)
+      this.preview = url
+    },
   },
   computed: {
     ...mapGetters(['profile'])
   },
   created() {
     this.fillOldInfo()
+    this.makeImgUrl()
   }
 }
 </script>

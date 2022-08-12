@@ -73,20 +73,20 @@ def updateuserinformation(request):
         # 이메일과 닉네임 모두 유저의 기존 값과 다른 경우
         if email_user != user and nickname_user != user:
             return Response({
-                'email': '이메일잘못됨',
-                'nickname': '닉네임 잘못됨'
+                'email': '이메일이 이미 존재합니다.',
+                'nickname': '닉네임이 이미 존재합니다.'
                 }, status=status.HTTP_409_CONFLICT)
 
         # 이메일은 유저의 기존 값과 동일, 닉네임은 유저의 기존 값과 다른 경우
         if email_user == user and nickname_user != user:
             return Response({
-            'nickname': '닉네임 잘못됨'
+            'nickname': '닉네임이 이미 존재합니다.'
             }, status=status.HTTP_409_CONFLICT)
 
         # 이메일은 유저의 기존 값과 다르고, 닉네임은 유저의 기존 값과 동일한 경우
         if email_user != user and nickname_user == user:
             return Response({
-            'email': '이메일잘못됨',
+            'email': '이메일이 이미 존재합니다.',
             }, status=status.HTTP_409_CONFLICT)
 
         # 이메일과 닉네임 모두 유저의 기존 값과 같은 경우 - 그대로 저장
@@ -101,7 +101,7 @@ def updateuserinformation(request):
         # 이메일이 유저의 기존 값과 다른 경우
         if email_user != user:
             return Response({
-                'email': '이메일잘못됨',
+                'email': '이메일이 이미 존재합니다.',
                 }, status=status.HTTP_409_CONFLICT)
 
         # 이메일이 유저의 기존 값과 같은 경우
@@ -116,7 +116,7 @@ def updateuserinformation(request):
         # 닉네임이 유저의 기존 값과 다른 경우
         if nickname_user != user:
             return Response({
-                'nickname': '닉네임 잘못됨'
+                'nickname': '닉네임이 이미 존재합니다.'
                 }, status=status.HTTP_409_CONFLICT)
 
         # 닉네임이 유저의 기존 값과 같은 경우
@@ -127,7 +127,14 @@ def updateuserinformation(request):
 
     # 그 외 유효성검사에 걸리는 경우
     if serializer.is_valid(raise_exception=True):
-        
-        serializer.save(myplant_count=myplant_count, dday=dday)
+
+        if request.data['photo'] != '':
+
+            serializer.save(myplant_count=myplant_count, dday=dday)
+
+        else:
+            photo = user.photo
+            serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
+    
         return Response(serializer.data)
 
