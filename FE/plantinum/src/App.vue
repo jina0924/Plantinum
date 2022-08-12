@@ -31,4 +31,8 @@ export default {
   #app {
     font-family: 'SUIT';
   }
+
+  body {
+    background-color: #F8F5EE;
+  }
 </style>

@@ -42,7 +42,7 @@ export default {
   methods : {
     ...mapActions(['fetchMyplants']),
     isMypage() {
-      if (this.currentUser.username === this.myplantUsername) {
+      if (this.username === this.myplantUsername) {
         this.mypage = true
       }
     },
@@ -51,7 +51,8 @@ export default {
     }
   },
   computed : {
-    ...mapGetters(['myplants', 'currentUser', 'isLoggedIn',])
+    // ...mapGetters(['myplants', 'currentUser', 'isLoggedIn',])
+    ...mapGetters(['myplants', 'username', 'isLoggedIn',])
   },
   watch: {
     myplants() {
