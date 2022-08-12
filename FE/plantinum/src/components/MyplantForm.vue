@@ -1,34 +1,44 @@
 <template>
   <div class="wrapper">
-    <div class="form-bg col-10 col-lg-7 p-5">
+    <div class="form-bg col-md-6 p-5">
       <h3 class="form-title mb-4">내 식물 등록</h3>
       <form @submit.prevent="onSubmit">
         <!-- 식물 사진 -->
-        <div class="mb-3">
+        <div class="mb-3 img-section">
+          <!-- <div class="img-delete-btn">X</div> -->
           <div class="preview-section">
-            <img :src="newMyplantImage" alt="내식물 등록 이미지" class="preview-myplant-image">
-          </div>
-          <div class="img-add">
             <label for="myplantPhoto" class="img-add">
-              <span class="material-symbols-outlined">photo_camera</span>
-              <span>사진 변경하기</span>
+              <!-- <img v-if="action==='update'" :src="myplant.photo" alt="내식물 등록 이미지" class="preview-myplant-image"> -->
+              <img :src="newMyplantImage" alt="내식물 등록 이미지" class="preview-myplant-image">
             </label>
-            <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
           </div>
+            <div class="img-add-input">
+              <label for="myplantPhoto" class="img-add">
+                <span class="material-symbols-outlined">photo_camera</span>
+                <span>사진 등록하기</span>
+                <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
+              </label>
+            </div>
+          <!-- </label> -->
+          <!-- <button>x</button> -->
         </div>
-        <!-- 식물 닉네임 -->
-        <div class="mb-3">
-          <input v-model="newMyplant.nickname" type="text" class="form-input" id="myplantNickname" placeholder="식물 닉네임을 입력해주세요.">
-        </div>
-        <!-- 식물 이름 검색 -->
-        <div class="select-plant mb-3" v-if="action==='create'">
-          <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요." class="form-input" v-model="newMyplant.plantname">
-          <datalist id="search-plant-list">
-            <option v-for="(plant) in plant_list" :key="plant.pk">{{ plant.name }}</option>
-          </datalist>
-        </div>
-        <div class="select-plant mb-3" v-if="action==='update'">
-          <input type="text" id="plant" :placeholder="myplant.plant_info.name" class="form-input disabled-input" disabled>
+        <div class="input-text-group">
+          <!-- 식물 닉네임 -->
+          <div class="mb-3">
+            <input v-model="newMyplant.nickname" type="text" class="form-input" id="myplantNickname" placeholder="식물 닉네임을 입력해주세요.">
+          </div>
+          <!-- 식물 이름 검색 -->
+          <div class="select-plant mb-3" v-if="action==='create'">
+            <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요." class="form-input" v-model="newMyplant.plantname">
+            <datalist id="search-plant-list">
+              <option v-for="(plant) in plant_list" :key="plant.pk">{{ plant.name }}</option>
+            </datalist>
+            <input v-if="newMyplant.plantname==='직접 입력하기'" type="text" id="tmp-plant" placeholder="식물 이름을 직접 입력해주세요." class="form-input" v-model="newMyplant.tmp">
+          </div>
+          <div class="select-plant mb-3" v-if="action==='update'">
+            <input v-if="newMyplant.plantname!=='직접 입력하기'" type="text" id="plant" :placeholder="myplant.plant_info.name" class="form-input disabled-input" disabled>
+            <input v-if="newMyplant.plantname==='직접 입력하기'" type="text" id="plant" :placeholder="myplant.tmp" class="form-input disabled-input" disabled>
+          </div>
         </div>
         <!-- 등록 버튼 -->
         <div class="myplant-create-submit">
@@ -60,19 +70,14 @@ export default {
         nickname: this.myplant.nickname,
         photo: this.myplant.photo,
         plantname: this.myplant.plant_info?.name,
+        tmp: this.myplant.tmp,
       },
-      newMyplantImage: 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg',
+      newMyplantImage: this.action==='create' ? 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg' : this.myplant.photo,
     }
   },
   computed: {
-    // ...mapGetters(['currentUser', 'plant_list'])
-    ...mapGetters(['username', 'plant_list'])
+    ...mapGetters(['username', 'plant_list']),
   },
-  // watch: {
-  //   username() {
-  //     this.username = this.currentUser.username
-  //   }
-  // },
   methods: {
     ...mapActions(['createMyplant', 'searchPlant', 'updateMyplant']),
     onInputImage() {
@@ -82,9 +87,11 @@ export default {
       this.newMyplantImage = url
     },
     onSubmit() {
-      // if (this.newMyplant.photo.length < 1) {
-      //   // this.newMyplant.photo = '../assets/'
-      // }
+      if (!this.newMyplant.nickname | this.newMyplant.nickname.length > 10) {
+        alert('식물 닉네임을 다시 입력해주세요.')
+      } else if (!this.newMyplant.plantname) {
+        alert('식물 이름을 등록해주세요.')
+      }
       if (this.action === 'create') {
         this.createMyplant(this.newMyplant)
       } else if (this.action === 'update') {
@@ -122,17 +129,35 @@ export default {
   color: #65805D;
 }
 
+.img-section {
+  position: relative;
+}
+
+.img-delete-btn {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  color: white;
+  background-color: rgba(0, 0, 0, 50%);
+  border: none;
+  position: absolute;
+  left: 70%;
+}
+
 .preview-section {
-  width: 20rem;
-  height: 20rem;
-  overflow: hidden;
-  margin: auto;
+  /* width: 20rem;
+  height: 20rem; */
+  /* overflow: hidden; */
+  /* margin: auto; */
+  display: flex;
+  justify-content: center;
+
 }
 
 .preview-myplant-image {
   border-radius: 15px;
-  width: 100%;
-  height: 100%;
+  width: 20rem;
+  height: 20rem;
   object-fit: cover;
 }
 
@@ -142,9 +167,14 @@ export default {
   margin-top: .3rem;
 }
 
-.img-add span {
+.img-add-input {
+  display: flex;
   font-size: 1rem;
-  margin: auto .2rem;
+  justify-content: center;
+}
+
+.img-add > span {
+  margin: .4rem .3rem 0 .3rem;
 }
 
 .img-add:hover {
@@ -160,13 +190,19 @@ input[type="file"] {
   border: 0;
 }
 
+.input-text-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .form-input {
   display: block;
-  width: 100%;
+  width: 85%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  margin: 2rem 0;
+  margin: .5rem auto;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #efefef;
