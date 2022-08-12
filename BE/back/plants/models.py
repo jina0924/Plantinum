@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class Plants(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
     watercycle_spring = models.CharField(max_length=6)
     watercycle_spring_nm = models.CharField(max_length=30)
     watercycle_summer = models.CharField(max_length=6)
@@ -16,13 +16,15 @@ class Plants(models.Model):
 
 
 class Myplant(models.Model):
-    nickname = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
     otp_code = models.CharField(max_length=6, unique=True, null=True)
     plant_info = models.ForeignKey(Plants, on_delete=models.PROTECT, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='images/myplant/', default='static/monstera.jpg')
     is_connected = models.BooleanField(default=False)
+    tmp = models.CharField(max_length=20, blank=True)
+
 
 from annoying.fields import AutoOneToOneField
 
