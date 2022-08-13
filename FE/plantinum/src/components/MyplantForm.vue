@@ -12,11 +12,18 @@
               <img :src="newMyplantImage" alt="내식물 등록 이미지" class="preview-myplant-image">
             </label>
           </div>
-            <div class="img-add-input">
+            <div class="img-add-div">
               <label for="myplantPhoto" class="img-add">
-                <span class="material-symbols-outlined">photo_camera</span>
+                <span class="material-symbols-outlined img-add-icon">photo_camera</span>
                 <span>사진 등록하기</span>
                 <input @change="onInputImage" accept="image/*" ref="newMyplantImage" type="file" class="form-input" id="myplantPhoto">
+              </label>
+              <span class="px-2">|</span>
+              <label for="photo-delete">
+                <span @click="onDeleteImage" class="img-delete-btn img-add">
+                  <span class="material-symbols-outlined img-add-icon">imagesmode</span>
+                  <span>기본 이미지로</span>
+                </span>
               </label>
             </div>
           <!-- </label> -->
@@ -82,9 +89,13 @@ export default {
     ...mapActions(['createMyplant', 'searchPlant', 'updateMyplant']),
     onInputImage() {
       this.newMyplant.photo = this.$refs.newMyplantImage.files[0]
-      this.newMyplant.photo
+      // this.newMyplant.photo
       const url = URL.createObjectURL(this.newMyplant.photo)
       this.newMyplantImage = url
+    },
+    onDeleteImage() {
+      this.newMyplant.photo = ''
+      this.newMyplantImage = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg'
     },
     onSubmit() {
       if (!this.newMyplant.nickname | this.newMyplant.nickname.length > 10) {
@@ -133,17 +144,6 @@ export default {
   position: relative;
 }
 
-.img-delete-btn {
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  color: white;
-  background-color: rgba(0, 0, 0, 50%);
-  border: none;
-  position: absolute;
-  left: 70%;
-}
-
 .preview-section {
   /* width: 20rem;
   height: 20rem; */
@@ -161,24 +161,29 @@ export default {
   object-fit: cover;
 }
 
-.img-add {
-  display: flex;
-  justify-content: center;
-  margin-top: .3rem;
-}
-
-.img-add-input {
+.img-add-div {
   display: flex;
   font-size: 1rem;
   justify-content: center;
+  /* align-items: center; */
 }
 
-.img-add > span {
-  margin: .4rem .3rem 0 .3rem;
+.img-add {
+  display: flex;
+  /* justify-content: center; */
+  /* margin-top: .3rem; */
+  align-items: center;
+}
+
+.img-add-icon {
+  font-size: 1.2rem;
+  margin-right: .3rem;
 }
 
 .img-add:hover {
   cursor: pointer;
+  color: #65805d;
+  transition: all .2s;
 }
 
 input[type="file"] {
