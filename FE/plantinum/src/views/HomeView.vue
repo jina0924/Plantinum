@@ -45,10 +45,10 @@
 
     <!-- second box -->
     <div class="second-box row">
-      <div class="col-md-6 col-sm d-flex align-items-center">
+      <div class="col-md-6 col-sm col d-flex align-items-center">
         <img src="../assets/HomeView/main_pic_2.jpg" alt="">
       </div>
-      <div class="row col-md-6 d-flex justify-content-center">
+      <div class="row col-md-6 col-12 d-flex justify-content-center">
         <div class="contentbox">
           <div class="text-main">
             <p>오늘은 상태가 어떠니?</p>
@@ -113,7 +113,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-sm d-flex align-items-center justify-content-center">
+      <div class="col-md-6 col-sm col d-flex align-items-center justify-content-center">
         <img src="../assets/HomeView/main_pic_3.jpg" alt="">
       </div>
     </div>
@@ -124,8 +124,8 @@
         <p>Supool</p>
       </div>
       <div class="row">
-        <div class="col-md-6 col-sm d-flex align-items-center justify-content-center">
-          <img src="../assets/HomeView/main_pic_2.jpg" alt="">
+        <div class="col-md-6 col-sm col d-flex align-items-center justify-content-center">
+          <img src="../assets/HomeView/main_pic_4.jpg" alt="">
         </div>
         <div class="row col-md-6 d-flex justify-content-center">
           <div class="contentbox">
@@ -351,19 +351,19 @@ a {
 
 .second-box img {
   width: 100%;
-  height: 70%;
+  height: 50%;
   margin-left: 0;
 }
 
 .third-box img {
-  width: 50%;
+  width: 60%;
   height: 70%;
   margin: auto;
 }
 
 .fourth-box img {
-  width: 100%;
-  height: 70%;
+  width: 70%;
+  height: 50%;
   background-position: auto;
 }
 

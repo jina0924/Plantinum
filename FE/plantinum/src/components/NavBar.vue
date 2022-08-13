@@ -22,7 +22,9 @@
             잎팔이
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <router-link class="dropdown-item" :to="{ name: 'leaf82' }">거래</router-link>
+            <div @click="go()">
+              <router-link class="dropdown-item" :to="{ name: 'leaf82' }">거래</router-link>
+            </div>
             <div class="dropdown-divider"></div>
             <router-link class="dropdown-item" :to="{ name: 'messenger' }" v-if="isLoggedIn">채팅</router-link>
             <router-link class="dropdown-item" :to="{ name: 'login' }" v-if="!isLoggedIn">채팅</router-link>
@@ -48,6 +50,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import router from '@/router'
 
 export default {
   name: 'NavBar',
@@ -67,6 +70,9 @@ export default {
     // abc () {
     //   this.username = this.currentUser.username
     // }
+    go() {
+      router.go()
+    }
   },
   // created () {
     // console.log(this.currentUser)
