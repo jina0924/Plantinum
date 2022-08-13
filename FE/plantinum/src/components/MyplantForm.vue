@@ -36,11 +36,11 @@
           </div>
           <!-- 식물 이름 검색 -->
           <div class="select-plant mb-3" v-if="action==='create'">
-            <input type="text" id="plant" list="search-plant-list" placeholder="식물 이름을 검색하세요." class="form-input" v-model="newMyplant.plantname">
+            <input type="text" id="plant" list="search-plant-list" placeholder="식물 종류를 검색하세요." class="form-input" v-model="newMyplant.plantname">
             <datalist id="search-plant-list">
               <option v-for="(plant) in plant_list" :key="plant.pk">{{ plant.name }}</option>
             </datalist>
-            <input v-if="newMyplant.plantname==='직접 입력하기'" type="text" id="tmp-plant" placeholder="식물 이름을 직접 입력해주세요." class="form-input" v-model="newMyplant.tmp">
+            <input v-if="newMyplant.plantname==='직접 입력하기'" type="text" id="tmp-plant" placeholder="식물 종류를 직접 입력해주세요." class="form-input mt-3" v-model="newMyplant.tmp">
           </div>
           <div class="select-plant mb-3" v-if="action==='update'">
             <input v-if="newMyplant.plantname!=='직접 입력하기'" type="text" id="plant" :placeholder="myplant.plant_info.name" class="form-input disabled-input" disabled>
@@ -98,16 +98,18 @@ export default {
       this.newMyplantImage = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg'
     },
     onSubmit() {
-      if (!this.newMyplant.nickname | this.newMyplant.nickname.length > 10) {
-        alert('식물 닉네임을 다시 입력해주세요.')
+      if (!this.newMyplant.nickname) {
+        alert('식물 닉네임을 입력해주세요.')
+      } else if (this.newMyplant.nickname.length > 10) {
+        alert('식물 닉네임을 10자 이하로 등록해주세요.')
       } else if (!this.newMyplant.plantname) {
-        alert('식물 이름을 등록해주세요.')
+        alert('식물 종류를 등록해주세요.')
       }
       if (this.action === 'create') {
         this.createMyplant(this.newMyplant)
       } else if (this.action === 'update') {
         if (this.newMyplant.photo === this.myplant.photo) {
-          this.newMyplant.photo = ''
+          this.newMyplant.photo = 'same'
         }
         const payload ={
           plantPk: this.myplant.id,
@@ -207,7 +209,7 @@ input[type="file"] {
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  margin: .5rem auto;
+  margin: auto;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #efefef;
