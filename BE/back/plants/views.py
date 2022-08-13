@@ -214,16 +214,23 @@ def detail(request, myplant_pk):
         return Response(serializer.data)
 
     def update():
+
+        request_copy_data = request.data.copy()
+
+        if request_copy_data['photo'] == 'same':
+            request_copy_data['photo'] = myplant.photo
+
         if request.user == user:
-            serializer = MyplantSerializer(instance=myplant, data=request.data)
+            serializer = MyplantSerializer(instance=myplant, data=request_copy_data)
 
             if serializer.is_valid(raise_exception=True):
-                if request.data['photo'] != '':
+                if request_copy_data['photo'] != '':
 
                     serializer.save()
 
                 else:
-                    photo = myplant.photo
+                
+                    photo = 'static/monstera.jpg'
                     serializer.save(photo=photo)
 
                 return Response(serializer.data)
