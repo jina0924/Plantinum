@@ -192,6 +192,7 @@ export default {
   height: 100%;
   position: absolute;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 /* .profile-img {
