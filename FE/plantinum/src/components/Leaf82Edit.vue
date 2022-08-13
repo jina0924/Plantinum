@@ -196,6 +196,11 @@ div {
   border-radius: 15px;
 }
 
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
 .img-box img{
   height: 300px;
   width: 300px;
