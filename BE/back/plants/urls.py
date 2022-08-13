@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.plants),
+    # path('all', views.MemoList.as_view()),
     path('search/', views.search_all),
     path('search/<plantname>/', views.search),
     path('myplant/', views.create_myplant),
