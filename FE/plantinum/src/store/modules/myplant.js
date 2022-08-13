@@ -46,10 +46,6 @@ export const Myplant = {
     },
 
     createMyplant({ commit, getters }, myplant) {
-      console.log({
-        ...getters.authHeader,
-        'Content-Type': 'multipart/form-data',
-      })
       axios({
         url: drf.myplant.newMyplant(),
         method: 'post',
@@ -60,9 +56,7 @@ export const Myplant = {
         },
       })
       .then(res => {
-        console.log(res.data)
         commit('SET_MYPLANT', res.data)
-        console.log(getters.currentUser.username)
         router.push({
           name: 'myplantDetail',
           params: { username: getters.currentUser.username, plantPk: getters.myplant.id }
