@@ -17,6 +17,7 @@ export const Account = {
     authError: null,
     profile: {},
     username: 'guest',
+    leaf82Set: []
   },
 
   getters: {
@@ -26,6 +27,7 @@ export const Account = {
     authHeader: state => ({ Authorization: `Token ${state.token}`}),
     profile: state => state.profile,
     username: state => state.username,
+    leaf82Set: state => state.leaf82Set
   },
 
   mutations: {
@@ -35,7 +37,10 @@ export const Account = {
       state.username = user.username
     },
     SET_AUTH_ERROR: (state, error) => state.authError = error,
-    SET_PROFILE: (state, profile) => state.profile = profile,
+    SET_PROFILE: (state, profile) => {
+      state.profile = profile,
+      state.leaf82Set = profile.leaf82_set
+    }
   },
 
   actions: {

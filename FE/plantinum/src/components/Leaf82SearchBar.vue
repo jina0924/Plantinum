@@ -73,6 +73,9 @@ export default {
           sigungu: this.info.sigungu
         }
         this.search(params)
+      } else if (!!this.info.plantname === false && !!this.info.sido === false && !!this.info.sigungu === false) {
+        const params = {}
+        this.search(params)
       }
     },
     // 필터링
