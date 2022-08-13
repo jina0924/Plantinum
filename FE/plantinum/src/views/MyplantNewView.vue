@@ -20,6 +20,7 @@ export default {
         nickname: '',
         photo: '',
         plantname: '',
+        tmp: '',
       }
     }
   }

@@ -2,7 +2,7 @@
   <div>
     <!-- 리스트가 있을 때 -->
     <!-- 정렬 버튼 -->
-    <div class="row">
+    <div class="row mx-0">
       <div class="col-1"></div>
       <div class="col-10 jsutify-content-center">
         <div class="sort-btn-div mt-4 d-flex flex-row-reverse" v-if="myplant_list[0]">

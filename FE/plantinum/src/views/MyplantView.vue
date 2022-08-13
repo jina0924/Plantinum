@@ -58,7 +58,7 @@ export default {
     myplants() {
       this.fillMyplants()
     },
-    currentUser() {
+    username() {
       this.isMypage()
     }
   },
@@ -88,7 +88,8 @@ export default {
   height: 100%;
   width: 100%;
   margin: 0;
-  background-repeat: repeat-x;
+  background-size: cover;
+  /* background-repeat: repeat-x; */
 }
 
 .myplant {
