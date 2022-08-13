@@ -124,27 +124,12 @@
           <p>회원님이 등록한 잎팔이 글 목록입니다.</p>
         </div>
       </div>
-      <div class="myleaf-list row mt-5 d-flex justify-content-start" v-if="myleaf82">
+      <div class="myleaf-list row mt-5 d-flex justify-content-center" v-if="myleaf82">
         <!-- v-for 등록해야 -->
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
-        </div>
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
-        </div>
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
-        </div>
-        <div class="myleaf-pic m-2 d-flex justify-content-center">
-          <div>
-            <img src="@/assets/ProfileView/background_img.jpg" alt="">
-          </div>
+        <div class="myleaf-pic m-2 d-flex justify-content-center" v-for="leaf82 in leaf82Set" :key="leaf82.pk">
+          <router-link :to="{ name: 'leaf82Detail' , params: { username: username ,posting_addr: leaf82.posting_addr } }">
+            <img :src="leaf82.photo" :alt="`${leaf82.plantname} 잎팔이 게시글 사진입니다`">
+          </router-link>
         </div>
       </div>
     </div>
@@ -167,7 +152,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['profile'])
+    ...mapGetters(['profile', 'leaf82Set', 'username'])
   },
 }
 </script>
