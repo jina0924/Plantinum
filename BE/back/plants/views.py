@@ -17,7 +17,28 @@ User = get_user_model()
 def plants(request):
     plants = get_list_or_404(Plants)
     serializer = PlantsSerializer(plants, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data)    
+
+# from rest_framework.pagination import PageNumberPagination
+# from .pagination import PaginationHandlerMixin
+# from rest_framework.views import APIView
+
+
+# class MemoPagination(PageNumberPagination):
+#     page_size_query_param = 'limit'
+    
+# class MemoList(APIView, PaginationHandlerMixin):
+#     pagination_class = MemoPagination
+#     serializer_class = PlantsSerializer
+#     def get(self, request, format=None, *args, **kwargs):
+#         instance = Plants.objects.all()
+#         page = self.paginate_queryset(instance)
+#         if page is not None:
+#             serializer = self.get_paginated_response(self.serializer_class(page,
+#  many=True).data)
+#         else:
+#             serializer = self.serializer_class(instance, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # 내 식물 전체 조회 
