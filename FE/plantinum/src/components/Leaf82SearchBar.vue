@@ -52,7 +52,10 @@ export default {
         plantname: '',
         sido: '',
         sigungu: '',
-      }
+      },
+      limit: 2,
+      loadPage: 1,
+      searchPage: 1
     }
   },
   methods: {
