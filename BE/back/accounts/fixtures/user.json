@@ -1,0 +1,48 @@
+[
+{
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$pz6ulf1pVEjjWAj2Ge4xml$b/nv9ypu4QhB39vAvWe2IAUYM65Ge6HUk2YemqsUzkk=",
+        "last_login": "2022-08-13T21:26:18.715",
+        "is_superuser": false,
+        "username": "plantinum_test",
+        "first_name": "",
+        "last_name": "",
+        "email": "plantinum_test@testemail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-08-13T21:26:18.544",
+        "phone_number": "",
+        "addr": "",
+        "zip_code": "",
+        "nickname": "싱싱한소나무3309",
+        "photo": "static/profile.jpg",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$51GaXq9J8OKek3C9UooUyY$KY66KkhpdEWzSYOq4DY07QurVKSWUG0FP2uXzIYAcu0=",
+        "last_login": "2022-08-13T21:48:05.147",
+        "is_superuser": false,
+        "username": "plantinum_test2",
+        "first_name": "",
+        "last_name": "",
+        "email": "plantinum_test2@testemail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-08-13T21:48:05.014",
+        "phone_number": "",
+        "addr": "",
+        "zip_code": "",
+        "nickname": "싱싱한귤나무3159",
+        "photo": "images/profile/프사.jpg",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]

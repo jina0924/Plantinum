@@ -1,0 +1,100 @@
+[
+{
+    "model": "plants.myplant",
+    "pk": 1,
+    "fields": {
+        "nickname": "사랑이",
+        "created_at": "2022-08-13T21:27:39.969",
+        "otp_code": null,
+        "plant_info": 51,
+        "user": 1,
+        "photo": "images/myplant/러브체인.jpg",
+        "is_connected": false,
+        "tmp": ""
+    }
+},
+{
+    "model": "plants.myplant",
+    "pk": 2,
+    "fields": {
+        "nickname": "가울이",
+        "created_at": "2022-08-13T21:29:26.894",
+        "otp_code": null,
+        "plant_info": 1,
+        "user": 1,
+        "photo": "images/myplant/가울테리아.jpg",
+        "is_connected": false,
+        "tmp": ""
+    }
+},
+{
+    "model": "plants.myplant",
+    "pk": 3,
+    "fields": {
+        "nickname": "중간고사",
+        "created_at": "2022-08-13T21:35:47.357",
+        "otp_code": null,
+        "plant_info": 207,
+        "user": 1,
+        "photo": "images/myplant/벚나무.jpg",
+        "is_connected": false,
+        "tmp": "벚나무"
+    }
+},
+{
+    "model": "plants.myplant",
+    "pk": 4,
+    "fields": {
+        "nickname": "개나리아님",
+        "created_at": "2022-08-13T21:36:12.553",
+        "otp_code": null,
+        "plant_info": 207,
+        "user": 1,
+        "photo": "images/myplant/영춘화.jpg",
+        "is_connected": false,
+        "tmp": "영춘화"
+    }
+},
+{
+    "model": "plants.myplant",
+    "pk": 5,
+    "fields": {
+        "nickname": "포포",
+        "created_at": "2022-08-13T21:49:27.705",
+        "otp_code": null,
+        "plant_info": 177,
+        "user": 2,
+        "photo": "images/myplant/포인세티아.jpg",
+        "is_connected": false,
+        "tmp": ""
+    }
+},
+{
+    "model": "plants.myplant",
+    "pk": 6,
+    "fields": {
+        "nickname": "수박",
+        "created_at": "2022-08-13T21:50:26.697",
+        "otp_code": null,
+        "plant_info": 104,
+        "user": 2,
+        "photo": "images/myplant/수박페페로미아.jpg",
+        "is_connected": false,
+        "tmp": ""
+    }
+},
+{
+    "model": "plants.myplant",
+    "pk": 7,
+    "fields": {
+        "nickname": "들꽃",
+        "created_at": "2022-08-13T21:51:20.767",
+        "otp_code": null,
+        "plant_info": 207,
+        "user": 2,
+        "photo": "static/monstera.jpg",
+        "is_connected": false,
+        "tmp": "들꽃"
+    }
+}
+]

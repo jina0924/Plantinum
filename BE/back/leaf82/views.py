@@ -135,6 +135,7 @@ class SearchAPI(APIView, PaginationHandlerMixin):
         plantname = request.GET.get('plantname', '*')
         sido = request.GET.get('sido', '*')
         sigungu = request.GET.get('sigungu', '*')
+        category_class = request.GET.get('category_class', '분양해요')
 
         if plantname != '*':
             instance = instance.filter(plantname__contains=plantname)
@@ -146,6 +147,8 @@ class SearchAPI(APIView, PaginationHandlerMixin):
         if sigungu != '*':
             addr2 = Juso.objects.filter(sigungu__contains=sigungu)
             instance = instance.filter(addr__in=addr2)
+
+        instance = instance.filter(category_class=category_class)
 
         page = self.paginate_queryset(instance)        
 

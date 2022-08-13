@@ -7,7 +7,13 @@
 
 ```python
 python manage.py migrate
-python manage.py loaddata plants.json juso.json
+python manage.py loaddata plants.json juso.json user.json myplant.json leaf82.json
+```
+
+```
+# 생성되어있는 유저
+plantinum_test
+plantinum_test2
 ```
 
 
@@ -38,20 +44,20 @@ http://127.0.0.1:8000/api/v1/accounts/signup/
 
 | Key          | Type   | Description     | Mandatory | Example        |
 | ------------ | ------ | --------------- | --------- | -------------- |
-| username     | String | 유저아이디      | O         | idsampleuser   |
-| email        | String | 이메일          | O    | abc@aa.com               |
-| password1    | String | 비밀번호        | O         | testpassword   |
-| password2    | String | 비밀번호 재입력 | O         | testpassword   |
-| phone_number | String | 폰넘버          |           | 01012345678    |
-| addr         | String | 주소            |           | seoul          |
-| zip_code     | String | 우편번호        |           | 12345          |
-| nickname     | String | 닉네임, default값 존재         |           | samplenickname |
+| username     | String | 유저아이디      | O         | plantinum_test |
+| email        | String | 이메일          | O    | plantinum_test@testemail.com |
+| password1    | String | 비밀번호        | O         | xptmxmdlqslek |
+| password2    | String | 비밀번호 재입력 | O         | xptmxmdlqslek |
+| phone_number | String | 폰넘버          |           |     |
+| addr         | String | 주소            |           |           |
+| zip_code     | String | 우편번호        |           |           |
+| nickname     | String | 닉네임, default값 존재         |           |  |
 
 - Response
 
 ```
 {
-    "key": "60c122934378ff59db8d4caae94a295a53d7c11a"
+    "key": "3e2df1dc87c527fc5722b907f48e352dd3c046ee"
 }
 ```
 
@@ -69,16 +75,16 @@ http://127.0.0.1:8000/api/v1/accounts/login/
 
 - Body
 
-| Key      | Type   | Description | Mandatory | Example      |
-| -------- | ------ | ----------- | --------- | ------------ |
-| username | String | 유저아이디  | O         | idsampleuser |
-| password | String | 비밀번호    | O         | testpassword |
+| Key      | Type   | Description | Mandatory | Example        |
+| -------- | ------ | ----------- | --------- | -------------- |
+| username | String | 유저아이디  | O         | plantinum_test |
+| password | String | 비밀번호    | O         | xptmxmdlqslek  |
 
 - Response
 
 ```
 {
-    "key": "60c122934378ff59db8d4caae94a295a53d7c11a"
+    "key": "57f72c606b9cbd10d2ecf5df6eda4b90f2213198"
 }
 ```
 
@@ -100,13 +106,13 @@ http://127.0.0.1:8000/api/v1/accounts/logout/
 
 | Key           | Type   | Description   | Mandatory | Example                                        |
 | ------------- | ------ | ------------- | --------- | ---------------------------------------------- |
-| Authorization | String | Token {token} | O         | Token 60c122934378ff59db8d4caae94a295a53d7c11a |
+| Authorization | String | Token {token} | O         | Token 3e2df1dc87c527fc5722b907f48e352dd3c046ee |
 
 - Response
 
 ```
 {
-    "detail": "Successfully logged out."
+    "detail": "로그아웃되었습니다."
 }
 ```
 
@@ -124,16 +130,16 @@ http://127.0.0.1:8000/api/v1/accounts/password/change/
 
 - Body
 
-| Key           | Type   | Description | Mandatory | Example |
-| ------------- | ------ | ----------- | --------- | ------- |
-| new_password1 | String |             | O         |         |
-| new_password1 | String |             | O         |         |
+| Key           | Type   | Description | Mandatory | Example           |
+| ------------- | ------ | ----------- | --------- | ----------------- |
+| new_password1 | String |             | O         | new_xptmxmdlqslek |
+| new_password1 | String |             | O         | new_xptmxmdlqslek |
 
 - Response
 
 ```
 {
-    "detail": "New password has been saved."
+    "detail": "새로운 패스워드가 저장되었습니다."
 }
 ```
 
@@ -156,14 +162,34 @@ http://127.0.0.1:8000/api/v1/accounts/profile/
 ```
 {
     "pk": 1,
-    "nickname": "늘푸른소나무9865",
-    "email": "test1@test.com",
+    "nickname": "싱싱한소나무3309",
+    "email": "plantinum_test@testemail.com",
     "phone_number": "",
     "addr": "",
     "zip_code": "",
-    "myplant_count": 0,
+    "myplant_count": 4,
     "dday": 1,
-    "photo": "https://url.kr/s38eg6"
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/profile.jpg",
+    "leaf82_set": [
+        {
+            "pk": 1,
+            "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%AC%B4%EB%8A%AC%EC%82%B0%ED%98%B8%EC%88%98.jpg",
+            "posting_addr": 893570,
+            "plantname": "무늬산호수"
+        },
+        {
+            "pk": 2,
+            "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EC%82%B0%EC%84%B8%EB%B2%A0%EB%A6%AC%EC%95%84.jpg",
+            "posting_addr": 863022,
+            "plantname": "산세베리아"
+        },
+        {
+            "pk": 3,
+            "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+            "posting_addr": 883823,
+            "plantname": "치자나무"
+        }
+    ]
 }
 ```
 
@@ -183,28 +209,28 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
 
 - Body
 
-| Key          | Type   | Description | Mandatory | Example         |
-| ------------ | ------ | ----------- | --------- | --------------- |
-| nickname     | String |             | O         | 새로운닉네임    |
-| email        | String |             | O         | 12345@naver.com |
-| phone_number | String |             | O         | 01012341234     |
-| addr         | String |             | O         | seoul           |
-| zip_code     | String |             | O         | 12345           |
-| photo        | Text   |             | O         |                 |
+| Key          | Type      | Description                   | Mandatory | Example                      |
+| ------------ | --------- | ----------------------------- | --------- | ---------------------------- |
+| nickname     | String    |                               | O         | 플랜티넘테스트               |
+| email        | String    |                               | O         | plantinum_test@testemail.com |
+| phone_number | String    |                               | O         |                              |
+| addr         | String    |                               | O         |                              |
+| zip_code     | String    |                               | O         |                              |
+| photo        | ImageFile | 새로운 사진/기존사진/기본사진 | O         |                              |
 
 - Response
 
 ```
 {
     "pk": 1,
-    "nickname": "새로운닉네임",
-    "email": "12345@naver.com",
-    "phone_number": "01012341234",
-    "addr": "seoul",
-    "zip_code": "12345",
-    "myplant_count": 0,
+    "nickname": "플랜티넘테스트",
+    "email": "plantinum_test@testemail.com",
+    "phone_number": "",
+    "addr": "",
+    "zip_code": "",
+    "myplant_count": 4,
     "dday": 1,
-    "photo": "https://url.kr/s38eg6"
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/profile.jpg"
 }
 ```
 
@@ -229,7 +255,12 @@ http://127.0.0.1:8000/api/v1/plants/
 [
     {
         "id": 1,
-        "myplant_set": [],
+        "myplant_set": [
+            {
+                "pk": 2,
+                "nickname": "가울이"
+            }
+        ],
         "name": "가울테리아",
         "watercycle_spring": "053003",
         "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
@@ -270,15 +301,11 @@ http://127.0.0.1:8000/api/v1/plants/search/
         "pk": 2,
         "name": "개운죽"
     },
-    {
-        "pk": 3,
-        "name": "골드크레스트 윌마"
-    },
-    {
-        "pk": 4,
-        "name": "공작야자"
-    },
     ...
+    {
+        "pk": 207,
+        "name": "직접 입력하기"
+    }
 ]
 ```
 
@@ -342,18 +369,27 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{username}/
 
 - Request Parameters
 
-| Name     | Type   | Description | Mandatory | Example  |
-| -------- | ------ | ----------- | --------- | -------- |
-| username | String | 유저id      | O         | testuser |
+| Name     | Type   | Description | Mandatory | Example        |
+| -------- | ------ | ----------- | --------- | -------------- |
+| username | String | 유저id      | O         | plantinum_test |
 
 - Response
 
 ```
 [
     {
-        "pk": 1,
-        "nickname": "깨운이",
-        "photo": "",
+        "pk": 4,
+        "nickname": "개나리아님",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/myplant/%EC%98%81%EC%B6%98%ED%99%94.jpg",
+        "sensing": {
+            "moisture_level": 0
+        },
+        "diary_count": 0
+    },
+    {
+        "pk": 3,
+        "nickname": "중간고사",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/myplant/%EB%B2%9A%EB%82%98%EB%AC%B4.jpg",
         "sensing": {
             "moisture_level": 0
         },
@@ -362,16 +398,16 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{username}/
     {
         "pk": 2,
         "nickname": "가울이",
-        "photo": "",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/myplant/%EA%B0%80%EC%9A%B8%ED%85%8C%EB%A6%AC%EC%95%84.jpg",
         "sensing": {
             "moisture_level": 0
         },
-        "diary_count": 3
+        "diary_count": 0
     },
     {
-        "pk": 3,
-        "nickname": "개운개운",
-        "photo": "",
+        "pk": 1,
+        "nickname": "사랑이",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/myplant/%EB%9F%AC%EB%B8%8C%EC%B2%B4%EC%9D%B8.jpg",
         "sensing": {
             "moisture_level": 0
         },
@@ -397,8 +433,8 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 
 | Key      | Type   | Description                  | Mandatory | Example |
 | -------- | ------ | ---------------------------- | --------- | ------- |
-| nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
-| photo    | String | 물주기 등록 대상 식물의 사진 | 기본값존재 |         |
+| nickname | String | 내식물 등록 대상 식물의 애칭 | O         | 깨운이  |
+| photo    | ImageFile | 내식물 등록 대상 식물의 사진 | 기본값존재 |         |
 | plantname | String | 사용자가 선택한 식물 이름 | O    | 개운죽     |
 | tmp | String | 직접 입력하기 선택시 기입 |  |  |
 
@@ -406,13 +442,13 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 
 ```
 {
-    "id": 1,
+    "id": 8,
     "user": {
         "pk": 1,
-        "username": "test1",
-        "nickname": "촉촉한귤나무123"
+        "username": "plantinum_test",
+        "nickname": "플랜티넘테스트"
     },
-    "name": {
+    "plant_info": {
         "pk": 2,
         "name": "개운죽",
         "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
@@ -422,20 +458,21 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
         "specl_manage_info": "수경은 물주기가 필요 없으나, 화분은 1-2주에 한번씩 충분히 관수한다."
     },
     "sensing": {
-        "id": 1,
+        "id": 8,
         "remaining_water": false,
         "state_led": false,
         "moisture_level": 0,
         "last_watering": "",
-        "my_plant": 1
+        "my_plant": 8
     },
     "diary_set": [],
     "diary_count": 0,
     "nickname": "깨운이",
-    "created_at": "2022-07-26T07:08:54.928651Z",
-    "otp_code": "",
-    "photo": "https://url.kr/d1acln",
-    "is_connected": false
+    "created_at": "2022-08-13T22:41:15.882334",
+    "otp_code": null,
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+    "is_connected": false,
+    "tmp": ""
 }
 ```
 
@@ -449,83 +486,50 @@ http://127.0.0.1:8000/api/v1/plants/myplant/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
+http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/detail/
 ```
 
 - Request Parameters
 
 | Name           | Type | Description             | Mandatory | Example |
 | -------------- | ---- | ----------------------- | --------- | ------- |
-| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 2       |
+| 내식물 식물 pk | Int  | 내식물 등록한 식물의 pk | O         | 8       |
 
 - Response
 
 ```
 {
-    "id": 2,
+    "id": 8,
     "user": {
         "pk": 1,
-        "username": "test1",
-        "nickname": ""
+        "username": "plantinum_test",
+        "nickname": "플랜티넘테스트"
     },
-    "name": {
-        "pk": 1,
-        "name": "가울테리아",
-        "watercycle_spring_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_summer_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_autumn_nm": "토양 표면이 말랐을때 충분히 관수함",
-        "watercycle_winter_nm": "화분 흙 대부분 말랐을때 충분히 관수함",
-        "specl_manage_info": ""
+    "plant_info": {
+        "pk": 2,
+        "name": "개운죽",
+        "watercycle_spring_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_summer_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_autumn_nm": "흙을 촉촉하게 유지함(물에 잠기지 않도록 주의)",
+        "watercycle_winter_nm": "토양 표면이 말랐을때 충분히 관수함",
+        "specl_manage_info": "수경은 물주기가 필요 없으나, 화분은 1-2주에 한번씩 충분히 관수한다."
     },
     "sensing": {
-        "id": 2,
+        "id": 8,
         "remaining_water": false,
         "state_led": false,
         "moisture_level": 0,
         "last_watering": "",
-        "my_plant": 2
+        "my_plant": 8
     },
-    "diary_set": [
-        {
-            "id": 1,
-            "my_plant": {
-                "pk": 2,
-                "nickname": "가울이"
-            },
-            "content": "첫 번째 일지",
-            "photo": "",
-            "diary_created_at": "2022-07-26T08:15:09.427783Z",
-            "public_private": false
-        },
-        {
-            "id": 2,
-            "my_plant": {
-                "pk": 2,
-                "nickname": "가울이"
-            },
-            "content": "두 번째 일지",
-            "photo": "",
-            "diary_created_at": "2022-07-26T08:16:08.831901Z",
-            "public_private": false
-        },
-        {
-            "id": 3,
-            "my_plant": {
-                "pk": 2,
-                "nickname": "가울이"
-            },
-            "content": "쑥쑥 자라는 가울이",
-            "photo": "",
-            "diary_created_at": "2022-07-26T08:32:50.126572Z",
-            "public_private": false
-        }
-    ],
-    "diary_count": 3,
-    "nickname": "가울이",
-    "created_at": "2022-07-26T07:25:42.426355Z",
-    "otp_code": "",
-    "photo": "",
-    "is_connected": false
+    "diary_set": [],
+    "diary_count": 0,
+    "nickname": "깨운이",
+    "created_at": "2022-08-13T22:41:15.882334",
+    "otp_code": null,
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+    "is_connected": false,
+    "tmp": ""
 }
 ```
 
@@ -541,31 +545,31 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
+http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/detail/
 ```
 
 - Request Parameters
 
 | Name           | Type | Description             | Mandatory | Example |
 | -------------- | ---- | ----------------------- | --------- | ------- |
-| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 2       |
+| 내식물 식물 pk | Int  | 내식물 등록한 식물의 pk | O         | 8       |
 
 - Body
 
-| Key      | Type   | Description                  | Mandatory | Example |
-| -------- | ------ | ---------------------------- | --------- | ------- |
-| nickname | String | 물주기 등록 대상 식물의 애칭 | O         | 깨운이  |
-| photo    | String | 물주기 등록 대상 식물의 사진 | ?         |         |
+| Key      | Type   | Description                                                  | Mandatory | Example |
+| -------- | ------ | ------------------------------------------------------------ | --------- | ------- |
+| nickname | String | 내식물 등록 대상 식물의 애칭                                 | O         | 깨운잉  |
+| photo    | String | 내식물 등록 대상 식물의 사진<br />새로운 사진/기존사진/기본사진 | O         |         |
 
 - Response
 
 ```
 {
-    "id": 1,
+    "id": 8,
     "user": {
-        "pk": 2,
-        "username": "test2",
-        "nickname": "싱싱한올리브나무6759"
+        "pk": 1,
+        "username": "plantinum_test",
+        "nickname": "플랜티넘테스트"
     },
     "plant_info": {
         "pk": 2,
@@ -577,20 +581,21 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
         "specl_manage_info": "수경은 물주기가 필요 없으나, 화분은 1-2주에 한번씩 충분히 관수한다."
     },
     "sensing": {
-        "id": 1,
+        "id": 8,
         "remaining_water": false,
         "state_led": false,
         "moisture_level": 0,
         "last_watering": "",
-        "my_plant": 1
+        "my_plant": 8
     },
     "diary_set": [],
     "diary_count": 0,
-    "nickname": "깨운이",
-    "created_at": "2022-08-05T04:54:49.012014Z",
+    "nickname": "깨운잉",
+    "created_at": "2022-08-13T22:41:15.882334",
     "otp_code": null,
-    "photo": "https://url.kr/d1acln",
-    "is_connected": false
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+    "is_connected": false,
+    "tmp": ""
 }
 ```
 
@@ -604,20 +609,20 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
+http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/detail/
 ```
 
 - Request Parameters
 
 | Name           | Type | Description             | Mandatory | Example |
 | -------------- | ---- | ----------------------- | --------- | ------- |
-| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 2       |
+| 내식물 식물 pk | Int  | 내식물 등록한 식물의 pk | O         | 8       |
 
 - Response
 
 ```
 {
-    "result": "내식물이 삭제되었습니다."
+    "detail": "내식물이 삭제되었습니다."
 }
 ```
 
@@ -627,7 +632,7 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/detail/
 
 - 기기와 연결되지 않았고 OTP도 없는 상태에서 OTP 발급
 - 연결이 되지 않았는데 OTP가 있다면 현재 있는 값 보여주기
-- 5분 후 자동으로 삭제 (NULL)
+- 20초 후 자동으로 삭제 (NULL)
 
 - 로그인 사용자 - 토큰 사용
 - GET
@@ -647,14 +652,30 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/otp/
 - Response
 
 ```
+# 정상 발급 / otp 존재
 {
-    "otp_code": "636631"
+    "otp_code": "492279"
 }
 ```
 
 ```
+# 연결된 상태
 {
-    "result": "이미 발급되었거나 연결되었습니다."
+    "detail": "이미 연결되었습니다."
+}
+```
+
+```
+# 존재하지 않는 식물pk
+{
+    "detail": "찾을 수 없습니다."
+}
+```
+
+```
+# 다른 유저의 식물
+{
+    "detail": "잘못된 접근입니다."
 }
 ```
 
@@ -703,32 +724,36 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/otp/status/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/disconnect/
+http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/disconnect/
 ```
 
 - Request Parameters
 
 | Name           | Type | Description             | Mandatory | Example |
 | -------------- | ---- | ----------------------- | --------- | ------- |
-| 물주기 식물 pk | Int  | 물주기 등록한 식물의 pk | O         | 1       |
+| 내식물 식물 pk | Int  | 내식물 등록한 식물의 pk | O         | 1       |
 
 - Response
 
 ```
+# 정상 연결 해제
 {
 	"is_connected": false
 }
 ```
 
 ```
+# 연결되지 않은 식물의 연결 해제 시도
 {
-    "result": "연결상태를 확인해주세요."
+    "detail": "연결상태를 확인해주세요."
 }
 ```
 
 
 
 ### 식물 일지
+
+- **수정필요**
 
 - 나의 식물 별 일지 전체 조회, 일지 작성
 - 로그인 사용자 - 토큰 사용
@@ -737,14 +762,14 @@ http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/disconnect/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/plants/myplant/{물주기 식물 pk}/diary/
+http://127.0.0.1:8000/api/v1/plants/myplant/{내식물 식물 pk}/diary/
 ```
 
 - Request Parameters
 
-| Name      | Type | Description | Mandatory | Example |
-| --------- | ---- | ----------- | --------- | ------- |
-| 내식물 pk | Int  |             | O         | 2       |
+| Name           | Type | Description | Mandatory | Example |
+| -------------- | ---- | ----------- | --------- | ------- |
+| 내식물 식물 pk | Int  |             | O         | 2       |
 
 - Body: POST
 
@@ -914,40 +939,41 @@ http://127.0.0.1:8000/api/v1/leaf82/new/
 
 - Body
 
-| Key            | Type   | Description                                | Mandatory  | Example    |
-| -------------- | ------ | ------------------------------------------ | ---------- | ---------- |
-| sido           | String | 시도                                       | O          | 서울특별시 |
-| sigungu        | String | 시군구                                     | O          | 종로구     |
-| plantname      | String | 식물이름                                   | O          | 산세베리아 |
-| content        | Text   | 내용                                       | O          | 채팅주세요 |
-| price          | Int    | 가격                                       | O          | 20000      |
-| category_class | String | 분양해요/분양받아요                        | O          | 분양해요   |
-| status_class   | String | 판매중/거래완료/예약중<br />default=판매중 |            |            |
-| photo          | Text   |                                            | 기본값존재 |            |
+| Key            | Type   | Description                                    | Mandatory  | Example    |
+| -------------- | ------ | ---------------------------------------------- | ---------- | ---------- |
+| sido           | String | 시도                                           | O          | 서울특별시 |
+| sigungu        | String | 시군구                                         | O          | 종로구     |
+| plantname      | String | 식물이름                                       | O          | 산세베리아 |
+| content        | Text   | 내용                                           | O          | 채팅주세요 |
+| price          | Int    | 가격                                           | O          | 20000      |
+| category_class | String | 분양해요/분양받아요                            | O          | 분양해요   |
+| status_class   | String | 분양대기/분양완료/분양예약<br />default=판매중 |            |            |
+| photo          | Text   |                                                | 기본값존재 |            |
 
 - Response
 
 ```
 {
-    "id": 3,
+    "id": 6,
     "user": {
         "pk": 1,
-        "username": "test1",
-        "nickname": "새내기참나무4979"
+        "username": "plantinum_test",
+        "nickname": "플랜티넘테스트",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/profile.jpg"
     },
     "addr": {
-        "id": 108,
-        "sido": "경기도",
-        "sigungu": "용인시 처인구"
+        "id": 1,
+        "sido": "서울특별시",
+        "sigungu": "종로구"
     },
-    "plantname": "싱고니움",
-    "photo": "https://url.kr/d1acln",
-    "created_at": "2022-08-04T06:25:01.655280Z",
-    "content": "연락주세요",
-    "price": 15000,
+    "plantname": "산세베리아",
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+    "created_at": "2022-08-13T22:58:26.972836",
+    "content": "채팅주세요",
+    "price": 20000,
     "category_class": "분양해요",
-    "status_class": "판매중",
-    "posting_addr": 207303
+    "status_class": "분양대기",
+    "posting_addr": 350230
 }
 ```
 
@@ -961,7 +987,7 @@ http://127.0.0.1:8000/api/v1/leaf82/new/
 - URL
 
 ```
-http://127.0.0.1:8000/api/v1/leaf82/
+http://127.0.0.1:8000/api/v1/leaf82/main
 ```
 
 - Response
@@ -969,57 +995,111 @@ http://127.0.0.1:8000/api/v1/leaf82/
 ```
 [
     {
-        "pk": 4,
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "price": 15000,
+        "pk": 6,
+        "plantname": "산세베리아",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+        "price": 20000,
         "category_class": "분양해요",
-        "status_class": "판매중",
+        "status_class": "분양대기",
         "addr": {
-            "id": 108,
-            "sido": "경기도",
-            "sigungu": "용인시 처인구"
+            "id": 1,
+            "sido": "서울특별시",
+            "sigungu": "종로구"
         },
-        "posting_addr": 426408,
+        "posting_addr": 350230,
         "user": {
             "pk": 1,
-            "username": "test1"
+            "username": "plantinum_test"
+        }
+    },
+    {
+        "pk": 5,
+        "plantname": "라일락",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%9D%BC%EC%9D%BC%EB%9D%BD.jpg",
+        "price": 100000,
+        "category_class": "분양해요",
+        "status_class": "분양대기",
+        "addr": {
+            "id": 5,
+            "sido": "서울특별시",
+            "sigungu": "광진구"
+        },
+        "posting_addr": 415916,
+        "user": {
+            "pk": 2,
+            "username": "plantinum_test2"
+        }
+    },
+    {
+        "pk": 4,
+        "plantname": "아몬드페페",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+        "price": 10900,
+        "category_class": "분양받아요",
+        "status_class": "분양대기",
+        "addr": {
+            "id": 23,
+            "sido": "서울특별시",
+            "sigungu": "강남구"
+        },
+        "posting_addr": 938738,
+        "user": {
+            "pk": 2,
+            "username": "plantinum_test2"
         }
     },
     {
         "pk": 3,
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중",
+        "plantname": "치자나무",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg",
+        "price": 0,
+        "category_class": "분양받아요",
+        "status_class": "분양대기",
         "addr": {
-            "id": 108,
-            "sido": "경기도",
-            "sigungu": "용인시 처인구"
+            "id": 4,
+            "sido": "서울특별시",
+            "sigungu": "성동구"
         },
-        "posting_addr": 207303,
+        "posting_addr": 883823,
         "user": {
             "pk": 1,
-            "username": "test1"
+            "username": "plantinum_test"
         }
     },
     {
         "pk": 2,
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "price": 15000,
+        "plantname": "산세베리아",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EC%82%B0%EC%84%B8%EB%B2%A0%EB%A6%AC%EC%95%84.jpg",
+        "price": 35000,
         "category_class": "분양해요",
-        "status_class": "판매중",
+        "status_class": "분양대기",
         "addr": {
-            "id": 108,
-            "sido": "경기도",
-            "sigungu": "용인시 처인구"
+            "id": 23,
+            "sido": "서울특별시",
+            "sigungu": "강남구"
         },
-        "posting_addr": 426408,
+        "posting_addr": 863022,
         "user": {
             "pk": 1,
-            "username": "test1"
+            "username": "plantinum_test"
+        }
+    },
+    {
+        "pk": 1,
+        "plantname": "무늬산호수",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%AC%B4%EB%8A%AC%EC%82%B0%ED%98%B8%EC%88%98.jpg",
+        "price": 20000,
+        "category_class": "분양해요",
+        "status_class": "분양대기",
+        "addr": {
+            "id": 5,
+            "sido": "서울특별시",
+            "sigungu": "광진구"
+        },
+        "posting_addr": 893570,
+        "user": {
+            "pk": 1,
+            "username": "plantinum_test"
         }
     }
 ]
@@ -1117,7 +1197,7 @@ http://127.0.0.1:8000/api/v1/leaf82/{시도}/{시군구}/
 
 ### 잎팔이 검색
 
-- 선택한 식물이름/시도/시군구에 해당하는 모든 글 조회
+- 선택한 카테고리/식물이름/시도/시군구에 해당하는 모든 글 조회
 - 식물이름은 `무늬`만 입력해도 `무늬관음죽`, `무늬산호수` 등을 모두 포함하여 조회
 - 시도는 반드시 일치하는 값만 조회
 - 시군구는 `용인시`를 검색한다면 `용인시`, `용인시 처인구` `용인시 기흥구` 등을 모두 포함하여 조회
@@ -1134,68 +1214,51 @@ http://127.0.0.1:8000/api/v1/leaf82/search
 
 - Params
 
-| Key       | Type   | Description      | Mandatory | Example |
-| --------- | ------ | ---------------- | --------- | ------- |
-| plantname | String | 식물이름(검색어) |           |         |
-| sido      | String | 시도             |           | 경기도  |
-| sigungu   | String | 시군구           |           | 용인시  |
+| Key            | Type   | Description         | Mandatory | Example    |
+| -------------- | ------ | ------------------- | --------- | ---------- |
+| plantname      | String | 식물이름(검색어)    |           |            |
+| sido           | String | 시도                |           | 서울특별시 |
+| sigungu        | String | 시군구              |           | 광진구     |
+| category_class | String | 분양해요/분양받아요 | O         |            |
 
 - Response
 
 ```
 [
     {
-        "pk": 7,
-        "plantname": "산세베리아",
-        "photo": "https://url.kr/d1acln",
-        "price": 15000,
+        "pk": 5,
+        "plantname": "라일락",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%9D%BC%EC%9D%BC%EB%9D%BD.jpg",
+        "price": 100000,
         "category_class": "분양해요",
-        "status_class": "판매중",
+        "status_class": "분양대기",
         "addr": {
-            "id": 108,
-            "sido": "경기도",
-            "sigungu": "용인시 기흥구"
+            "id": 5,
+            "sido": "서울특별시",
+            "sigungu": "광진구"
         },
-        "posting_addr": 336921,
+        "posting_addr": 415916,
         "user": {
             "pk": 2,
-            "username": "test2"
+            "username": "plantinum_test2"
         }
     },
     {
-        "pk": 6,
-        "plantname": "산세베리아",
-        "photo": "https://url.kr/d1acln",
-        "price": 15000,
+        "pk": 1,
+        "plantname": "무늬산호수",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%AC%B4%EB%8A%AC%EC%82%B0%ED%98%B8%EC%88%98.jpg",
+        "price": 20000,
         "category_class": "분양해요",
-        "status_class": "판매중",
+        "status_class": "분양대기",
         "addr": {
-            "id": 107,
-            "sido": "경기도",
-            "sigungu": "용인시"
+            "id": 5,
+            "sido": "서울특별시",
+            "sigungu": "광진구"
         },
-        "posting_addr": 615947,
-        "user": {
-            "pk": 2,
-            "username": "test2"
-        }
-    },
-    {
-        "pk": 2,
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중",
-        "addr": {
-            "id": 108,
-            "sido": "경기도",
-            "sigungu": "용인시 처인구"
-        },
-        "posting_addr": 426408,
+        "posting_addr": 893570,
         "user": {
             "pk": 1,
-            "username": "test1"
+            "username": "plantinum_test"
         }
     }
 ]
@@ -1215,34 +1278,35 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 
 - Request Parameters
 
-| Name         | Type   | Description                                                  | Mandatory | Example |
-| ------------ | ------ | ------------------------------------------------------------ | --------- | ------- |
-| username     | String | 유저id                                                       | O         | test1   |
-| posting_addr | Int    | 잎팔이 글 작성시 부여되는 랜덤 값<br />한 유저 내에서 중복되지 않음 | O         | 426408  |
+| Name         | Type   | Description                                                  | Mandatory | Example        |
+| ------------ | ------ | ------------------------------------------------------------ | --------- | -------------- |
+| username     | String | 유저id                                                       | O         | plantinum_test |
+| posting_addr | Int    | 잎팔이 글 작성시 부여되는 랜덤 값<br />한 유저 내에서 중복되지 않음 | O         | 893570         |
 
 - Response
 
 ```
 {
-    "id": 2,
+    "id": 1,
     "user": {
         "pk": 1,
-        "username": "test1",
-        "nickname": "새내기참나무4979"
+        "username": "plantinum_test",
+        "nickname": "플랜티넘테스트",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/profile.jpg"
     },
     "addr": {
-        "id": 108,
-        "sido": "경기도",
-        "sigungu": "용인시 처인구"
+        "id": 5,
+        "sido": "서울특별시",
+        "sigungu": "광진구"
     },
-    "plantname": "싱고니움",
-    "photo": "https://url.kr/d1acln",
-    "created_at": "2022-08-04T05:08:32.067416Z",
-    "content": "연락주세요",
-    "price": 15000,
+    "plantname": "무늬산호수",
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%AC%B4%EB%8A%AC%EC%82%B0%ED%98%B8%EC%88%98.jpg",
+    "created_at": "2022-08-13T21:41:46.909668",
+    "content": "광진구에서 직거래원해요~",
+    "price": 20000,
     "category_class": "분양해요",
-    "status_class": "판매중",
-    "posting_addr": 426408
+    "status_class": "분양대기",
+    "posting_addr": 893570
 }
 ```
 
@@ -1261,10 +1325,10 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 
 - Request Parameters
 
-| Name         | Type   | Description                                                  | Mandatory | Example |
-| ------------ | ------ | ------------------------------------------------------------ | --------- | ------- |
-| username     | String | 유저id                                                       | O         | test1   |
-| posting_addr | Int    | 잎팔이 글 작성시 부여되는 랜덤 값<br />한 유저 내에서 중복되지 않음 | O         | 426408  |
+| Name         | Type   | Description                                                  | Mandatory | Example        |
+| ------------ | ------ | ------------------------------------------------------------ | --------- | -------------- |
+| username     | String | 유저id                                                       | O         | plantinum_test |
+| posting_addr | Int    | 잎팔이 글 작성시 부여되는 랜덤 값<br />한 유저 내에서 중복되지 않음 | O         | 893570         |
 
 - Body
 
@@ -1272,43 +1336,52 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 | -------------- | ------ | ------------------------------------------ | --------- | ---------- |
 | sido           | String | 시도                                       | O         | 서울특별시 |
 | sigungu        | String | 시군구                                     | O         | 종로구     |
-| plantname      | String | 식물이름                                   | O         | 싱고니움   |
-| content        | Text   | 내용                                       | O         | 연락주세요 |
+| plantname      | String | 식물이름                                   | O         | 무늬산호수 |
+| content        | Text   | 내용                                       | O         | 채팅주세요 |
 | price          | Int    | 가격                                       | O         | 15000      |
 | category_class | String | 분양해요/분양받아요                        | O         | 분양해요   |
-| status_class   | String | 판매중/거래완료/예약중<br />default=판매중 | O         | 거래완료   |
-| photo          | Text   |                                | ?         ||
+| status_class   | String | 분양대기/분양완료/분양예약<br />default=분양대기 | O         | 분양완료  |
+| photo          | ImageFile | 새로운 사진/기존사진/기본사진 | O        ||
 
 - Response
 
 ```
+# 정상 수정
 {
     "id": 1,
     "user": {
         "pk": 1,
-        "username": "test1",
-        "nickname": "새내기참나무4979",
-        "photo": "https://url.kr/s38eg6"
+        "username": "plantinum_test",
+        "nickname": "플랜티넘테스트",
+        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/static/profile.jpg"
     },
     "addr": {
         "id": 1,
         "sido": "서울특별시",
         "sigungu": "종로구"
     },
-    "plantname": "싱고니움",
-    "photo": "https://url.kr/d1acln",
-    "created_at": "2022-08-04T04:20:42.359078Z",
-    "content": "연락주세요",
+    "plantname": "무늬산호수",
+    "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%AC%B4%EB%8A%AC%EC%82%B0%ED%98%B8%EC%88%98.jpg",
+    "created_at": "2022-08-13T21:41:46.909668",
+    "content": "채팅주세요",
     "price": 15000,
     "category_class": "분양해요",
-    "status_class": "거래완료",
-    "posting_addr": 323845
+    "status_class": "분양완료",
+    "posting_addr": 893570
 }
 ```
 
 ```
+# 없는 게시글
 {
-    "result": "잘못된 접근입니다."
+    "detail": "찾을 수 없습니다."
+}
+```
+
+```
+# 다른 사람의 게시글
+{
+    "detail": "잘못된 접근입니다."
 }
 ```
 
@@ -1335,14 +1408,23 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 - Response
 
 ```
+# 정상 삭제
 {
-    "result": "게시글이 삭제되었습니다."
+    "detail": "게시글이 삭제되었습니다."
 }
 ```
 
 ```
+# 없는 게시글
 {
-    "result": "잘못된 접근입니다."
+    "detail": "찾을 수 없습니다."
+}
+```
+
+```
+# 다른 사람의 게시글
+{
+    "detail": "잘못된 접근입니다."
 }
 ```
 
@@ -1350,20 +1432,7 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 
 # 5. 추가 예정
 
-### 마이페이지 (로그인정보+잎팔이정보)
-
-
-내 잎팔이 글 전체 조회
-
-=> 잎팔이 글 pk와 이미지url만 받아오기 (임시로 이미지 주소 보내기)
-
-휴대폰번호 형식 지정
-
-
-
-accounts/user/ 했을 때 나오는 정보 수정 가능한지
-
-
+유저정보 api
 
 
 
