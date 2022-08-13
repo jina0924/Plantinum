@@ -149,6 +149,7 @@ p {
 .item img {
   width: 130px;
   height: 130px;
+  object-fit: cover;
 }
 
 .item-info .name {
