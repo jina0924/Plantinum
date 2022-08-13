@@ -127,9 +127,10 @@ div {
   padding: 0;
 }
 .search {
-  background-image: url('@/assets/Leaf82/leaf82SearchBarImg.jpg');
+  background: url('@/assets/Leaf82/searchbar_pic_0.jpg') bottom right;
   padding-top: 175px;
   padding-bottom: 175px;
+  background-size: cover;
 }
 
 .search-box {
@@ -179,7 +180,8 @@ div {
   background-color: #b2c9ab;
   color: white;
   border-radius: 0.5rem;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
+  height: 1.8rem;
 }
 
 .create-btn:focus {
@@ -195,8 +197,9 @@ div {
 
 select {
   border-radius: 0.5rem;
-  font-size: 1.3rem;
-  border-color: rgb(191, 191, 191);  
+  font-size: 0.9rem;
+  border-color: rgb(191, 191, 191); 
+  height: 1.8rem; 
 }
 
 select:focus {
