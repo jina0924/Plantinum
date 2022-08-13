@@ -1,9 +1,12 @@
 <template>
   <div>
     <nav-bar></nav-bar>
-    <leaf-82-search-bar></leaf-82-search-bar>
+    <leaf-82-search-bar :limit="limit" ></leaf-82-search-bar>
     <leaf-82-list :sellItems="sellItems" :buyItems="buyItems"></leaf-82-list>
     <!-- <leaf-82-list></leaf-82-list> -->
+    <div class="d-flex justify-content-center">
+      더보기
+    </div>
   </div>
 </template>
 
@@ -24,6 +27,9 @@ export default {
     return {
       sellItems: [],
       buyItems: [],
+      limit: 2,
+      loadPage: 1,
+      searchPage: 1
     }
   },
   methods: {
@@ -31,7 +37,7 @@ export default {
     sortList(items) {
       this.sellItems = []
       this.buyItems = []
-      for (let item of items) {
+      for (let item of items.results) {
         if (item.category_class === '분양해요') {
           this.sellItems.push(item)
         } else {
@@ -56,13 +62,20 @@ export default {
           item.plantname = plantname
         }
       }
+    },
+    beforeFetchLeaf82() {
+      const params = {
+        page: 1,
+        limit: 2,
+      }
+      this.fetchLeaf82(params)
     }
   },
   computed: {
     ...mapGetters(['searchList'])
   },
   created() {
-    this.fetchLeaf82()
+    this.beforeFetchLeaf82()
     this.fetchSido()
   },
   watch: {

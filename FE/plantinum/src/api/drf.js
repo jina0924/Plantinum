@@ -26,7 +26,7 @@ export default {
     disconnect: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'disconnect/',
   },
   leaf82: {
-    leaf82: () => HOST + LEAF82,
+    leaf82: () => HOST + LEAF82 + 'main',
     sido: () => HOST + LEAF82 + 'search/sido/',
     sigungu: (sido) => HOST + LEAF82 + `search/${sido}/` + 'sigungu/',
     search: () => HOST + LEAF82 + 'search',
