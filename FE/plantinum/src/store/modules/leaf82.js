@@ -6,7 +6,7 @@ export const Leaf82 = {
   state: {
     sido: [],
     sigungu: [],
-    searchList: [],
+    searchList: {},
     leaf82Detail: {}
     // 상세정보는 url로 created로 받아오자
   },
@@ -31,10 +31,11 @@ export const Leaf82 = {
       commit('SET_LEAF82DETAIL', {})
     },
 
-    fetchLeaf82({ commit }) {
+    fetchLeaf82({ commit }, params) {
       axios({
         url: drf.leaf82.leaf82(),
         method: 'get',
+        params
       })
       .then(res => {
         commit('SET_SEARCHLIST', res.data)
