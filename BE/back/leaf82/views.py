@@ -62,12 +62,33 @@ def search_sigungu(request, sido):
 
 
 # 잎팔이 전체 글 조회 (지역 상관 X)
-@api_view(['GET'])
-def read_leaf82(request):
+# @api_view(['GET'])
+# def read_leaf82(request):
 
-    leaves = Leaf82.objects.all().order_by('-pk')
-    serializer = Leaf82ListSerializer(leaves, many=True)
-    return Response(serializer.data)
+#     leaves = Leaf82.objects.all().order_by('-pk')
+#     serializer = Leaf82ListSerializer(leaves, many=True)
+#     return Response(serializer.data)
+
+
+from rest_framework.pagination import PageNumberPagination
+from pagination import PaginationHandlerMixin
+from rest_framework.views import APIView
+
+
+class MemoPagination(PageNumberPagination):
+    page_size_query_param = 'limit'
+    
+class Leaf82ListAPI(APIView, PaginationHandlerMixin):
+    pagination_class = MemoPagination
+    serializer_class = Leaf82ListSerializer
+    def get(self, request, format=None, *args, **kwargs):
+        instance = Leaf82.objects.all().order_by('-pk')
+        page = self.paginate_queryset(instance)
+        if page is not None:
+            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+        else:
+            serializer = self.serializer_class(instance, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # # 잎팔이 특정 지역/동네 글 조회  => 제공 x
@@ -81,28 +102,58 @@ def read_leaf82(request):
 #     return Response(serializer.data)
 
 
-@api_view(['GET'])
-def search(request):
-    # 식물이름(검색어)/시도/시군구
+# @api_view(['GET'])
+# def search(request):
+#     # 식물이름(검색어)/시도/시군구
 
-    plantname = request.GET.get('plantname', '*')
-    sido = request.GET.get('sido', '*')
-    sigungu = request.GET.get('sigungu', '*')
+#     plantname = request.GET.get('plantname', '*')
+#     sido = request.GET.get('sido', '*')
+#     sigungu = request.GET.get('sigungu', '*')
 
-    leaves = Leaf82.objects.filter().order_by('-pk')
-    if plantname != '*':
-        leaves = leaves.filter(plantname__contains=plantname)
+#     leaves = Leaf82.objects.filter().order_by('-pk')
+#     if plantname != '*':
+#         leaves = leaves.filter(plantname__contains=plantname)
         
-    if sido != '*':
-        addr1 = Juso.objects.filter(sido=sido)
-        leaves = leaves.filter(addr__in=addr1)
+#     if sido != '*':
+#         addr1 = Juso.objects.filter(sido=sido)
+#         leaves = leaves.filter(addr__in=addr1)
 
-    if sigungu != '*':
-        addr2 = Juso.objects.filter(sigungu__contains=sigungu)
-        leaves = leaves.filter(addr__in=addr2)
+#     if sigungu != '*':
+#         addr2 = Juso.objects.filter(sigungu__contains=sigungu)
+#         leaves = leaves.filter(addr__in=addr2)
 
-    serializer = Leaf82ListSerializer(leaves, many=True)
-    return Response(serializer.data)
+#     serializer = Leaf82ListSerializer(leaves, many=True)
+#     return Response(serializer.data)
+
+
+class SearchAPI(APIView, PaginationHandlerMixin):
+    pagination_class = MemoPagination
+    serializer_class = Leaf82ListSerializer
+    def get(self, request, format=None, *args, **kwargs):
+        instance = Leaf82.objects.filter().order_by('-pk')
+
+        plantname = request.GET.get('plantname', '*')
+        sido = request.GET.get('sido', '*')
+        sigungu = request.GET.get('sigungu', '*')
+
+        if plantname != '*':
+            instance = instance.filter(plantname__contains=plantname)
+            
+        if sido != '*':
+            addr1 = Juso.objects.filter(sido=sido)
+            instance = instance.filter(addr__in=addr1)
+
+        if sigungu != '*':
+            addr2 = Juso.objects.filter(sigungu__contains=sigungu)
+            instance = instance.filter(addr__in=addr2)
+
+        page = self.paginate_queryset(instance)        
+
+        if page is not None:
+            serializer = self.get_paginated_response(self.serializer_class(page, many=True).data)
+        else:
+            serializer = self.serializer_class(instance, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
