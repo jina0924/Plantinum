@@ -120,7 +120,7 @@ export default {
     },
     goChat(){
       console.log(this.user.pk)
-      this.setReceiver(this.user.pk)
+      this.setReceiver(this.user.username)
     }
   },
   computed: {
