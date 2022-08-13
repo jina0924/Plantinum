@@ -42,20 +42,24 @@ export default {
   data(){
     return {
       socket: null,
-      id:null,
+      id: -1,
       message: '',
       now_messages:[],
-      now_receiver: -1,
+      now_receiver: -1, // 새로고침 했거나, 거래탭에서 채팅하기로 넘어오지 않았을 경우
       rooms:{},
     }
   },
   computed: {
-    ...mapGetters(['receiver','currentUser'])
+    ...mapGetters(['receiver','currentUser',])
   },
   async created() {
-    this.id = this.currentUser.pk;
-    //console.log(this.currentUser);
-   // console.log(this.id);
+      // this.id = this.currentUser.pk;
+    // let userWait = await this.fetchCurrentUser()
+    // console.log(userWait)
+    // this.id = this.currentUser.pk
+    // console.log(this.currentUser.pk);
+    // console.log(this.id);
+    this.id = localStorage.getItem('username')
 
     if( this.receiver !== -1 ){
       this.now_receiver=this.receiver;
@@ -74,7 +78,7 @@ export default {
     this.socket.emit('getRooms',this.id);
     console.log(this.rooms)
 
-    //-1이 아니면 채팅에서 건너온것_start
+    //-1이 아니면 거래에서 건너온것_start
     if(this.now_receiver !== -1){
       if( (this.now_receiver in this.rooms) == false ){
         this.socket.emit('startchat',this.now_receiver);
@@ -102,7 +106,7 @@ export default {
     
   },
   methods : {
-    ...mapActions(['fetchReceiver','setReceiver']),
+    ...mapActions(['fetchReceiver','setReceiver',]),
 
     changeReceiver(data){
       console.log(data);
@@ -157,7 +161,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .whitebox{
   background-color: #FFFFFFCC;
   height: 500px;
