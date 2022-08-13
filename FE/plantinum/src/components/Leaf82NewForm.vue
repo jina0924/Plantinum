@@ -165,6 +165,7 @@ div {
   height: 300px;
   width: 300px;
   border-radius: 1rem;
+  object-fit: cover;
 }
 
 .img-add span {
