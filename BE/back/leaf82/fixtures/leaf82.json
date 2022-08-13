@@ -1,0 +1,82 @@
+[
+{
+    "model": "leaf82.leaf82",
+    "pk": 1,
+    "fields": {
+        "plantname": "무늬산호수",
+        "photo": "images/leaf82/무늬산호수.jpg",
+        "created_at": "2022-08-13T21:41:46.909",
+        "content": "광진구에서 직거래원해요~",
+        "price": 20000,
+        "category_class": "분양해요",
+        "status_class": "분양대기",
+        "user": 1,
+        "addr": 5,
+        "posting_addr": 893570
+    }
+},
+{
+    "model": "leaf82.leaf82",
+    "pk": 2,
+    "fields": {
+        "plantname": "산세베리아",
+        "photo": "images/leaf82/산세베리아.jpg",
+        "created_at": "2022-08-13T21:43:04.828",
+        "content": "잘 키운 산세베리아 분양해요! 연락 주세요~^^",
+        "price": 35000,
+        "category_class": "분양해요",
+        "status_class": "분양대기",
+        "user": 1,
+        "addr": 23,
+        "posting_addr": 863022
+    }
+},
+{
+    "model": "leaf82.leaf82",
+    "pk": 3,
+    "fields": {
+        "plantname": "치자나무",
+        "photo": "static/monstera.jpg",
+        "created_at": "2022-08-13T21:45:08.370",
+        "content": "나도 키우고 싶다 치자나무..\r\n분양하시는 분 연락 주세요!\r\n(가격협의)",
+        "price": 0,
+        "category_class": "분양받아요",
+        "status_class": "분양대기",
+        "user": 1,
+        "addr": 4,
+        "posting_addr": 883823
+    }
+},
+{
+    "model": "leaf82.leaf82",
+    "pk": 4,
+    "fields": {
+        "plantname": "아몬드페페",
+        "photo": "static/monstera.jpg",
+        "created_at": "2022-08-13T21:55:02.271",
+        "content": "아몬드페페 분양받고 싶어요~",
+        "price": 10900,
+        "category_class": "분양받아요",
+        "status_class": "분양대기",
+        "user": 2,
+        "addr": 23,
+        "posting_addr": 938738
+    }
+},
+{
+    "model": "leaf82.leaf82",
+    "pk": 5,
+    "fields": {
+        "plantname": "라일락",
+        "photo": "images/leaf82/라일락.jpg",
+        "created_at": "2022-08-13T21:56:28.520",
+        "content": "직거래 원합니다!",
+        "price": 100000,
+        "category_class": "분양해요",
+        "status_class": "분양대기",
+        "user": 2,
+        "addr": 5,
+        "posting_addr": 415916
+    }
+}
+]
