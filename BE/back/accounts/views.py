@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from .serializers import MyProfileSerializer, UpdateUserInformationSerializer
+from .serializers import MyProfileSerializer, UpdateUserInformationSerializer, UserSerializer
 import datetime
 from rest_framework import status
 
@@ -47,6 +47,16 @@ def profile(request):
     }
     
     return Response(data)
+
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def currentuser(request):
+    user = request.user
+    serializer = UserSerializer(user)
+
+    return Response(serializer.data)
 
 
 @api_view(['PUT'])
