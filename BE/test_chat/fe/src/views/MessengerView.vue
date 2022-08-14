@@ -55,6 +55,25 @@
                                 <img
                                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                                   alt="avatar" class="d-flex align-self-center chat-list-img">
+                              </div>
+                              <div class="pt-1">
+                                <p class="your-name">김상덕</p>
+                                <p class="wish-leaf">귤나무</p>
+                              </div>
+                            </div>
+                            <div class="pt-1">
+                              <p class="mb-1 time-cnt">Just now</p>
+                            </div>
+                          </div>
+                        </li>
+
+                        <li class="p-2 border-bottom">
+                          <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                              <div>
+                                <img
+                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                  alt="avatar" class="d-flex align-self-center chat-list-img">
                                 <!-- <span class="badge bg-success badge-dot"></span> -->
                               </div>
                               <div class="pt-1">
@@ -67,27 +86,6 @@
                               <!-- <span class="badge bg-danger rounded-pill float-end">3</span> -->
                             </div>
                           </div>
-                        </li>
-
-                        <li class="p-2 border-bottom">
-                          <a href="#!" class="d-flex justify-content-between">
-                            <div class="d-flex flex-row">
-                              <div>
-                                <img
-                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                                  alt="avatar" class="d-flex align-self-center me-3" width="60">
-                                <span class="badge bg-warning badge-dot"></span>
-                              </div>
-                              <div class="pt-1">
-                                <p class="fw-bold mb-0">Alexa Chung</p>
-                                <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                              </div>
-                            </div>
-                            <div class="pt-1">
-                              <p class="small text-muted mb-1">5 mins ago</p>
-                              <span class="badge bg-danger rounded-pill float-end">2</span>
-                            </div>
-                          </a>
                         </li>
                       </ul>
                     </div>
@@ -342,6 +340,22 @@ export default {
   padding: 0 1rem 0 0;
 }
 
+.chat-list-view::-webkit-scrollbar {
+  width: 10px;
+}
+.chat-list-view::-webkit-scrollbar-thumb {
+  background-color: #EFEFEF;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.chat-list-view::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 10px;
+  /* box-shadow: inset 0px 0px 5px white; */
+}
+
+
 .chat-list-img {
   width: 60px;
   margin-right: .5rem;
@@ -353,6 +367,21 @@ export default {
   padding: 1rem 2rem 0 1rem;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.chat-view::-webkit-scrollbar {
+  width: 10px;
+}
+.chat-view::-webkit-scrollbar-thumb {
+  background-color: #EFEFEF;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.chat-view::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 10px;
+  /* box-shadow: inset 0px 0px 5px white; */
 }
 
 .chat-profile-img {
