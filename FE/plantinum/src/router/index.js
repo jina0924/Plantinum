@@ -126,7 +126,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 // 페이지 이동할 때마다 검사함

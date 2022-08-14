@@ -11,17 +11,20 @@
             <img :src="preview" alt="회원님의 사진입니다." class="profile-img">
           </div>
         </div>
-          <div class="profile-pic d-flex justify-content-center">
-            <label for="pic-file">
-              <span class="material-symbols-outlined">
-                photo_camera
-              </span>
-              <span>
-                사진 변경하기
-              </span>
-            </label>
-            <input type="file" id="pic-file" @change="onInputImage()" accept="image/*" ref="profileImage">
-          </div>
+        <div class="profile-pic d-flex justify-content-center pt-1">
+          <label for="pic-file" class="img-add">
+            <span class="material-symbols-outlined img-add-icon">photo_camera</span>
+            <span>사진변경</span>
+          </label>
+          <input type="file" id="pic-file" @change="onInputImage()" accept="image/*" ref="profileImage">
+          <span class="px-2">|</span>
+          <label for="photo-delete" class="mb-0">
+            <span @click="onDeleteImage" class="img-delete-btn img-add">
+              <span class="material-symbols-outlined img-add-icon">imagesmode</span>
+              <span>초기화</span>
+            </span>
+          </label>          
+        </div>
         <!-- 닉네임 -->
         <div class="profile-nickname">
           <p class="mb-0">{{ info.nickname }}</p>
@@ -197,6 +200,10 @@ export default {
       const url = URL.createObjectURL(this.info.photo)
       this.preview = url
     },
+    onDeleteImage() {
+      this.info.photo = ''
+      this.preview = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/profile.jpg'
+    },
     beforeUpdateProfile(info) {
       if (info.nickname.length > 15) {
         alert('닉네임은 최대 15글자입니다.')
@@ -247,6 +254,25 @@ export default {
   font-size: 1rem;
   cursor: pointer;
 }
+
+.img-add {
+  display: flex;
+  /* justify-content: center; */
+  /* margin-top: .3rem; */
+  align-items: center;
+}
+
+.img-add-icon {
+  font-size: 1.2rem;
+  margin-right: .3rem;
+}
+
+.img-add:hover {
+  cursor: pointer;
+  color: #65805d;
+  transition: all .2s;
+}
+
 
 input[type="file"] {
   position: absolute;

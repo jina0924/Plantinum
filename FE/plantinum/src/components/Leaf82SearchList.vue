@@ -194,7 +194,6 @@ export default {
     },
     // 필터링
     beforeFetchSigungu(event) {
-      console.log(event.target.value)
       const sido = event.target.value
       if (sido === 'null') {
         if (this.info.plantname !== '') {
