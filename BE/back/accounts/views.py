@@ -55,7 +55,13 @@ def profile(request):
 def updateuserinformation(request):
     user = request.user
     myplant_count = UpdateUserInformationSerializer(user).data.get('myplant_count')
-    serializer = UpdateUserInformationSerializer(instance=user, data=request.data)
+
+    request_copy_data = request.data.copy()
+
+    if request_copy_data['photo'] == 'same':
+        request_copy_data['photo'] = user.photo
+
+    serializer = UpdateUserInformationSerializer(instance=user, data=request_copy_data)
     date_joined = user.date_joined
     today = datetime.datetime.now()
     dday = (today - date_joined).days+1
@@ -94,7 +100,14 @@ def updateuserinformation(request):
         # 이메일과 닉네임 모두 유저의 기존 값과 같은 경우 - 그대로 저장
         if email_user == user and nickname_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save(myplant_count=myplant_count, dday=dday)
+
+                if request_copy_data['photo'] != '':
+                    serializer.save(myplant_count=myplant_count, dday=dday)
+
+                else:
+                    photo = 'static/monstera.jpg'
+                    serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
+
                 return Response(serializer.data)
 
     # 이메일이 이미 존재하는 경우
@@ -109,7 +122,13 @@ def updateuserinformation(request):
         # 이메일이 유저의 기존 값과 같은 경우
         if email_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save(myplant_count=myplant_count, dday=dday)
+                if request_copy_data['photo'] != '':
+                    serializer.save(myplant_count=myplant_count, dday=dday)
+
+                else:
+                    photo = 'static/monstera.jpg'
+                    serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
+                
                 return Response(serializer.data)
 
     # 닉네임이 이미 존재하는 경우
@@ -124,18 +143,22 @@ def updateuserinformation(request):
         # 닉네임이 유저의 기존 값과 같은 경우
         if nickname_user == user:
             if serializer.is_valid(raise_exception=True):
-                serializer.save(myplant_count=myplant_count, dday=dday)
+                if request_copy_data['photo'] != '':
+                    serializer.save(myplant_count=myplant_count, dday=dday)
+
+                else:
+                    photo = 'static/monstera.jpg'
+                    serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
                 return Response(serializer.data)
 
     # 그 외 유효성검사에 걸리는 경우
     if serializer.is_valid(raise_exception=True):
 
-        if request.data['photo'] != '':
-
+        if request_copy_data['photo'] != '':
             serializer.save(myplant_count=myplant_count, dday=dday)
 
         else:
-            photo = user.photo
+            photo = 'static/monstera.jpg'
             serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
     
         return Response(serializer.data)

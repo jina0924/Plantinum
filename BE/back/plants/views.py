@@ -1,4 +1,3 @@
-from socket import timeout
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -9,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.core.cache import cache
-from django.http import JsonResponse
+
 
 User = get_user_model()
 
