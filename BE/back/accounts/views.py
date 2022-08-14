@@ -105,7 +105,7 @@ def updateuserinformation(request):
                     serializer.save(myplant_count=myplant_count, dday=dday)
 
                 else:
-                    photo = 'static/monstera.jpg'
+                    photo = 'static/profile.jpg'
                     serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
 
                 return Response(serializer.data)
@@ -126,7 +126,7 @@ def updateuserinformation(request):
                     serializer.save(myplant_count=myplant_count, dday=dday)
 
                 else:
-                    photo = 'static/monstera.jpg'
+                    photo = 'static/profile.jpg'
                     serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
                 
                 return Response(serializer.data)
@@ -147,7 +147,7 @@ def updateuserinformation(request):
                     serializer.save(myplant_count=myplant_count, dday=dday)
 
                 else:
-                    photo = 'static/monstera.jpg'
+                    photo = 'static/profile.jpg'
                     serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
                 return Response(serializer.data)
 
@@ -158,7 +158,7 @@ def updateuserinformation(request):
             serializer.save(myplant_count=myplant_count, dday=dday)
 
         else:
-            photo = 'static/monstera.jpg'
+            photo = 'static/profile.jpg'
             serializer.save(myplant_count=myplant_count, dday=dday, photo=photo)
     
         return Response(serializer.data)
