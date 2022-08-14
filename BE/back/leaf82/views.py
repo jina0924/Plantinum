@@ -174,7 +174,7 @@ def detail_update_delete(request, username, posting_addr):
         request_copy_data = request.data.copy()
 
         if request_copy_data['photo'] == 'same':
-            request_copy_data['photo'] = user.photo
+            request_copy_data['photo'] = leaf82.photo
 
         if request.user == user:
             sido = request.data['sido']
