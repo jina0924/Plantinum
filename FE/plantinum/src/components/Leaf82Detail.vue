@@ -40,13 +40,13 @@
             <div class="content d-flex justify-content-start py-1 my-3">
               <p>{{ leaf82Detail.content }}</p>
             </div>
-            <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '판매중'">
+            <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '분양대기'">
               <div class="message" v-if="isLoggedIn && username !== this.$route.params.username">
                 <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-center">
                   <button class="py-2">채팅하러 가기</button>
                 </router-link>
               </div>
-              <div class="update row d-flex justify-content-center" v-if="this.$route.params.username === currentUser.username">
+              <div class="update row d-flex justify-content-center" v-if="this.$route.params.username === username">
                 <div class="update-box mx-3 my-2">
                   <router-link class="update-a" :to="{ name: 'leaf82Edit' , params: { username: this.$route.params.username , posting_addr: this.$route.params.posting_addr } }">
                     <button class="update-btn">수정</button>
