@@ -6,20 +6,61 @@ export const Leaf82 = {
   state: {
     sido: [],
     sigungu: [],
-    searchList: {},
+    sellObject: {},
+    sellList: [],
+    buyObject: {},
+    buyList: [],
     leaf82Detail: {}
     // 상세정보는 url로 created로 받아오자
   },
   getters: {
     sido: state => state.sido,
     sigungu: state => state.sigungu,
-    searchList: state => state.searchList,
+    sellObject: state => state.sellObject,
+    sellList: state => state.sellList,
+    buyObject: state => state.buyObject,
+    buyList: state => state.buyList,
     leaf82Detail: state => state.leaf82Detail
   },
   mutations: {
     SET_SIDO: (state, sido) => state.sido = sido,
     SET_SIGUNGU: (state, sigungu) => state.sigungu = sigungu,
-    SET_SEARCHLIST: (state, searchList) => state.searchList = searchList,
+    SET_SELLOBJECT: (state, sellObject) => {
+      state.sellObject = {
+        count: sellObject.count,
+        next: sellObject.next,
+        previous: sellObject.previous
+      }
+      state.sellList = sellObject.results
+    },
+    ADD_SELLOBJECT: (state, sellObject) => {
+      state.sellObject = {
+        count: sellObject.count,
+        next: sellObject.next,
+        previous: sellObject.previous
+      }
+      for (let result of sellObject.results) {
+        state.sellList.push(result)
+      }
+    },
+    SET_BUYOBJECT: (state, buyObject) => {
+      state.buyObject = {
+        count: buyObject.count,
+        next: buyObject.next,
+        previous: buyObject.previous
+      }
+      state.buyList = buyObject.results
+    },
+    ADD_BUYOBJECT: (state, buyObject) => {
+      state.buyObject = {
+        count: buyObject.count,
+        next: buyObject.next,
+        previous: buyObject.previous
+      }
+      for (let result of buyObject.results) {
+        state.buyList.push(result)
+      }
+    },
     SET_LEAF82DETAIL: (state, leaf82Detail) => state.leaf82Detail = leaf82Detail
   },
   actions: {
@@ -29,20 +70,6 @@ export const Leaf82 = {
 
     resetLeaf82Detail({ commit }) {
       commit('SET_LEAF82DETAIL', {})
-    },
-
-    fetchLeaf82({ commit }, params) {
-      axios({
-        url: drf.leaf82.leaf82(),
-        method: 'get',
-        params
-      })
-      .then(res => {
-        commit('SET_SEARCHLIST', res.data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
     },
 
     fetchSido({ commit }) {
@@ -65,6 +92,8 @@ export const Leaf82 = {
       })
 
     },
+
+    // 초기 화면 띄어주기 및 서치, 필터링 모두 소화
     search({ commit }, params) {
       axios({
         url: drf.leaf82.search(),
@@ -72,8 +101,15 @@ export const Leaf82 = {
         params
       })
       .then(res => {
-        commit('SET_SEARCHLIST', res.data)
-        
+        if (params.category_class === '분양해요' && params.page === 1) {
+          commit('SET_SELLOBJECT', res.data)
+        } else if (params.category_class === '분양해요' && params.page !== 1) {
+          commit('ADD_SELLOBJECT', res.data)
+        } else if (params.category_class === '분양받아요' && params.page === 1) {
+          commit('SET_BUYOBJECT', res.data)
+        } else {
+          commit('ADD_BUYOBJECT', res.data)
+        }
       })
     },
 
