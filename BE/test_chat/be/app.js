@@ -4,12 +4,19 @@
 const express = require("express");
 const { Server } = require("socket.io");
 const { createServer } = require("http");
+const { pool } = require("./db");
+
+//const { networkInterfaces } = require("os");
+//const { profile } = require("console");
 
 // express 초기화
 const app = express()
 // socket.io 지원을 위해 http 모듈에서 제공하는 메서드로 서버를 초기화한다.
 const http = createServer(app)
-// 웹 소켓 서버를 초기화한다. 두번째로 서버를 초기화할 때 여러 옵션을 줄 수 있다.
+
+app.use(express.json())
+
+//웹 소켓 서버를 초기화한다. 두번째로 서버를 초기화할 때 여러 옵션을 줄 수 있다.
 const io = new Server(http, {
   cors: {
     origin: ['http://localhost:8080']
@@ -19,7 +26,7 @@ const io = new Server(http, {
 
 
 let rooms_count = 0;
-const messages_send = [];
+//const messages_send = [];
 const chattingRooms = {};
 const user_rooms={A:{},B:{},C:{}};
 //연결된 소켓 관리, {id,uid}
@@ -28,6 +35,24 @@ const user_rooms={A:{},B:{},C:{}};
 
 const connected_sockets={A:null,B:null,C:null};
 
+function nowDate(){
+  const date = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+  const time = new Date().toTimeString().split(" ")[0];
+
+  return date+' '+time;
+}
+
+async function geturl(data){
+  try{
+    const req = await pool.query( `select photo from accounts_user where username="${data}"`);
+    //console.log(req[0][0]['photo']);
+    return req[0][0]['photo'];
+  }catch (err){
+    console.log(err)
+    return "static/profile.jpg"
+  }
+}
+
 
 class ChatInfo{
   constructor(id1,id2){
@@ -35,7 +60,8 @@ class ChatInfo{
     this.participation = new Set();
     this.participation.add(id1);
     this.participation.add(id2);
-    this.messages = ["------- start chatting --------"];
+    this.messages = [{"person": "ALL" , "datetime":nowDate(),"msg": "---- start chatting ----"}];
+    // this.messages=[{"person":"A","datetime":"YYYYMMDDHHMM","msg":"Lorem"}];
   }
 }
 
@@ -91,7 +117,7 @@ io.on('connection', socket => {
     */
   });
 
-  socket.on('startchat',(data)=>{
+  socket.on('startchat',async (data)=>{
     console.log("make chattingrooms");
     console.log(socket.user_name,data)
     //처음 채팅방이 만들어짐
@@ -129,7 +155,7 @@ io.on('connection', socket => {
 
     //보낸 소켓 채팅방 참여
     socket.join(String(rooms_count));
-    socket.emit('sendRooms',{with_who:data, room_num:rooms_count});
+    socket.emit('sendRooms',{with_who:data, room_num:rooms_count,photo_url: await geturl(data)});
     //상대 채팅방 참여(현재 접속시)
     if((connected_sockets[data] in io.sockets.sockets) == true){
       connected_sockets[data].join(String(rooms_count));
@@ -148,25 +174,24 @@ io.on('connection', socket => {
       }
     }*/
 
-    
+    const chat={"person": "ALL" , "datetime":nowDate(),"msg": "---- start chatting ----"};
     //해당 채팅 시작알림 메세지 보내기
-    msg = ["------- start chatting --------"]
-    io.to(String(rooms_count)).emit('messages', msg);
+    io.to(String(rooms_count)).emit('message', chat);
     //만들어진 룸넘버 제공
     
     rooms_count++;
   });
 
-  socket.on('getRooms',data=>{
+  socket.on('getRooms', async data=>{
 
     if(data in user_rooms === true){  
       console.log(user_rooms[data]);  
-      for ( chatroom in user_rooms[data]){
-        console.log(chatroom)
+      for ( who in user_rooms[data]){
+        console.log(who)
         // 채팅방 반환 및 참여.
-        const num = user_rooms[data][chatroom]
+        const num = user_rooms[data][who]
         socket.join(String(num));
-        socket.emit('sendRooms',{with_who:chatroom , room_num:num});
+        socket.emit('sendRooms',{with_who:who , room_num:num,photo_url:await geturl(who)});
       }
     }
 
@@ -186,14 +211,16 @@ io.on('connection', socket => {
   });
 
   socket.on('send', data => {
-    
+    //"datetime [user_name] msg"
+    //"datetime [Plant] url"
     message = "["+socket.user_name+"] "+data.msg;
     console.log(message);
     //console.log(data.room_num, chattingRooms[data.room_num]);
-    chattingRooms[data.room_num].messages.push(message);
+    const chat={"person": socket.user_name, "datetime":nowDate(),"msg":data.msg};
+    chattingRooms[data.room_num].messages.push(chat);
     //chattingRooms[data.room_num].messages.push(message);
     //messages_send.push(message);
-    io.to(String(data.room_num)).emit('message', message);
+    io.to(String(data.room_num)).emit('message', chat);
   });
 
   
@@ -211,10 +238,19 @@ io.on('connection', socket => {
 })
 
 
-app.get("/", (req,res) => {
-  res.send(messages);
+app.get("/", async (req,res) => {
+  const data = await geturl("plantinum_test2");
+  console.log(data);
+  res.json(data);
 })
+
 // app.listen이 아닌 http.listen를 사용한다.
 http.listen(3000, () => {
   console.log('started server')
 })
+
+
+
+
+
+

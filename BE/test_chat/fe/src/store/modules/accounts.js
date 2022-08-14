@@ -16,7 +16,8 @@ export const Account = {
     currentUser: {},
     authError: null,
     profile: {},
-    username: localStorage.getItem('username') || '',
+    username: 'guest',
+    leaf82Set: []
   },
 
   getters: {
@@ -26,6 +27,7 @@ export const Account = {
     authHeader: state => ({ Authorization: `Token ${state.token}`}),
     profile: state => state.profile,
     username: state => state.username,
+    leaf82Set: state => state.leaf82Set
   },
 
   mutations: {
@@ -35,7 +37,10 @@ export const Account = {
       state.username = user.username
     },
     SET_AUTH_ERROR: (state, error) => state.authError = error,
-    SET_PROFILE: (state, profile) => state.profile = profile,
+    SET_PROFILE: (state, profile) => {
+      state.profile = profile,
+      state.leaf82Set = profile.leaf82_set
+    }
   },
 
   actions: {
@@ -47,11 +52,6 @@ export const Account = {
     removeToken({ commit }) {
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
-    },
-
-    resetUsername({ commit }) {
-      console.log(commit)
-      localStorage.setItem('username', '')
     },
 
     resetCurrentUser({ commit }) {
@@ -82,10 +82,26 @@ export const Account = {
       })
       .catch(err => {
         console.error(err.response.data)
+        console.log()
+        if(!!err.response.data.username && err.response.data.username[0] === '해당 사용자 이름은 이미 존재합니다.') {
+          alert('해당 사용자 이름은 이미 존재합니다.')
+        } else if (!!err.response.data.email && err.response.data.email[0] === '유효한 이메일 주소를 입력하십시오.') {
+          alert('유효한 이메일 주소를 입력하십시오.')
+        } else if (!!err.response.data.email && err.response.data.email[0] === '이미 이 이메일 주소로 등록된 사용자가 있습니다.') {
+          alert('이미 등록된 메일입니다.')
+        } else if (!!err.response.data.non_field_errors && err.response.data.non_field_errors[0] === '두 개의 패스워드 필드가 서로 맞지 않습니다.') {
+          alert('패스워드가 일치하지 않습니다.')
+        } else if (!!err.response.data.password1 && err.response.data.password1[0] === '비밀번호가 너무 일상적인 단어입니다.') {
+          alert('비밀번호가 단순합니다. 복잡한 비밀번호를 입력해주세요.')
+        } else if (!!err.response.data.password1 && err.response.data.password1[0] === '비밀번호가 전부 숫자로 되어 있습니다.') {
+          alert('비밀번호가 전부 숫자로 되어 있습니다.')
+        }else {
+          alert('다시 입력해주세요.')
+        }
         commit('SET_AUTH_ERROR', err.response.data)
       })
     },
-
+    
     login({ commit, dispatch }, credentials) {
       axios ({
         url: drf.accounts.login(),
@@ -102,6 +118,7 @@ export const Account = {
       })
       .catch(err => {
         console.error(err.response.data)
+        alert('다시 한 번 작성해주세요.')
         commit('SET_AUTH_ERROR', err.response.data)
       })
     },
@@ -114,7 +131,6 @@ export const Account = {
       })
       .then(() => {
         dispatch('removeToken')
-        dispatch('resetUsername')
         dispatch('resetCurrentUser')
         dispatch('resetProfile')
         alert('logout 되었습니다')
@@ -134,10 +150,7 @@ export const Account = {
           method: 'get',
           headers: getters.authHeader,
         })
-        .then(res => {
-          commit('SET_CURRENT_USER', res.data)
-          localStorage.setItem('username', res.data.username)
-        })
+        .then(res => commit('SET_CURRENT_USER', res.data))
         .catch(err => {
           if (err.response.status === 401) {
             dispatch('removeToken')
