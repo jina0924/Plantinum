@@ -1198,6 +1198,8 @@ http://127.0.0.1:8000/api/v1/leaf82/{시도}/{시군구}/
 ### 잎팔이 검색
 
 - 선택한 카테고리/식물이름/시도/시군구에 해당하는 모든 글 조회
+- page, limit으로 구분
+- page는 게시글들 중 몇 페이지, limit은 한 페이지에 보이는 게시글 수를 의미
 - 식물이름은 `무늬`만 입력해도 `무늬관음죽`, `무늬산호수` 등을 모두 포함하여 조회
 - 시도는 반드시 일치하는 값만 조회
 - 시군구는 `용인시`를 검색한다면 `용인시`, `용인시 처인구` `용인시 기흥구` 등을 모두 포함하여 조회
@@ -1212,56 +1214,50 @@ http://127.0.0.1:8000/api/v1/leaf82/{시도}/{시군구}/
 http://127.0.0.1:8000/api/v1/leaf82/search
 ```
 
+```
+# 예시
+http://127.0.0.1:8000/api/v1/leaf82/search?page=1&limit=3&category_class=분양해요&sido=서울특별시&sigungu=광진구&plantname=무늬산호수
+```
+
 - Params
 
-| Key            | Type   | Description         | Mandatory | Example    |
-| -------------- | ------ | ------------------- | --------- | ---------- |
-| plantname      | String | 식물이름(검색어)    |           |            |
-| sido           | String | 시도                |           | 서울특별시 |
-| sigungu        | String | 시군구              |           | 광진구     |
-| category_class | String | 분양해요/분양받아요 | O         |            |
+| Key            | Type   | Description         | Mandatory  | Example    |
+| -------------- | ------ | ------------------- | ---------- | ---------- |
+| plantname      | String | 식물이름(검색어)    |            | 무늬산호수 |
+| sido           | String | 시도                |            | 서울특별시 |
+| sigungu        | String | 시군구              |            | 광진구     |
+| category_class | String | 분양해요/분양받아요 | O          |            |
+| page           | Int    |                     | 1이 기본값 | 1          |
+| limit          | Int    | 20으로 고정         | O          | 20         |
 
 - Response
 
 ```
-[
-    {
-        "pk": 5,
-        "plantname": "라일락",
-        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%9D%BC%EC%9D%BC%EB%9D%BD.jpg",
-        "price": 100000,
-        "category_class": "분양해요",
-        "status_class": "분양대기",
-        "addr": {
-            "id": 5,
-            "sido": "서울특별시",
-            "sigungu": "광진구"
-        },
-        "posting_addr": 415916,
-        "user": {
-            "pk": 2,
-            "username": "plantinum_test2"
-        }
-    },
-    {
-        "pk": 1,
-        "plantname": "무늬산호수",
-        "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%AC%B4%EB%8A%AC%EC%82%B0%ED%98%B8%EC%88%98.jpg",
-        "price": 20000,
-        "category_class": "분양해요",
-        "status_class": "분양대기",
-        "addr": {
-            "id": 5,
-            "sido": "서울특별시",
-            "sigungu": "광진구"
-        },
-        "posting_addr": 893570,
-        "user": {
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
             "pk": 1,
-            "username": "plantinum_test"
+            "plantname": "무늬산호수",
+            "photo": "https://plantinum.s3.ap-northeast-2.amazonaws.com/images/leaf82/%EB%AC%B4%EB%8A%AC%EC%82%B0%ED%98%B8%EC%88%98.jpg",
+            "price": 20000,
+            "category_class": "분양해요",
+            "status_class": "분양대기",
+            "addr": {
+                "id": 5,
+                "sido": "서울특별시",
+                "sigungu": "광진구"
+            },
+            "posting_addr": 893570,
+            "user": {
+                "pk": 1,
+                "username": "plantinum_test"
+            }
         }
-    }
-]
+    ]
+}
 ```
 
 
