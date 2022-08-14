@@ -32,7 +32,12 @@ export const Myplant = {
         headers : getters.authHeader,
       })
       .then(res => commit('SET_MYPLANTS', res.data))
-      .catch(err => console.log(err.response))
+      .catch(err => {
+        console.log(err.response)
+        if (err.response.status === 404) {
+          router.push({ name: 'NotFound404' })
+        }
+      })
     },
 
     searchPlant({ commit, getters }) {
@@ -46,10 +51,6 @@ export const Myplant = {
     },
 
     createMyplant({ commit, getters }, myplant) {
-      console.log({
-        ...getters.authHeader,
-        'Content-Type': 'multipart/form-data',
-      })
       axios({
         url: drf.myplant.newMyplant(),
         method: 'post',
@@ -60,9 +61,7 @@ export const Myplant = {
         },
       })
       .then(res => {
-        console.log(res.data)
         commit('SET_MYPLANT', res.data)
-        console.log(getters.currentUser.username)
         router.push({
           name: 'myplantDetail',
           params: { username: getters.currentUser.username, plantPk: getters.myplant.id }
@@ -79,12 +78,14 @@ export const Myplant = {
         method: 'get',
         headers: getters.authHeader,
       })
-      .then(res => commit('SET_MYPLANT', res.data))
+      .then(res => 
+        commit('SET_MYPLANT', res.data)
+        )
       .catch(err => {
         console.log(err.response)
-        // if (err.response.status === 404) {
-        //   router.push({ name: 'NotFound404' })
-        // }
+        if (err.response.status === 404) {
+          router.push({ name: 'NotFound404' })
+        }
       })
     },
 

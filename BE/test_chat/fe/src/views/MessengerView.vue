@@ -1,21 +1,24 @@
 <template>
   <nav-bar></nav-bar>
-  <!-- <div class="row mx-0"> -->
+   <div class="row mx-0"> 
       <!-- 여백 -->
-    <!-- <div class="col-md-1 px-0 mx-0"></div> -->
+    <div class="col-md-1 px-0 mx-0"></div>
       <!-- 내용 담을 흰 상자 -->
-    <!-- <div class="col-md-10 mb-5 pb-5 px-0 mx-0 whitebox"> -->
+    <div class="col-md-10 mb-5 pb-5 px-0 mx-0 whitebox">
       <!--채팅 목록-->
-      <!-- <div class="item chat-list" >
+      <div class="item chat-list" >
         <div class="user-box" @click="changeReceiver(key)" v-for=" (val,key) in rooms" :key="val">
           {{ key }}
         </div> 
-      </div> -->
+      </div> 
       <!-- 채팅 방-->
-      <!-- <div class="item chat-room">
+      <div class="item chat-room">
         <div class="chat-area" >
           <div v-for="msg in now_messages" :key="msg">
-          {{ msg }}
+          {{ urls[msg["person"]] }}
+          {{ msg["person"] }}
+          {{ msg["datetime"] }}
+          {{ msg["msg"] }}
           </div>
         </div>
         <div class="input-area">
@@ -23,118 +26,12 @@
           <button class="send-button" style="display: block;" @click="sendMessage">전송</button>
         </div>
       </div>
-    </div> -->
-      <!-- 여백 -->
-    <!-- <div class="col-md-1 px-0 mx-0"></div>
-  </div> -->
-  <!-- --------------------------------------------------------------------------------------- -->
-  <section>
-    <div class="container py-4">
-
-      <div class="row">
-        <div class="col-md-12">
-
-          <div class="card" id="chat3">
-            <div class="card-body">
-
-              <div class="row">
-                <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
-
-                  <div class="p-3">
-
-                    <div class="profile-div mb-3">
-                      <span>내 프로필 자리</span>
-                    </div>
-
-                    <div class="chat-list-view">
-                      <ul class="mb-0 list-unstyled">
-                        <li class="p-2 border-bottom">
-                          <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row">
-                              <div>
-                                <img
-                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                  alt="avatar" class="d-flex align-self-center chat-list-img">
-                              </div>
-                              <div class="pt-1">
-                                <p class="your-name">김상덕</p>
-                                <p class="wish-leaf">귤나무</p>
-                              </div>
-                            </div>
-                            <div class="pt-1">
-                              <p class="mb-1 time-cnt">Just now</p>
-                            </div>
-                          </div>
-                        </li>
-
-                        <li class="p-2 border-bottom">
-                          <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row">
-                              <div>
-                                <img
-                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                  alt="avatar" class="d-flex align-self-center chat-list-img">
-                                <!-- <span class="badge bg-success badge-dot"></span> -->
-                              </div>
-                              <div class="pt-1">
-                                <p class="your-name">김상덕</p>
-                                <p class="wish-leaf">귤나무</p>
-                              </div>
-                            </div>
-                            <div class="pt-1">
-                              <p class="mb-1 time-cnt">Just now</p>
-                              <!-- <span class="badge bg-danger rounded-pill float-end">3</span> -->
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-
-                  </div>
-
-                </div>
-                <!-- 채팅 내용 -->
-                <div class="col-md-6 col-lg-7 col-xl-8">
-                  <div class="chat-view">
-                    <!-- 상대가 적은 메시지 -->
-                    <div class="d-flex flex-row justify-content-start">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                        alt="avatar 1" class="chat-profile-img">
-                      <div>
-                        <p class="your-message">Lorem ipsum
-                          dolor
-                          sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore
-                          magna aliqua.</p>
-                        <p class="message-time">12:00 PM | Aug 13</p>
-                      </div>
-                    </div>
-                    <!-- 내가 적은 메시지 -->
-                    <div class="d-flex flex-row justify-content-end">
-                      <div>
-                        <p class="my-message">Ut enim ad minim veniam.</p>
-                        <p class="message-time">12:00 PM | Aug 13</p>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- 채팅 메시지 적는 부분 -->
-                  <div class="d-flex justify-content-start align-items-center">
-                    <input type="text" class="form-input" id="exampleFormControlInput2"
-                      placeholder="Type message">
-                    <span class="material-symbols-outlined">send</span>
-                  </div>
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-
     </div>
-  </section>
+      <!-- 여백 -->
+    <div class="col-md-1 px-0 mx-0"></div>
+  </div> 
+  <!-- --------------------------------------------------------------------------------------- -->
+ 
 </template>
 
 <script>
@@ -155,6 +52,7 @@ export default {
       now_messages:[],
       now_receiver: -1, // 새로고침 했거나, 거래탭에서 채팅하기로 넘어오지 않았을 경우
       rooms:{},
+      urls:{},
     }
   },
   computed: {
@@ -190,9 +88,11 @@ export default {
 
     //-1이 아니면 거래에서 건너온것_start
     if(this.now_receiver !== -1){
+      // 전에 거래 기록 없을 때
       if( (this.now_receiver in this.rooms) == false ){
         this.socket.emit('startchat',this.now_receiver);
       }else{
+        //전에 거래 기록 있을 때
         this.socket.emit("getMessages",this.rooms[this.now_receiver]);
       }
     }
@@ -204,12 +104,14 @@ export default {
     })
     // 서버에서 메세지 받아오기
     this.socket.on('message', (message) => {
-      this.now_messages.push(message)
+      this.now_messages.push(message);
+      console.log(message);
     })
 
     //채팅방 정보 받아오기
     this.socket.on('sendRooms',(data)=>{
       this.rooms[data.with_who] = data.room_num;
+      this.urls[data.with_who] = data.photo_url;
     })
     
 
@@ -340,22 +242,6 @@ export default {
   padding: 0 1rem 0 0;
 }
 
-.chat-list-view::-webkit-scrollbar {
-  width: 10px;
-}
-.chat-list-view::-webkit-scrollbar-thumb {
-  background-color: #EFEFEF;
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 2px solid transparent;
-}
-.chat-list-view::-webkit-scrollbar-track {
-  background-color: white;
-  border-radius: 10px;
-  /* box-shadow: inset 0px 0px 5px white; */
-}
-
-
 .chat-list-img {
   width: 60px;
   margin-right: .5rem;
@@ -367,21 +253,6 @@ export default {
   padding: 1rem 2rem 0 1rem;
   overflow-y: scroll;
   overflow-x: hidden;
-}
-
-.chat-view::-webkit-scrollbar {
-  width: 10px;
-}
-.chat-view::-webkit-scrollbar-thumb {
-  background-color: #EFEFEF;
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 2px solid transparent;
-}
-.chat-view::-webkit-scrollbar-track {
-  background-color: white;
-  border-radius: 10px;
-  /* box-shadow: inset 0px 0px 5px white; */
 }
 
 .chat-profile-img {
