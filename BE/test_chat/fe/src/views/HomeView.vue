@@ -45,12 +45,12 @@
 
     <!-- second box -->
     <div class="second-box row">
-      <div class="col-md-6 col-sm d-flex align-items-center">
+      <div class="col-md-6 col-sm col d-flex align-items-center">
         <img src="../assets/HomeView/main_pic_2.jpg" alt="">
       </div>
-      <div class="row col-md-6 d-flex justify-content-center">
-        <div class="contentbox">
-          <div class="text-main">
+      <div class="row col-md-6 col-12 d-flex justify-content-center">
+        <div class="contentbox pt-5">
+          <div class="text-main pt-5">
             <p>오늘은 상태가 어떠니?</p>
             <p>식물이 들려주는 이야기</p>
           </div>
@@ -65,8 +65,8 @@
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
-                <div class="new-box" v-if="!!username">
-                  <router-link :to="{ name: 'myplant', params: { username } }">
+                <div class="new-box" v-if="isLoggedIn">
+                  <router-link :to="{ name: 'myplant', params: { username: username } }">
                     <button class="btn">내 식물</button>
                   </router-link>
                 </div>
@@ -86,8 +86,8 @@
     <!-- third box -->
     <div class="third-box row">
       <div class="row col-md-6 d-flex justify-content-center">
-        <div class="contentbox">
-          <div class="text-main">
+        <div class="contentbox pt-5">
+          <div class="text-main pt-5">
             <p>여러분의 식물을</p>
             <p>분양해주세요</p>
           </div>
@@ -113,7 +113,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 col-sm d-flex align-items-center justify-content-center">
+      <div class="col-md-6 col-sm col d-flex align-items-center justify-content-center">
         <img src="../assets/HomeView/main_pic_3.jpg" alt="">
       </div>
     </div>
@@ -124,8 +124,8 @@
         <p>Supool</p>
       </div>
       <div class="row">
-        <div class="col-md-6 col-sm d-flex align-items-center justify-content-center">
-          <img src="../assets/HomeView/main_pic_2.jpg" alt="">
+        <div class="col-md-6 col-sm col d-flex align-items-center justify-content-center">
+          <img src="../assets/HomeView/main_pic_4.jpg" alt="">
         </div>
         <div class="row col-md-6 d-flex justify-content-center">
           <div class="contentbox">
@@ -268,7 +268,7 @@ a {
 }
 
 .second-box .contentbox {
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   font-family: 'SUIT', sans-serif;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -335,7 +335,7 @@ a {
   height: 53px;
   font-size: 1.3rem;
   /*1rem*/
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   background-color: #b2c9ab;
   color: white;
   width: 100%;
@@ -351,19 +351,19 @@ a {
 
 .second-box img {
   width: 100%;
-  height: 70%;
+  height: 50%;
   margin-left: 0;
 }
 
 .third-box img {
-  width: 50%;
+  width: 60%;
   height: 70%;
   margin: auto;
 }
 
 .fourth-box img {
-  width: 100%;
-  height: 70%;
+  width: 70%;
+  height: 50%;
   background-position: auto;
 }
 
