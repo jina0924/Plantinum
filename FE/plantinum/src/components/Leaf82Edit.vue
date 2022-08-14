@@ -13,15 +13,18 @@
           <img :src="preview" alt="등록될 사진입니다.">
         </div>
         <div class="img-add-box d-flex justify-content-center pt-2">
-          <label for="pic-file" class="img-add mb-0">
-            <span class="material-symbols-outlined">
-              photo_camera
-            </span>
-            <span>
-              사진 변경하기
+          <label for="pic-file" class="img-add">
+            <span class="material-symbols-outlined img-add-icon">photo_camera</span>
+            <span>사진 변경하기</span>
+          </label>
+          <input type="file" id="pic-file" @change="onInputImage" accept="image/*" ref="leaf82Image">
+          <span class="px-2">|</span>
+          <label for="photo-delete">
+            <span @click="onDeleteImage" class="img-delete-btn img-add">
+              <span class="material-symbols-outlined img-add-icon">imagesmode</span>
+              <span>기본 이미지로</span>
             </span>
           </label>
-          <input type="file" id="pic-file" @change="onInputImage()" accept="image/*" ref="leaf82Image">
         </div>
       </div>
       <!-- 하단 -->
@@ -167,6 +170,10 @@ export default {
       const url = URL.createObjectURL(this.credentials.photo)
       this.preview = url
     },
+    onDeleteImage() {
+      this.credentials.photo = ''
+      this.preview = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg'
+    }
   },
   computed: {
     ...mapGetters(['leaf82Detail', 'sido', 'sigungu']),
@@ -208,12 +215,22 @@ div {
   object-fit: cover;
 }
 
-.img-add span {
-  font-size: 1rem;
+.img-add {
+  display: flex;
+  /* justify-content: center; */
+  /* margin-top: .3rem; */
+  align-items: center;
+}
+
+.img-add-icon {
+  font-size: 1.2rem;
+  margin-right: .3rem;
 }
 
 .img-add:hover {
   cursor: pointer;
+  color: #65805d;
+  transition: all .2s;
 }
 
 input[type="file"] {

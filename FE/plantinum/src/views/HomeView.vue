@@ -49,8 +49,8 @@
         <img src="../assets/HomeView/main_pic_2.jpg" alt="">
       </div>
       <div class="row col-md-6 col-12 d-flex justify-content-center">
-        <div class="contentbox">
-          <div class="text-main">
+        <div class="contentbox pt-5">
+          <div class="text-main pt-5">
             <p>오늘은 상태가 어떠니?</p>
             <p>식물이 들려주는 이야기</p>
           </div>
@@ -86,8 +86,8 @@
     <!-- third box -->
     <div class="third-box row">
       <div class="row col-md-6 d-flex justify-content-center">
-        <div class="contentbox">
-          <div class="text-main">
+        <div class="contentbox pt-5">
+          <div class="text-main pt-5">
             <p>여러분의 식물을</p>
             <p>분양해주세요</p>
           </div>
@@ -268,7 +268,7 @@ a {
 }
 
 .second-box .contentbox {
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   font-family: 'SUIT', sans-serif;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -335,7 +335,7 @@ a {
   height: 53px;
   font-size: 1.3rem;
   /*1rem*/
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   background-color: #b2c9ab;
   color: white;
   width: 100%;
