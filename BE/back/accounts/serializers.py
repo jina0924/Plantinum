@@ -66,7 +66,11 @@ class UpdateUserInformationSerializer(serializers.ModelSerializer):
 
         model = User
         fields = ('pk', 'nickname', 'email', 'phone_number', 'addr', 'zip_code', 'myplant_count', 'dday', 'photo',)
-        
 
 
-    
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = User
+        fields = ('pk', 'nickname', 'photo',)
