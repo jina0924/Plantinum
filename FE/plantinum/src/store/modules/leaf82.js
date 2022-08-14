@@ -111,6 +111,9 @@ export const Leaf82 = {
           commit('ADD_BUYOBJECT', res.data)
         }
       })
+      .catch(err => {
+        console.log(err)
+      })
     },
 
     createLeaf82({ commit, getters }, credentials) {
@@ -188,6 +191,9 @@ export const Leaf82 = {
       })
       .catch(err => {
         console.log(err)
+        if (err.response.status === 404) {
+          router.push({ name: 'NotFound404' })
+        }
       })
     }
   },

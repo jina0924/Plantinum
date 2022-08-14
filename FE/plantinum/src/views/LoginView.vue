@@ -272,13 +272,18 @@ h5 span{
   line-height: 22px;
   letter-spacing: 0.5px;
   outline: none;
-  color: #c4c3ca;
+  color: black;
   background-color: #ffffff;
   border: none;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
   box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
 }
+
+.form-style::placeholder {
+  color: #c4c3ca;
+}
+
 .form-style:focus,
 .form-style:active {
   border: none;
