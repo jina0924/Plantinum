@@ -171,17 +171,22 @@ def detail_update_delete(request, username, posting_addr):
 
 
     def update():
+        request_copy_data = request.data.copy()
+
+        if request_copy_data['photo'] == 'same':
+            request_copy_data['photo'] = user.photo
+
         if request.user == user:
             sido = request.data['sido']
             sigungu = request.data['sigungu']
             addr = get_object_or_404(Juso, sido=sido, sigungu=sigungu)
-            serializer = Leaf82Serializer(instance=leaf82, data=request.data)
+            serializer = Leaf82Serializer(instance=leaf82, data=request_copy_data)
             if serializer.is_valid(raise_exception=True):
-                if request.data['photo'] != '':
+                if request_copy_data['photo'] != '':
                     serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr)
 
                 else:
-                    photo = leaf82.photo
+                    photo = 'static/monstera.jpg'
                     serializer.save(user=user, addr=addr, posting_addr=leaf82.posting_addr, photo=photo)
                 return Response(serializer.data)
         else:
