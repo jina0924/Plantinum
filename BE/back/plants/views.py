@@ -1,13 +1,15 @@
+from socket import timeout
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer, MyplantListSerializer, OtpcodeSerializer
+from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer, MyplantListSerializer
 from .models import Myplant, Plants, Diary
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-
+from django.core.cache import cache
+from django.http import JsonResponse
 
 User = get_user_model()
 
@@ -110,7 +112,7 @@ def create_myplant(request):
 
 
 # 연결되지 않은 상태, otp도 없는 상태에서 otp 발급
-# 5분이 지나면 otp 삭제
+# 2분이 지나면 otp 삭제
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -123,7 +125,8 @@ def create_otp(request, myplant_pk):
         user = myplant.values('user_id')[0]['user_id']
         
         if me == user:  # OTP 요청자와 식물 등록자가 같으면
-            if myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드가 발급되지 않았고 연결된 상태가 아니라면
+            # if myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드가 발급되지 않았고 연결된 상태가 아니라면
+            if cache.get(f'{me}_{myplant_pk}') == None and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드가 발급되지 않았고 연결된 상태가 아니라면
 
                 otp_code = ''
 
@@ -137,25 +140,33 @@ def create_otp(request, myplant_pk):
 
                 myplant.update(otp_code=otp_code)
 
+                def set_otp_redis():
+                    cache.set(f'{me}_{myplant_pk}', otp_code, timeout=20)  # 지속시간 20초
+                set_otp_redis()
+
+                otp_redis = cache.get(f'{me}_{myplant_pk}')
+
                 def delete_otp():
                     myplant.update(otp_code=None)
                 Timer(20, delete_otp).start()  # 20초뒤 삭제 함수 실행
 
-                return Response({'otp_code': otp_code})
+                return Response({'otp_code': otp_redis})
             
-            elif myplant.values('otp_code')[0]['otp_code'] and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드는 존재하나 연결된 상태가 아니라면
+            # elif myplant.values('otp_code')[0]['otp_code'] and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드는 존재하나 연결된 상태가 아니라면
+            #     otp_code = myplant.values('otp_code')[0]['otp_code']
+            #     return Response({'otp_code': otp_code})
 
-                otp_code = myplant.values('otp_code')[0]['otp_code']
+            elif cache.get(f'{me}_{myplant_pk}') and myplant.values('is_connected')[0]['is_connected'] == False:  # 연결되지 않은 상태로 otp 존재
+                otp_redis = cache.get(f'{me}_{myplant_pk}')
+                return Response({'otp_code': otp_redis})
 
-                return Response({'otp_code': otp_code})
-
-            elif myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == True:  # 해당 식물의 OTP 코드가 발급되지 않았으나 연결된 상태라면
+            elif myplant.values('is_connected')[0]['is_connected'] == True:  # 해당 식물이 연결된 상태라면
                 
                 return Response({'detail': '이미 연결되었습니다.'}, status=status.HTTP_400_BAD_REQUEST)
 
         else:  # OTP 요청자와 식물 등록자가 다르면
             return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
-    else:
+    else:  # 존재하지 않는 식물pk
         return Response({'detail': '찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
 
 
@@ -169,9 +180,8 @@ def otp_status(request, myplant_pk):
     user = myplant.user_id
     
     if me == user:
-
-        serializer = OtpcodeSerializer(myplant)
-        return Response(serializer.data)
+        otp_redis = cache.get(f'{me}_{myplant_pk}')
+        return Response({'otp_code': otp_redis})
 
     else:
         return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
