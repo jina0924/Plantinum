@@ -162,6 +162,8 @@ export default {
   font-family: 'SUIT' sans-serif;
   background-color: #FFFFFFCC;
   padding-top: 7rem;
+  border-radius: 15px;
+  box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
   /* profile-head 부분 */
