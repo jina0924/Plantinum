@@ -16,7 +16,7 @@ export const Account = {
     currentUser: {},
     authError: null,
     profile: {},
-    username: 'guest',
+    username: localStorage.getItem('username') || '',
     leaf82Set: []
   },
 
@@ -150,7 +150,10 @@ export const Account = {
           method: 'get',
           headers: getters.authHeader,
         })
-        .then(res => commit('SET_CURRENT_USER', res.data))
+        .then(res => {
+          commit('SET_CURRENT_USER', res.data)
+          localStorage.setItem('username', res.data.username)
+        })
         .catch(err => {
           if (err.response.status === 401) {
             dispatch('removeToken')
