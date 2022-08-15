@@ -1,6 +1,8 @@
 <template>
-  <nav-bar></nav-bar>
-  <leaf-82-edit></leaf-82-edit>
+  <div class="leaf82Edit">
+    <nav-bar></nav-bar>
+    <leaf-82-edit></leaf-82-edit>
+  </div>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
   <div class="profile-detail mt-5 row">
     <!-- 헤드부분 -->
-    <div class="profile-head col-lg-4 row">
+    <div class="profile-head pt-5 col-lg-4 row">
       <div class="col-2"></div>
       <!-- 프로필 사진 -->
       <div class="profile-head-content col-8">
