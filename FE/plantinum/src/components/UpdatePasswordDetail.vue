@@ -64,6 +64,8 @@ export default {
   font-family: 'SUIT' sans-serif;
   background-color: #FFFFFFCC;
   padding-top: 7rem;
+  box-shadow: 0rem 0rem 0.2rem #d2d2d2;
+  border-radius: 15px;
 }
 
 div {
@@ -113,13 +115,30 @@ p {
   border-width: 1px;
 }
 
+input:focus {
+  outline: none;
+}
+
 .submit-yes .btn {
   background-color: #b2c9ab;
   color: white;
 }
 
+.submit-yes .btn:hover {
+  cursor: pointer;
+  background-color: #65805d;
+  transition: all 0.5s;
+}
+
 .submit-no a {
   width: 100%;
+  text-decoration: none;
+}
+
+.submit-no a .btn:hover {
+  cursor: pointer;
+  background-color: #d2d2d2;
+  transition: all 0.5s;
 }
 
 .btn {
