@@ -210,8 +210,8 @@ export default {
       } else if (info.nickname === '') {
         alert('닉네임을 입력해주세요.')
       } else {
-        if (typeof info.photo == 'string' || info.photo instanceof String) {
-            info.photo = ''
+        if (info.photo !== '' && typeof info.photo == 'string' || info.photo instanceof String) {
+            info.photo = 'same'
         }
         this.updateProfile(info)
       }
