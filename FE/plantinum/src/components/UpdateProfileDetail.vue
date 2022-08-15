@@ -1,7 +1,7 @@
 <template>
   <form class="profile-detail mt-5 row" @submit.prevent="beforeUpdateProfile(info)">
     <!-- 헤드부분 -->
-    <div class="profile-head col-lg-4 row">
+    <div class="profile-head pt-5 col-lg-4 row">
       <div class="col-2"></div>
       <!-- 프로필 사진 및 닉네임과 이메일 -->
       <div class="profile-head-content col-8">
@@ -80,7 +80,7 @@
                 <span class="material-symbols-outlined icon pr-4">email</span>
               </div>
               <div class="card-text row pb-5 mx-0">
-                <input type="text" class="card-input mx-4" v-model="info.email">
+                <input type="email" class="card-input mx-4" v-model="info.email">
               </div>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateProfile', 'fetchCurrentUser']),
+    ...mapActions(['updateProfile', 'fetchCurrentUser', 'fetchProfile']),
     fillOldInfo() {
       this.info = this.profile
     },
@@ -207,11 +207,17 @@ export default {
     beforeUpdateProfile(info) {
       if (info.nickname.length > 15) {
         alert('닉네임은 최대 15글자입니다.')
-      } else if (info.nickname === '') {
+      } else if (!info.nickname) {
         alert('닉네임을 입력해주세요.')
+      } else if (!info.email) {
+        alert('이메일을 입력해주세요')
+      } else if (!!info.phone_number && !Number.isInteger(parseInt(info.phone_number))) {
+        alert(`연락처는 '-'을 제외한 숫자만 입력해주세요.`)
+      } else if (!!info.phone_number && info.phone_number.length <10 || info.phone_number.length > 11 && Number.isInteger(parseInt(info.phone_number))) {
+        alert('연락처는 열자리 혹은 열한자리 숫자만 입력 가능합니다.')
       } else {
-        if (typeof info.photo == 'string' || info.photo instanceof String) {
-            info.photo = ''
+        if (!!info.photo && typeof info.photo == 'string' || info.photo instanceof String) {
+            info.photo = 'same'
         }
         this.updateProfile(info)
       }
@@ -221,8 +227,15 @@ export default {
     ...mapGetters(['profile'])
   },
   created() {
+    this.fetchProfile()
     this.fillOldInfo()
     this.makeImgUrl()
+  },
+  watch: {
+    profile() {
+      this.fillOldInfo()
+      this.makeImgUrl()
+    }
   }
 }
 </script>
@@ -232,6 +245,8 @@ export default {
   font-family: 'SUIT' sans-serif;
   background-color: #FFFFFFCC;
   padding-top: 7rem;
+  border-radius: 15px;
+  box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
   /* profile-head 부분 */
@@ -378,6 +393,11 @@ input[type="file"] {
   width: 80%;
 }
 
+.card-input:focus {
+  outline: none;
+  color: black;
+}
+
 .card-text .card-addr {
   color: #7E7E7E;
   font-size: 0.9rem;
@@ -387,7 +407,6 @@ input[type="file"] {
 .find-addr {
 
 }
-
 
 .card-text .card-input-nickname {
   color: #7E7E7E;

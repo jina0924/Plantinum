@@ -46,22 +46,22 @@
                   <button class="py-2">채팅하러 가기</button>
                 </router-link>
               </div>
-              <div class="update row d-flex justify-content-center" v-if="this.$route.params.username === username">
-                <div class="update-box mx-3 my-2">
-                  <router-link class="update-a" :to="{ name: 'leaf82Edit' , params: { username: this.$route.params.username , posting_addr: this.$route.params.posting_addr } }">
-                    <button class="update-btn">수정</button>
-                  </router-link>
-                </div>
-                <div class="delete-box mx-3 my-2">
-                  <button class="delete-btn" @click="deleteLeaf82(deleteInfo)">삭제</button>
-                </div>
-              </div>              
               <div class="message" v-if="!isLoggedIn">
                 <router-link :to="{}" class="d-flex justify-content-center" @click="loginRequired()">
                   <button class="py-2">채팅하러 가기</button>
                 </router-link>
               </div>
             </div>
+            <div class="update row d-flex justify-content-center" v-if="this.$route.params.username === username">
+              <div class="update-box mx-3 my-2">
+                <router-link class="update-a" :to="{ name: 'leaf82Edit' , params: { username: this.$route.params.username , posting_addr: this.$route.params.posting_addr } }">
+                  <button class="update-btn">수정</button>
+                </router-link>
+              </div>
+              <div class="delete-box mx-3 my-2">
+                <button class="delete-btn" @click="deleteLeaf82(deleteInfo)">삭제</button>
+              </div>
+            </div>              
           </div>
         </div>
         <div class="col-sm-2 col-0"></div>
@@ -150,6 +150,7 @@ div {
 .main {
   background-color: white;
   border-radius: 15px;
+  box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
 /* 상단 */

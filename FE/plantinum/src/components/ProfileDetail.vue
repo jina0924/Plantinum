@@ -1,7 +1,7 @@
 <template>
   <div class="profile-detail mt-5 row">
     <!-- 헤드부분 -->
-    <div class="profile-head col-lg-4 row">
+    <div class="profile-head pt-5 col-lg-4 row">
       <div class="col-2"></div>
       <!-- 프로필 사진 -->
       <div class="profile-head-content col-8">
@@ -162,6 +162,8 @@ export default {
   font-family: 'SUIT' sans-serif;
   background-color: #FFFFFFCC;
   padding-top: 7rem;
+  border-radius: 15px;
+  box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
   /* profile-head 부분 */
