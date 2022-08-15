@@ -155,8 +155,8 @@ export default {
       } else if (credentials.content === '') {
         alert('식물을 소개해주세요')
       } else {
-        if (typeof credentials.photo == 'string' || credentials.photo instanceof String) {
-          credentials.photo = ''
+        if (credentials.photo !== '' && typeof credentials.photo == 'string' || credentials.photo instanceof String) {
+          credentials.photo = 'same'
         }
         const updateInfo = {
           credentials,
