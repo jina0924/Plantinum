@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light px-5">
+  <nav class="navbar navbar-expand-lg navbar-light px-4">
     <router-link class="navbar-brand" :to="{ name: 'home'}">Plantinum</router-link>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler px-1" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -93,37 +93,41 @@ export default {
 </script>
 
 <style scoped>
-  .navbar-brand {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
-  }
+.navbar-brand {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.5rem;
+}
 
-  .nav-link {
-    font-family: 'SUIT', sans-serif;
-  }
+.nav-link {
+  font-family: 'SUIT', sans-serif;
+}
 
-  .dropdown-item {
-    font-family: 'SUIT', sans-serif;
-  }
+.dropdown-item {
+  font-family: 'SUIT', sans-serif;
+}
 
-  .btn{
-    border-radius: 5px;
-    height: 44px;
-    font-size: 1rem;
-    background-color: #b2c9ab;
-    color: white;
-    width: 100%;
-  }
+.btn{
+  border-radius: 5px;
+  height: 44px;
+  font-size: 1rem;
+  background-color: #b2c9ab;
+  color: white;
+  width: 100%;
+}
 
-  /* .nav-item a.router-link-exact-active {
-  font-weight: 600px;
-  text-align: center;
-  text-decoration-line: none;
+/* .nav-item a.router-link-exact-active {
+font-weight: 600px;
+text-align: center;
+text-decoration-line: none;
 } */
 
 .btn:hover {
   background-color: #65805d;
   transition: all 0.5s;
+}
+
+.navbar-toggler-icon {
+  font-size: 1rem;
 }
 
 /* .nav-link.router-link-exact-active {

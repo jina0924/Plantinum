@@ -272,7 +272,7 @@ h5 span{
   line-height: 22px;
   letter-spacing: 0.5px;
   outline: none;
-  color: black;
+  color: rgb(91, 91, 91);
   background-color: #ffffff;
   border: none;
   -webkit-transition: all 200ms linear;
