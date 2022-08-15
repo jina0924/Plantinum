@@ -56,9 +56,9 @@
               <option value="분양받아요">분앙받아요</option>
             </select>
             <select name="status_class" id="status_class" @change="selectStatus($event)" class="mr-1">
-              <option value="판매중">판매중</option>
-              <option value="예약중">예약중</option>
-              <option value="거래완료">거래완료</option>
+              <option value="분양대기">분양대기</option>
+              <option value="분양예약">분양예약</option>
+              <option value="분양완료">분양완료</option>
             </select>
           </div>
           <div class="content d-flex justify-content-start py-">
@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import router from '@/router'
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -129,21 +130,21 @@ export default {
     },
     selectSigungu(event) {
       let tmp = event.target.value
-      console.log(tmp)
+      // console.log(tmp)
       this.credentials.sigungu = tmp
-      console.log(this.credentials.sigungu)
+      // console.log(this.credentials.sigungu)
     },
     selectCategory(event) {
       let tmp = event.target.value
-      console.log(tmp)
+      // console.log(tmp)
       this.credentials.category_class = tmp
-      console.log(this.credentials.category_class)
+      // console.log(this.credentials.category_class)
     },
     selectStatus(event) {
       let tmp = event.target.value
-      console.log(tmp)
+      // console.log(tmp)
       this.credentials.status_class = tmp
-      console.log(this.credentials.status_class)
+      // console.log(this.credentials.status_class)
     },
     beforeUpdateLeaf82(credentials) {
       if (credentials.plantname === '') {
@@ -173,15 +174,20 @@ export default {
     onDeleteImage() {
       this.credentials.photo = ''
       this.preview = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg'
+    },
+    isMine() {
+      if (this.$route.params.username !== this.username) {
+        alert('잘못된 접근입니다.')
+        router.push({ name: 'leaf82'})
+      }
     }
   },
   computed: {
-    ...mapGetters(['leaf82Detail', 'sido', 'sigungu']),
+    ...mapGetters(['leaf82Detail', 'sido', 'sigungu', 'username']),
   },
   created() {
     this.fetchSido()
-    // this.fillCredentials()
-    // console.log(this.credentials)
+    this.isMine()
   },
   watch: {
     leaf82Detail() {
@@ -201,6 +207,7 @@ div {
 .main {
   background-color: white;
   border-radius: 15px;
+  box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
 .title {
