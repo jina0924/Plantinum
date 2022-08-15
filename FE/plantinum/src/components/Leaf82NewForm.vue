@@ -154,6 +154,7 @@ div {
 .main {
   background-color: white;
   border-radius: 15px;
+  box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
 .title{
