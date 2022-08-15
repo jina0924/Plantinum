@@ -46,7 +46,7 @@
     <!-- second box -->
     <div class="second-box row">
       <div class="col-md-6 col-sm col d-flex align-items-center">
-        <img src="../assets/HomeView/main_pic_2.jpg" alt="">
+        <img src="../assets/HomeView/main_pic_2_small.jpg" alt="">
       </div>
       <div class="row col-md-6 col-12 d-flex justify-content-center">
         <div class="contentbox pt-5">
