@@ -1,7 +1,7 @@
 <template>
   <div class="boxes">
     <!-- first box -->
-    <div class=first-box>
+    <div :class="firstBox">
       <nav-bar></nav-bar>
       <!-- <div class="row">
         <div class="col-md-3 home-logo">
@@ -15,11 +15,11 @@
       <!-- 글귀 부분 -->
       <div class="row col-md-6 d-flex justify-content-center">
         <div class="contentbox">
-          <div class="text-main">
+          <div :class="textMain">
             <p>반려식물 통합 관리 플랫폼</p>
             <p>플랜티넘</p>
           </div>
-          <div class="text-detail">
+          <div :class="textDetail">
             <p>반려식물 케어부터 분양정보까지,</p>
             <p>사람들과 함께 아름다운 집을 만들어요.</p>
           </div>
@@ -34,7 +34,7 @@
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <router-link :to="{ name: 'login' }">
-                  <button class="btn">로그인 / 회원가입</button>
+                  <button :class="btn">로그인 / 회원가입</button>
                 </router-link>
               </div>
             </div>
@@ -44,17 +44,17 @@
     </div>
 
     <!-- second box -->
-    <div class="second-box row">
-      <div class="col-md-6 col-sm col d-flex align-items-center">
+    <div :class="secondBox">
+      <div class="col-md-6 col-sm-0 d-flex align-items-center">
         <img src="../assets/HomeView/main_pic_2.jpg" alt="">
       </div>
       <div class="row col-md-6 col-12 d-flex justify-content-center">
-        <div class="contentbox pt-5">
-          <div class="text-main pt-5">
+        <div :class="contentBox">
+          <div :class="textMain">
             <p>오늘은 상태가 어떠니?</p>
             <p>식물이 들려주는 이야기</p>
           </div>
-          <div class="text-detail">
+          <div :class="textDetail">
             <p>소중한 반려식물의 변화를</p>
             <p>놓치지 않을 수 있어요.</p>
             <br>
@@ -67,14 +67,14 @@
               <div class="login d-flex justify-content-center">
                 <div class="new-box" v-if="isLoggedIn">
                   <router-link :to="{ name: 'myplant', params: { username: username } }">
-                    <button class="btn">내 식물</button>
+                    <button :class="btn">내 식물</button>
                   </router-link>
                 </div>
                 <!-- <router-link :to="{ name: 'myplant', params: { username } }" v-if="!!username">
-                <button class="btn">내 식물</button>
+                <button :class="btn">내 식물</button>
               </router-link> -->
                 <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
-                  <button class="btn">내 식물</button>
+                  <button :class="btn">내 식물</button>
                 </router-link>
               </div>
             </div>
@@ -84,19 +84,19 @@
     </div>
 
     <!-- third box -->
-    <div class="third-box row">
+    <div :class="thirdBox">
       <div class="row col-md-6 d-flex justify-content-center">
-        <div class="contentbox pt-5">
-          <div class="text-main pt-5">
+        <div :class="contentBox">
+          <div :class="textMain">
             <p>여러분의 식물을</p>
             <p>분양해주세요</p>
           </div>
-          <div class="text-sub">
+          <div :class="textSub">
             <span>"보내는 마음은 아쉬웠지만,</span>
             <br>
             <span class="d-flex justify-content-end">좋은 분을 만난거 같았어요."</span>
           </div>
-          <div class="text-detail">
+          <div :class="textDetail">
             <p>서울에 거주하시는 진아님은</p>
             <p>얼마전 아비스를 유민님께 분양해주었답니다.</p>
           </div>
@@ -106,7 +106,7 @@
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <router-link :to="{ name: 'leaf82' }">
-                  <button class="btn">잎팔이</button>
+                  <button :class="btn">잎팔이</button>
                 </router-link>
               </div>
             </div>
@@ -129,12 +129,12 @@
         </div>
         <div class="row col-md-6 d-flex justify-content-center">
           <div class="contentbox">
-            <div class="text-main">
+            <div :class="textMain">
               <p>토양상태를 파악해</p>
               <p>자동으로 길러주는 나만의</p>
               <p>수풀</p>
             </div>
-            <div class="text-detail">
+            <div :class="textDetail">
               <p>수풀은 토양의 습도, 주변의 온도를 분석하여</p>
               <p>자동 급수하며 식집사들을 도와주고 있습니다.</p>
               <br>
@@ -148,7 +148,7 @@
               <div class="btn-border">
                 <div class="login d-flex justify-content-center">
                   <router-link :to="{ name: 'home' }">
-                    <button class="btn">comming soon</button>
+                    <button :class="btn">comming soon</button>
                   </router-link>
                 </div>
               </div>
@@ -167,11 +167,19 @@ import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'HomeView',
-  // data() {
-  //   return {
-  //     username : 'guest'
-  //   }
-  // },
+  data() {
+    return {
+      width: window.innerWidth,
+      firstBox: 'first-box',
+      secondBox: 'second-box row',
+      thirdBox: 'third-box row',
+      contentBox: 'content-box',
+      textMain: 'text-main',
+      textDetail: 'text-detail',
+      textSub: 'text-sub',
+      btn: 'btn',
+    }
+  },
   components: {
     NavBar
   },
@@ -181,7 +189,31 @@ export default {
       if (this.isLoggedIn === true) {
         this.fetchProfile()
       }
-    }
+    },
+    handleResize() {
+      this.width = window.innerWidth;
+    },
+    mobileOrPc() {
+      if (this.width <= 576) {
+        this.firstBox = 'first-box-mobile'
+        this.secondBox = 'second-box-mobile row'
+        this.thirdBox = 'third-box-mobile row'
+        this.contentBox = 'contentbox'
+        this.textMain = 'text-main-mobile'
+        this.textDetail = 'text-detail-mobile'
+        this.textSub = 'text-sub-mobile'
+        this.btn = 'btn-mobile'
+      } else {
+        this.firstBox = 'first-box'
+        this.secondBox = 'second-box row'
+        this.thirdBox = 'third-box row'
+        this.contentBox = 'contentbox pt-5'
+        this.textMain = 'text-main'
+        this.textDetail = 'text-detail'
+        this.textSub = 'text-sub'
+        this.btn = 'btn'
+      }
+    },
   },
   computed: {
     ...mapGetters(['username', 'isLoggedIn', 'profile']),
@@ -196,12 +228,21 @@ export default {
   },
   created() {
     this.beforeFetchProfile()
+    this.mobileOrPc()
   },
-  // watch: {
-  //   currentUser: function() {
-  //     this.abc()
-  //   }
-  // }
+  mounted() {
+    // console.log("ready...");
+    window.addEventListener('resize', this.handleResize);
+	},
+  beforeUnmount() {
+    // console.log("beforeDestroy...");
+    window.removeEventListener('resize', this.handleResize);
+  },
+  watch: {
+    width() {
+      this.mobileOrPc()
+    }
+  }
 }
 </script>
 
@@ -217,11 +258,29 @@ div {
   background-size: cover;
 }
 
+.first-box-mobile {
+  height: 800px;
+  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('../assets/HomeView/main_pic_1.jpg') bottom left;
+  background-size: cover;
+}
+
 .second-box {
   height: 1117px;
   background-color: white;
   display: flex;
   flex-direction: row;
+}
+
+.second-box-mobile {
+  height: 800px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.second-box-mobile img {
+  width: 0;
+  height: 0;
 }
 
 .third-box {
@@ -231,6 +290,18 @@ div {
   flex-direction: row;
 }
 
+.third-box-mobile {
+  height: 800px;
+  background-color: #F3F3F3;
+  display: flex;
+  flex-direction: row;
+}
+
+.third-box-mobile img {
+  width: 0;
+  height: 0;
+}
+
 .fourth-box {
   height: 1117px;
   background-color: #F8F5EE;
@@ -238,10 +309,10 @@ div {
   flex-direction: column;
 }
 
-.row {
+/* .row {
   display: flex;
   flex-direction: row;
-}
+} */
 
 .home-logo {
   text-align: center;
@@ -293,10 +364,23 @@ a {
   margin-bottom: 4rem;
 }
 
+.text-main-mobile {
+  margin-top: 12rem;
+  margin-bottom: 6rem;
+}
+
 .text-main p {
   margin-bottom: 0;
   font-size: 3rem;
   font-weight: bold;
+}
+
+.text-main-mobile p {
+  margin-bottom: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
 }
 
 .text-sub {
@@ -305,6 +389,13 @@ a {
   font-weight: bold;
 }
 
+.text-sub-mobile {
+  margin-bottom: 5rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+
 .text-detail {
   margin-bottom: 7rem;
 }
@@ -312,6 +403,15 @@ a {
 .text-detail p {
   margin-bottom: 0;
   font-size: 1.5rem;
+}
+
+.text-detail-mobile {
+  margin-bottom: 7rem;
+}
+
+.text-detail-mobile p {
+  margin-bottom: 0;
+  font-size: 1rem;
 }
 
 .text-detail span {
@@ -339,6 +439,28 @@ a {
   background-color: #b2c9ab;
   color: white;
   width: 100%;
+}
+
+.btn:hover {
+  background-color: #65805d;
+  color: #ffffff;
+  /*box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);*/
+}
+
+.btn-mobile {
+  border: none;
+  border-radius: 5px;
+  height: 2.5rem;
+  font-size: 0.8rem;
+  background-color: #b2c9ab;
+  color: white;
+  width: 100%;
+}
+
+.btn-mobile:hover {
+  background-color: #65805d;
+  color: #ffffff;
+  /*box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);*/
 }
 
 .btnbox a {
@@ -376,11 +498,5 @@ a {
   margin-bottom: 0;
   font-size: 4rem;
   font-family: 'Dancing Script', cursive;
-}
-
-.btn:hover {
-  background-color: #65805d;
-  color: #ffffff;
-  /*box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);*/
 }
 </style>>
