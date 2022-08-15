@@ -47,28 +47,49 @@
                   <div class="p-3">
 
                     <div class="profile-div mb-3">
-                      <span>{{ username }}의 채팅방</span>
+                      <span>채팅 목록</span>
                     </div>
 
                     <div class="chat-list-view">
-                      <ul class="mb-0 list-unstyled">
-                        <li class="p-2 border-bottom">
-                          <div @click="changeReceiver(key)" v-for=" (val,key) in rooms" :key="val" class="d-flex justify-content-between chat-list-item">
+                      <ul class="my-0 list-unstyled">
+                        <li class="p-0 m-0 border-bottom">
+                          <div @click="changeReceiver(key)" v-for=" (val,key) in rooms" :key="val" class="d-flex justify-content-between chat-list-item" :class="{'list-item-active': key===now_receiver}">
                             <div class="d-flex flex-row">
                               <div>
                                 <img
                                   :src="baseURL + urls[key]"
-                                  alt="avatar" class="d-flex align-self-center chat-list-img">
+                                  alt="상대방 프로필 사진" class="d-flex align-self-center chat-list-img">
                               </div>
-                              <div class="pt-1">
+                              <div class="pt-3">
                                 <p class="your-name">{{ key }}</p>
                               </div>
                             </div>
-                            <div class="pt-1">
+                            <!-- <div class="pt-1">
                               <p class="mb-1 time-cnt">Just now</p>
-                            </div>
+                            </div> -->
                           </div>
                         </li>
+
+                        <li class="p-0 m-0 border-bottom">
+                          <div @click="changeReceiver(key)" v-for=" (val,key) in rooms" :key="val" class="d-flex justify-content-between chat-list-item" :class="{'list-item-active': key===now_receiver}">
+                            <div class="d-flex flex-row">
+                              <div>
+                                <img
+                                  :src="baseURL + urls[key]"
+                                  alt="상대방 프로필 사진" class="d-flex align-self-center chat-list-img">
+                              </div>
+                              <div class="pt-3">
+                                <p class="your-name">{{ key }}</p>
+                              </div>
+                            </div>
+                            <!-- <div class="pt-1">
+                              <p class="mb-1 time-cnt">Just now</p>
+                            </div> -->
+                          </div>
+                        </li>
+
+
+
                       </ul>
                     </div>
 
@@ -79,6 +100,12 @@
                 <div class="col-md-6 col-lg-7 col-xl-8">
                   <div class="you-username" v-if="now_receiver!==-1">{{ now_receiver }}</div>
                   <div class="chat-view" ref="now_messages">
+                    <!-- 채팅방 클릭 전 -->
+                    <div v-if="now_receiver===-1" class="leaf82-chat-start">
+                      <span class="material-symbols-outlined leaf82-chat-icon">nest_found_savings</span>
+                      <div>잎팔이 채팅</div>
+                    </div>
+                    <!-- 채팅방 클릭 후 -->
                     <div v-for="msg in now_messages" :key="msg">
                       <!-- 상대가 적은 메시지 -->
                       <div class="d-flex flex-row justify-content-start" v-if="msg.person!==username">
@@ -99,7 +126,7 @@
                     </div>
                     </div>
                   <!-- 채팅 메시지 적는 부분 -->
-                  <div class="d-flex justify-content-start align-items-center">
+                  <div class="d-flex justify-content-start align-items-center" v-if="now_receiver!==-1">
                     <input v-model="message" type="text" class="form-input" id="exampleFormControlInput2"
                       placeholder="Type message" @keyup.enter="sendMessage">
                     <span @click="sendMessage" class="material-symbols-outlined send-btn">send</span>
@@ -137,7 +164,7 @@ export default {
       now_receiver: -1, // 새로고침 했거나, 거래탭에서 채팅하기로 넘어오지 않았을 경우
       rooms: {},
       urls: {},
-      baseURL : "https://plantinum.s3.ap-northeast-2.amazonaws.com/"
+      baseURL: "https://plantinum.s3.ap-northeast-2.amazonaws.com/",
     }
   },
   computed: {
@@ -267,7 +294,7 @@ export default {
 
 
 <style scoped>
-.whitebox{
+/* .whitebox{
   background-color: #FFFFFFCC;
   height: 500px;
 	width: 300px;
@@ -318,7 +345,7 @@ export default {
 .input-message {
   margin-left:5px;
   width: 70%;
-}
+} */
 
 /* ----------------------------------------------------------------------------------------------- */
 .card {
@@ -356,12 +383,16 @@ export default {
   border-radius: 50%;
 }
 
+.chat-list-item {
+  padding: .7rem;
+}
+
 .chat-list-item:hover {
   cursor: pointer;
   background-color: #EFEFEF;
 }
 
-.chat-list-item:focus {
+.list-item-active {
   background-color: #EFEFEF;
 }
 
@@ -371,6 +402,23 @@ export default {
   padding: 1rem 2rem 0 1rem;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.leaf82-chat-start {
+  color: #A6A6A6;
+  /* margin: 5rem, auto; */
+  text-align: center;
+  font-size: 1.2rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leaf82-chat-icon {
+  font-size: 13rem;
+  margin-bottom: .5rem;
 }
 
 .you-username {
@@ -451,7 +499,9 @@ export default {
   margin: 1.3rem .5rem 1.5rem 0;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #efefef;
+  /* border: 1px solid #efefef; */
+  border-color: rgba(178, 201, 171, 20% ) ;
+  border: none;
   border-radius: 0.25rem;
   box-shadow: 0.5rem 0.5rem 0.5rem #efefef;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
