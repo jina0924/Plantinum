@@ -15,7 +15,11 @@
       <!-- <div class="item chat-room">
         <div class="chat-area" >
           <div v-for="msg in now_messages" :key="msg">
-          {{ msg }}
+          {{ urls[msg["person"]] }}
+          {{ msg["person"] }}
+          {{ msg["datetime"] }}
+          {{ msg["msg"] }}
+
           </div>
         </div>
         <div class="input-area">
@@ -43,7 +47,7 @@
                   <div class="p-3">
 
                     <div class="profile-div mb-3">
-                      <span>내 프로필 자리</span>
+                      <span>{{ username }}의 채팅방</span>
                     </div>
 
                     <div class="chat-list-view">
@@ -53,31 +57,11 @@
                             <div class="d-flex flex-row">
                               <div>
                                 <img
-                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                  :src="baseURL + urls[key]"
                                   alt="avatar" class="d-flex align-self-center chat-list-img">
                               </div>
                               <div class="pt-1">
                                 <p class="your-name">{{ key }}</p>
-                                <p class="wish-leaf">귤나무</p>
-                              </div>
-                            </div>
-                            <div class="pt-1">
-                              <p class="mb-1 time-cnt">Just now</p>
-                            </div>
-                          </div>
-                        </li>
-
-                        <li class="p-2 border-bottom">
-                          <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row">
-                              <div>
-                                <img
-                                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                  alt="avatar" class="d-flex align-self-center chat-list-img">
-                              </div>
-                              <div class="pt-1">
-                                <p class="your-name">김상덕</p>
-                                <p class="wish-leaf">귤나무</p>
                               </div>
                             </div>
                             <div class="pt-1">
@@ -93,29 +77,31 @@
                 </div>
                 <!-- 채팅 내용 -->
                 <div class="col-md-6 col-lg-7 col-xl-8">
-                  <div class="you-username">상대방 이름</div>
-                  <div class="chat-view">
-                    <!-- 상대가 적은 메시지 -->
-                    <div class="d-flex flex-row justify-content-start" v-for="msg in now_messages" :key="msg">
-                      <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-                        alt="avatar 1" class="chat-profile-img"> -->
-                      <div>
-                        <p class="your-message">{{ msg }}</p>
-                        <p class="message-time">12:00 PM | Aug 13</p>
+                  <div class="you-username" v-if="now_receiver!==-1">{{ now_receiver }}</div>
+                  <div class="chat-view" ref="now_messages">
+                    <div v-for="msg in now_messages" :key="msg">
+                      <!-- 상대가 적은 메시지 -->
+                      <div class="d-flex flex-row justify-content-start" v-if="msg.person!==username">
+                        <img :src="baseURL + urls[now_receiver]"
+                          alt="avatar 1" class="chat-profile-img">
+                        <div>
+                          <p class="your-message">{{ msg.msg }}</p>
+                          <p class="message-time">{{ msg.datetime }}</p>
+                        </div>
+                      </div>
+                      <!-- 내가 적은 메시지 -->
+                      <div class="d-flex flex-row justify-content-end" v-if="msg.person===username">
+                        <div>
+                          <p class="my-message">{{ msg.msg }}</p>
+                          <p class="message-time">{{ msg.datetime }}</p>
+                        </div>
                       </div>
                     </div>
-                    <!-- 내가 적은 메시지 -->
-                    <div class="d-flex flex-row justify-content-end">
-                      <div>
-                        <p class="my-message">판다 판다</p>
-                        <p class="message-time">12:00 PM | Aug 13</p>
-                      </div>
                     </div>
-                  </div>
                   <!-- 채팅 메시지 적는 부분 -->
                   <div class="d-flex justify-content-start align-items-center">
                     <input v-model="message" type="text" class="form-input" id="exampleFormControlInput2"
-                      placeholder="Type message">
+                      placeholder="Type message" @keyup.enter="sendMessage">
                     <span @click="sendMessage" class="material-symbols-outlined send-btn">send</span>
                   </div>
 
@@ -147,9 +133,11 @@ export default {
       socket: null,
       id: -1,
       message: '',
-      now_messages:[],
+      now_messages: [],
       now_receiver: -1, // 새로고침 했거나, 거래탭에서 채팅하기로 넘어오지 않았을 경우
-      rooms:{},
+      rooms: {},
+      urls: {},
+      baseURL : "https://plantinum.s3.ap-northeast-2.amazonaws.com/"
     }
   },
   computed: {
@@ -180,9 +168,11 @@ export default {
 
     //-1이 아니면 거래에서 건너온것_start
     if(this.now_receiver !== -1){
+      // 전에 거래 기록 없을 때
       if( (this.now_receiver in this.rooms) == false ){
         this.socket.emit('startchat',this.now_receiver);
       }else{
+        // 전에 거래 기록 있을 때
         this.socket.emit("getMessages",this.rooms[this.now_receiver]);
       }
     }
@@ -200,6 +190,7 @@ export default {
     //채팅방 정보 받아오기
     this.socket.on('sendRooms',(data)=>{
       this.rooms[data.with_who] = data.room_num;
+      this.urls[data.with_who] = data.photo_url;
     })
     
 
@@ -255,6 +246,20 @@ export default {
     this.rooms={};
     this.setReceiver(-1);
     next();
+  },
+
+  watch: {
+    now_messages() {
+      this.$nextTick(() => {
+        let now_messages = this.$refs.now_messages;
+        now_messages.scrollTo({ top : now_messages.scrollHeight, behavior: 'smooth' })
+      })
+    }
+  },
+
+  updated() {
+    let now_messages = this.$refs.now_messages;
+    now_messages.scrollTo({ top : now_messages.scrollHeight, behavior: 'smooth' })
   }
   
 }
@@ -348,6 +353,7 @@ export default {
 .chat-list-img {
   width: 60px;
   margin-right: .5rem;
+  border-radius: 50%;
 }
 
 .chat-list-item:hover {
@@ -392,6 +398,8 @@ export default {
 .chat-profile-img {
   width: 45px;
   height: 100%;
+  margin-right: .5rem;
+  border-radius: 50%;
 }
 
 .your-name {
@@ -416,14 +424,14 @@ export default {
   background-color: #f5f6f7;
   border-radius: 10px;
   margin-bottom: .3rem;
-  padding: 1rem;
+  padding: .8rem 1rem;
 }
 
 .my-message {
   background-color: #b2c9ab;
   border-radius: 10px;
   margin-bottom: .3rem;
-  padding: 1rem;
+  padding: .8rem 1rem;
 }
 
 .message-time {
