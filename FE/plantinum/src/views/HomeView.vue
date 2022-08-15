@@ -1,7 +1,7 @@
 <template>
   <div class="boxes">
     <!-- first box -->
-    <div class=first-box>
+    <div :class="firstBox">
       <nav-bar></nav-bar>
       <!-- <div class="row">
         <div class="col-md-3 home-logo">
@@ -49,7 +49,7 @@
         <img src="../assets/HomeView/main_pic_2.jpg" alt="">
       </div>
       <div class="row col-md-6 col-12 d-flex justify-content-center">
-        <div class="contentbox pt-5">
+        <div :class="contentBox">
           <div class="text-main pt-5">
             <p>오늘은 상태가 어떠니?</p>
             <p>식물이 들려주는 이야기</p>
@@ -86,7 +86,7 @@
     <!-- third box -->
     <div class="third-box row">
       <div class="row col-md-6 d-flex justify-content-center">
-        <div class="contentbox pt-5">
+        <div :class="contentBox">
           <div class="text-main pt-5">
             <p>여러분의 식물을</p>
             <p>분양해주세요</p>
@@ -167,11 +167,13 @@ import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'HomeView',
-  // data() {
-  //   return {
-  //     username : 'guest'
-  //   }
-  // },
+  data() {
+    return {
+      width: window.innerWidth,
+      firstBox: 'first-box',
+      contentBox: 'content-box'
+    }
+  },
   components: {
     NavBar
   },
@@ -181,7 +183,24 @@ export default {
       if (this.isLoggedIn === true) {
         this.fetchProfile()
       }
-    }
+    },
+    handleResize() {
+      this.width = window.innerWidth;
+    },
+    getFirstBox() {
+      if (this.width <= 576) {
+        this.firstBox = 'first-box2'
+      } else {
+        this.firstBox = 'first-box'
+      }
+    },
+    getContentBox() {
+      if (this.width <= 576) {
+        this.contentBox = 'contentbox'
+      } else {
+        this.contentBox = 'contentbox pt-5'
+      }
+    },
   },
   computed: {
     ...mapGetters(['username', 'isLoggedIn', 'profile']),
@@ -196,12 +215,28 @@ export default {
   },
   created() {
     this.beforeFetchProfile()
+    this.getFirstBox()
+    this.getContentBox()
   },
-  // watch: {
-  //   currentUser: function() {
-  //     this.abc()
-  //   }
-  // }
+  mounted() {
+    // console.log("ready...");
+    window.addEventListener('resize', this.handleResize);
+	},
+  beforeUnmount() {
+    // console.log("beforeDestroy...");
+    window.removeEventListener('resize', this.handleResize);
+  },
+  watch: {
+    width() {
+      if (this.width < 576) {
+        this.firstBox = 'first-box2'
+        this.contentBox = 'contentbox'
+      } else {
+        this.firstBox = 'first-box'
+        this.contentBox = 'contentbox pt-5'
+      }
+    }
+  }
 }
 </script>
 
@@ -214,6 +249,12 @@ div {
 .first-box {
   height: 1117px;
   background: url("../assets/HomeView/background_img.jpg") bottom left;
+  background-size: cover;
+}
+
+.first-box2 {
+  height: 1117px;
+  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('../assets/HomeView/main_pic_1.jpg') bottom left;
   background-size: cover;
 }
 
