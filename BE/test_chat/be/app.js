@@ -5,6 +5,7 @@ const express = require("express");
 const { Server } = require("socket.io");
 const { createServer } = require("http");
 const { pool } = require("./db");
+const fs = require('fs')
 
 //const { networkInterfaces } = require("os");
 //const { profile } = require("console");
@@ -27,13 +28,48 @@ const io = new Server(http, {
 
 let rooms_count = 0;
 //const messages_send = [];
+// 방번호, 채팅 내역만
 const chattingRooms = {};
-const user_rooms={A:{},B:{},C:{}};
+// 각각 어느 채팅방에 존재하는지
+let user_rooms={A:{},B:{},C:{}};
 //연결된 소켓 관리, {id,uid}
 //let sockets_count = 0;
 // pk : socket(list)
 
 const connected_sockets={A:null,B:null,C:null};
+
+// 방번호, 채팅내역
+class ChatInfo{
+  constructor(num){
+    this.room_number = num;
+    this.messages = [{"person": "ALL" , "datetime":nowDate(),"msg": "---- start chatting ----"}];
+    // this.messages=[{"person":"A","datetime":"YYYYMMDDHHMM","msg":"Lorem"}];
+  }
+}
+
+//저장된 채팅 내역 불러오기
+const remain_datas = fs.readFileSync('./stored_data/chatrooms.json').toString();
+const chat_datas = JSON.parse(remain_datas);
+
+//console.log("----- for ------");
+for (data in chat_datas){
+    if(data == "rooms_count"){
+      rooms_count = chat_datas.rooms_count;
+    };
+    console.log(data);
+    chattingRooms[data]=new ChatInfo(data);
+    //console.log(chat_datas[data]["messages"]);
+    //console.log()
+    chattingRooms[data]["messages"]= chat_datas[data]["messages"];
+}
+
+//저장된 방정보 불러오기
+const remain_rooms = fs.readFileSync('./stored_data/user_rooms.json').toString();
+const room_datas = JSON.parse(remain_rooms);
+
+console.log(room_datas);
+user_rooms = room_datas;
+
 
 function nowDate(){
   const date = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
@@ -54,16 +90,6 @@ async function geturl(data){
 }
 
 
-class ChatInfo{
-  constructor(id1,id2){
-    this.room_number = rooms_count;
-    this.participation = new Set();
-    this.participation.add(id1);
-    this.participation.add(id2);
-    this.messages = [{"person": "ALL" , "datetime":nowDate(),"msg": "---- start chatting ----"}];
-    // this.messages=[{"person":"A","datetime":"YYYYMMDDHHMM","msg":"Lorem"}];
-  }
-}
 
 // 앞단에서 요청이 오고 소켓이 생성되면 이벤트를 발생시킨다.
 // 두번째 인자인 콜백함수에 생성된 소켓이 담겨져온다.
@@ -121,7 +147,7 @@ io.on('connection', socket => {
     console.log("make chattingrooms");
     console.log(socket.user_name,data)
     //처음 채팅방이 만들어짐
-    chattingRooms[rooms_count]=new ChatInfo(socket.user_name,data);
+    chattingRooms[rooms_count]=new ChatInfo(rooms_count);
     
     //user_rooms에 채팅방 저장
     //console.log(user_rooms[socket.user_name]);
@@ -178,8 +204,19 @@ io.on('connection', socket => {
     //해당 채팅 시작알림 메세지 보내기
     io.to(String(rooms_count)).emit('message', chat);
     //만들어진 룸넘버 제공
-    
+
+    //json 저장
+    chat_datas[String(rooms_count)]=chattingRooms[rooms_count];
     rooms_count++;
+
+    chat_datas["rooms_count"] = rooms_count;
+
+    const newchatdata=JSON.stringify(chat_datas);
+    fs.writeFileSync('./stored_data/chatrooms.json',newchatdata);
+
+    const newroomdata=JSON.stringify(user_rooms);
+    fs.writeFileSync('./stored_data/user_rooms.json',newroomdata);
+
   });
 
   socket.on('getRooms', async data=>{
@@ -218,9 +255,16 @@ io.on('connection', socket => {
     //console.log(data.room_num, chattingRooms[data.room_num]);
     const chat={"person": socket.user_name, "datetime":nowDate(),"msg":data.msg};
     chattingRooms[data.room_num].messages.push(chat);
+    console.log(chattingRooms[data.room_num].messages);
     //chattingRooms[data.room_num].messages.push(message);
     //messages_send.push(message);
     io.to(String(data.room_num)).emit('message', chat);
+
+    //채팅 저장
+    //chat_datas[data.room_num].messages.push(chat);
+    
+    const newchatdata=JSON.stringify(chat_datas);
+    fs.writeFileSync('./stored_data/chatrooms.json',newchatdata);
   });
 
   
