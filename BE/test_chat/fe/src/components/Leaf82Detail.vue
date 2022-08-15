@@ -1,68 +1,74 @@
 <template>
   <div class="leaf82-detail row">
     <!-- 여백 -->
-    <div class="col-md-1 col-0"></div>
+    <div class="col-md-3 col-0"></div>
     <!-- 메인 -->
-    <div class="main col-md-10 row py-5 my-5">
+    <div class="main col-md-6 py-5 my-5">
       <!-- 좌측 -->
-      <div class="left col-md-5">
+      <div class="left">
         <div class="img-box d-flex justify-content-center">
           <img :src="leaf82Detail.photo" alt="화분 사진">
         </div>
-        <!-- <div class="update row d-flex justify-content-center"> -->
-        <div class="update row d-flex justify-content-center" v-if="this.$route.params.username === currentUser.username">
-          <div class="update-box mx-3 my-2">
-            <router-link class="update-a" :to="{ name: 'leaf82Edit' , params: { username: this.$route.params.username , posting_addr: this.$route.params.posting_addr } }">
-              <button class="update-btn">수정</button>
-            </router-link>
-          </div>
-          <div class="delete-box mx-3 my-2">
-            <button class="delete-btn" @click="deleteLeaf82(deleteInfo)">삭제</button>
-          </div>
-        </div>
       </div>
       <!-- 우측 -->
-      <div class="right col-md-7 mt-3 px-5">
-        <div class="plantname d-flex justify-content-start">
-          <p>{{ leaf82Detail.plantname }} {{ leaf82Detail.category_class }}</p>
-        </div>
-        <hr>
-        <div class="nickname d-flex justify-content-start pb-1">
-          <router-link :to="{ name: 'myplant' , params: { username: this.$route.params.username } }" class="nickname-route">
-            <img :src="user.photo" :alt="`${ user.nickname }의 프로필 사진입니다.`" class="user-photo mr-1">
-          </router-link>
-          <router-link :to="{ name: 'myplant' , params: { username: this.$route.params.username } }" class="nickname-route">
-            <p>{{ user.nickname }}</p>
-          </router-link>
-        </div>
-        <div class="price d-flex justify-content-start pb-1">
-          <p>{{ leaf82Detail.price }} 원</p>
-        </div>
-        <div class="addr d-flex justify-content-start pb-1">
-          <p>{{ addr.sido }} {{ addr.sigungu }}</p>
-        </div>
-        <div class="status d-flex justify-content-start pb-1">
-          <p>{{ leaf82Detail.status_class }}</p>
-        </div>
-        <div class="content d-flex justify-content-start py-1 my-3">
-          <p>{{ leaf82Detail.content }}</p>
-        </div>
-        <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '판매중'">
-          <div class="message" v-if="isLoggedIn">
-            <router-link :to="{ name : 'messenger' }" class="d-flex justify-content-center" @click = "goChat()">
-              <button class="py-2" >채팅하러 가기</button>
-            </router-link>
+      <div class="row">
+        <div class="col-sm-2 col-0"></div>
+        <div class="col-sm-8 col-0">
+          <div class="right mt-3">
+            <div class="plantname d-flex justify-content-start">
+              <p>{{ leaf82Detail.plantname }} {{ leaf82Detail.category_class }}</p>
+            </div>
+            <hr>
+            <div class="nickname d-flex justify-content-start pb-3">
+              <router-link :to="{ name: 'myplant' , params: { username: this.$route.params.username } }" class="nickname-route">
+                <img :src="user.photo" :alt="`${ user.nickname }의 프로필 사진입니다.`" class="user-photo mr-1">
+              </router-link>
+              <router-link :to="{ name: 'myplant' , params: { username: this.$route.params.username } }" class="nickname-route">
+                <p>{{ user.nickname }}</p>
+                <p class="addr">{{ addr.sido }} {{ addr.sigungu }}</p>
+              </router-link>
+            </div>
+            <div class="price d-flex justify-content-start pb-2">
+              <p>{{ leaf82Detail.price }} 원</p>
+            </div>
+            <div class="created_at d-flex justify-content-start pb-2">
+              <p>등록일 : {{ info.created_at }}</p>
+            </div>
+            <div class="status d-flex justify-content-start pb-2">
+              <p>{{ leaf82Detail.status_class }}</p>
+            </div>
+            <div class="content d-flex justify-content-start py-1 my-3">
+              <p>{{ leaf82Detail.content }}</p>
+            </div>
+            <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '분양대기'">
+              <div class="message" v-if="isLoggedIn && username !== this.$route.params.username">
+                <router-link :to="{ name : 'messenger' }" class="d-flex justify-content-center" @click = "goChat()">
+                  <button class="py-2">채팅하러 가기</button>
+                </router-link>
+              </div>
+              <div class="update row d-flex justify-content-center" v-if="this.$route.params.username === username">
+                <div class="update-box mx-3 my-2">
+                  <router-link class="update-a" :to="{ name: 'leaf82Edit' , params: { username: this.$route.params.username , posting_addr: this.$route.params.posting_addr } }">
+                    <button class="update-btn">수정</button>
+                  </router-link>
+                </div>
+                <div class="delete-box mx-3 my-2">
+                  <button class="delete-btn" @click="deleteLeaf82(deleteInfo)">삭제</button>
+                </div>
+              </div>              
+              <div class="message" v-if="!isLoggedIn">
+                <router-link :to="{}" class="d-flex justify-content-center" @click="loginRequired()">
+                  <button class="py-2">채팅하러 가기</button>
+                </router-link>
+              </div>
+            </div>
           </div>
-          <div class="message" v-if="!isLoggedIn">
-            <router-link :to="{}" class="d-flex justify-content-center" @click="loginRequired()">
-              <button class="py-2">채팅하러 가기</button>
-            </router-link>
-          </div>
         </div>
+        <div class="col-sm-2 col-0"></div>
       </div>
     </div>
     <!-- 여백 -->
-    <div class="col-md-1 col-0"></div>
+    <div class="col-md-3 col-0"></div>
   </div>
 </template>
 
@@ -113,6 +119,7 @@ export default {
       this.addr = this.leaf82Detail.addr
       this.info = this.leaf82Detail
       this.info.price = this.info.price.toLocaleString('ko-KR')
+      this.info.created_at = this.info.created_at.slice(0,10)
     },
     loginRequired() {
       alert('로그인이 필요한 서비스입니다.')
@@ -124,7 +131,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['leaf82Detail', 'currentUser', 'isLoggedIn']),
+    ...mapGetters(['leaf82Detail', 'currentUser', 'isLoggedIn', 'username']),
   },
   watch: {
     leaf82Detail() {
@@ -145,11 +152,12 @@ div {
   border-radius: 15px;
 }
 
-/* 왼쪽 */
+/* 상단 */
 .img-box img{
   height: 300px;
   width: 300px;
   border-radius: 1rem;
+  object-fit: cover;
 }
 
 .update-btn {
@@ -186,7 +194,7 @@ div {
   transition: all 0.5s;
 }
 
-/* 오른쪽 */
+/* 하단 */
 p {
   margin: 0;
 }
@@ -202,8 +210,9 @@ p {
 }
 
 .user-photo {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 10rem;
 }
 
 .price p {
@@ -215,8 +224,14 @@ p {
   color: gray;
 }
 
-.addr p {
+.addr {
+  font-size: 0.8rem;
+  color: gray;
+}
 
+.created_at {
+  font-size: 0.8rem;
+  color: gray;
 }
 
 .content p {

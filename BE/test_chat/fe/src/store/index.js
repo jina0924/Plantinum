@@ -10,7 +10,7 @@ import createPersistedState from "vuex-persistedstate"
 
 export default createStore({
   modules: { 
-    Account, Myplant, Leaf82, Timer, Messenger,
+    Account, Myplant, Leaf82, Timer,Messenger,
   },
   plugins: [createPersistedState({
     // paths: ['Account', 'Myplant',]

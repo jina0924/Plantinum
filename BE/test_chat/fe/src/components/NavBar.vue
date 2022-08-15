@@ -7,10 +7,10 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" v-if="!!username">
+        <li class="nav-item" v-if="isLoggedIn">
           <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }" v-if="!isLoggedIn">내 식물</router-link> -->
           <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">내 식물</router-link> -->
-          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }">내 식물</router-link>
+          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" :style="[isMyplant ? {fontWeight: 700} : {fontWeight: 400}]">내 식물</router-link>
         </li>
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }">내 식물</router-link>
@@ -18,18 +18,20 @@
           <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" v-if="!!username">내 식물</router-link> -->
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle pb-0 mx-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle pb-0 mx-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :style="[isLeaf82 ? {fontWeight: 700} : {fontWeight: 400}]">
             잎팔이
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <router-link class="dropdown-item" :to="{ name: 'leaf82' }">거래</router-link>
+            <div @click="go()">
+              <router-link class="dropdown-item" :to="{ name: 'leaf82' }">거래</router-link>
+            </div>
             <div class="dropdown-divider"></div>
             <router-link class="dropdown-item" :to="{ name: 'messenger' }" v-if="isLoggedIn">채팅</router-link>
             <router-link class="dropdown-item" :to="{ name: 'login' }" v-if="!isLoggedIn">채팅</router-link>
           </div>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'profile' }" v-if="isLoggedIn">프로필</router-link>
+          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'profile' }" v-if="isLoggedIn" :style="[isProfile ? {fontWeight: 700} : {fontWeight: 400}]">프로필</router-link>
           <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }" v-if="!isLoggedIn">프로필</router-link>          
         </li>
       </ul>
@@ -48,30 +50,45 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import router from '@/router'
 
 export default {
   name: 'NavBar',
-  // data() {
-  //   return {
-  //     username : 'guest'
-  //   }
-  // },
-  computed: {
-    ...mapGetters(['isLoggedIn', 'currentUser']),
-    username() {
-      return this.currentUser.username
+  data() {
+    return {
+      myplantGroup: ['myplant', 'myplantNew', 'myplantNew', 'myplantDetail', 'myplantEdit'],
+      leaf82Group: ['leaf82', 'leaf82New', 'leaf82Detail', 'leaf82Edit', 'messenger'],
+      profileGroup: ['profile', 'updateprofile', 'updatepassword'],
     }
+  },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'username']),
+    // username() {
+    //   return this.currentUser.username
+    // }
+    isMyplant() {
+      return this.myplantGroup.includes(this.$route.name)
+    },
+    isLeaf82() {
+      return this.leaf82Group.includes(this.$route.name)
+    },
+    isProfile() {
+      return this.profileGroup.includes(this.$route.name)
+    },
   },
   methods: {
     ...mapActions(['logout',]),
     // abc () {
     //   this.username = this.currentUser.username
     // }
+    go() {
+      router.go()
+    }
   },
-  created () {
-    // console.log(this.currentUser)
-    // this.abc()
-  }
+  // created () {
+  //   console.log(this.$route.name)
+  //   // this.abc()
+  // }
 }
 </script>
 
@@ -101,6 +118,16 @@ export default {
   /* .nav-item a.router-link-exact-active {
   font-weight: 600px;
   text-align: center;
+  text-decoration-line: none;
+} */
+
+.btn:hover {
+  background-color: #65805d;
+  transition: all 0.5s;
+}
+
+/* .nav-link.router-link-exact-active {
+  font-weight: 700;
   text-decoration-line: none;
 } */
 
