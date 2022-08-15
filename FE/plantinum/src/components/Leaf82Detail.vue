@@ -42,7 +42,7 @@
             </div>
             <div class="btns d-flex justify-content-center py-3" v-if="leaf82Detail.status_class === '분양대기'">
               <div class="message" v-if="isLoggedIn && username !== this.$route.params.username">
-                <router-link :to="{ name : 'leaf82' }" class="d-flex justify-content-center">
+                <router-link :to="{ name : 'messenger' }" class="d-flex justify-content-center" @click = "goChat()">
                   <button class="py-2">채팅하러 가기</button>
                 </router-link>
               </div>
@@ -113,7 +113,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['deleteLeaf82']),
+    ...mapActions(['deleteLeaf82', 'setReceiver']),
     fillData() {
       this.user = this.leaf82Detail.user
       this.addr = this.leaf82Detail.addr
@@ -124,6 +124,10 @@ export default {
     loginRequired() {
       alert('로그인이 필요한 서비스입니다.')
       router.push({ name: 'login' })
+    },
+    goChat(){
+      console.log(this.user.pk)
+      this.setReceiver(this.user.username)
     }
   },
   computed: {
