@@ -435,4 +435,7 @@ yarn-error.log
 # secretkey
 my_settings.py
 
+# test_chat_db
+BE/test_chat/be/*
+
 # End of https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,vue,vuejs,node

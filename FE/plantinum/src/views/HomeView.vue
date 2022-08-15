@@ -35,9 +35,9 @@
     </div>
 
     <!-- second box -->
-    <div class="second-box">
-      <div class="col-md-6 col-sm-0 d-flex align-items-center">
-        <img src="../assets/HomeView/main_pic_2.jpg" alt="내 식물 소개 사진입니다.">
+    <div class="second-box row">
+      <div class="col-md-6 col-sm col d-flex align-items-center">
+        <img src="../assets/HomeView/main_pic_2_small.jpg" alt="">
       </div>
       <div class="row col-md-6 col-12 d-flex justify-content-center">
         <div class="contentbox">
