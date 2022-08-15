@@ -8,15 +8,22 @@
           <div class="plant-profile-img">
             <img :src="myplant.photo" :alt="`${myplant.nickname} 사진`" class="myplant-img">
           </div>
-          <div class="col-lg-7 plant-profile-info">
+          <div class="col-lg-5 col-xl-6 plant-profile-info">
             <h2 class="myplant-nickname">{{ myplant.nickname }}</h2>
-            <div class="myplant-data botanical-name">{{ plant_info.name }}</div>
+            <!-- 수정/삭제 버튼 -->
+            <div v-if="isOwner" class="owner-btn">
+              <router-link :to="{ name: 'myplantEdit', params: { plantPk: myplantPk } }" class="edit-btn">
+                <span class="material-symbols-outlined">drive_file_rename_outline</span>
+              </router-link>
+              <span @click="deleteMyplant(myplantPk)" class="material-symbols-outlined delete-btn">delete</span>
+            </div>
+
+            <div v-if="myplant.plant_info?.name!=='직접 입력하기'" class="myplant-data botanical-name">{{ myplant.plant_info?.name }}</div>
+            <div v-if="myplant.plant_info?.name==='직접 입력하기'" class="myplant-data botanical-name tmp-name">{{ myplant.tmp }}</div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
-              <progress :value="myplant.sensing.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
-
-              <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.moisture_level }}</span>
-              <!-- <span class="col-md-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span> -->
+              <progress :value="myplant.sensing?.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
+              <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing?.moisture_level }}</span>
             </div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">등록 날짜</span>
@@ -24,13 +31,13 @@
             </div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">최근 관수 날짜</span>
-              <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing.last_watering }}</span>
+              <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing?.last_watering }}</span>
               <span class="col-md-7 col-xl-8 not-connected" v-if="!myplant.is_connected">알 수 없음</span>
             </div>
             <div class="row plant-btn-group">
 
               <button class="btn plant-info-btn" type="button" @click="changeModal(1)">계절별 식물 관리 정보</button>
-              <button v-if="myplant.plant_info.specl_manage_info" class="btn plant-info-btn" @click="changeModal(2)">특별 관리 정보</button>
+              <button v-if="myplant.plant_info?.specl_manage_info" class="btn plant-info-btn" @click="changeModal(2)">특별 관리 정보</button>
               <div class="otp">
                 <!-- 연결 끊기 -->
                 <button v-if="!!myplant.is_connected" @click="disconnectMyplant(myplantPk)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
@@ -46,15 +53,15 @@
                   <!-- 계절별 식물 관리 정보 모달 -->
                   <div v-if="modal===1">
                     <h5>계절별 식물 관리 정보</h5>
-                    <div class="season">봄</div>{{ myplant.plant_info.watercycle_spring_nm }}
-                    <div class="season">여름</div>{{ myplant.plant_info.watercycle_summer_nm }}
-                    <div class="season">가을</div>{{ myplant.plant_info.watercycle_autumn_nm }}
-                    <div class="season">겨울</div>{{ myplant.plant_info.watercycle_winter_nm }}
+                    <div class="season">봄</div>{{ myplant.plant_info?.watercycle_spring_nm }}
+                    <div class="season">여름</div>{{ myplant.plant_info?.watercycle_summer_nm }}
+                    <div class="season">가을</div>{{ myplant.plant_info?.watercycle_autumn_nm }}
+                    <div class="season">겨울</div>{{ myplant.plant_info?.watercycle_winter_nm }}
                   </div>
                   <!-- 특별 관리 정보 모달 -->
                   <div v-if="modal===2">
                     <h5>특별 관리 정보</h5>
-                    <p>{{ myplant.plant_info.specl_manage_info }}</p>
+                    <p>{{ myplant.plant_info?.specl_manage_info }}</p>
                   </div>
                   <button class="modal-close-btn">닫기</button>
                 </div>
@@ -82,19 +89,6 @@
               <span class="material-symbols-outlined supool-icon">potted_plant</span>
               <span>SuPool은 Plantinum에서 제작한 자동화 화분입니다</span>
             </div>
-            <!-- <div v-if="!myplant.is_connected && !!myplant.otp_code" class="otp-timer">
-              <span>다음 숫자를 화분에 입력해주세요 : {{ myplant.otp_code }}</span>
-              <span>.......{{ otpTimer }}</span>
-              <div>
-                <progress :value=otpTimer max="10"></progress>
-              </div>
-            </div> -->
-            <div v-if="isOwner" class="owner-btn">
-              <router-link :to="{ name: 'myplantEdit', params: { plantPk: myplantPk } }">
-                <button>수정</button>
-              </router-link>
-              <button @click="deleteMyplant(myplantPk)">삭제</button>
-            </div>
           </div>
         </div>
       </div>
@@ -115,8 +109,6 @@ export default {
     return {
       myplantPk: this.$route.params.plantPk,
       modal: 0,
-      // otpTimer: 20,
-      plant_info: {},
     }
   },
   props: {
@@ -126,7 +118,7 @@ export default {
   computed: {
     ...mapGetters(['myplant', 'isOwner', 'temp_OTP', 'otpTimer']),
     myplantCreatedAt() {
-      return this.myplant.created_at.substr(0, 10)
+      return this.myplant.created_at?.substr(0, 10)
     },
     isConnected() {
       // return this.myplant.otp_code ? 'SuPool 연결 끊기' : 'SuPool 연결'
@@ -139,11 +131,11 @@ export default {
       }
     },
   },
-  watch: {
-    myplant() {
-      this.plant_info = this.myplant.plant_info
-    }
-  },
+  // watch: {
+  //   myplant() {
+  //     this.plant_info = this.myplant.plant_info
+  //   }
+  // },
   methods: {
     ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant']),
     close(event) {
@@ -187,7 +179,8 @@ export default {
 .profile-body { 
   background-color: white;
   border-radius: 15px;
-  padding: 2.5rem;
+  padding: 3.5rem 2rem;
+  margin-top: 3rem;
 }
 
 .plant-profile-img {
@@ -210,6 +203,29 @@ export default {
 .myplant-nickname {
   font-size: 3.5rem;
   font-weight: 600;
+  display: inline;
+  margin-right: 1rem;
+}
+
+.owner-btn {
+  display: inline-block;
+  color: #a6a6a6;
+  margin-left: auto;
+}
+
+.edit-btn {
+  text-decoration: none;
+  margin-right: .5rem;
+  color: inherit;
+}
+
+.edit-btn:hover {
+  color: #845A49;
+}
+
+.delete-btn:hover {
+  color: #845A49;
+  cursor: pointer;
 }
 
 .botanical-name {
@@ -217,6 +233,10 @@ export default {
   font-family: 'MaruBuri';
   font-size: 1.1rem;
   font-style: italic;
+}
+
+.tmp-name {
+  color: #f7d489;
 }
 
 .myplant-data {
