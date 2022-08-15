@@ -1,4 +1,5 @@
-const HOST = 'http://127.0.0.1:8000/api/v1/'
+// const HOST = 'http://127.0.0.1:8000/api/v1/'
+const HOST = 'http://i7a109.p.ssafy.io/api/v1/'
 
 const ACCOUNTS = 'accounts/'
 
