@@ -3300,15 +3300,15 @@
     "pk": 207,
     "fields": {
         "name": "직접 입력하기",
-        "watercycle_spring": "000000",
+        "watercycle_spring": "053000",
         "watercycle_spring_nm": "정보없음",
-        "watercycle_summer": "000000",
+        "watercycle_summer": "053000",
         "watercycle_summer_nm": "정보없음",
-        "watercycle_autumn": "000000",
+        "watercycle_autumn": "053000",
         "watercycle_autumn_nm": "정보없음",
-        "watercycle_winter": "000000",
+        "watercycle_winter": "053000",
         "watercycle_winter_nm": "정보없음",
-        "specl_manage_info": "정보없음"
+        "specl_manage_info": ""
     }
 }
 ]
