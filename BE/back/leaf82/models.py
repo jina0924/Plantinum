@@ -24,7 +24,7 @@ class Leaf82(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     content = models.CharField(max_length=1000)
     price = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10000000)])
-    category_class = models.CharField(max_length=5, choices=CATEGORY_CHOICES)
+    category_class = models.CharField(max_length=5, choices=CATEGORY_CHOICES, default='분양해요')
     status_class = models.CharField(max_length=4, choices=STATUS_CHOICES, default='분양대기')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     addr = models.ForeignKey(Juso, on_delete=models.PROTECT)
