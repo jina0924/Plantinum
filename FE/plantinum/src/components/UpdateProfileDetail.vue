@@ -91,7 +91,7 @@
                 <span class="material-symbols-outlined icon pr-4">phone</span>
               </div>
               <div class="card-text pb-5">
-                <input type="text" class="card-input mx-4" v-model="info.phone_number">
+                <input type="text" class="card-input mx-4" v-model="info.phone_number" placeholder="'-'을 제외한 숫자만 입력해주세요.">
               </div>
             </div>
           </div>
@@ -211,10 +211,30 @@ export default {
         alert('닉네임을 입력해주세요.')
       } else if (!info.email) {
         alert('이메일을 입력해주세요')
-      } else if (!!info.phone_number && !Number.isInteger(parseInt(info.phone_number))) {
-        alert(`연락처는 '-'을 제외한 숫자만 입력해주세요.`)
-      } else if (!!info.phone_number && info.phone_number.length <10 || info.phone_number.length > 11 && Number.isInteger(parseInt(info.phone_number))) {
-        alert('연락처는 열자리 혹은 열한자리 숫자만 입력 가능합니다.')
+      } 
+      else if (info.phone_number !== '') {
+        if (info.phone_number.length < 10 || info.phone_number.length > 11) {
+          alert('열자리나 열한자리의 휴대전화 번호를 입력해주세요.')
+        } else if (
+          info.phone_number.slice(0,3) !== '010' && 
+          info.phone_number.slice(0,3) !== '011' &&
+          info.phone_number.slice(0,3) !== '012' &&
+          info.phone_number.slice(0,3) !== '013' &&
+          info.phone_number.slice(0,3) !== '014' &&
+          info.phone_number.slice(0,3) !== '015' &&
+          info.phone_number.slice(0,3) !== '016' &&
+          info.phone_number.slice(0,3) !== '017' &&
+          info.phone_number.slice(0,3) !== '018' &&
+          info.phone_number.slice(0,3) !== '019'
+        ) {
+          alert(`연락처 양식을 확인해주세요.`)
+        } else {
+          for (let num of info.phone_number) {
+            if (!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(num)) {
+              alert('연락처에 숫자만 입력해주세요.')
+            }
+          }
+        }
       } else {
         if (!!info.photo && typeof info.photo == 'string' || info.photo instanceof String) {
             info.photo = 'same'
