@@ -17,7 +17,7 @@
           <div class="text-hello" v-if="isLoggedIn">
             <!-- <div class="text-hello"> -->
             <!-- user 정보 받아와야 함 -->
-            <p>안녕하세요, <b>{{ profile.nickname }}</b> 님</p>
+            <p>안녕하세요, <b>{{ currentUser.nickname }}</b> 님</p>
           </div>
           <!-- 버튼 -->
           <div class="btnbox" v-if="!isLoggedIn">
@@ -166,7 +166,7 @@
             <p>사람들과 함께 아름다운 집을 만들어요.</p>
           </div>
           <div class="text-hello-tablet" v-if="isLoggedIn">
-            <p>안녕하세요, <b>{{ profile.nickname }}</b> 님</p>
+            <p>안녕하세요, <b>{{ currentUser.nickname }}</b> 님</p>
           </div>
           <!-- 버튼 -->
           <div class="btnbox" v-if="!isLoggedIn">
@@ -312,7 +312,7 @@
             <p>사람들과 함께 아름다운 집을 만들어요.</p>
           </div>
           <div class="text-hello-mobile" v-if="isLoggedIn">
-            <p>안녕하세요, <b>{{ profile.nickname }}</b> 님</p>
+            <p>안녕하세요, <b>{{ currentUser.nickname }}</b> 님</p>
           </div>
           <!-- 버튼 -->
           <div class="btnbox" v-if="!isLoggedIn">
@@ -373,10 +373,10 @@
           <p>여러분의 식물을</p>
           <p>분양해주세요</p>
         </div>
-        <div class="text-sub-mobile pl-5">
+        <div class="text-sub-mobile pl-4">
           <span>"보내는 마음은 아쉬웠지만,</span>
           <br>
-          <span class="d-flex justify-content-end pr-5">좋은 분을 만난거 같았어요."</span>
+          <span class="d-flex justify-content-end pr-4">좋은 분을 만난거 같았어요."</span>
         </div>
         <div class="text-detail-mobile">
           <p>서울에 거주하시는 진아님은</p>
@@ -437,7 +437,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import NavBar from '@/components/NavBar.vue'
 
 export default {
@@ -452,19 +452,13 @@ export default {
     NavBar
   },
   methods: {
-    ...mapActions(['fetchProfile']),
-    beforeFetchProfile() {
-      if (this.isLoggedIn === true) {
-        this.fetchProfile()
-      }
-    },
     handleResize() {
       this.width = window.innerWidth;
     },
     mobileOrPc() {
       if (this.width <= 420) {
         this.device = 'Mobile'
-      } else if (576 < this.width && this.width <= 900) {
+      } else if (576 < this.width && this.width <= 920) {
         this.device = 'Tablet'
       } else {
         this.device = 'PC'
@@ -472,10 +466,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['username', 'isLoggedIn', 'profile']),
+    ...mapGetters(['username', 'isLoggedIn', 'currentUser']),
   },
   created() {
-    this.beforeFetchProfile()
     this.mobileOrPc()
   },
   mounted() {
@@ -656,7 +649,7 @@ a {
 
 .text-main-mobile p {
   margin-bottom: 0;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -676,7 +669,7 @@ a {
 
 .text-sub-mobile {
   margin-bottom: 5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
 }
 
@@ -706,7 +699,7 @@ a {
 
 .text-detail-mobile p {
   margin-bottom: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   display: flex;
   justify-content: center;
 }
@@ -747,7 +740,7 @@ a {
 }
 
 .text-hello-mobile {
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .new-box {

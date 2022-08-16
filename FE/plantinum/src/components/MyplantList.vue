@@ -27,8 +27,9 @@
                 </span>
               </div>
               <div class="col-4 d-flex justify-content-end align-items-center">
-                <span class="material-symbols-outlined humidity">water_drop</span>
-                <span class="humidity">{{ plant.sensing.moisture_level }} %</span>
+                <span class="material-symbols-outlined no-humidity" v-if="!plant.is_connected">water_drop</span>
+                <span class="material-symbols-outlined humidity" v-if="plant.is_connected">water_drop</span>
+                <span class="humidity" v-if="plant.is_connected">{{ plant.sensing.moisture_level }} %</span>
                 <!-- <span class="material-symbols-outlined diary-count">description</span>
                 <span class="diary-count">{{ plant.일지수 }}</span> -->
               </div>
@@ -174,6 +175,11 @@ export default {
 .humidity {
   font-size: 1rem;
   color: #18A7DB;
+}
+
+.no-humidity {
+  font-size: 1rem;
+  color: gray;
 }
 
 .material-symbols-outlined {
