@@ -147,22 +147,23 @@ export default {
       // console.log(this.credentials.status_class)
     },
     beforeUpdateLeaf82(credentials) {
-      if (credentials.plantname === '') {
+      if (!credentials.plantname) {
         alert('이름을 입력해주세요.')
-      } else if (credentials.price === '' || !Number.isInteger(parseInt(credentials.price))) {
+      } else if (!credentials.price || !Number.isInteger(parseInt(credentials.price))) {
         alert('가격을 확인해주세요.')
-      } else if (credentials.sigungu === '') {
+      } else if (!credentials.sigungu) {
         alert('주소를 선택해주세요.')
-      } else if (credentials.content === '') {
+      } else if (!credentials.content) {
         alert('식물을 소개해주세요')
       } else {
-        if (credentials.photo !== '' && typeof credentials.photo == 'string' || credentials.photo instanceof String) {
+        if (!!credentials.photo && typeof credentials.photo == 'string' || credentials.photo instanceof String) {
           credentials.photo = 'same'
         }
         const updateInfo = {
           credentials,
           info: this.info
         }
+        // console.log(credentials.photo)
         this.updateLeaf82(updateInfo)
       }
     },
@@ -186,8 +187,8 @@ export default {
     ...mapGetters(['leaf82Detail', 'sido', 'sigungu', 'username']),
   },
   created() {
-    this.fetchSido()
     this.isMine()
+    this.fetchSido()
   },
   watch: {
     leaf82Detail() {

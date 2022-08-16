@@ -90,7 +90,7 @@
       <div class="col-sm-2 col-md-3 col-0" v-if="!!bList"></div>
       <!-- 리스트가 있을 때 -->
       <div class="leaf82-list col-sm-8 col-md-6 col-0 row d-flex justify-content-center" v-if="!!bList">
-        <div class="item px-2 pb-2" v-for="leaf82 in bList" :key="leaf82.pk">
+        <div class="item px-3 pb-4" v-for="leaf82 in bList" :key="leaf82.pk">
           <router-link class="route" :to="{ name: 'leaf82Detail', params: { username: leaf82.user.username , posting_addr: leaf82.posting_addr } }">
             <div class="item-img d-flex justify-content-center">
               <img :src="leaf82.photo" :alt="`${leaf82.plantname} 사진입니다.`">
@@ -245,7 +245,7 @@ export default {
     beforeFetchSearch(event) {
       const sigungu = event.target.value
       this.info.sigungu = sigungu
-      if (this.info.plantname === '') {
+      if (!this.info.plantname) {
         this.info.page = 1
         const params = {
           sido: this.info.sido,
