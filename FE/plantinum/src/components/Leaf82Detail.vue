@@ -113,7 +113,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['deleteLeaf82', 'setReceiver']),
+    ...mapActions(['deleteLeaf82', 'setReceiver', 'setLeaf82Plant']),
     fillData() {
       this.user = this.leaf82Detail.user
       this.addr = this.leaf82Detail.addr
@@ -128,6 +128,7 @@ export default {
     goChat(){
       console.log(this.user.pk)
       this.setReceiver(this.user.username)
+      this.setLeaf82Plant(this.info.plantname)
     }
   },
   computed: {
