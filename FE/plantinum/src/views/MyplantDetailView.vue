@@ -78,7 +78,7 @@
                       <div v-if="otpTimer > 0">{{ otpTimer }}</div>
                       <div v-if="otpTimer <= 0">0</div>
                       <div class="d-flex justify-content-center">
-                        <progress :value=otpTimer max="20" class="progress-bar"></progress>
+                        <progress :value=otpTimer max="60" class="progress-bar"></progress>
                       </div>
                     </div>
                   </div>
@@ -150,7 +150,7 @@ export default {
       const interval = setInterval(() => {
         this.checkOTP(this.myplantPk)
         this.countTime(this.otpTimer - 1)
-        if (this.otpTimer <= 15 && this.temp_OTP === null) {
+        if (this.otpTimer <= 55 && this.temp_OTP === null) {
           this.stopTimer(interval)
           this.fetchMyplant(this.myplantPk)
           this.modal = 0
@@ -162,7 +162,7 @@ export default {
       return interval},
     stopTimer(Timer) {
       clearInterval(Timer)
-      this.countTime(20)
+      this.countTime(60)
       this.modal = 0
     }
   },
