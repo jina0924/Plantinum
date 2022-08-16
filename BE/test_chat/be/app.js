@@ -42,7 +42,7 @@ const connected_sockets={A:null,B:null,C:null};
 class ChatInfo{
   constructor(num){
     this.room_number = num;
-    this.messages = [{"person": "ALL" , "datetime":nowDate(),"msg": "---- start chatting ----"}];
+    this.messages = [];
     // this.messages=[{"person":"A","datetime":"YYYYMMDDHHMM","msg":"Lorem"}];
   }
 }
