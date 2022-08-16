@@ -187,14 +187,10 @@ input[type="file"] {
 }
 
 /* 하단 */
-.right input {
-  width: 100%;
-  border-radius: 0.5rem;
-  height: 2.5rem;
-}
 
 .right select {
   border-radius: 0.5rem;
+  padding-left: 0.5rem;
   display: block;
   width: 100%;
   height: 2.5rem;
@@ -214,6 +210,9 @@ select:focus {
 
 input {
   display: block;
+  border-radius: 0.5rem;
+  height: 2.5rem;
+  padding-left: 0.5rem;
   width: 100%;
   font-size: 1rem;
   line-height: 1.5;
@@ -233,6 +232,7 @@ input:focus {
 
 textarea {
   display: block;
+  padding-left: 0.5rem;
   width: 100%;
   font-size: 1rem;
   line-height: 1.5;
