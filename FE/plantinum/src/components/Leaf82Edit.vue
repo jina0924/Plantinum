@@ -116,8 +116,8 @@ export default {
       this.credentials.plantname = this.leaf82Detail.plantname
       this.credentials.content = this.leaf82Detail.content
       this.credentials.price = this.leaf82Detail.price
-      this.credentials.category_class = this.leaf82Detail.category_class
-      this.credentials.status_class = this.leaf82Detail.status_class
+      this.credentials.category_class = '분양해요'
+      this.credentials.status_class = '분양대기'
       this.credentials.photo = this.leaf82Detail.photo
     },
     makeImgUrl() {
@@ -251,13 +251,9 @@ input[type="file"] {
 }
 
 /* 하단 */
-.right input {
-  width: 100%;
-  border-radius: 0.5rem;
-  height: 2.5rem;
-}
 
 .right select {
+  padding-left: 0.5rem;
   border-radius: 0.5rem;
   display: block;
   width: 100%;
@@ -279,6 +275,9 @@ input[type="file"] {
 }
 
 input {
+  padding-left: 0.5rem;
+  border-radius: 0.5rem;
+  height: 2.5rem;
   display: block;
   width: 100%;
   font-size: 1rem;
@@ -298,6 +297,7 @@ input:focus {
 }
 
 textarea {
+  padding-left: 0.5rem;
   display: block;
   width: 100%;
   font-size: 1rem;

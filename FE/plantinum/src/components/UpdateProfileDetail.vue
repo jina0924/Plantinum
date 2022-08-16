@@ -161,7 +161,7 @@ export default {
         email: '',
         addr: '',
         zip_code: '',
-        phone_number: '',
+        phone_number: null,
         // dday: '',
         // myplant_count: '',
       },
@@ -211,17 +211,18 @@ export default {
         alert('닉네임을 입력해주세요.')
       } else if (!info.email) {
         alert('이메일을 입력해주세요')
-      } 
-      else if (info.phone_number !== '') {
-        if (info.phone_number.length < 10 || info.phone_number.length > 11) {
+      } else if (info.phone_number !== null) {
+        if (info.phone_number === '') {
+          this.info.phone_number = null
+          if (!!info.photo && typeof info.photo == 'string' || info.photo instanceof String) {
+              info.photo = 'same'
+          }
+          this.updateProfile(info)
+        } else if (info.phone_number.length < 10 || info.phone_number.length > 11) {
           alert('열자리나 열한자리의 휴대전화 번호를 입력해주세요.')
         } else if (
           info.phone_number.slice(0,3) !== '010' && 
           info.phone_number.slice(0,3) !== '011' &&
-          info.phone_number.slice(0,3) !== '012' &&
-          info.phone_number.slice(0,3) !== '013' &&
-          info.phone_number.slice(0,3) !== '014' &&
-          info.phone_number.slice(0,3) !== '015' &&
           info.phone_number.slice(0,3) !== '016' &&
           info.phone_number.slice(0,3) !== '017' &&
           info.phone_number.slice(0,3) !== '018' &&
@@ -234,6 +235,10 @@ export default {
               alert('연락처에 숫자만 입력해주세요.')
             }
           }
+          if (!!info.photo && typeof info.photo == 'string' || info.photo instanceof String) {
+              info.photo = 'same'
+          }
+          this.updateProfile(info)
         }
       } else {
         if (!!info.photo && typeof info.photo == 'string' || info.photo instanceof String) {
