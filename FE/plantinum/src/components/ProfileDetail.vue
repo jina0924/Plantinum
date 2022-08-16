@@ -114,8 +114,8 @@
         </div>
       </div>
       <!-- 내 잎팔이 사진 조회 - 클릭 -->
-      <div class="row px-3" v-if="myleaf82">
-        <div class="profile-myleaf82-on mt-5 px-0 col-12 offset-0 offset-md-3 offset-lg-0" v-if="myleaf82">
+      <div class=" px-3" v-if="myleaf82">
+        <div class="profile-myleaf82-on mt-5 offset-0 offset-md-3 offset-lg-0" v-if="myleaf82">
           <span class="info pr-2" @click="changeMyleaf82">로그인 및 프로필</span>
           <span class="divider">|</span>
           <span class="myleaf82 pl-2">내 잎팔이 글</span>
