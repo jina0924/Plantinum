@@ -1,2 +1,0 @@
-cd chatServer
-nohup node app.js &
