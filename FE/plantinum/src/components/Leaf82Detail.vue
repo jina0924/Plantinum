@@ -15,8 +15,10 @@
         <div class="col-sm-2 col-0"></div>
         <div class="col-sm-8 col-0">
           <div class="right mt-3">
-            <div class="plantname d-flex justify-content-start">
-              <p>{{ leaf82Detail.plantname }} {{ leaf82Detail.category_class }}</p>
+            <div class="plantname d-flex justify-content-start align-items-center">
+              <span class="category" v-if="leaf82Detail.category_class === '분양받아요'">{{ leaf82Detail.category_class }}</span>
+              <span class="category-2" v-if="leaf82Detail.category_class === '분양해요'">{{ leaf82Detail.category_class }}</span>
+              <span class="ml-3">{{ leaf82Detail.plantname }}</span>
             </div>
             <hr>
             <div class="nickname d-flex justify-content-start pb-3">
@@ -200,9 +202,27 @@ p {
   margin: 0;
 }
 
-.plantname p {
+.plantname {
   font-size: 2rem;
   font-weight: bold;
+}
+
+.plantname .category {
+  font-size: 0.8rem;
+  background-color: #f7d489ff;
+  border-radius: 0.4rem;
+  padding: 0.3rem;
+  color: white;
+  font-weight: normal;
+}
+
+.plantname .category-2 {
+  font-size: 0.8rem;
+  background-color: #b2c9ab;
+  border-radius: 0.4rem;
+  padding: 0.3rem;
+  color: white;
+  font-weight: normal;
 }
 
 .nickname-route {
