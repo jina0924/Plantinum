@@ -202,6 +202,7 @@ export const Account = {
         //   router.push({ name: 'profile' })
         // })
         .catch(err => {
+          console.log(err.response.data)
           commit('SET_AUTH_ERROR', err.response.data)
           router.push({ name: 'updateProfile' })
           if (err.response.status === 401) {
