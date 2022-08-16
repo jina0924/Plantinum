@@ -42,10 +42,11 @@ const connected_sockets={A:null,B:null,C:null};
 class ChatInfo{
   constructor(num){
     this.room_number = num;
-    this.messages = [{"person": "ALL" , "datetime":nowDate(),"msg": "---- start chatting ----"}];
+    this.messages = [];
     // this.messages=[{"person":"A","datetime":"YYYYMMDDHHMM","msg":"Lorem"}];
   }
 }
+
 
 //저장된 채팅 내역 불러오기
 const remain_datas = fs.readFileSync('./stored_data/chatrooms.json').toString();
@@ -64,6 +65,7 @@ for (data in chat_datas){
 }
 
 //저장된 방정보 불러오기
+
 const remain_rooms = fs.readFileSync('./stored_data/user_rooms.json').toString();
 const room_datas = JSON.parse(remain_rooms);
 
@@ -143,7 +145,20 @@ io.on('connection', socket => {
     */
   });
 
-  socket.on('startchat',async (data)=>{
+  socket.on('startchat',async (data,plant)=>{
+
+    if((socket.user_name in user_rooms) == true){
+      if((data in user_rooms[socket.user_name]) === true){
+        console.log("it is exist!!")
+        const chat={"person": "PLANT" , "datetime":nowDate(),"msg": plant};
+        chattingRooms[user_rooms[socket.user_name][data]].messages.push(chat);
+        const newchatdata=JSON.stringify(chat_datas);
+        fs.writeFileSync('./stored_data/chatrooms.json',newchatdata);
+        socket.emit("roomIsExist",user_rooms[socket.user_name][data]);
+        return;
+      }
+    }
+
     console.log("make chattingrooms");
     console.log(socket.user_name,data)
     //처음 채팅방이 만들어짐
@@ -156,10 +171,13 @@ io.on('connection', socket => {
     //user_rooms[socket.user_name][data]=rooms_count;
     //user_rooms[data][socket.user_name]=rooms_count;
     
+    //보낸사람
     if((socket.user_name in user_rooms) === true){
+      console.log(socket.user_name ,"is here");
       user_rooms[socket.user_name][data]=rooms_count;
       //user_rooms[socket.user_name].push([data.receiver,rooms_count]);
     }else{
+      console.log(socket.user_name ,"is not here");
       user_rooms[socket.user_name]={};
       user_rooms[socket.user_name][data]=rooms_count;
       //user_rooms[socket.user_name]=[[data.receiver,rooms_count]];
@@ -170,7 +188,7 @@ io.on('connection', socket => {
     //console.log(socket.user_name)
 
     //받는 사람도
-    if((data.receiver in user_rooms) === true){
+    if((data in user_rooms) === true){
       user_rooms[data][socket.user_name]=rooms_count;
     }else{
       user_rooms[data]={};
@@ -200,15 +218,17 @@ io.on('connection', socket => {
       }
     }*/
 
-    const chat={"person": "ALL" , "datetime":nowDate(),"msg": "---- start chatting ----"};
+    const chat={"person": "PLANT" , "datetime":nowDate(),"msg": plant};
+    chattingRooms[rooms_count].messages.push(chat);
     //해당 채팅 시작알림 메세지 보내기
     io.to(String(rooms_count)).emit('message', chat);
     //만들어진 룸넘버 제공
 
     //json 저장
     chat_datas[String(rooms_count)]=chattingRooms[rooms_count];
+    
     rooms_count++;
-
+    
     chat_datas["rooms_count"] = rooms_count;
 
     const newchatdata=JSON.stringify(chat_datas);
