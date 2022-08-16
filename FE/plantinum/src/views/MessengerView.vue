@@ -1,4 +1,4 @@
-<template>
+so<template>
   <nav-bar></nav-bar>
   <!-- <div class="row mx-0"> -->
       <!-- 여백 -->
@@ -42,18 +42,19 @@
             <div class="card-body">
 
               <div class="row">
+                <!-- 채팅 목록 -->
                 <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
 
-                  <div class="p-3">
+                  <div class="p-2">
 
-                    <div class="profile-div mb-3">
+                    <div class="chat-list-title mb-3 d-flex justify-content-center">
                       <span>채팅 목록</span>
                     </div>
 
                     <div class="chat-list-view">
-                      <ul class="my-0 list-unstyled">
-                        <li class="p-0 m-0 border-bottom">
-                          <div @click="changeReceiver(key)" v-for=" (val,key) in rooms" :key="val" class="d-flex justify-content-between chat-list-item" :class="{'list-item-active': key===now_receiver}">
+                      <ul class="m-0 list-unstyled">
+                        <li class="m-0 border-bottom chat-list-item" @click="changeReceiver(key)" v-for=" (val,key) in rooms" :key="val" :class="{'list-item-active': key===now_receiver}">
+                          <div class="d-flex justify-content-between">
                             <div class="d-flex flex-row">
                               <div>
                                 <img
@@ -69,33 +70,14 @@
                             </div> -->
                           </div>
                         </li>
-
-                        <li class="p-0 m-0 border-bottom">
-                          <div @click="changeReceiver(key)" v-for=" (val,key) in rooms" :key="val" class="d-flex justify-content-between chat-list-item" :class="{'list-item-active': key===now_receiver}">
-                            <div class="d-flex flex-row">
-                              <div>
-                                <img
-                                  :src="baseURL + urls[key]"
-                                  alt="상대방 프로필 사진" class="d-flex align-self-center chat-list-img">
-                              </div>
-                              <div class="pt-3">
-                                <p class="your-name">{{ key }}</p>
-                              </div>
-                            </div>
-                            <!-- <div class="pt-1">
-                              <p class="mb-1 time-cnt">Just now</p>
-                            </div> -->
-                          </div>
-                        </li>
-
-
-
                       </ul>
                     </div>
+                    <hr class="d-md-none">
 
                   </div>
 
                 </div>
+                <hr class="d-md-none">
                 <!-- 채팅 내용 -->
                 <div class="col-md-6 col-lg-7 col-xl-8">
                   <div class="you-username" v-if="now_receiver!==-1">{{ now_receiver }}</div>
@@ -107,20 +89,29 @@
                     </div>
                     <!-- 채팅방 클릭 후 -->
                     <div v-for="msg in now_messages" :key="msg">
+                      <!-- 거래 식물 이름 -->
+                      <div class="d-flex flex-row justify-content-center" v-if="msg.person==='PLANT'">
+                        <div>
+                          <!-- <p class="plant-name">{{ msg.msg }} 채팅 시작</p> -->
+                          <p class="plant-name">---- {{ msg.msg }} 채팅 시작 ----</p>
+                          <!-- <p class="message-time">{{ msg.datetime.substr(0, 10) }}</p> -->
+                        </div>
+                      </div>
                       <!-- 상대가 적은 메시지 -->
-                      <div class="d-flex flex-row justify-content-start" v-if="msg.person!==username">
+                      <div class="d-flex flex-row justify-content-start" v-if="msg.person!==username && msg.person!=='PLANT'">
                         <img :src="baseURL + urls[now_receiver]"
                           alt="avatar 1" class="chat-profile-img">
                         <div>
                           <p class="your-message">{{ msg.msg }}</p>
-                          <p class="message-time">{{ msg.datetime }}</p>
+                          <p class="message-time">{{ msg.datetime.substr(5, 11) }}</p>
+                          <!-- <p class="message-time">{{ msg.datetime.substr(0, 10) }}</p> -->
                         </div>
                       </div>
                       <!-- 내가 적은 메시지 -->
                       <div class="d-flex flex-row justify-content-end" v-if="msg.person===username">
                         <div>
                           <p class="my-message">{{ msg.msg }}</p>
-                          <p class="message-time">{{ msg.datetime }}</p>
+                          <p class="message-time">{{ msg.datetime.substr(5, 11) }}</p>
                         </div>
                       </div>
                     </div>
@@ -169,7 +160,7 @@ export default {
   },
   computed: {
     // ...mapGetters(['receiver','currentUser',])
-    ...mapGetters(['receiver','username',])
+    ...mapGetters(['receiver','username', 'leaf82_plant']),
   },
   async created() {
     // this.id = this.currentUser.pk
@@ -179,12 +170,15 @@ export default {
     if( this.receiver !== -1 ){
       this.now_receiver=this.receiver;
     }
-    //console.log(this.receiver)
+    
+    if ( this.leaf82_plant !== -1) {
+      this.now_plant = this.leaf82_plant
+    }
 
     console.log(this.rooms)
 
     // 소켓 생성 - 서버주소
-    this.socket = io('http://localhost:3000')
+    this.socket = io('http://i7a109.p.ssafy.io:3000')
     this.socket.on('connect', () => {
     })
     // 소켓연결후 id(pk) 건내줌
@@ -197,12 +191,15 @@ export default {
     if(this.now_receiver !== -1){
       // 전에 거래 기록 없을 때
       if( (this.now_receiver in this.rooms) == false ){
-        this.socket.emit('startchat',this.now_receiver);
+        this.socket.emit('startchat',this.now_receiver, this.leaf82_plant);
       }else{
         // 전에 거래 기록 있을 때
         this.socket.emit("getMessages",this.rooms[this.now_receiver]);
       }
     }
+    this.socket.on("roomIsExist",(room_num) => {
+      this.socket.emit("getMessages",room_num);
+    })
 
 
     // 서버에서 보낸 채팅내역 받아오기
@@ -224,7 +221,7 @@ export default {
     
   },
   methods : {
-    ...mapActions(['fetchReceiver','setReceiver',]),
+    ...mapActions(['fetchReceiver','setReceiver', 'fetchLeaf82Plant', 'setLeaf82Plant']),
 
     changeReceiver(data){
       console.log(data);
@@ -239,7 +236,6 @@ export default {
         // 채팅시작
         //start();
         this.socket.emit("getMessages",this.rooms[this.now_receiver]);
-
       }
     },
 
@@ -261,8 +257,7 @@ export default {
         
         this.socket.emit("getMessages",this.rooms[this.receiver]);
       }
-    }
-
+    },
 
   },
 
@@ -270,8 +265,10 @@ export default {
     console.log("socket disconnect")
     this.socket.disconnect();
     this.now_receiver=-1;
+    // this.now_plant=-1;
     this.rooms={};
     this.setReceiver(-1);
+    // this.setLeaf82Plant(-1);
     next();
   },
 
@@ -354,6 +351,11 @@ export default {
   box-shadow: 0 0 .5rem #edeae2;
 }
 
+.chat-list-title {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
 .chat-list-view {
   position: relative;
   height: 500px;
@@ -384,7 +386,7 @@ export default {
 }
 
 .chat-list-item {
-  padding: .7rem;
+  padding: .8rem;
 }
 
 .chat-list-item:hover {
@@ -405,7 +407,7 @@ export default {
 }
 
 .leaf82-chat-start {
-  color: #A6A6A6;
+  color: #D9D9D9;
   /* margin: 5rem, auto; */
   text-align: center;
   font-size: 1.2rem;
@@ -451,7 +453,7 @@ export default {
 }
 
 .your-name {
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0;
 }
 
@@ -466,6 +468,18 @@ export default {
   font-size: .8rem;
   font-weight: 400;
   color: rgb(73, 73, 73);
+}
+
+.plant-name {
+  /* background-color: #f7d489; */
+  /* border-radius: 10px; */
+  /* margin-bottom: .3rem; */
+  padding: .2rem;
+  /* border-top: thick double #f7d489; */
+  /* border-top: thick double #D9D9D9 ;
+  border-bottom: thick double #D9D9D9 ; */
+  /* border-bottom: .3rem solid #845A49 ; */
+  color: #845A49  ;
 }
 
 .your-message {
