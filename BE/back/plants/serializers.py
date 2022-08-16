@@ -66,7 +66,7 @@ class MyplantListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Myplant
-        fields = ('pk', 'nickname', 'photo', 'sensing', 'diary_count',)
+        fields = ('pk', 'nickname', 'photo', 'sensing', 'diary_count', 'is_connected',)
 
 
 class PlantsSerializer(serializers.ModelSerializer):
