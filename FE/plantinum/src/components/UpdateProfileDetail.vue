@@ -1,5 +1,5 @@
 <template>
-  <form class="profile-detail mt-5 row" @submit.prevent="beforeUpdateProfile(info)">
+  <div class="profile-detail mt-5 row">
     <!-- 헤드부분 -->
     <div class="profile-head pt-5 col-lg-4 row">
       <div class="col-2"></div>
@@ -36,7 +36,7 @@
         <!-- 회원정보 수정 -->
         <div class="btns row">
           <div class="profile-update-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center mr-2">
-              <button type="submit" class="btn">
+              <button type="submit" class="btn" @click="beforeUpdateProfile(info)">
                 저장
               </button>
           </div>
@@ -126,18 +126,18 @@
           <div class="container p-0 pb-2">
             <div class="card nickname">
               <div class="card-head d-flex justify-content-between pt-3">
-                <span class="kind pl-4">내 식물</span>
+                <span class="kind pl-4">회원탈퇴</span>
                 <span class="material-symbols-outlined icon pr-4">potted_plant</span>
               </div>
               <div class="card-text pb-5">
-                <span class="card-content pl-4">{{ profile.myplant_count }}</span>
+                <button class="signout card-content ml-3" @click="signout()"> 탈퇴하기</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -169,7 +169,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateProfile', 'fetchCurrentUser', 'fetchProfile']),
+    ...mapActions(['updateProfile', 'fetchCurrentUser', 'fetchProfile', 'signout']),
     fillOldInfo() {
       this.info = this.profile
     },
@@ -246,7 +246,7 @@ export default {
         }
         this.updateProfile(info)
       }
-    }
+    },
   },
   computed: {
     ...mapGetters(['profile'])
@@ -458,6 +458,17 @@ input[type="file"] {
 .card-content {
   color: #7E7E7E;
   font-size: 0.9rem;
+  background: none;
+  border: none;
+}
+
+.card-content:hover {
+  cursor: pointer;
+  color: #65805d;
+}
+
+.card-content:focus {
+  outline: none;
 }
 
 .card-text a {
