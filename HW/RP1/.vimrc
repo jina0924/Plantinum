@@ -17,6 +17,7 @@ set sw=4
 set ls=2
 set cindent
 set autoindent
+set encoding =utf-8
 syntax on
 
 let delimitMate_expand_cr=1
