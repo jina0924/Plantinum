@@ -207,8 +207,10 @@ export default {
       this.now_messages = messages
     })
     // 서버에서 메세지 받아오기
-    this.socket.on('message', (message) => {
-      this.now_messages.push(message)
+    this.socket.on('message', (message, sender) => {
+      if(sender === this.now_receiver || sender == this.username){
+        this.now_messages.push(message)
+      }
     })
 
     //채팅방 정보 받아오기
