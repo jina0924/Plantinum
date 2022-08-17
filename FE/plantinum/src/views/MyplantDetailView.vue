@@ -23,7 +23,7 @@
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
               <progress :value="myplant.sensing?.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
-              <span class="col-md-7 col-xl-8" v-if="myplant.is_connected">{{ myplant.sensing?.moisture_level }}</span>
+              <span class="moisture-level-percent" v-if="myplant.is_connected">{{ myplant.sensing?.moisture_level }}</span>
             </div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">등록 날짜</span>
@@ -48,7 +48,7 @@
               </div>
 
               <!-- 정보 모달 -->
-              <div class="black-bg" @click="close($event)" v-if="modal===1 | modal===2">
+              <div class="black-bg" @click="close($event)" v-if="modal===1 || modal===2 ">
                 <div class="modal-bg myplant-modal">
                   <!-- 계절별 식물 관리 정보 모달 -->
                   <div v-if="modal===1">
@@ -68,7 +68,8 @@
               </div>
 
               <!-- OTP 모달 -->
-              <div class="black-bg" v-if="!!temp_OTP">
+              <!-- <div class="black-bg" v-if="!!temp_OTP"> -->
+              <div class="black-bg" @click="close($event)" v-if="modal===3">
                 <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
                   <div>
@@ -80,6 +81,7 @@
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="60" class="progress-bar"></progress>
                       </div>
+                      <button class="modal-close-btn">닫기</button>
                     </div>
                   </div>
                 </div>
@@ -131,11 +133,7 @@ export default {
       }
     },
   },
-  // watch: {
-  //   myplant() {
-  //     this.plant_info = this.myplant.plant_info
-  //   }
-  // },
+
   methods: {
     ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant']),
     close(event) {
@@ -150,12 +148,15 @@ export default {
       const interval = setInterval(() => {
         this.checkOTP(this.myplantPk)
         this.countTime(this.otpTimer - 1)
+        console.log(this.otpTimer)
+        // console.log(this.temp_OTP)
         if (this.otpTimer <= 55 && this.temp_OTP === null) {
           this.stopTimer(interval)
           this.fetchMyplant(this.myplantPk)
           this.modal = 0
-        } else if (this.myplant.is_connected) {
+        } else if (this.myplant.is_connected===true) {
           this.stopTimer(interval)
+          this.temp_OTP = null
           this.modal = 0
         }
       }, 1000)
@@ -172,6 +173,7 @@ export default {
       this.startTimer()
     }
   },
+
 }
 </script>
 
@@ -265,6 +267,10 @@ export default {
   border-radius:10px;
   background: #18A7DB;
   transition: width 1s linear;
+}
+
+.moisture-level-percent { 
+  color: #18A7DB;
 }
 
 .not-connected {
