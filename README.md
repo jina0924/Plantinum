@@ -62,12 +62,13 @@ $ npm run serve
 
 ## Docs
 [문서 모음](./Docs/)
-> [프로젝트_명세서](./Docs/%5B%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%AA%85%EC%84%B8%EC%84%9C%5DPlantinum.docx) : 프로젝트가 수행해야 할 모든 기능과 제약 사항, 서비스적인 요구사항을 분석해서 기록해둔 문서. 
-> [Develop_log_server.md](./Docs/Develop_log_server.md) : 서버 개발일지.
-> [Develop_log.md](./Docs/Develop_log.md) : 하드웨어 개발일지.
-> [HW 흐름 구상 및 유즈케이스.docx](./Docs/HW%20%ED%9D%90%EB%A6%84%20%EA%B5%AC%EC%83%81%20%EB%B0%8F%20%EC%9C%A0%EC%A6%88%EC%BC%80%EC%9D%B4%EC%8A%A4.docx) : 하드웨어 흐름 구상도.
-> [Jira_guide.pdf](./Docs/Jira_guide.pdf) : Jira 사용법 정리.
-> [STACK_EXPLANATION](./Docs/STACK_EXPLANATION.md) : 기술 스택 정리.
+[프로젝트_명세서](./Docs/%5B%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%AA%85%EC%84%B8%EC%84%9C%5DPlantinum.docx) : 프로젝트가 수행해야 할 모든 기능과 제약 사항, 서비스적인 요구사항을 분석해서 기록해둔 문서. 
+[Develop_log_server.md](./Docs/Develop_log_server.md) : 서버 개발일지
+[Develop_log.md](./Docs/Develop_log.md) : 하드웨어 개발일지
+[HW 흐름 구상 및 유즈케이스.docx](./Docs/HW%20%ED%9D%90%EB%A6%84%20%EA%B5%AC%EC%83%81%20%EB%B0%8F%20%EC%9C%A0%EC%A6%88%EC%BC%80%EC%9D%B4%EC%8A%A4.docx) : 하드웨어 흐름 구상도.
+[Jira_guide.pdf](./Docs/Jira_guide.pdf) : Jira 사용법 정리
+[STACK_EXPLANATION](./Docs/STACK_EXPLANATION.md) : 기술 스택 정리
+> > > 
 
 
 ## GIT
