@@ -3,7 +3,7 @@ import drf from '@/api/drf'
 
 export const Timer = {
   state: {
-    otpTimer: 20,
+    otpTimer: 60,
     temp_OTP: null,
   },
   getters: {

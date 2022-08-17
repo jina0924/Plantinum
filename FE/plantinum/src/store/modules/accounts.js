@@ -218,19 +218,38 @@ export const Account = {
         data : credentials,
         headers : getters.authHeader
       })
-        .then(res => {
-          const token = res.data.key
-          dispatch('saveToken', token)
-          dispatch('fetchCurrentUser')
-          router.push({ name: 'profile' })
-          alert('비밀번호가 변경되었습니다.')
+      .then(res => {
+        const token = res.data.key
+        dispatch('saveToken', token)
+        dispatch('fetchCurrentUser')
+        router.push({ name: 'profile' })
+        alert('비밀번호가 변경되었습니다.')
+      })
+      .catch(err => {
+        console.log(err)
+        if (err.response.status === 401) {
+          router.push({ name: 'updatepassword' })
+        }
+      })
+    },
+    signout({ dispatch , getters }) {
+      if (confirm('정말로 탈퇴하시겠습니까?')) {
+        axios({
+          url: drf.accounts.signout(),
+          method: 'delete',
+          headers: getters.authHeader
+        })
+        .then(() =>{
+          dispatch('removeToken')
+          dispatch('resetCurrentUser')
+          dispatch('resetProfile')
+          alert('성공적으로 탈퇴되었습니다.')
+          router.push({ name: 'home' })          
         })
         .catch(err => {
           console.log(err)
-          if (err.response.status === 401) {
-            router.push({ name: 'updatepassword' })
-          }
         })
-    },
+      }
+    }
   }
 }

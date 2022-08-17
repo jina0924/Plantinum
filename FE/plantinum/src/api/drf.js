@@ -15,7 +15,8 @@ export default {
     currentUserInfo: () => HOST + ACCOUNTS + 'user/',
     profile: () => HOST + ACCOUNTS + 'profile/',
     updateProfile: () => HOST + ACCOUNTS + 'userinformation/',
-    changePassword: () => HOST + ACCOUNTS + 'password/' + 'change/'
+    changePassword: () => HOST + ACCOUNTS + 'password/' + 'change/',
+    signout: () => HOST + ACCOUNTS + 'withdraw/'
   },
   myplant: {
     plantSearch: () => HOST + 'plants/' + 'search/',
