@@ -111,7 +111,7 @@ def create_myplant(request):
 
 
 # 연결되지 않은 상태, otp도 없는 상태에서 otp 발급
-# 2분이 지나면 otp 삭제
+# 1분이 지나면 otp 삭제
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -140,14 +140,14 @@ def create_otp(request, myplant_pk):
                 myplant.update(otp_code=otp_code)
 
                 def set_otp_redis():
-                    cache.set(f'{me}_{myplant_pk}', otp_code, timeout=20)  # 지속시간 20초
+                    cache.set(f'{me}_{myplant_pk}', otp_code, timeout=60)  # 지속시간 60초
                 set_otp_redis()
 
                 otp_redis = cache.get(f'{me}_{myplant_pk}')
 
                 def delete_otp():
                     myplant.update(otp_code=None)
-                Timer(20, delete_otp).start()  # 20초뒤 삭제 함수 실행
+                Timer(60, delete_otp).start()  # 60초뒤 삭제 함수 실행
 
                 return Response({'otp_code': otp_redis})
             
