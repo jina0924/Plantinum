@@ -197,11 +197,7 @@ class sensorThread(QThread):
 
     def send_data(self):
         self.cur = db.cursor()
-        self.sql_str = "update plants_sensing
-                        set remaining_water = " +water_amount+ 
-                        ", state_led= " + (1-issleep) +
-                        ", moisture_level = " + soil +
-                        " where id=" + str(user_data['id']) 
+        self.sql_str = "update plants_sensing set remaining_water = " +water_amount+ ", state_led= " + (1-issleep) +", moisture_level = " + soil +" where id=" + str(user_data['id']) 
         self.cur.execute(self.sql_str)
         db.commit()
 
@@ -259,7 +255,7 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
     def dbset(self):
         #db커넥트
         global db
-        db = mysql.connector.connect(host="your_db_server",user='user', password='user_pw', database='your_db',buffered=True)
+        db = mysql.connector.connect(host="db_sever",user='user_name', password='user_pw', database='db',buffered=True)
 
     def main(self):
         pass
@@ -273,13 +269,20 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
         global success_acc
         global plant_id,nickname,water_amount,hum_threshold
         global user_data,watering_cnt
+        
 
+        if(user_data['id'] == -1):
+            msgBox = QMessageBox()
+            msgBox.setText("There is no information\nPlease push NEW button")
+            msgBox.exec()
         #쿼리요청
         self.cur = db.cursor()
-        self.sql_str = "select isconnect from plants_myplant where id=" + str(user_data['id'])
+        self.sql_str = "select is_connected from plants_myplant where id=" + str(user_data['id'])
         self.cur.execute(self.sql_str)
+        db.commit()
 
         for result in self.cur:
+            print(result)
             # connect success 바로 메인페이지로 이동
             if(result[0] == 1):
                 #connect == 1 이면 연결유지 상태 메인페이지 이동
@@ -291,6 +294,7 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
                 widget.setCurrentIndex(2)
             else:
                 #연결이 끊기면 오류메세지
+                print("connect is not here")
                 msgBox = QMessageBox()
                 msgBox.setText("There are no connected plants")
                 msgBox.exec()
@@ -308,8 +312,8 @@ class EntryPage(QDialog, QWidget, Ui_EntryUI):
             #print(result[0])
 
         #다시 누를 것 대비_변경반영
-        db.commit()
 
+        self.cur.close()
 #메인 페이지 _ 파도 화면
 class MainPage(QDialog, QWidget, Ui_MainUI):
     def __init__(self):
@@ -454,21 +458,26 @@ class DetailPage(QDialog, QWidget, Ui_DetailUI):
             self.watering_board[i].setText(user_data['recent_watering'][len(user_data['recent_watering'])-i-1])
 
         #닉네임
-        self.cur = db.cursor()
-        self.sql_str = "select name from plants_myplant where id=" + str(user_data['id'])
-        self.cur.execute(self.sql_str)
+        try:
+            self.cur = db.cursor()
+            self.sql_str = "select nickname from plants_myplant where id=" + str(user_data['id'])
+            self.cur.execute(self.sql_str)
+            db.commit()
 
-        for (res) in self.cur:
+            for (res) in self.cur:
             #print(res)
             #닉네임 변경시
-            if(res[0] != user_data['nickname']):
-                self.label_11.setText(res[0])
-                user_data['nickname'] = res[0]
-                with open(userfilepath, "w", encoding='utf-8') as file:
-                    json.dump(user_data, file, indent="\t", ensure_ascii=False)
+                if(res[0] != user_data['nickname']):
+                    self.label_11.setText(res[0])
+                    user_data['nickname'] = res[0]
+                    with open(userfilepath, "w", encoding='utf-8') as file:
+                        json.dump(user_data, file, indent="\t", ensure_ascii=False)
 
-        self.cur.close()
-        db.commit()
+            self.cur.close()
+        except Exception as e:
+            print(e)
+            db.reconnect()
+            
 
         #물의 양
         if(water_amount == 1):
@@ -524,9 +533,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
             self.cur = db.cursor()
 
             # is otp exist?
-            self.sql_str = "select A.id, A.nickname, A.otp_code, A.is_connected, B.watercycle_spring
-                            from plants_myplant A join plants_plants B on A.plant_info_id = B.id
-                            where otp_code = " + self.otp_code
+            self.sql_str = "select A.id, A.nickname, A.otp_code, A.is_connected, B.watercycle_spring from plants_myplant A join plants_plants B on A.plant_info_id = B.id where otp_code = " + self.otp_code
             self.cur.execute(self.sql_str)
             # result = 1개
             if(self.cur.rowcount ==1):
@@ -548,7 +555,7 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
                     self.flag = 1
 
                     # make otp=NULL, isconnect = 1
-                    self.sql_str = "update plants_myplant set otp_code=NULL, is_connected=1 where id="+self.plant_id
+                    self.sql_str = "update plants_myplant set otp_code=NULL, is_connected=1 where id="+str(self.plant_id)
                     self.cur.execute(self.sql_str)
 
                     #json 수정
@@ -560,19 +567,19 @@ class OtpPage(QDialog, QWidget, Ui_Otp):
                     user_data['nickname'] = self.name
                     user_data['recent_watering'] = []
                     user_data['water_amount']=0
-                    user_data['hum_threshold']=30
                     #humuduty 정리
-                    if(self.hum_threshold == 053001):
+                    if(self.hum_threshold == "053001"):
                         hum_threshold = 80
-                    elif(self.hum_threshold == 053002):
+                    elif(self.hum_threshold == "053002"):
                         hum_threshold = 60
-                    elif(self.hum_threshold == 053003):
+                    elif(self.hum_threshold == "053003"):
                         hum_threshold = 40
-                    elif(self.hum_threshold == 053004):
+                    elif(self.hum_threshold == "053004"):
                         hum_threshold = 20
                     else:
                         hum_threshold = 0
 
+                    user_data['hum_threshold']=hum_threshold
                     #수정반영
                     with open(userfilepath, "w", encoding='utf-8') as file:
                         json.dump(user_data, file, indent="\t",ensure_ascii=False)
