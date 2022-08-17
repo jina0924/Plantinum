@@ -12,7 +12,7 @@ export const Timer = {
   },
   mutations: {
     COUNT_TIME: (state, otptimer) => state.otpTimer = otptimer,
-    SET_OTP: (state, otp) => state.temp_OTP = otp,
+    SET_OTP: (state, otp) => state.temp_OTP = otp
   },
   actions: {
     countTime({ commit }, otptimer) {
@@ -30,17 +30,21 @@ export const Timer = {
         console.log(err.response)
       })
     },
-
+    
     checkOTP({ commit, getters }, plantPk) {
-        axios({
-          url: drf.myplant.otpStatus(plantPk),
-          method: 'get',
-          headers: getters.authHeader,
-        })
-        .then(res => commit('SET_OTP', res.data.otp_code))
-        .catch(err => {
-          console.log(err.response)
-        })
+      // console.log('왔니?')
+      axios({
+        url: drf.myplant.otpStatus(plantPk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        console.log(res.data.otp_code)
+        commit('SET_OTP', res.data.otp_code)
+      })
+      .catch(err => {
+        console.log(err.response)
+      })
       },
   },
 }
