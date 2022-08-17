@@ -179,7 +179,13 @@ def otp_status(request, myplant_pk):
     user = myplant.user_id
     
     if me == user:
-        otp_redis = cache.get(f'{me}_{myplant_pk}')
+        is_connected = myplant.is_connected
+        if is_connected == True:
+            otp_redis = None
+
+        else:
+            otp_redis = cache.get(f'{me}_{myplant_pk}')
+        print(otp_redis)
         return Response({'otp_code': otp_redis})
 
     else:
