@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
@@ -173,3 +174,11 @@ def updateuserinformation(request):
     
         return Response(serializer.data)
 
+
+@api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def withdraw(request):
+    user = User.objects.get(username=request.user)
+    user.delete()
+    return Response({'detail': '정상적으로 탈퇴되었습니다.'})
