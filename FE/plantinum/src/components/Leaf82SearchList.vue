@@ -2,17 +2,36 @@
   <!-- 서치 배너 -->
   <div class="search row">
     <div class="col-sm-2 col-md-4 col-0"></div>
-    <div class="search-box col-sm-8 col-md-4 col-12 d-flex justify-content-center">
-      <input class="search-input pl-3" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
-      <button class="search-btn" type="submit" @click="beforeSearch()">
-        <span class="material-symbols-outlined d-flex align-items-center justify-content-center">search</span>
-      </button>
+    <div class="search-box col-sm-8 col-md-4 col-12">
+      <div class="d-flex justify-content-center">
+        <input class="search-input pl-3" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
+        <button class="search-btn" type="submit" @click="beforeSearch()">
+          <span class="material-symbols-outlined d-flex align-items-center justify-content-center">search</span>
+        </button>
+      </div>
+      <div class="d-flex justify-content-center">
+        <select class="sido pl-3 active" @change="beforeFetchSigungu($event)">
+          <option value="null">지역을 선택해주세요</option>
+          <option v-for="loc in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
+        </select>
+        <!-- 시도가 선택되면 활성화 -->
+        <select class="sigungu pl-3 active" @change="beforeFetchSearch($event)" v-if="this.info.sido">
+          <option selected>동네를 선택해주세요</option>
+          <option v-for="loc in sigungu" :key="loc.pk" :value="loc.sigungu">{{ loc.sigungu }}</option>
+        </select>
+        <select class="sigungu pl-3" v-if="!this.info.sido" disabled>
+          <option selected>동네를 선택해주세요</option>
+        </select>
+        <button class="reset d-flex align-items-center justify-content-center" @click="reset">
+          <span class="material-symbols-outlined">autorenew</span>
+        </button>
+      </div>
     </div>
     <div class="col-sm-2 col-md-4 col-0"></div>
   </div>
   <div class="select-box row mt-5 mb-3">
     <div class="col-sm-2 col-0"></div>
-    <div class="select row d-flex justify-content-between col-sm-8 col-12">
+    <div class="select row d-flex justify-content-end col-sm-8 col-12">
       <div class="create">
         <!-- 생성버튼 -->
         <router-link :to="{ name : 'leaf82New' }" v-if="isLoggedIn">
@@ -21,13 +40,11 @@
           </button>
         </router-link>
       </div>
-      <div class="filter d-flex justify-content-center">
-        <!-- 검색버튼 -->
+      <!-- <div class="filter d-flex justify-content-center">
         <select class="sido mr-1" @change="beforeFetchSigungu($event)">
           <option value="null">지역을 선택해주세요</option>
           <option v-for="loc in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
         </select>
-        <!-- 시도가 선택되면 활성화 -->
         <select class="sigungu" @change="beforeFetchSearch($event)" v-if="this.info.sido">
           <option selected>동네를 선택해주세요</option>
           <option v-for="loc in sigungu" :key="loc.pk" :value="loc.sigungu">{{ loc.sigungu }}</option>
@@ -35,7 +52,7 @@
         <select class="sigungu" v-if="!this.info.sido" disabled>
           <option selected>동네를 선택해주세요</option>
         </select>
-      </div>
+      </div> -->
     </div>
     <div class="col-sm-2 col-0"></div>
   </div>
@@ -261,6 +278,12 @@ export default {
         this.search(params)
       }
     },
+    reset() {
+      this.info.plantname = ''
+      this.info.sido = ''
+      this.info.sigungu = ''
+      this.fetchSearch()
+    },
     onoff() {
       this.isSell = !this.isSell
       if(this.isSell) {
@@ -408,7 +431,6 @@ div {
   height: 2.5rem;
   border: 0;
   border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
   font-size: 1.2rem;
 }
 
@@ -421,7 +443,6 @@ div {
   border: 0;
   background-color: white;
   border-top-right-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
   color: black;
 }
 
@@ -457,16 +478,55 @@ div {
   transition: all 0.5s;
 }
 
-
 select {
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
-  border-color: rgb(191, 191, 191); 
-  height: 1.8rem; 
+  height: 2.5rem;
+  width: 45%;
 }
 
 select:focus {
   outline: none;
+}
+
+.active:hover {
+  cursor: pointer;
+}
+
+.sido {
+  border-color: #d2d2d2;
+  border-left: none;
+  border-bottom: none;
+  border-bottom-left-radius: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.sigungu {
+  border-color: #d2d2d2;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  font-size: 1.2rem;
+}
+
+.reset {
+  width: 10%;
+  height: 2.5rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-color: #d2d2d2;
+  border-right: none;
+  border-bottom: none;
+  border-width: 1px;
+  background-color: white;
+  border-bottom-right-radius: 0.5rem;
+  color: black;
+}
+
+.reset:focus {
+  outline: none;
+}
+
+.reset:hover {
+  cursor: pointer;
 }
 
 /* 리스트 영역 */

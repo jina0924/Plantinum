@@ -299,6 +299,10 @@ button:hover {
   cursor: pointer;
 }
 
+button:focus {
+  outline: none;
+}
+
 .cancel a button:hover{
   background-color: #d2d2d2;
   transition: all 0.5s;
