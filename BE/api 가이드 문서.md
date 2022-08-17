@@ -236,6 +236,26 @@ http://127.0.0.1:8000/api/v1/accounts/userinformation/
 
 
 
+### 회원탈퇴
+
+- 로그인 사용자 - 토큰 사용
+- DELETE
+- URL
+
+```
+http://127.0.0.1:8000/api/v1/accounts/withdraw/
+```
+
+- Response
+
+```
+{
+    "detail": "정상적으로 탈퇴되었습니다."
+}
+```
+
+
+
 # 3. 식물 관련 페이지
 
 ### 전체 식물 데이터 조회
