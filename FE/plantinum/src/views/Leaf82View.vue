@@ -12,19 +12,19 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Leaf82View',
+
   components: {
     NavBar,
     Leaf82SearchList
   },
-  data(){
-    return {
-    }
-  },
+
   methods: {
     ...mapActions(['fetchSido']),
   },
+
   computed: {
   },
+  
   created() {
     this.fetchSido()
   },

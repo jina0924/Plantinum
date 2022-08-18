@@ -13,6 +13,7 @@ import Leaf82NewForm from '@/components/Leaf82NewForm.vue'
 
 export default {
   name: 'Leaf82NewView',
+  
   components: {
     NavBar,
     Leaf82NewForm,
