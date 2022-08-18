@@ -96,6 +96,7 @@ export default {
 .navbar-brand {
   font-family: 'Dancing Script', cursive;
   font-size: 2.5rem;
+  margin-left: 1.5rem;
 }
 
 .nav-link {
