@@ -156,6 +156,7 @@ export default {
       rooms: {},
       urls: {},
       baseURL: "https://plantinum.s3.ap-northeast-2.amazonaws.com/",
+      nicknames: {},
     }
   },
   computed: {
@@ -217,6 +218,7 @@ export default {
     this.socket.on('sendRooms',(data)=>{
       this.rooms[data.with_who] = data.room_num;
       this.urls[data.with_who] = data.photo_url;
+      // this.nicknames[data.with_who] = fetchNickname(data.with_who)
     })
     
 
