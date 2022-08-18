@@ -13,4 +13,5 @@ urlpatterns = [
     path('myplant/<int:myplant_pk>/disconnect/', views.disconnect),
     path('myplant/<int:myplant_pk>/detail/', views.detail),
     path('myplant/<int:myplant_pk>/diary/', views.diary),
+    path('myplant/<int:myplant_pk>/otp/remove/', views.otp_remove),
 ]
