@@ -166,7 +166,7 @@ def otp_status(request, myplant_pk):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def otp_status(request, myplant_pk):
+def otp_remove(request, myplant_pk):
     myplant = get_object_or_404(Myplant, pk=myplant_pk)
     me = request.user.id
     user = myplant.user_id
