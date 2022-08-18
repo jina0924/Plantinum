@@ -12,7 +12,7 @@ export const Timer = {
   },
   mutations: {
     COUNT_TIME: (state, otptimer) => state.otpTimer = otptimer,
-    SET_OTP: (state, otp) => state.temp_OTP = otp
+    SET_OTP: (state, otp) => state.temp_OTP = otp,
   },
   actions: {
     countTime({ commit }, otptimer) {
@@ -43,6 +43,21 @@ export const Timer = {
       .catch(err => {
         console.log(err)
       })
-      },
+    },
+
+    removeOTP({ commit, getters, dispatch }, plantPk) {
+      axios({
+        url: drf.myplant.otpRemove(plantPk),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      .then(res => {
+        commit('SET_OTP', res.data.otp_code)
+        dispatch('countTime', 60)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
   },
 }
