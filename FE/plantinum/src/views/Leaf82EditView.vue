@@ -12,10 +12,12 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Leaf82EditView',
+
   components: {
     Leaf82Edit,
     NavBar
   },
+
   data() {
     return {
       info: {
@@ -24,9 +26,11 @@ export default {
       },
     }
   },
+
   methods: {
     ...mapActions(['fetchLeaf82Detail'])
   },
+  
   created() {
     this.fetchLeaf82Detail(this.info)
   },

@@ -14,10 +14,12 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Leaf82DetailView',
+
   components: {
     Leaf82Detail,
     NavBar
   },
+
   data() {
     return {
       info: {
@@ -26,12 +28,15 @@ export default {
       },
     }
   },
+
   methods: {
     ...mapActions(['fetchLeaf82Detail']),
   },
+
   computed: {
     ...mapGetters(['leaf82Detail'])
   },
+  
   created() {
     this.fetchLeaf82Detail(this.info)
   },

@@ -11,8 +11,8 @@ export const Leaf82 = {
     buyObject: {},
     buyList: [],
     leaf82Detail: {}
-    // 상세정보는 url로 created로 받아오자
   },
+
   getters: {
     sido: state => state.sido,
     sigungu: state => state.sigungu,
@@ -22,6 +22,7 @@ export const Leaf82 = {
     buyList: state => state.buyList,
     leaf82Detail: state => state.leaf82Detail
   },
+
   mutations: {
     SET_SIDO: (state, sido) => state.sido = sido,
     SET_SIGUNGU: (state, sigungu) => state.sigungu = sigungu,
@@ -75,6 +76,7 @@ export const Leaf82 = {
     },
     SET_LEAF82DETAIL: (state, leaf82Detail) => state.leaf82Detail = leaf82Detail
   },
+
   actions: {
     resetSigungu({ commit }) {
       commit('SET_SIGUNGU', [])
@@ -105,7 +107,6 @@ export const Leaf82 = {
 
     },
 
-    // 초기 화면 띄어주기 및 서치, 필터링 모두 소화
     search({ commit }, params) {
       axios({
         url: drf.leaf82.search(),

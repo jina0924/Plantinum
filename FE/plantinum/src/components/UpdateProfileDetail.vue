@@ -1,11 +1,8 @@
 <template>
   <div class="profile-detail mt-5 row">
-    <!-- 헤드부분 -->
     <div class="profile-head pt-5 col-lg-4 row">
       <div class="col-2"></div>
-      <!-- 프로필 사진 및 닉네임과 이메일 -->
       <div class="profile-head-content col-8">
-        <!-- 프로필 사진 -->
         <div class="profile-img-box">
           <div>
             <img :src="preview" alt="회원님의 사진입니다." class="profile-img">
@@ -25,15 +22,12 @@
             </span>
           </label>          
         </div>
-        <!-- 닉네임 -->
         <div class="profile-nickname">
           <p class="mb-0">{{ info.nickname }}</p>
         </div>
-        <!-- 이메일 -->
         <div class="profile-email">
           <p class="">{{ info.email }}</p>
         </div>
-        <!-- 회원정보 수정 -->
         <div class="btns row">
           <div class="profile-update-btn px-0 col-md-3 col-sm-6 d-flex justify-content-center mr-2">
               <button type="submit" class="btn" @click="beforeUpdateProfile(info)">
@@ -51,9 +45,7 @@
       </div>
       <div class="col-2"></div>
     </div>
-    <!-- body 부분 -->
     <div class="profile-body col-lg-8">
-      <!-- 로그인/프로필 정보 - 기본형 -->
       <div class="profile-info-on mt-5 offset-0 offset-md-3 offset-lg-0">
         <span class="info pr-2">로그인 및 프로필</span>
       </div>
@@ -145,65 +137,58 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'UpdateProfileDetail',
+
   data() {
     return {
-      // oldInfo: {
-      //   nickname: '',
-      //   email: '',
-      //   addr: '',
-      //   zip_code: '',
-      //   phone_number: '',
-      //   dday: '',
-      //   myplant_count: '',
-      // },
       info: {
         nickname: '',
         email: '',
         addr: '',
         zip_code: '',
         phone_number: null,
-        // dday: '',
-        // myplant_count: '',
+
       },
       preview: ''
     }
   },
+
   methods: {
     ...mapActions(['updateProfile', 'fetchCurrentUser', 'fetchProfile', 'signout']),
+
     fillOldInfo() {
       this.info = this.profile
     },
+
     makeImgUrl() {
       this.preview = this.profile.photo
     },
+
     findAddr() {
       new window.daum.Postcode({
         oncomplete: (data) => {
-          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-          //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-          if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+          if (data.userSelectedType === 'R') {
               this.info.addr = data.roadAddress;
-          } else { // 사용자가 지번 주소를 선택했을 경우(J)
+          } else {
               this.info.addr = data.jibunAddress;
           }
           this.info.zip_code = data.zonecode
-
-          // 우편번호와 주소 정보를 해당 필드에 넣는다.
           document.getElementById('sample6_postcode').value = data.zonecode;
           document.getElementById("sample6_address").value = this.info.addr;
         }
       }).open();
     },
+
     onInputImage() {
       this.info.photo = this.$refs.profileImage.files[0]
       const url = URL.createObjectURL(this.info.photo)
       this.preview = url
     },
+
     onDeleteImage() {
       this.info.photo = ''
       this.preview = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/profile.jpg'
     },
+
     beforeUpdateProfile(info) {
       if (info.nickname.length > 15) {
         alert('닉네임은 최대 15글자입니다.')
@@ -248,14 +233,17 @@ export default {
       }
     },
   },
+
   computed: {
     ...mapGetters(['profile'])
   },
+
   created() {
     this.fetchProfile()
     this.fillOldInfo()
     this.makeImgUrl()
   },
+
   watch: {
     profile() {
       this.fillOldInfo()
@@ -273,8 +261,6 @@ export default {
   border-radius: 15px;
   box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
-
-  /* profile-head 부분 */
 
 .profile-img-box {
   position: relative;
@@ -297,8 +283,6 @@ export default {
 
 .img-add {
   display: flex;
-  /* justify-content: center; */
-  /* margin-top: .3rem; */
   align-items: center;
 }
 
@@ -322,12 +306,6 @@ input[type="file"] {
   overflow: hidden;
   border: 0;
 }
-
-/* .profile-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 10rem;
-} */
 
 .profile-update-btn .btn{
   border-radius: 15px;
@@ -380,8 +358,6 @@ input[type="file"] {
   font-size: 1rem;
   color: #7E7E7E;
 }
-
-/* profile-body 부분 */
 
 .profile-info-on .info {
   font-size: 2rem;
