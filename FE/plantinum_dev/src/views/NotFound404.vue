@@ -1,21 +1,20 @@
 <template>
-    <div class="home">
-        <div class="wrapper">
-            <router-link class="plantinum" :to="{ name: 'home' }">Plantinum</router-link>
-
-            <div class="text1">
-                <p>잘못된 요청입니다</p>
-            </div>
-            <div class="btn1">
-                <router-link :to="{ name: 'home' }">
-                    <button class="btn">돌아가기</button>
-                </router-link>
-            </div>
-            <div class="forzerofor">
-                <p>404</p>
-            </div>
-        </div>
+  <div class="home">
+    <div class="wrapper">
+      <router-link class="plantinum" :to="{ name: 'home' }">Plantinum</router-link>
+      <div class="text1">
+        <p>잘못된 요청입니다</p>
+      </div>
+      <div class="btn1">
+        <router-link :to="{ name: 'home' }">
+          <button class="btn">HOME</button>
+        </router-link>
+      </div>
+      <div class="forzerofor">
+        <p>404</p>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -31,8 +30,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* width: 100%; */
-    /* height: 100%; */
     height: 100vh;
     margin: 0;
 }
@@ -81,7 +78,6 @@ export default {
     font-weight: bold;
     color: white;
     text-shadow: 2px 2px 5px rgba(16, 39, 112, .2);
-    /* background-color: #65805d; */
     align-items: center;
 
 }

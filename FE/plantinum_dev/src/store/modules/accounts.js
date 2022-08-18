@@ -81,8 +81,7 @@ export const Account = {
         router.push({ name: 'home' })
       })
       .catch(err => {
-        console.error(err.response.data)
-        console.log()
+        console.log(err)
         if(!!err.response.data.username && err.response.data.username[0] === '해당 사용자 이름은 이미 존재합니다.') {
           alert('해당 사용자 이름은 이미 존재합니다.')
         } else if (!!err.response.data.email && err.response.data.email[0] === '유효한 이메일 주소를 입력하십시오.') {
@@ -95,7 +94,9 @@ export const Account = {
           alert('비밀번호가 단순합니다. 복잡한 비밀번호를 입력해주세요.')
         } else if (!!err.response.data.password1 && err.response.data.password1[0] === '비밀번호가 전부 숫자로 되어 있습니다.') {
           alert('비밀번호가 전부 숫자로 되어 있습니다.')
-        }else {
+        } else if (!!err.response.data.password1 && err.response.data.password1[0] === '비밀번호가 너무 짧습니다. 최소 8 문자를 포함해야 합니다.') {
+          alert('비밀번호가 너무 짧습니다. 최소 8 문자를 포함해야 합니다.')
+        } else {
           alert('다시 입력해주세요.')
         }
         commit('SET_AUTH_ERROR', err.response.data)
