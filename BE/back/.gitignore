@@ -3,6 +3,7 @@
 
 
 my_settings.py
+debug.log
 
 ### Django ###
 *.log
