@@ -148,7 +148,7 @@ export default {
         phone_number: null,
 
       },
-      preview: ''
+      preview: '',
     }
   },
 
@@ -179,9 +179,14 @@ export default {
     },
 
     onInputImage() {
-      this.info.photo = this.$refs.profileImage.files[0]
-      const url = URL.createObjectURL(this.info.photo)
-      this.preview = url
+      if (this.$refs.profileImage.files[0].size > 2621440) {
+        alert('사진이 너무 큽니다. 2.5MB보다 작은 사진을 선택해주세요.')
+        this.val = this.$refs.profileImage.files[0]
+      } else {
+        this.info.photo = this.$refs.profileImage.files[0]
+        const url = URL.createObjectURL(this.info.photo)
+        this.preview = url
+      }
     },
 
     onDeleteImage() {
