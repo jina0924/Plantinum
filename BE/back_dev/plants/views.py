@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
-from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, MyplantListSerializer
+from .serializers import MyplantSerializer, PlantsSerializer, PlantsSearchSerializer, DiarySerializer, MyplantListSerializer
 from .models import Myplant, Plants, Diary
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -19,6 +19,27 @@ def plants(request):
     plants = get_list_or_404(Plants)
     serializer = PlantsSerializer(plants, many=True)
     return Response(serializer.data)    
+
+# from rest_framework.pagination import PageNumberPagination
+# from .pagination import PaginationHandlerMixin
+# from rest_framework.views import APIView
+
+
+# class MemoPagination(PageNumberPagination):
+#     page_size_query_param = 'limit'
+    
+# class MemoList(APIView, PaginationHandlerMixin):
+#     pagination_class = MemoPagination
+#     serializer_class = PlantsSerializer
+#     def get(self, request, format=None, *args, **kwargs):
+#         instance = Plants.objects.all()
+#         page = self.paginate_queryset(instance)
+#         if page is not None:
+#             serializer = self.get_paginated_response(self.serializer_class(page,
+#  many=True).data)
+#         else:
+#             serializer = self.serializer_class(instance, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 # 내 식물 전체 조회 
@@ -79,6 +100,13 @@ def create_myplant(request):
 
             serializer.save(user=user, plant_info=plant_info)
 
+        # def otp():
+        #     myplant = Myplant.objects.filter(pk=serializer.data['id'])
+        #     # print(myplant.values('otp_code'))  otp code 존재
+        #     myplant.update(otp_code='')
+        #     # print(myplant.values('otp_code'))  otp code 삭제
+        # Timer(301, otp).start()  # 5분 뒤 함수 실행
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -96,6 +124,7 @@ def create_otp(request, myplant_pk):
         user = myplant.values('user_id')[0]['user_id']
         
         if me == user:  # OTP 요청자와 식물 등록자가 같으면
+            # if myplant.values('otp_code')[0]['otp_code'] == None and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드가 발급되지 않았고 연결된 상태가 아니라면
             if cache.get(f'{me}_{myplant_pk}') == None and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드가 발급되지 않았고 연결된 상태가 아니라면
 
                 otp_code = ''
@@ -121,6 +150,10 @@ def create_otp(request, myplant_pk):
                 Timer(60, delete_otp).start()  # 60초뒤 삭제 함수 실행
 
                 return Response({'otp_code': otp_redis})
+            
+            # elif myplant.values('otp_code')[0]['otp_code'] and myplant.values('is_connected')[0]['is_connected'] == False:  # 해당 식물의 OTP 코드는 존재하나 연결된 상태가 아니라면
+            #     otp_code = myplant.values('otp_code')[0]['otp_code']
+            #     return Response({'otp_code': otp_code})
 
             elif cache.get(f'{me}_{myplant_pk}') and myplant.values('is_connected')[0]['is_connected'] == False:  # 연결되지 않은 상태로 otp 존재
                 otp_redis = cache.get(f'{me}_{myplant_pk}')
@@ -152,7 +185,7 @@ def otp_status(request, myplant_pk):
 
         else:
             otp_redis = cache.get(f'{me}_{myplant_pk}')
-
+        print(otp_redis)
         return Response({'otp_code': otp_redis})
 
     else:
@@ -234,4 +267,30 @@ def detail(request, myplant_pk):
         return update()
     elif request.method == 'DELETE':
         return delete()
+
+
+# 수정필요
+# 물주기 각 식물 별 다이어리-식물 별 전체조회/다이어리 작성
+@api_view(['GET', 'POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def diary(request, myplant_pk):
+
+    def read_diary():
+        diary = Diary.objects.filter(my_plant_id=myplant_pk).order_by('-pk')
+        serializer = DiarySerializer(diary, many=True)
+        return Response(serializer.data)
+
+    def create_diary():
+        my_plant = get_object_or_404(Myplant, pk=myplant_pk)
+        serializer = DiarySerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(my_plant=my_plant)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    if request.method == 'GET':
+        return read_diary()
+    elif request.method == 'POST':
+        return create_diary()
+    # 삭제 추가하기
 

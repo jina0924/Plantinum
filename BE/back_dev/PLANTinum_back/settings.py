@@ -175,6 +175,25 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 
 # OLD_PASSWORD_FIELD_ENABLED = True
 
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
+
 AWS_ACCESS_KEY_ID = my_settings.AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = my_settings.AWS_SECRET_ACCESS_KEY
 AWS_REGION = 'ap-northeast-2'
