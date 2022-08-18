@@ -13,11 +13,8 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">로그인</h4>
-											<!-- <h4 class="mb-4">로그인</h4> -->
-                      <account-error-list v-if="authError"></account-error-list>
                       <form @submit.prevent="login(login_credentials)">
                         <div class="form-group">
-                          <!-- account error -->
                           <input v-model="login_credentials.username" type="text" name="login-username" class="form-style" placeholder="Your ID" id="login-username" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">person</span>
                         </div>
@@ -27,17 +24,16 @@
                         </div>
                         <button class="mt-4 btn" type=submit>로그인</button>
                       </form>
-                      <!-- router link  -->
-                      <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a></p>
+                      <p class="mb-0 mt-4 text-center">
+                        <router-link :to="{ name: 'home'}" class="link">메인 화면으로 돌아가기</router-link>
+                      </p>
                     </div>
                   </div>
                 </div>
 								<div class="card-back">
 									<div class="center-wrap">
 										<div class="section text-center">
-											<!-- <h4 class="mb-4 pb-3">회원가입</h4> -->
 											<h4 class="mb-4">회원가입</h4>
-                      <account-error-list v-if="authError"></account-error-list>
                       <form @submit.prevent="signup(signup_credentials)">
                         <div class="form-group">
                           <input v-model="signup_credentials.username" type="text" name="username" class="form-style" placeholder="Your ID" id="username" autocomplete="off">
@@ -51,19 +47,10 @@
                           <input v-model="signup_credentials.password1" type="password" name="signuppass1" class="form-style" placeholder="Your Password" id="signuppass1" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">lock</span>
                         </div>
-                        <!-- ------------------------------------------------------- -->
                         <div class="form-group mt-2">
                           <input v-model="signup_credentials.password2" type="password" name="signuppass2" class="form-style" placeholder="Confirm Password" id="signuppass2" autocomplete="off">
                           <span class="material-symbols-outlined input-icon">lock</span>
                         </div>
-                        <!-- <div class="form-group mt-2">
-                          <input type="tel" name="phone" class="form-style" placeholder="Your Phone Number" id="phone" autocomplete="off">
-                          <span class="material-symbols-outlined input-icon">call</span>
-                        </div>
-                        <div class="form-group mt-2">
-                          <input type="text" name="nickname" class="form-style" placeholder="Your Nickname" id="nickname" autocomplete="off">
-                          <span class="material-symbols-outlined input-icon">badge</span>
-                        </div> -->
                         <button class="mt-4 btn" type=submit>회원가입</button>
                       </form>
                     </div>
@@ -80,13 +67,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import AccountErrorList from '@/components/AccountErrorList.vue'
 
 export default {
   name: 'LoginView',
-  components: {
-    AccountErrorList,
-  },
+
   data() {
     return {
       login_credentials: {
@@ -102,9 +86,11 @@ export default {
       emailerror : ''
     }
   },
+
   computed: {
-    ...mapGetters(['authError']),
+    ...mapGetters(['authError',]),
   },
+  
   methods: {
     ...mapActions(['login', 'signup', 'fetchAuthError'])
   },
@@ -185,7 +171,7 @@ h5 span{
   border-radius: 50%;
   color: #ffffff;
   background-color: #b2c9ab;
-  content: '↖';
+  content: '\2196';
   z-index: 20;
   top: -10px;
   left: -10px;
@@ -271,13 +257,18 @@ h5 span{
   line-height: 22px;
   letter-spacing: 0.5px;
   outline: none;
-  color: #c4c3ca;
+  color: rgb(91, 91, 91);
   background-color: #ffffff;
   border: none;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
   box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
 }
+
+.form-style::placeholder {
+  color: #c4c3ca;
+}
+
 .form-style:focus,
 .form-style:active {
   border: none;
