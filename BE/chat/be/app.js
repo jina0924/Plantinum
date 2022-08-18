@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const { createServer } = require("http");
 const { pool } = require("./db");
 const fs = require('fs')
-
+const cors=require('cors');
 //const { networkInterfaces } = require("os");
 //const { profile } = require("console");
 
@@ -16,11 +16,22 @@ const app = express()
 const http = createServer(app)
 
 app.use(express.json())
+//app.use(cors());
 
-//웹 소켓 서버를 초기화한다. 두번째로 서버를 초기화할 때 여러 옵션을 줄 수 있다.
+
+let corsOptions={
+	origin:'http://plantinum.co.kr',
+	credentials:true
+}
+
+app.use(cors(corsOptions))
+
+
+// 웹 소켓 서버를 초기화한다. 두번째로 서버를 초기화할 때 여러 옵션을 줄 수 있다.
 const io = new Server(http, {
   cors: {
-    origin: ['http://localhost:8080']
+	  origin: ['http://plantinum.co.kr']
+	  //origin: "*"
   }
 })
 
@@ -182,7 +193,7 @@ io.on('connection', socket => {
       user_rooms[socket.user_name][data]=rooms_count;
       //user_rooms[socket.user_name]=[[data.receiver,rooms_count]];
     }
-    console.log(user_rooms);
+    //console.log(user_rooms);
 
     
     //console.log(socket.user_name)
@@ -278,7 +289,7 @@ io.on('connection', socket => {
     //console.log(chattingRooms[data.room_num].messages);
     //chattingRooms[data.room_num].messages.push(message);
     //messages_send.push(message);
-    io.to(String(data.room_num)).emit('message', chat);
+    io.to(String(data.room_num)).emit('message', chat, socket.user_name);
 
     //채팅 저장
     //chat_datas[data.room_num].messages.push(chat);
@@ -301,14 +312,12 @@ io.on('connection', socket => {
   });
 })
 
-/*
-app.get("/", async (req,res) => {
-  const data = await geturl("plantinum_test2");
-  console.log(data);
-  res.json(data);
-})
-*/
 
+app.get("/", async (req,res) => {
+  //const data = await geturl("plantinum_test2");
+  //console.log(data);
+  res.send("Hello world");
+})
 // app.listen이 아닌 http.listen를 사용한다.
 http.listen(3000, () => {
   console.log('started server')
