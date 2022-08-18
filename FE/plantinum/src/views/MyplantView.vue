@@ -1,14 +1,11 @@
 <template>
   <div class="myplant">
     <nav-bar></nav-bar>
-    <!-- 배경 화면 -->
     <div class="container my-0">
       <div class="banner-img">
       </div>
     </div>
-    <!-- 리스트 -->
     <myplant-list :myplants='myplants_data'></myplant-list>
-    <!-- 추가 버튼 (스티키 바텀) -->
     <div class="create-btn" v-if="mypage">
       <router-link class="add px-5 mx-5 pb-5" :to="{ name: 'myplantNew' }">
         <button class="btn">
@@ -51,7 +48,6 @@ export default {
     }
   },
   computed : {
-    // ...mapGetters(['myplants', 'currentUser', 'isLoggedIn',])
     ...mapGetters(['myplants', 'username', 'isLoggedIn',])
   },
   watch: {
@@ -75,12 +71,9 @@ export default {
 <style scoped>
 .container {
   height: 50vh;
-  /* height: 500px; */
-  /* width: 100vw; */
   margin: 0;
   padding: 0;
   max-width: 1920px;
-  /* max-height: 500px; */
 }
 
 .banner-img {
@@ -89,7 +82,6 @@ export default {
   width: 100%;
   margin: 0;
   background-size: cover;
-  /* background-repeat: repeat-x; */
 }
 
 .myplant {

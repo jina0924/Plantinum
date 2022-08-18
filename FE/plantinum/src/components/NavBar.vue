@@ -78,17 +78,10 @@ export default {
   },
   methods: {
     ...mapActions(['logout',]),
-    // abc () {
-    //   this.username = this.currentUser.username
-    // }
     go() {
       router.go()
     }
   },
-  // created () {
-  //   console.log(this.$route.name)
-  //   // this.abc()
-  // }
 }
 </script>
 
@@ -96,6 +89,7 @@ export default {
 .navbar-brand {
   font-family: 'Dancing Script', cursive;
   font-size: 2.5rem;
+  margin-left: 1.5rem;
 }
 
 .nav-link {
@@ -115,12 +109,6 @@ export default {
   width: 100%;
 }
 
-/* .nav-item a.router-link-exact-active {
-font-weight: 600px;
-text-align: center;
-text-decoration-line: none;
-} */
-
 .btn:hover {
   background-color: #65805d;
   transition: all 0.5s;
@@ -130,9 +118,5 @@ text-decoration-line: none;
   font-size: 1rem;
 }
 
-/* .nav-link.router-link-exact-active {
-  font-weight: 700;
-  text-decoration-line: none;
-} */
 
 </style>
