@@ -7,4 +7,5 @@ urlpatterns = [
     path('userinformation/', views.updateuserinformation),
     path('user/', views.currentuser),
     path('withdraw/', views.withdraw),
+    path('nickname/<username>/', views.nickname),
 ]
