@@ -33,9 +33,6 @@
                                 <p class="your-name">{{ nicknames[key] }}</p>
                               </div>
                             </div>
-                            <!-- <div class="pt-1">
-                              <p class="mb-1 time-cnt">Just now</p>
-                            </div> -->
                           </div>
                         </li>
                       </ul>
@@ -60,9 +57,7 @@
                       <!-- 거래 식물 이름 -->
                       <div class="d-flex flex-row justify-content-center" v-if="msg.person==='PLANT'">
                         <div>
-                          <!-- <p class="plant-name">{{ msg.msg }} 채팅 시작</p> -->
                           <p class="plant-name">---- {{ msg.msg }} 채팅 시작 ----</p>
-                          <!-- <p class="message-time">{{ msg.datetime.substr(0, 10) }}</p> -->
                         </div>
                       </div>
                       <!-- 상대가 적은 메시지 -->
@@ -72,7 +67,6 @@
                         <div>
                           <p class="your-message">{{ msg.msg }}</p>
                           <p class="message-time">{{ msg.datetime.substr(5, 11) }}</p>
-                          <!-- <p class="message-time">{{ msg.datetime.substr(0, 10) }}</p> -->
                         </div>
                       </div>
                       <!-- 내가 적은 메시지 -->
@@ -132,8 +126,6 @@ export default {
     ...mapGetters(['receiver','username', 'leaf82_plant', 'nickname']),
   },
   async created() {
-    // this.id = this.currentUser.pk
-    // this.id = localStorage.getItem('username')
     this.id = this.username
 
     if( this.receiver !== -1 ){
@@ -144,8 +136,6 @@ export default {
       this.now_plant = this.leaf82_plant
     }
 
-    // console.log(this.rooms)
-
     // 소켓 생성 - 서버주소
     this.socket = io('http://i7a109.p.ssafy.io:3000')
     this.socket.on('connect', () => {
@@ -154,7 +144,6 @@ export default {
     this.socket.emit('makeSocketName',this.id);
     // 현재 채팅방 리스트 불러오기
     this.socket.emit('getRooms',this.id);
-    // console.log(this.rooms)
 
     //-1이 아니면 거래에서 건너온것_start
     if(this.now_receiver !== -1){
@@ -187,9 +176,6 @@ export default {
       this.rooms[data.with_who] = data.room_num;
       this.urls[data.with_who] = data.photo_url;
       this.nicknames[data.with_who] = data.nickname;
-      // console.log(this.urls, this.nicknames)
-      // this.nicknames[data.with_who] = nickname_data
-      // console.log(this.nicknames)
     })
     
 
@@ -199,7 +185,6 @@ export default {
     ...mapActions(['setReceiver',]),
 
     changeReceiver(data){
-      // console.log(data);
       //현재 채팅자와 같을때 - 아무일도 일어나지 않음
       if(this.now_receiver === data){
         return;
@@ -209,7 +194,6 @@ export default {
         // 상대 변경
         this.now_receiver=data;
         // 채팅시작
-        //start();
         this.socket.emit("getMessages",this.rooms[this.now_receiver]);
       }
     },
@@ -237,10 +221,8 @@ export default {
   },
 
   beforeRouteLeave(to,from,next){
-    // console.log("socket disconnect")
     this.socket.disconnect();
     this.now_receiver=-1;
-    // this.now_plant=-1;
     this.rooms={};
     this.setReceiver(-1);
     next();

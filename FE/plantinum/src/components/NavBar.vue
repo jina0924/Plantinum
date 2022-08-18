@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" v-if="isLoggedIn">
-          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" :style="[isMyplant ? {fontWeight: 700} : {fontWeight: 400}]">내 식물</router-link>
+          <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username: username } }" :style="[isMyplant ? {fontWeight: 700} : {fontWeight: 400}]" v-if="!!username">내 식물</router-link>
         </li>
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }">내 식물</router-link>
@@ -18,7 +18,7 @@
             잎팔이
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div @click="go()">
+            <div>
               <router-link class="dropdown-item" :to="{ name: 'leaf82' }">거래</router-link>
             </div>
             <div class="dropdown-divider"></div>
@@ -43,7 +43,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import router from '@/router'
 
 export default {
   name: 'NavBar',
@@ -74,10 +73,6 @@ export default {
 
   methods: {
     ...mapActions(['logout',]),
-    
-    go() {
-      router.go()
-    }
   },
 }
 </script>

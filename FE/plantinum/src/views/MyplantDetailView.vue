@@ -130,7 +130,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant']),
+    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant', 'removeOTP']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
@@ -166,6 +166,11 @@ export default {
       this.startTimer()
     }
   },
+  beforeUnmount() {
+    if (this.temp_OTP) {
+      this.removeOTP(this.$route.params.plantPk)
+    }
+  }
 
 }
 </script>
