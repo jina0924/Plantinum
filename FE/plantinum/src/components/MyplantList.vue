@@ -12,7 +12,6 @@
     </div>
     <!-- 내 식물 카드 목록 -->
     <div class="yesplant" v-if="myplant_list[0]">
-      <!-- <div class="col-md-2 px-0"></div> -->
       <div class="col-1"></div>
       <div class="col-10 row px-0 card-section">
         <div class="card" v-for="plant in myplant_list" :key="plant.pk">
@@ -21,17 +20,15 @@
               <img :src="plant.photo" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
             </div>
             <div class="d-flex justify-content-between plant-info">
-              <div class="col-8">
+              <div class="col-7">
                 <span class="plant-name">
                   {{ plant.nickname }}
                 </span>
               </div>
-              <div class="col-4 d-flex justify-content-end align-items-center">
+              <div class="col-5 d-flex justify-content-end align-items-center">
                 <span class="material-symbols-outlined no-humidity" v-if="!plant.is_connected">water_drop</span>
                 <span class="material-symbols-outlined humidity" v-if="plant.is_connected">water_drop</span>
                 <span class="humidity" v-if="plant.is_connected">{{ plant.sensing.moisture_level }} %</span>
-                <!-- <span class="material-symbols-outlined diary-count">description</span>
-                <span class="diary-count">{{ plant.일지수 }}</span> -->
               </div>
             </div>
           </router-link>
@@ -39,7 +36,6 @@
       </div>
       <div class="col-1"></div>
     </div>
-    <!-- 리스트가 없을 때 -->
     <div class="container">
       <div class="noplant" v-if="!myplants[0]">
         <span class="material-symbols-outlined noplant-icon">
@@ -60,14 +56,12 @@ export default {
     return {
       sort_by : '등록순↓',
       myplant_list : [],
-      // username: 'guest',
     }
   },
   props : {
     myplants: Array,
   },
   computed : {
-    // ...mapGetters(['currentUser']),
     ...mapGetters(['username']),
   },
   watch: {
@@ -89,13 +83,7 @@ export default {
         })
       }
     },
-    // fetchUsername() {
-    //   this.username = this.$route.params.username
-    // },
   },
-  // created() {
-  //   this.fetchUsername()
-  // }
 }
 </script>
 
@@ -110,10 +98,6 @@ export default {
   background-color: white;
   color: #B2C9AB;
   border-color: #B2C9AB;
-  /* border-style: solid; */
-  /* border-radius: 5px; */
-  /* height: 2.5rem;
-  width: 5rem; */
 }
 
 .sort-btn:focus {
@@ -152,8 +136,6 @@ export default {
 }
 
 .plant-img img {
-  /* width: 95%;
-  height: 95%; */
   padding: 0.5rem;
   border-radius: 20px;
   position: absolute;
@@ -184,12 +166,10 @@ export default {
 
 .material-symbols-outlined {
   font-size: 1.5rem;
-  /* margin: 0 0 1rem 0; */
 }
 
 .noplant-icon {
   font-size: 14rem;
-  /* margin: 0 0 1rem 0; */
 }
 
 .container {

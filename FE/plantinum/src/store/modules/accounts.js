@@ -3,14 +3,6 @@ import axios from 'axios'
 import drf from '@/api/drf'
 
 export const Account = {
-  // state: {
-  // },
-  // getters: {
-  // },
-  // mutations: {
-  // },
-  // actions: {
-  // },
   state: {
     token: localStorage.getItem('token') || '' ,
     currentUser: {},
@@ -117,7 +109,6 @@ export const Account = {
         router.push({ name: 'home' })
       })
       .catch(err => {
-        console.error(err.response.data)
         alert('다시 한 번 작성해주세요.')
         commit('SET_AUTH_ERROR', err.response.data)
       })
@@ -136,10 +127,9 @@ export const Account = {
         alert('logout 되었습니다')
         router.push({ name: 'home' })
       })
-      // 에러 발생 시 어떻게 할 지 고민해야 함
       .catch(err => {
         alert('잘못된 접근입니다.')
-        console.log(err.response)
+        console.log(err)
       })
     },
 

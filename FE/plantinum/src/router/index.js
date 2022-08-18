@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
-// import LogoutView from '@/views/LogoutView.vue'
-import SignupView from '@/views/SignupView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import UpdatePasswordView from '@/views/UpdatePasswordView.vue'
 
@@ -27,22 +25,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView,
-    // props: true
   },
   {
     path: '/login',
     name: 'login',
     component: LoginView
-  },
-  // {
-  //   path: '/logout',
-  //   name: 'logout',
-  //   component: LogoutView
-  // },
-  {
-    path: '/signup',
-    name: 'signup',
-    component: SignupView
   },
   {
     path: '/profile',
@@ -132,9 +119,6 @@ const router = createRouter({
   }
 })
 
-// 페이지 이동할 때마다 검사함
-// to 내가 가려고 하는 부분(내식물, 입팔이 등등)
-// from은 어디서 오냐를 본다
 router.beforeEach((to, from, next) => {
   store.commit('SET_AUTH_ERROR', null)
 
