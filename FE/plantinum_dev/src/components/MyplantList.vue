@@ -21,12 +21,12 @@
               <img :src="plant.photo" :alt="`${plant.nickanme} 사진 입니다.`" class="img-fluid">
             </div>
             <div class="d-flex justify-content-between plant-info">
-              <div class="col-8">
+              <div class="col-7">
                 <span class="plant-name">
                   {{ plant.nickname }}
                 </span>
               </div>
-              <div class="col-4 d-flex justify-content-end align-items-center">
+              <div class="col-5 d-flex justify-content-end align-items-center">
                 <span class="material-symbols-outlined no-humidity" v-if="!plant.is_connected">water_drop</span>
                 <span class="material-symbols-outlined humidity" v-if="plant.is_connected">water_drop</span>
                 <span class="humidity" v-if="plant.is_connected">{{ plant.sensing.moisture_level }} %</span>

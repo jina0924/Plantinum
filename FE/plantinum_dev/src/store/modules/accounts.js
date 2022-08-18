@@ -17,7 +17,8 @@ export const Account = {
     authError: null,
     profile: {},
     username: localStorage.getItem('username') || '',
-    leaf82Set: []
+    leaf82Set: [],
+    nickname: ''
   },
 
   getters: {
@@ -27,7 +28,8 @@ export const Account = {
     authHeader: state => ({ Authorization: `Token ${state.token}`}),
     profile: state => state.profile,
     username: state => state.username,
-    leaf82Set: state => state.leaf82Set
+    leaf82Set: state => state.leaf82Set,
+    nickname: state => state.nickname
   },
 
   mutations: {
@@ -40,7 +42,8 @@ export const Account = {
     SET_PROFILE: (state, profile) => {
       state.profile = profile,
       state.leaf82Set = profile.leaf82_set
-    }
+    },
+    SET_NICKNAME: (state, nickname) => state.nickname = nickname
   },
 
   actions: {
@@ -250,6 +253,21 @@ export const Account = {
           console.log(err)
         })
       }
-    }
+    },
+
+    fetchNickname({ getters }, username) {
+      axios({
+        url: drf.accounts.nickname(username),
+        method: 'get',
+        headers: getters.authHeader,
+      })
+      // .then(res => {
+      //   commit('SET_NICKNAME', res.data)
+      // })
+      // .catch(err => console.log(err))
+      .then(res => {
+        return res.data
+      })
+    },
   }
 }

@@ -156,11 +156,12 @@ export default {
       rooms: {},
       urls: {},
       baseURL: "https://plantinum.s3.ap-northeast-2.amazonaws.com/",
+      nicknames: {},
     }
   },
   computed: {
     // ...mapGetters(['receiver','currentUser',])
-    ...mapGetters(['receiver','username', 'leaf82_plant']),
+    ...mapGetters(['receiver','username', 'leaf82_plant', 'nickname']),
   },
   async created() {
     // this.id = this.currentUser.pk
@@ -217,13 +218,15 @@ export default {
     this.socket.on('sendRooms',(data)=>{
       this.rooms[data.with_who] = data.room_num;
       this.urls[data.with_who] = data.photo_url;
+      console.log(this.fetchNickname(data.with_who))
+      // this.nicknames[data.with_who] = this.fetchNickname(data.with_who)
     })
     
 
     
   },
   methods : {
-    ...mapActions(['fetchReceiver','setReceiver', 'fetchLeaf82Plant', 'setLeaf82Plant']),
+    ...mapActions(['fetchReceiver','setReceiver', 'fetchLeaf82Plant', 'setLeaf82Plant', 'fetchNickname']),
 
     changeReceiver(data){
       console.log(data);
