@@ -24,8 +24,8 @@
 
 ### Design
 
-- 포토샵
-- 일러스트
+- PhotoShop
+- Illustrator
 - Figma
 
 
@@ -55,12 +55,20 @@
 ### Front-end
 
 - Vue.js
+
+  > 3.2.13
+
 - HTML5
+
 - CSS3
+
 - JavaScript
+
 - Node.js
-- Vue3
+
 - Vuex
+
+  > 4.0.0
 
 
 
@@ -110,5 +118,4 @@
 - MobaXterm
 - Postman
 - Movavi
-
 
