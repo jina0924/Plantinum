@@ -3,12 +3,9 @@
     <div class="form-bg col-md-6 p-5">
       <h3 class="form-title mb-4">내 식물 등록</h3>
       <form @submit.prevent="onSubmit">
-        <!-- 식물 사진 -->
         <div class="mb-3 img-section">
-          <!-- <div class="img-delete-btn">X</div> -->
           <div class="preview-section">
             <label for="myplantPhoto" class="img-add">
-              <!-- <img v-if="action==='update'" :src="myplant.photo" alt="내식물 등록 이미지" class="preview-myplant-image"> -->
               <img :src="newMyplantImage" alt="내식물 등록 이미지" class="preview-myplant-image">
             </label>
           </div>
@@ -26,15 +23,11 @@
                 </span>
               </label>
             </div>
-          <!-- </label> -->
-          <!-- <button>x</button> -->
         </div>
         <div class="input-text-group">
-          <!-- 식물 닉네임 -->
           <div class="mb-3">
             <input v-model="newMyplant.nickname" type="text" class="form-input" id="myplantNickname" placeholder="식물 닉네임을 입력해주세요.">
           </div>
-          <!-- 식물 이름 검색 -->
           <div class="select-plant mb-3" v-if="action==='create'">
             <input type="text" id="plant" list="search-plant-list" placeholder="식물 종류를 검색하세요." class="form-input" v-model="newMyplant.plantname">
             <datalist id="search-plant-list">
@@ -47,7 +40,6 @@
             <input v-if="newMyplant.plantname==='직접 입력하기'" type="text" id="plant" :placeholder="myplant.tmp" class="form-input disabled-input" disabled>
           </div>
         </div>
-        <!-- 등록 버튼 -->
         <div class="myplant-create-submit">
           <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="action==='create'">
             <button class="form-btn back-btn">뒤로가기</button>
@@ -89,7 +81,6 @@ export default {
     ...mapActions(['createMyplant', 'searchPlant', 'updateMyplant']),
     onInputImage() {
       this.newMyplant.photo = this.$refs.newMyplantImage.files[0]
-      // this.newMyplant.photo
       const url = URL.createObjectURL(this.newMyplant.photo)
       this.newMyplantImage = url
     },
@@ -147,10 +138,6 @@ export default {
 }
 
 .preview-section {
-  /* width: 20rem;
-  height: 20rem; */
-  /* overflow: hidden; */
-  /* margin: auto; */
   display: flex;
   justify-content: center;
 
@@ -167,13 +154,10 @@ export default {
   display: flex;
   font-size: 1rem;
   justify-content: center;
-  /* align-items: center; */
 }
 
 .img-add {
   display: flex;
-  /* justify-content: center; */
-  /* margin-top: .3rem; */
   align-items: center;
 }
 

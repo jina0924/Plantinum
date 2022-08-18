@@ -1,13 +1,10 @@
 <template>
   <div class="leaf82-new-form row">
-    <!-- 여백 -->
     <div class="col-md-3 col-0"></div>
-    <!-- 메인 -->
     <div class="main col-md-6 py-5 my-5">
       <div class="title-box col-12 d-flex justify-content-center py-3">
         <p class="title">잎팔이 수정하기</p>
       </div>
-      <!-- 상단 -->
       <div class="left">
         <div class="img-box d-flex justify-content-center">
           <img :src="preview" alt="등록될 사진입니다.">
@@ -27,7 +24,6 @@
           </label>
         </div>
       </div>
-      <!-- 하단 -->
       <div class="right mt-3 row">
         <div class="col-md-2"></div>
         <div class="col-md-8 col-">
@@ -42,12 +38,10 @@
               <option selected>지역을 선택해주세요</option>
               <option v-for="(loc) in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
             </select>
-            <!-- 시도가 선택되면 활성화 -->
             <select name="sigungu" id="" @change="selectSigungu($event)" v-if="this.credentials.sido" class="mr-1">
               <option selected>동네를 선택해주세요</option>
               <option v-for="(loc2) in sigungu" :key="loc2.pk" :value="loc2.sigungu">{{ loc2.sigungu }}</option>
             </select>
-            <!-- 비활성화 -->
             <select name="sigungu" id="" v-if="!this.credentials.sido" disabled class="mr-1">
               <option selected>동네를 선택해주세요</option>
             </select>
@@ -78,7 +72,6 @@
         </div>
       </div>
     </div>
-    <!-- 여백 -->
     <div class="col-md-3 col-0"></div>
   </div>
 </template>
@@ -110,6 +103,7 @@ export default {
   },
   methods: {
     ...mapActions(['updateLeaf82', 'fetchSido', 'fetchSigungu',]),
+
     fillCredentials() {
       this.credentials.sido = this.leaf82Detail.addr.sido
       this.credentials.sigungu = this.leaf82Detail.addr.sigungu
@@ -120,32 +114,32 @@ export default {
       this.credentials.status_class = '분양대기'
       this.credentials.photo = this.leaf82Detail.photo
     },
+
     makeImgUrl() {
       this.preview = this.credentials.photo
     },
+
     beforeFetchSigungu(event) {
       let tmp = event.target.value
       this.credentials.sido = tmp
       this.fetchSigungu(this.credentials.sido)
     },
+
     selectSigungu(event) {
       let tmp = event.target.value
-      // console.log(tmp)
       this.credentials.sigungu = tmp
-      // console.log(this.credentials.sigungu)
     },
+
     selectCategory(event) {
       let tmp = event.target.value
-      // console.log(tmp)
       this.credentials.category_class = tmp
-      // console.log(this.credentials.category_class)
     },
+
     selectStatus(event) {
       let tmp = event.target.value
-      // console.log(tmp)
       this.credentials.status_class = tmp
-      // console.log(this.credentials.status_class)
     },
+
     beforeUpdateLeaf82(credentials) {
       if (!credentials.plantname) {
         alert('이름을 입력해주세요.')
@@ -163,19 +157,21 @@ export default {
           credentials,
           info: this.info
         }
-        // console.log(credentials.photo)
         this.updateLeaf82(updateInfo)
       }
     },
+
     onInputImage() {
       this.credentials.photo = this.$refs.leaf82Image.files[0]
       const url = URL.createObjectURL(this.credentials.photo)
       this.preview = url
     },
+
     onDeleteImage() {
       this.credentials.photo = ''
       this.preview = 'https://plantinum.s3.ap-northeast-2.amazonaws.com/static/monstera.jpg'
     },
+
     isMine() {
       if (this.$route.params.username !== this.username) {
         alert('잘못된 접근입니다.')
@@ -225,8 +221,6 @@ div {
 
 .img-add {
   display: flex;
-  /* justify-content: center; */
-  /* margin-top: .3rem; */
   align-items: center;
 }
 
@@ -249,8 +243,6 @@ input[type="file"] {
   overflow: hidden;
   border: 0;
 }
-
-/* 하단 */
 
 .right select {
   padding-left: 0.5rem;
@@ -369,4 +361,5 @@ button:hover {
   background-color: #d2d2d2;
   transition: all 0.5s;
 }
+
 </style>

@@ -1,9 +1,7 @@
 <template>
   <div class="boxes" v-if="device === 'PC'">
-    <!-- first box -->
     <div class="first-box">
       <nav-bar></nav-bar>
-      <!-- 글귀 부분 -->
       <div class="row col-md-6 d-flex justify-content-center">
         <div class="contentbox">
           <div class="text-main">
@@ -15,13 +13,9 @@
             <p>사람들과 함께 아름다운 집을 만들어요.</p>
           </div>
           <div class="text-hello" v-if="isLoggedIn">
-            <!-- <div class="text-hello"> -->
-            <!-- user 정보 받아와야 함 -->
             <p>안녕하세요, <b>{{ currentUser.nickname }}</b> 님</p>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox" v-if="!isLoggedIn">
-            <!-- <div class="btnbox row"> -->
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <router-link :to="{ name: 'login' }">
@@ -34,7 +28,6 @@
       </div>
     </div>
 
-    <!-- second box -->
     <div class="second-box row">
       <div class="col-md-6 col-sm col d-flex align-items-center">
         <img src="../assets/HomeView/main_pic_2_small.jpg" alt="">
@@ -52,7 +45,6 @@
             <br>
             <p>언제 어디서든 반려 식물과 함께하세요.</p>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
@@ -61,9 +53,6 @@
                     <button class="btn">내 식물</button>
                   </router-link>
                 </div>
-                <!-- <router-link :to="{ name: 'myplant', params: { username } }" v-if="!!username">
-                <button class="btn">내 식물</button>
-              </router-link> -->
                 <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
                   <button class="btn">내 식물</button>
                 </router-link>
@@ -74,7 +63,6 @@
       </div>
     </div>
 
-    <!-- third box -->
     <div class="third-box">
       <div class="row col-md-6 d-flex justify-content-center">
         <div class="contentbox">
@@ -91,8 +79,6 @@
             <p>서울에 거주하시는 진아님은</p>
             <p>얼마전 아비스를 유민님께 분양해주었답니다.</p>
           </div>
-          <!-- 버튼 -->
-          <!-- <div class="btnbox" v-if="!isLoggedIn"> -->
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
@@ -109,7 +95,6 @@
       </div>
     </div>
 
-    <!-- fourth box -->
     <div class="fourth-box">
       <div class="title-supool d-flex justify-content-center align-items-center">
         <p>Supool</p>
@@ -134,7 +119,6 @@
               <span class="supool">수풀</span>
               <span class="extra">이 함께합니다.</span>
             </div>
-            <!-- 버튼 -->
             <div class="btnbox">
               <div class="btn-border">
                 <div class="login d-flex justify-content-center">
@@ -151,10 +135,8 @@
 
   </div>
   <div class="boxes" v-if="device === 'Tablet'">
-    <!-- first box -->
     <div class="first-box-tablet">
       <nav-bar></nav-bar>
-      <!-- 글귀 부분 -->
       <div class="row d-flex justify-content-center">
         <div class="contentbox-tablet">
           <div class="text-main-tablet">
@@ -168,9 +150,7 @@
           <div class="text-hello-tablet" v-if="isLoggedIn">
             <p>안녕하세요, <b>{{ currentUser.nickname }}</b> 님</p>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox" v-if="!isLoggedIn">
-            <!-- <div class="btnbox row"> -->
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <router-link :to="{ name: 'login' }">
@@ -183,7 +163,6 @@
       </div>
     </div>
 
-    <!-- second box -->
     <div class="second-box-tablet">
       <div class="col-md-6 d-flex align-items-center">
         <img src="../assets/HomeView/main_pic_2_tablet.jpg" alt="내 식물 소개 사진입니다.">
@@ -201,7 +180,6 @@
             <br>
             <p>언제 어디서든 반려 식물과 함께하세요.</p>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
@@ -210,9 +188,6 @@
                     <button class="btn-tablet">내 식물</button>
                   </router-link>
                 </div>
-                <!-- <router-link :to="{ name: 'myplant', params: { username } }" v-if="!!username">
-                <button class="btn">내 식물</button>
-              </router-link> -->
                 <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
                   <button class="btn-tablet">내 식물</button>
                 </router-link>
@@ -223,7 +198,6 @@
       </div>
     </div>
 
-    <!-- third box -->
     <div class="third-box-tablet">
       <div class="row col-6 d-flex justify-content-center">
         <div class="contentbox-tablet">
@@ -240,8 +214,6 @@
             <p>서울에 거주하시는 진아님은</p>
             <p>얼마전 아비스를 유민님께 분양해주었답니다.</p>
           </div>
-          <!-- 버튼 -->
-          <!-- <div class="btnbox" v-if="!isLoggedIn"> -->
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
@@ -258,7 +230,6 @@
       </div>
     </div>
 
-    <!-- fourth box -->
     <div class="fourth-box-tablet">
       <div class="title-supool d-flex justify-content-center align-items-center">
         <p>Supool</p>
@@ -281,7 +252,6 @@
               <span class="extra">이 함께합니다.</span>
             </div>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
@@ -297,10 +267,8 @@
 
   </div>
   <div class="boxes" v-if="device === 'Mobile'">
-    <!-- first box -->
     <div class="first-box-mobile">
       <nav-bar></nav-bar>
-      <!-- 글귀 부분 -->
       <div class="row d-flex justify-content-center">
         <div class="contentbox-mobile">
           <div class="text-main-mobile">
@@ -314,9 +282,7 @@
           <div class="text-hello-mobile" v-if="isLoggedIn">
             <p>안녕하세요, <b>{{ currentUser.nickname }}</b> 님</p>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox" v-if="!isLoggedIn">
-            <!-- <div class="btnbox row"> -->
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <router-link :to="{ name: 'login' }">
@@ -329,7 +295,6 @@
       </div>
     </div>
 
-    <!-- second box -->
     <div class="second-box-mobile">
       <div class="d-flex justify-content-center">
         <div class="contentbox-mobile">
@@ -344,7 +309,6 @@
             <br>
             <p>언제 어디서든 반려 식물과 함께하세요.</p>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
@@ -353,9 +317,6 @@
                     <button class="btn-mobile">내 식물</button>
                   </router-link>
                 </div>
-                <!-- <router-link :to="{ name: 'myplant', params: { username } }" v-if="!!username">
-                <button class="btn">내 식물</button>
-              </router-link> -->
                 <router-link :to="{ name: 'login' }" v-if="!isLoggedIn">
                   <button class="btn-mobile">내 식물</button>
                 </router-link>
@@ -366,7 +327,6 @@
       </div>
     </div>
 
-    <!-- third box -->
     <div class="third-box-mobile">
       <div class="contentbox-mobile">
         <div class="text-main-mobile">
@@ -382,8 +342,6 @@
           <p>서울에 거주하시는 진아님은</p>
           <p>얼마전 아비스를 유민님께 분양해주었답니다.</p>
         </div>
-        <!-- 버튼 -->
-        <!-- <div class="btnbox" v-if="!isLoggedIn"> -->
         <div class="btnbox">
           <div class="btn-border">
             <div class="login d-flex justify-content-center">
@@ -396,7 +354,6 @@
       </div>
     </div>
 
-    <!-- fourth box -->
     <div class="fourth-box-mobile">
       <div class="title-supool d-flex justify-content-center align-items-center">
         <p>Supool</p>
@@ -419,7 +376,6 @@
               <span class="extra">이 함께합니다.</span>
             </div>
           </div>
-          <!-- 버튼 -->
           <div class="btnbox">
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
@@ -442,19 +398,23 @@ import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'HomeView',
+
   data() {
     return {
       width: window.innerWidth,
       device: 'PC',
     }
   },
+
   components: {
     NavBar
   },
+
   methods: {
     handleResize() {
       this.width = window.innerWidth;
     },
+
     mobileOrPc() {
       if (this.width <= 420) {
         this.device = 'Mobile'
@@ -464,19 +424,24 @@ export default {
         this.device = 'PC'
       }
     },
+
   },
   computed: {
     ...mapGetters(['username', 'isLoggedIn', 'currentUser']),
   },
+
   created() {
     this.mobileOrPc()
   },
+
   mounted() {
     window.addEventListener('resize', this.handleResize);
 	},
+
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize);
   },
+
   watch: {
     width() {
       this.mobileOrPc()
@@ -751,8 +716,7 @@ a {
   border-radius: 5px;
   height: 53px;
   font-size: 1.3rem;
-  /*1rem*/
-  /* margin-bottom: 3rem; */
+
   background-color: #b2c9ab;
   color: white;
   width: 100%;
@@ -761,7 +725,6 @@ a {
 .btn:hover {
   background-color: #65805d;
   color: #ffffff;
-  /*box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);*/
 }
 
 .btn-tablet {
@@ -777,7 +740,6 @@ a {
 .btn-tablet:hover {
   background-color: #65805d;
   color: #ffffff;
-  /*box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);*/
 }
 
 .btn-mobile {
@@ -793,7 +755,6 @@ a {
 .btn-mobile:hover {
   background-color: #65805d;
   color: #ffffff;
-  /*box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);*/
 }
 
 .btnbox a {

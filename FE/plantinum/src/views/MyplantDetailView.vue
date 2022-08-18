@@ -10,7 +10,6 @@
           </div>
           <div class="col-lg-5 col-xl-6 plant-profile-info">
             <h2 class="myplant-nickname">{{ myplant.nickname }}</h2>
-            <!-- 수정/삭제 버튼 -->
             <div v-if="isOwner" class="owner-btn">
               <router-link :to="{ name: 'myplantEdit', params: { plantPk: myplantPk } }" class="edit-btn">
                 <span class="material-symbols-outlined">drive_file_rename_outline</span>
@@ -22,8 +21,9 @@
             <div v-if="myplant.plant_info?.name==='직접 입력하기'" class="myplant-data botanical-name tmp-name">{{ myplant.tmp }}</div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
-              <progress :value="myplant.sensing?.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
-              <span class="moisture-level-percent" v-if="myplant.is_connected">{{ myplant.sensing?.moisture_level }}</span>
+              <progress v-if="myplant.is_connected" :value="myplant.sensing?.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
+              <progress v-if="!myplant.is_connected" value="0" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
+              <span class="moisture-level-percent" v-if="myplant.is_connected">{{ myplant.sensing?.moisture_level }}%</span>
             </div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">등록 날짜</span>
@@ -47,10 +47,8 @@
                 <button v-if="!myplant.is_connected && !!temp_OTP" @click="changeModal(3)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
               </div>
 
-              <!-- 정보 모달 -->
               <div class="black-bg" @click="close($event)" v-if="modal===1 || modal===2 ">
                 <div class="modal-bg myplant-modal">
-                  <!-- 계절별 식물 관리 정보 모달 -->
                   <div v-if="modal===1">
                     <h5>계절별 식물 관리 정보</h5>
                     <div class="season">봄</div>{{ myplant.plant_info?.watercycle_spring_nm }}
@@ -58,7 +56,6 @@
                     <div class="season">가을</div>{{ myplant.plant_info?.watercycle_autumn_nm }}
                     <div class="season">겨울</div>{{ myplant.plant_info?.watercycle_winter_nm }}
                   </div>
-                  <!-- 특별 관리 정보 모달 -->
                   <div v-if="modal===2">
                     <h5>특별 관리 정보</h5>
                     <p>{{ myplant.plant_info?.specl_manage_info }}</p>
@@ -69,14 +66,14 @@
 
               <!-- OTP 모달 -->
               <!-- <div class="black-bg" v-if="!!temp_OTP"> -->
-              <div class="black-bg" @click="close($event)" v-if="modal===3">
+              <div class="black-bg" @click="close($event)" v-if="modal===3 && isOwner">
                 <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
                   <div>
                     <div v-if="!myplant.is_connected && !!temp_OTP" class="otp-timer">
                       <div>다음 숫자를 화분에 입력해주세요</div>
                       <div class="otp-number">{{ temp_OTP }}</div>
-                      <div v-if="otpTimer > 0">{{ otpTimer }}</div>
+                      <div v-if="otpTimer > 0">{{ otpTimer }}초</div>
                       <div v-if="otpTimer <= 0">0</div>
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="60" class="progress-bar"></progress>
@@ -95,15 +92,12 @@
         </div>
       </div>
     </div>
-    <!-- 식물 일지 부분 -->
-    <!-- 모달 부분 -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import NavBar from '@/components/NavBar.vue'
-// import MyplantModal from '@/components/MyplantModal.vue'
 
 export default {
   name: 'MyplantDetailView',
@@ -127,7 +121,8 @@ export default {
       if (this.myplant.is_connected) { 
         return 'SuPool 연결 끊기'
       } else if (this.temp_OTP !== null && this.myplant.is_connected === false) {
-        return 'SuPool 연결중'
+        // return 'SuPool 연결중'
+        return this.temp_OTP
       } else {
         return 'SuPool 연결'
       }
@@ -148,8 +143,6 @@ export default {
       const interval = setInterval(() => {
         this.checkOTP(this.myplantPk)
         this.countTime(this.otpTimer - 1)
-        console.log(this.otpTimer)
-        // console.log(this.temp_OTP)
         if (this.otpTimer <= 55 && this.temp_OTP === null) {
           this.stopTimer(interval)
           this.fetchMyplant(this.myplantPk)
@@ -261,7 +254,6 @@ export default {
 .moisture-level::-webkit-progress-bar {
   background:#E9E9E9;
   border-radius:10px;
-  /* box-shadow: inset 3px 3px 10px #ccc; */
 }
 .moisture-level::-webkit-progress-value {
   border-radius:10px;
@@ -364,7 +356,6 @@ h5 {
 
 .modal-close-btn:hover {
   background-color: #65805d;
-  /* transform: scale(1.1); */
   transition: all 0.5s;
 }
 
@@ -389,7 +380,6 @@ h5 {
 .progress-bar::-webkit-progress-bar {
   background:#e9e9e9;
   border-radius:10px;
-  /* box-shadow: inset 3px 3px 10px #ccc; */
 }
 .progress-bar::-webkit-progress-value {
   border-radius:10px;
