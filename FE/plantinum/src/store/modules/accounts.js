@@ -140,8 +140,8 @@ export const Account = {
           headers: getters.authHeader,
         })
         .then(res => {
-          commit('SET_CURRENT_USER', res.data)
           localStorage.setItem('username', res.data.username)
+          commit('SET_CURRENT_USER', res.data)
         })
         .catch(err => {
           console.log(err)

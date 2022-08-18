@@ -49,7 +49,7 @@
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <div class="new-box" v-if="isLoggedIn">
-                  <router-link :to="{ name: 'myplant', params: { username: username } }">
+                  <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="!!username">
                     <button class="btn">내 식물</button>
                   </router-link>
                 </div>
@@ -184,7 +184,7 @@
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <div class="new-box" v-if="isLoggedIn">
-                  <router-link :to="{ name: 'myplant', params: { username: username } }">
+                  <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="!!username">
                     <button class="btn-tablet">내 식물</button>
                   </router-link>
                 </div>
@@ -313,7 +313,7 @@
             <div class="btn-border">
               <div class="login d-flex justify-content-center">
                 <div class="new-box" v-if="isLoggedIn">
-                  <router-link :to="{ name: 'myplant', params: { username: username } }">
+                  <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="!!username">
                     <button class="btn-mobile">내 식물</button>
                   </router-link>
                 </div>
