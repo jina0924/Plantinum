@@ -78,7 +78,7 @@
               <p class="name">{{ leaf82.plantname }}</p>
               <p class="price">{{ leaf82.price }} 원</p>
               <p class="addr">{{ leaf82.addr.sido }} {{ leaf82.addr.sigungu }}</p>
-              <p class="message">채팅 15</p>
+              <p class="status">{{ leaf82.status_class }}</p>
             </div>
           </router-link>
         </div>
@@ -116,7 +116,7 @@
               <p class="name">{{ leaf82.plantname }}</p>
               <p class="price">{{ leaf82.price }} 원</p>
               <p class="addr">{{ leaf82.addr.sido }} {{ leaf82.addr.sigungu }}</p>
-              <p class="message">채팅 15</p>
+              <p class="status">{{ leaf82.status_class }}</p>
             </div>
           </router-link>
         </div>
@@ -588,7 +588,7 @@ p {
   font-size: 0.8rem;
 }
 
-.item-info .message {
+.item-info .status {
   font-size: 0.7rem;
   color: #A6A6A6;
 }

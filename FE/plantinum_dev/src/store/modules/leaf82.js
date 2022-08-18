@@ -40,6 +40,12 @@ export const Leaf82 = {
         previous: sellObject.previous
       }
       for (let result of sellObject.results) {
+        const price = Number(result.price)
+        result.price = price.toLocaleString('ko-KR')
+        if (result.plantname.length > 7) {
+          const plantname = result.plantname.substr(0, 7) + '...'
+          result.plantname = plantname
+        }
         state.sellList.push(result)
       }
     },
@@ -58,6 +64,12 @@ export const Leaf82 = {
         previous: buyObject.previous
       }
       for (let result of buyObject.results) {
+        const price = Number(result.price)
+        result.price = price.toLocaleString('ko-KR')
+        if (result.plantname.length > 7) {
+          const plantname = result.plantname.substr(0, 7) + '...'
+          result.plantname = plantname
+        }
         state.buyList.push(result)
       }
     },
