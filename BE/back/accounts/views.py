@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from .serializers import MyProfileSerializer, UpdateUserInformationSerializer, UserSerializer
+from .serializers import MyProfileSerializer, UpdateUserInformationSerializer, UserSerializer, NicknameSerializer
 import datetime
 from rest_framework import status
 
@@ -182,3 +182,13 @@ def withdraw(request):
     user = User.objects.get(username=request.user)
     user.delete()
     return Response({'detail': '정상적으로 탈퇴되었습니다.'})
+
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def nickname(request, username):
+    user = get_object_or_404(User, username=username)
+    serializer = NicknameSerializer(user)
+
+    return Response(serializer.data)

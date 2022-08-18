@@ -74,3 +74,11 @@ class UserSerializer(serializers.ModelSerializer):
 
         model = User
         fields = ('pk', 'nickname', 'photo', 'username',)
+
+
+class NicknameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+
+        model = User
+        fields = ('nickname',)
