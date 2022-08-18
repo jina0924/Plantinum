@@ -7,7 +7,7 @@
       </div>
       <div class="btn1">
         <router-link :to="{ name: 'home' }">
-          <button class="btn">돌아가기</button>
+          <button class="btn">HOME</button>
         </router-link>
       </div>
       <div class="forzerofor">
