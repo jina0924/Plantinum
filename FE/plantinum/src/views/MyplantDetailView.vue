@@ -65,8 +65,7 @@
               </div>
 
               <!-- OTP 모달 -->
-              <!-- <div class="black-bg" v-if="!!temp_OTP"> -->
-              <div class="black-bg" @click="close($event)" v-if="modal===3 && isOwner">
+              <div class="black-bg" v-if="modal===3 && isOwner">
                 <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
                   <div>
@@ -78,7 +77,6 @@
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="60" class="progress-bar"></progress>
                       </div>
-                      <button class="modal-close-btn">닫기</button>
                     </div>
                   </div>
                 </div>
@@ -117,11 +115,9 @@ export default {
       return this.myplant.created_at?.substr(0, 10)
     },
     isConnected() {
-      // return this.myplant.otp_code ? 'SuPool 연결 끊기' : 'SuPool 연결'
       if (this.myplant.is_connected) { 
         return 'SuPool 연결 끊기'
       } else if (this.temp_OTP !== null && this.myplant.is_connected === false) {
-        // return 'SuPool 연결중'
         return this.temp_OTP
       } else {
         return 'SuPool 연결'
@@ -166,12 +162,6 @@ export default {
       this.startTimer()
     }
   },
-  beforeUnmount() {
-    if (this.temp_OTP) {
-      this.removeOTP(this.$route.params.plantPk)
-    }
-  }
-
 }
 </script>
 
