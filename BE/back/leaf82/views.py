@@ -1,13 +1,13 @@
 from django.shortcuts import get_object_or_404
-from .serializers import JusoSigunguSerializer, Leaf82Serializer, Leaf82ListSerializer
+from .serializers import JusoSidoSerializer, JusoSigunguSerializer, Leaf82Serializer, Leaf82ListSerializer
 from .models import Juso, Leaf82
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
-from rest_framework import status
 import random
+from rest_framework import status
 
 
 User = get_user_model()
@@ -66,11 +66,11 @@ from pagination import PaginationHandlerMixin
 from rest_framework.views import APIView
 
 
-class SearchPagination(PageNumberPagination):
+class MemoPagination(PageNumberPagination):
     page_size_query_param = 'limit'
     
 class Leaf82ListAPI(APIView, PaginationHandlerMixin):
-    pagination_class = SearchPagination
+    pagination_class = MemoPagination
     serializer_class = Leaf82ListSerializer
     def get(self, request, format=None, *args, **kwargs):
         instance = Leaf82.objects.all().order_by('-pk')
@@ -83,7 +83,7 @@ class Leaf82ListAPI(APIView, PaginationHandlerMixin):
 
 
 class SearchAPI(APIView, PaginationHandlerMixin):
-    pagination_class = SearchPagination
+    pagination_class = MemoPagination
     serializer_class = Leaf82ListSerializer
     def get(self, request, format=None, *args, **kwargs):
         instance = Leaf82.objects.filter().order_by('-pk')
