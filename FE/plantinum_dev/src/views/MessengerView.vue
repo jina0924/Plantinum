@@ -62,7 +62,7 @@ so<template>
                                   alt="상대방 프로필 사진" class="d-flex align-self-center chat-list-img">
                               </div>
                               <div class="pt-3">
-                                <p class="your-name">{{ key }}</p>
+                                <p class="your-name">{{ nicknames[key] }}</p>
                               </div>
                             </div>
                             <!-- <div class="pt-1">
@@ -80,7 +80,7 @@ so<template>
                 <hr class="d-md-none">
                 <!-- 채팅 내용 -->
                 <div class="col-md-6 col-lg-7 col-xl-8">
-                  <div class="you-username" v-if="now_receiver!==-1">{{ now_receiver }}</div>
+                  <div class="you-username" v-if="now_receiver!==-1">{{ nicknames[now_receiver] }}</div>
                   <div class="chat-view" ref="now_messages">
                     <!-- 채팅방 클릭 전 -->
                     <div v-if="now_receiver===-1" class="leaf82-chat-start">
@@ -176,7 +176,7 @@ export default {
       this.now_plant = this.leaf82_plant
     }
 
-    console.log(this.rooms)
+    // console.log(this.rooms)
 
     // 소켓 생성 - 서버주소
     this.socket = io('http://i7a109.p.ssafy.io:3000')
@@ -186,7 +186,7 @@ export default {
     this.socket.emit('makeSocketName',this.id);
     // 현재 채팅방 리스트 불러오기
     this.socket.emit('getRooms',this.id);
-    console.log(this.rooms)
+    // console.log(this.rooms)
 
     //-1이 아니면 거래에서 건너온것_start
     if(this.now_receiver !== -1){
@@ -218,18 +218,20 @@ export default {
     this.socket.on('sendRooms',(data)=>{
       this.rooms[data.with_who] = data.room_num;
       this.urls[data.with_who] = data.photo_url;
-      console.log(this.fetchNickname(data.with_who))
-      // this.nicknames[data.with_who] = this.fetchNickname(data.with_who)
+      this.nicknames[data.with_who] = data.nickname;
+      // console.log(this.urls, this.nicknames)
+      // this.nicknames[data.with_who] = nickname_data
+      // console.log(this.nicknames)
     })
     
 
     
   },
   methods : {
-    ...mapActions(['fetchReceiver','setReceiver', 'fetchLeaf82Plant', 'setLeaf82Plant', 'fetchNickname']),
+    ...mapActions(['setReceiver',]),
 
     changeReceiver(data){
-      console.log(data);
+      // console.log(data);
       //현재 채팅자와 같을때 - 아무일도 일어나지 않음
       if(this.now_receiver === data){
         return;
@@ -267,13 +269,12 @@ export default {
   },
 
   beforeRouteLeave(to,from,next){
-    console.log("socket disconnect")
+    // console.log("socket disconnect")
     this.socket.disconnect();
     this.now_receiver=-1;
     // this.now_plant=-1;
     this.rooms={};
     this.setReceiver(-1);
-    // this.setLeaf82Plant(-1);
     next();
   },
 

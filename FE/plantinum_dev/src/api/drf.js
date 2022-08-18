@@ -17,8 +17,7 @@ export default {
     updateProfile: () => HOST + ACCOUNTS + 'userinformation/',
     changePassword: () => HOST + ACCOUNTS + 'password/' + 'change/',
     signout: () => HOST + ACCOUNTS + 'withdraw/',
-    nickname: (username) => HOST + ACCOUNTS + 'nickname/' + `${username}}/`
-
+    nickname: (username) => HOST + ACCOUNTS + 'nickname/' + `${username}/`
   },
   myplant: {
     plantSearch: () => HOST + 'plants/' + 'search/',
