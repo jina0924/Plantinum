@@ -22,8 +22,9 @@
             <div v-if="myplant.plant_info?.name==='직접 입력하기'" class="myplant-data botanical-name tmp-name">{{ myplant.tmp }}</div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">토양 습도</span>
-              <progress :value="myplant.sensing?.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
-              <span class="moisture-level-percent" v-if="myplant.is_connected">{{ myplant.sensing?.moisture_level }}</span>
+              <progress v-if="myplant.is_connected" :value="myplant.sensing?.moisture_level" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
+              <progress v-if="!myplant.is_connected" value="0" max="100" class="moisture-level col-md-7 col-xl-8"></progress>
+              <span class="moisture-level-percent" v-if="myplant.is_connected">{{ myplant.sensing?.moisture_level }}%</span>
             </div>
             <div class="myplant-data row">
               <span class="col-md-5 col-xl-4 info-title">등록 날짜</span>
@@ -69,7 +70,7 @@
 
               <!-- OTP 모달 -->
               <!-- <div class="black-bg" v-if="!!temp_OTP"> -->
-              <div class="black-bg" @click="close($event)" v-if="modal===3">
+              <div class="black-bg" @click="close($event)" v-if="modal===3 && isOwner">
                 <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
                   <div>
