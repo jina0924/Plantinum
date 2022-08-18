@@ -77,7 +77,7 @@
                     <div v-if="!myplant.is_connected && !!temp_OTP" class="otp-timer">
                       <div>다음 숫자를 화분에 입력해주세요</div>
                       <div class="otp-number">{{ temp_OTP }}</div>
-                      <div v-if="otpTimer > 0">{{ otpTimer }}</div>
+                      <div v-if="otpTimer > 0">{{ otpTimer }}초</div>
                       <div v-if="otpTimer <= 0">0</div>
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="60" class="progress-bar"></progress>
@@ -128,7 +128,8 @@ export default {
       if (this.myplant.is_connected) { 
         return 'SuPool 연결 끊기'
       } else if (this.temp_OTP !== null && this.myplant.is_connected === false) {
-        return 'SuPool 연결중'
+        // return 'SuPool 연결중'
+        return this.temp_OTP
       } else {
         return 'SuPool 연결'
       }
