@@ -1,16 +1,12 @@
 <template>
   <div class="leaf82-detail row">
-    <!-- 여백 -->
     <div class="col-md-3 col-0"></div>
-    <!-- 메인 -->
     <div class="main col-md-6 py-5 my-5">
-      <!-- 좌측 -->
       <div class="left">
         <div class="img-box d-flex justify-content-center">
           <img :src="leaf82Detail.photo" alt="화분 사진">
         </div>
       </div>
-      <!-- 우측 -->
       <div class="row">
         <div class="col-sm-2 col-0"></div>
         <div class="col-sm-8 col-0">
@@ -69,7 +65,6 @@
         <div class="col-sm-2 col-0"></div>
       </div>
     </div>
-    <!-- 여백 -->
     <div class="col-md-3 col-0"></div>
   </div>
 </template>
@@ -116,6 +111,7 @@ export default {
   },
   methods: {
     ...mapActions(['deleteLeaf82', 'setReceiver', 'setLeaf82Plant']),
+
     fillData() {
       this.user = this.leaf82Detail.user
       this.addr = this.leaf82Detail.addr
@@ -123,19 +119,22 @@ export default {
       this.info.price = this.info.price.toLocaleString('ko-KR')
       this.info.created_at = this.info.created_at.slice(0,10)
     },
+
     loginRequired() {
       alert('로그인이 필요한 서비스입니다.')
       router.push({ name: 'login' })
     },
+
     goChat(){
-      console.log(this.user.pk)
       this.setReceiver(this.user.username)
       this.setLeaf82Plant(this.info.plantname)
     }
   },
+
   computed: {
     ...mapGetters(['leaf82Detail', 'currentUser', 'isLoggedIn', 'username']),
   },
+
   watch: {
     leaf82Detail() {
       this.fillData()
@@ -156,7 +155,6 @@ div {
   box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
-/* 상단 */
 .img-box img{
   height: 300px;
   width: 300px;
@@ -198,7 +196,6 @@ div {
   transition: all 0.5s;
 }
 
-/* 하단 */
 p {
   margin: 0;
 }

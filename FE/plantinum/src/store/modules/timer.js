@@ -27,23 +27,21 @@ export const Timer = {
       })
       .then(res => commit('SET_OTP', res.data.otp_code))
       .catch(err => {
-        console.log(err.response)
+        console.log(err)
       })
     },
     
     checkOTP({ commit, getters }, plantPk) {
-      // console.log('왔니?')
       axios({
         url: drf.myplant.otpStatus(plantPk),
         method: 'get',
         headers: getters.authHeader,
       })
       .then(res => {
-        console.log(res.data.otp_code)
         commit('SET_OTP', res.data.otp_code)
       })
       .catch(err => {
-        console.log(err.response)
+        console.log(err)
       })
       },
   },

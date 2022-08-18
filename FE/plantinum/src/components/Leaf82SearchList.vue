@@ -1,5 +1,4 @@
 <template>
-  <!-- 서치 배너 -->
   <div class="search row">
     <div class="col-sm-2 col-md-4 col-0"></div>
     <div class="search-box col-sm-8 col-md-4 col-12">
@@ -14,7 +13,6 @@
           <option value="null">지역을 선택해주세요</option>
           <option v-for="loc in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
         </select>
-        <!-- 시도가 선택되면 활성화 -->
         <select class="sigungu pl-3 active" @change="beforeFetchSearch($event)" v-if="this.info.sido">
           <option selected>동네를 선택해주세요</option>
           <option v-for="loc in sigungu" :key="loc.pk" :value="loc.sigungu">{{ loc.sigungu }}</option>
@@ -33,41 +31,23 @@
     <div class="col-sm-2 col-0"></div>
     <div class="select row d-flex justify-content-end col-sm-8 col-12">
       <div class="create">
-        <!-- 생성버튼 -->
         <router-link :to="{ name : 'leaf82New' }" v-if="isLoggedIn">
           <button class="create-btn">
             등록
           </button>
         </router-link>
       </div>
-      <!-- <div class="filter d-flex justify-content-center">
-        <select class="sido mr-1" @change="beforeFetchSigungu($event)">
-          <option value="null">지역을 선택해주세요</option>
-          <option v-for="loc in sido" :key="loc.pk" :value="loc.sido">{{ loc.sido }}</option>
-        </select>
-        <select class="sigungu" @change="beforeFetchSearch($event)" v-if="this.info.sido">
-          <option selected>동네를 선택해주세요</option>
-          <option v-for="loc in sigungu" :key="loc.pk" :value="loc.sigungu">{{ loc.sigungu }}</option>
-        </select>
-        <select class="sigungu" v-if="!this.info.sido" disabled>
-          <option selected>동네를 선택해주세요</option>
-        </select>
-      </div> -->
     </div>
     <div class="col-sm-2 col-0"></div>
   </div>
-  <!-- 리스트 영역 -->
   <div class="leaf82-sell">
-    <!-- 분양해요 활성화 -->
     <div class="title d-flex justify-content-center mb-5" v-if="isSell">
       <span class="sell-on pr-2">분양해요</span>
       <span class="divider"> | </span>
       <span class="buy-off pl-2" @click="onoff()">분양받아요</span>
     </div>
-    <!-- 분양해요 목록들 -->
     <div class="leaf82-list-box row pb-2" v-if="isSell">
       <div class="col-sm-2 col-md-3 col-0" v-if="!!sList"></div>
-      <!-- 리스트가 있을 때 -->
       <div class="leaf82-list col-sm-8 col-md-6 col-0 row d-flex justify-content-center" v-if="!!sList">
         <div class="item px-3 pb-4" v-for="leaf82 in sList" :key="leaf82.pk">
           <router-link class="route" :to="{ name: 'leaf82Detail', params: { username: leaf82.user.username , posting_addr: leaf82.posting_addr } }">
@@ -78,13 +58,12 @@
               <p class="name">{{ leaf82.plantname }}</p>
               <p class="price">{{ leaf82.price }} 원</p>
               <p class="addr">{{ leaf82.addr.sido }} {{ leaf82.addr.sigungu }}</p>
-              <p class="message">채팅 15</p>
+              <p class="status">{{ leaf82.status_class }}</p>
             </div>
           </router-link>
         </div>
       </div>
       <div class="col-sm-2 col-md-3 col-0" v-if="!!sList"></div>
-      <!-- 리스트가 없을때 -->
       <div class="col-sm-2 col-md-3 col-0" v-if="!sList[0]"></div>
       <div class="leaf82-list col-sm-8 col-md-6 col-0 mt-5" v-if="!sList[0]">
         <div class="d-flex justify-content-center">
@@ -96,16 +75,13 @@
       </div>
       <div class="col-sm-2 col-md-3 col-0" v-if="!sList[0]"></div>
     </div>
-    <!-- 분양받아요 활성화 -->
     <div class="title d-flex justify-content-center mb-5" v-if="!isSell">
       <span class="sell-off pr-2" @click="onoff()">분양해요</span>
       <span class="divider"> | </span>
       <span class="buy-on pl-2">분양받아요</span>
     </div>
-    <!-- 분양받아요 목록들 -->
     <div class="leaf82-list-box row pb-2" v-if="!isSell">
       <div class="col-sm-2 col-md-3 col-0" v-if="!!bList"></div>
-      <!-- 리스트가 있을 때 -->
       <div class="leaf82-list col-sm-8 col-md-6 col-0 row d-flex justify-content-center" v-if="!!bList">
         <div class="item px-3 pb-4" v-for="leaf82 in bList" :key="leaf82.pk">
           <router-link class="route" :to="{ name: 'leaf82Detail', params: { username: leaf82.user.username , posting_addr: leaf82.posting_addr } }">
@@ -116,13 +92,12 @@
               <p class="name">{{ leaf82.plantname }}</p>
               <p class="price">{{ leaf82.price }} 원</p>
               <p class="addr">{{ leaf82.addr.sido }} {{ leaf82.addr.sigungu }}</p>
-              <p class="message">채팅 15</p>
+              <p class="status">{{ leaf82.status_class }}</p>
             </div>
           </router-link>
         </div>
       </div>
       <div class="col-sm-2 col-md-3 col-0" v-if="!!bList"></div>
-      <!-- 리스트가 없을때 -->
       <div class="col-sm-2 col-md-3 col-0" v-if="!bList[0]"></div>
       <div class="leaf82-list col-sm-8 col-md-6 col-0 mt-5" v-if="!bList[0]">
         <div class="d-flex justify-content-center">
@@ -134,7 +109,6 @@
       </div>
       <div class="col-sm-2 col-md-3 col-0" v-if="bList[0]"></div>
     </div>
-    <!-- 더보기 버튼 -->
     <div class="d-flex justify-content-center pb-5" v-if="isSell">
       <button class="more-btn" v-if="!!sellObject.next" @click="more()">- 더보기 -</button>
     </div>
@@ -149,6 +123,7 @@ import { mapActions , mapGetters } from 'vuex'
 
 export default {
   name: 'Leaf82SearchList',
+
   data () {
     return {
       isSell: true,
@@ -164,9 +139,10 @@ export default {
       sList: []
     }
   },
+
   methods: {
     ...mapActions(['fetchSigungu', 'search',]),
-    // 초기화
+
     fetchSearch() {
       const params = {
         limit : this.info.limit,
@@ -175,7 +151,7 @@ export default {
       }
       this.search(params)
     },
-    // 필터링 없이
+
     beforeSearch() {
       if (!!this.info.plantname === true && !!this.info.sido === true && !!this.info.sigungu === true) {
         this.info.page = 1
@@ -209,7 +185,7 @@ export default {
         this.search(params)
       }
     },
-    // 필터링
+
     beforeFetchSigungu(event) {
       const sido = event.target.value
       if (sido === 'null') {
@@ -259,6 +235,7 @@ export default {
         this.fetchSigungu(sido)
       }
     },
+
     beforeFetchSearch(event) {
       const sigungu = event.target.value
       this.info.sigungu = sigungu
@@ -278,12 +255,14 @@ export default {
         this.search(params)
       }
     },
+
     reset() {
       this.info.plantname = ''
       this.info.sido = ''
       this.info.sigungu = ''
       this.fetchSearch()
     },
+
     onoff() {
       this.isSell = !this.isSell
       if(this.isSell) {
@@ -357,6 +336,7 @@ export default {
         }
       }
     },
+
     fillList() {
       this.sList = this.sellList
       this.bList = this.buyList
@@ -377,6 +357,7 @@ export default {
         }
       }
     },
+
     more() {
       this.info.page += 1
       const params = this.info
@@ -390,12 +371,15 @@ export default {
       this.search(params)
     }
   },
+
   computed: {
     ...mapGetters(['sido', 'sigungu', 'isLoggedIn', 'sellObject', 'sellList', 'buyObject', 'buyList'])
   },
+
   created() {
     this.fetchSearch()
   },
+
   watch: {
     sellList() {
       this.fillList()
@@ -529,8 +513,6 @@ select:focus {
   cursor: pointer;
 }
 
-/* 리스트 영역 */
-
 .title {
   font-size: 2rem;
 }
@@ -588,7 +570,7 @@ p {
   font-size: 0.8rem;
 }
 
-.item-info .message {
+.item-info .status {
   font-size: 0.7rem;
   color: #A6A6A6;
 }

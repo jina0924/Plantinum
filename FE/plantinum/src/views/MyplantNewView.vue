@@ -8,11 +8,9 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import MyplantForm from '@/components/MyplantForm.vue'
-// import PlantSearchBar from '@/components/PlantSearchBar.vue'
 
 export default {
   name: 'MyplantNewView',
-  // components: { NavBar, MyplantForm, PlantSearchBar },
   components: { NavBar, MyplantForm },
   data() {
     return {
