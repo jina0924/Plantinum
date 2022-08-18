@@ -79,7 +79,6 @@
   - 네이밍 규칙
     - feature/기능
     - 예) feature/login
-- ~~hotfix~~
 
 
 

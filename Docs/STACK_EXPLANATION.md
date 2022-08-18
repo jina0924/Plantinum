@@ -1,6 +1,6 @@
 # STACK_EXPLANATION
 
-## 
+
 
 ### Configuration Management
 
@@ -14,6 +14,8 @@
 - JIRA
   > S07P11A109
   > S07P12A109
+  
+  
 
 
 ### Communication
@@ -41,8 +43,12 @@
 ### DB
 
 - MySQL
-  > MySQL
+
+  >MySQL 8.0.20
+
 - Redis
+
+  > Redis 3.0.504
 
 
 
@@ -50,6 +56,9 @@
 
 - AWS EC2 ubuntu
 - Nginx
+- S3
+
+
 
 
 ### Front-end
@@ -75,8 +84,32 @@
 ### Back-end
 
 - Django
+
+  > Django 3.2.14
+  >
+  > djangorestframework 3.13.1
+
 - Python
-- Java
+
+  > Python 3.9.9
+
+- node.js
+
+  > node.js 16.15.0
+
+- express
+
+  > express  ^4.17.2
+
+- socket.io
+
+  > socket.io  ^4.4.0
+
+- mysql2
+
+  > mysql2  ^2.3.3
+
+
 
 ### HW
 
@@ -112,10 +145,20 @@
 
 - Visual Studio Code
   > Visual Studio Code 1.68.1
-- Eclipse
+  
 - Pycharm
+
+
+
+### TOOL
+
 - Vim
+
 - MobaXterm
+
+  > MobaXterm Home Edition v22.1 installer edition
+
 - Postman
+
 - Movavi
 
