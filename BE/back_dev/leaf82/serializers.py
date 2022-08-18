@@ -6,6 +6,13 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+class JusoSidoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Juso
+        fields = ('pk', 'sido',)
+
+
 class JusoSigunguSerializer(serializers.ModelSerializer):
 
     class Meta:
