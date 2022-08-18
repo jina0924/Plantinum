@@ -110,6 +110,7 @@ export const Account = {
         router.push({ name: 'home' })
       })
       .catch(err => {
+        console.log(err)
         alert('다시 한 번 작성해주세요.')
         commit('SET_AUTH_ERROR', err.response.data)
       })
@@ -192,10 +193,19 @@ export const Account = {
         })
         .catch(err => {
           console.log(err)
-          commit('SET_AUTH_ERROR', err.response.data)
-          router.push({ name: 'updateProfile' })
-          if (err.response.status === 401) {
+          if (!!err.response.data && err.response.data.phone_number[0] === '사용자의 phone number은/는 이미 존재합니다.') {
+            alert('이미 등록되어 있는 전화번호입니다.')
+          } else if (!!err.response.data && err.response.data.email === '이메일이 이미 존재합니다.') {
+            alert('이미 등록되어 있는 이메일입니다.')
+          } else if (!!err.response.data && err.response.data.nickname === '닉네임이 이미 존재합니다.') {
+            alert('이미 사용중인 닉네임입니다.')
+          } else {
+            alert('잘못된 접근입니다.')
+            commit('SET_AUTH_ERROR', err.response.data)
             router.push({ name: 'updateProfile' })
+            if (err.response.status === 401) {
+              router.push({ name: 'updateProfile' })
+            }
           }
         })
     },
@@ -207,18 +217,17 @@ export const Account = {
         data : credentials,
         headers : getters.authHeader
       })
-      .then(res => {
-        const token = res.data.key
-        dispatch('saveToken', token)
-        dispatch('fetchCurrentUser')
-        router.push({ name: 'profile' })
+      .then(() => {
+        dispatch('removeToken')
+        dispatch('resetCurrentUser')
+        dispatch('resetProfile')
         alert('비밀번호가 변경되었습니다. 재로그인해주세요.')
+        router.push({ name: 'login' })
       })
       .catch(err => {
         console.log(err)
-        if (err.response.status === 401) {
-          router.push({ name: 'updatepassword' })
-        }
+        alert('다음과 같은 같은 상황입니다.\n - 단순한 비밀번호\n - 숫자로 이루어진 비밀번호\n - 짧은 비밀번호\n등등.')
+        router.push({ name: 'updatepassword' })
       })
     },
     

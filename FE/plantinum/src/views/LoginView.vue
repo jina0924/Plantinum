@@ -70,6 +70,7 @@ import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'LoginView',
+
   data() {
     return {
       login_credentials: {
@@ -85,9 +86,11 @@ export default {
       emailerror : ''
     }
   },
+
   computed: {
-    ...mapGetters(['authError']),
+    ...mapGetters(['authError',]),
   },
+  
   methods: {
     ...mapActions(['login', 'signup', 'fetchAuthError'])
   },
