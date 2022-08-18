@@ -21,14 +21,22 @@
 ### Communication
 
 - Mattermost
+- Webex
 
 
 
 ### Design
 
-- PhotoShop
-- Illustrator
-- Figma
+- Mockup
+  - Web
+    - Figma
+    - PhotoShop
+    - Illustraor
+  - HW
+    - onshape / 3DWOX Desktop x64
+- PPT
+  - Figma
+  - Google slides
 
 
 
