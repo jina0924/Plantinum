@@ -18,14 +18,14 @@
 
 - FE
 > 파일 위치 : ./FE/plantinum
-```
+```shell
 $ npm run build
 ```
 
 - BE
 > 파일 위치 : ./BE/back
 
-```
+```shell
 $ python manage.py runserver
 ```
 
@@ -33,19 +33,22 @@ $ python manage.py runserver
 - CHAT
 
 > 파일 위치 : ./BE/test_chat
-```
+```shell
 $ nohup node app.js &
 ```
 
 ## 🌸 IoT
 ---
-[코드정보](./HW/)
+[코드정보](./HW/Supool)
 
-### [RP1](./HW/RP1/)
-> 간단한 코드 설명 혹은 api 문서 링크
+### [Supool](./HW/Supool)
+> 라즈베리파이에 다운로드 후 폴더 내에서 다음 명령어 실행
+```shell
+$ python main.py
+```
 
-### [RP2](./HW/RP2/)
-> 간단한 코드 설명 혹은 api 문서 링크
+### [외관](./HW/stl_files)
+> SuPool의 외관 3D 디자인
 
 ## 🌸WEB 
 ---
@@ -55,6 +58,7 @@ $ nohup node app.js &
 ### 🌻BE
 [api 가이드 문서.md](./BE/api%20%EA%B0%80%EC%9D%B4%EB%93%9C%20%EB%AC%B8%EC%84%9C.md) 참고
 
+[채팅 서버 구축 문서.md](./BE/uwsgiuwsgi를 이용해서 django와 nginx연결하기.md) 참고
 
 ## 🎮기술스택
 ---
@@ -77,6 +81,7 @@ $ nohup node app.js &
 : Git 관련 내용 정리
 
 > [Convention.md](./GIT//Convention.md) : 프로젝트의 git convention
+
 > [git_command.md](./GIT//git_command.md)
 
 
