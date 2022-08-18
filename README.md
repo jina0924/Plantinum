@@ -89,4 +89,6 @@ $ npm run serve
 
 ## 💿ERD
 ---
- [ERD](https://www.erdcloud.com/d/QBfSSRay4GCSgap25)
+ [ERD](https://www.erdcloud.com/d/BqMQqe8yrRaQ5PXyd)
+
+![erd](README.assets/erd.png)
