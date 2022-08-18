@@ -2,11 +2,8 @@
   <div class="profile">
     <nav-bar></nav-bar>
     <div class="row mx-0">
-      <!-- 여백 -->
       <div class="col-md-1 px-0 mx-0"></div>
-      <!-- 내용 담을 흰 상자 -->
       <profile-detail class="col-md-10 mb-5 pb-5 px-0 mx-0"></profile-detail>
-      <!-- 여백 -->
       <div class="col-md-1 px-0 mx-0"></div>
     </div>
   </div>
@@ -19,13 +16,16 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'ProfileView',
+
   components: {
     ProfileDetail,
     NavBar
   },
+
   methods: {
     ...mapActions(['fetchProfile'])
   },
+  
   created() {
     this.fetchProfile()
   }

@@ -8,14 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" v-if="isLoggedIn">
-          <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }" v-if="!isLoggedIn">내 식물</router-link> -->
-          <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">내 식물</router-link> -->
           <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" :style="[isMyplant ? {fontWeight: 700} : {fontWeight: 400}]">내 식물</router-link>
         </li>
         <li class="nav-item" v-if="!isLoggedIn">
           <router-link class="nav-link pb-0 mx-2" :to="{ name: 'login' }">내 식물</router-link>
-          <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" v-if="isLoggedIn">내 식물</router-link> -->
-          <!-- <router-link class="nav-link pb-0 mx-2" :to="{ name: 'myplant', params: { username } }" v-if="!!username">내 식물</router-link> -->
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle pb-0 mx-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" :style="[isLeaf82 ? {fontWeight: 700} : {fontWeight: 400}]">
@@ -36,9 +32,6 @@
         </li>
       </ul>
       <div class="my-2 my-lg-0">
-        <!-- <router-link class="nav-link" :to="{ }" @click="logout" v-if="isLoggedIn">
-          <button class="btn">로그아웃</button>
-        </router-link> -->
         <button class="btn nav-link" @click="logout" v-if="isLoggedIn">로그아웃</button>
         <router-link class="nav-link" :to="{ name: 'login' }" v-if="!isLoggedIn">
           <button class="btn">로그인</button>
@@ -54,6 +47,7 @@ import router from '@/router'
 
 export default {
   name: 'NavBar',
+
   data() {
     return {
       myplantGroup: ['myplant', 'myplantNew', 'myplantNew', 'myplantDetail', 'myplantEdit'],
@@ -61,23 +55,26 @@ export default {
       profileGroup: ['profile', 'updateprofile', 'updatepassword'],
     }
   },
+
   computed: {
     ...mapGetters(['isLoggedIn', 'username']),
-    // username() {
-    //   return this.currentUser.username
-    // }
+
     isMyplant() {
       return this.myplantGroup.includes(this.$route.name)
     },
+
     isLeaf82() {
       return this.leaf82Group.includes(this.$route.name)
     },
+
     isProfile() {
       return this.profileGroup.includes(this.$route.name)
     },
   },
+
   methods: {
     ...mapActions(['logout',]),
+    
     go() {
       router.go()
     }

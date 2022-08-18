@@ -73,8 +73,7 @@ export const Account = {
         router.push({ name: 'home' })
       })
       .catch(err => {
-        console.error(err.response.data)
-        console.log()
+        console.log(err.response.data)
         if(!!err.response.data.username && err.response.data.username[0] === '해당 사용자 이름은 이미 존재합니다.') {
           alert('해당 사용자 이름은 이미 존재합니다.')
         } else if (!!err.response.data.email && err.response.data.email[0] === '유효한 이메일 주소를 입력하십시오.') {
@@ -145,6 +144,7 @@ export const Account = {
           localStorage.setItem('username', res.data.username)
         })
         .catch(err => {
+          console.log(err)
           if (err.response.status === 401) {
             dispatch('removeToken')
             router.push({ name: 'login' })
@@ -167,6 +167,7 @@ export const Account = {
         commit('SET_PROFILE', res.data)
       })
       .catch(err => {
+        console.log(err)
         if (err.response.status === 404) {
           router.push({ name: 'NotFound404' })
         }
@@ -187,12 +188,8 @@ export const Account = {
           commit('SET_PROFILE', res.data)
           router.push({ name: 'profile' })
         })
-        // .then(() => {
-        //   dispatch('fetchProfile')
-        //   router.push({ name: 'profile' })
-        // })
         .catch(err => {
-          console.log(err.response.data)
+          console.log(err)
           commit('SET_AUTH_ERROR', err.response.data)
           router.push({ name: 'updateProfile' })
           if (err.response.status === 401) {
@@ -222,6 +219,7 @@ export const Account = {
         }
       })
     },
+    
     signout({ dispatch , getters }) {
       if (confirm('정말로 탈퇴하시겠습니까?')) {
         axios({

@@ -1,22 +1,17 @@
 <template>
   <div class="profile-detail mt-5 row">
-    <!-- 헤드부분 -->
     <div class="profile-head pt-5 col-lg-4 row">
       <div class="col-2"></div>
-      <!-- 프로필 사진 -->
       <div class="profile-head-content col-8">
         <div class="profile-img-box">
           <img :src="profile.photo" alt="temporary img" class="profile-img">
         </div>
-        <!-- 닉네임 -->
         <div class="profile-nickname">
           <p class="mb-0">{{ profile.nickname }}</p>
         </div>
-        <!-- 이메일 -->
         <div class="profile-email">
           <p class="">{{ profile.email }}</p>
         </div>
-        <!-- 회원정보 수정 -->
         <div class="profile-update-btn" v-if="!myleaf82">
           <router-link :to="{ name : 'updateprofile' }">
             <button class="btn">
@@ -27,9 +22,7 @@
       </div>
       <div class="col-2"></div>
     </div>
-    <!-- body 부분 -->
     <div class="profile-body col-lg-8">
-      <!-- 로그인/프로필 정보 - 기본형 -->
       <div class="px-3" v-if="!myleaf82">
         <div class="profile-info-on mt-5 offset-0 offset-md-3 offset-lg-0" v-if="!myleaf82">
           <span class="info pr-2">로그인 및 프로필</span>
@@ -113,7 +106,6 @@
           </div>
         </div>
       </div>
-      <!-- 내 잎팔이 사진 조회 - 클릭 -->
       <div class=" px-3" v-if="myleaf82">
         <div class="profile-myleaf82-on mt-5 offset-0 offset-md-3 offset-lg-0" v-if="myleaf82">
           <span class="info pr-2" @click="changeMyleaf82">로그인 및 프로필</span>
@@ -125,7 +117,6 @@
         </div>
       </div>
       <div class="myleaf-list row mt-5 d-flex justify-content-center" v-if="myleaf82">
-        <!-- v-for 등록해야 -->
         <div class="myleaf-pic m-2 d-flex justify-content-center" v-for="leaf82 in leaf82Set" :key="leaf82.pk">
           <router-link :to="{ name: 'leaf82Detail' , params: { username: username ,posting_addr: leaf82.posting_addr } }">
             <img :src="leaf82.photo" :alt="`${leaf82.plantname} 잎팔이 게시글 사진입니다`">
@@ -141,16 +132,19 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'ProfileDetail',
+
   data() {
     return {
       myleaf82: false,
     }
   },
+
   methods: {
     changeMyleaf82() {
       this.myleaf82 = !this.myleaf82
     },
   },
+
   computed: {
     ...mapGetters(['profile', 'leaf82Set', 'username'])
   },
@@ -166,8 +160,6 @@ export default {
   box-shadow: 0rem 0rem 0.2rem #d2d2d2;
 }
 
-  /* profile-head 부분 */
-
 .profile-img-box {
   position: relative;
   width: 100%;
@@ -181,12 +173,6 @@ export default {
   border-radius: 50%;
   object-fit: cover;
 }
-
-/* .profile-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 10rem;
-} */
 
 .btn{
   border-radius: 15px;
@@ -213,8 +199,6 @@ export default {
   font-size: 1rem;
   color: #7E7E7E;
 }
-
-/* profile-body 부분 */
 
 .divider {
   font-size: 2rem;

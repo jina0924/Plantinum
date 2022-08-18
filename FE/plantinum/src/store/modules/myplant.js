@@ -30,6 +30,7 @@ export const Myplant = {
       })
       .then(res => commit('SET_MYPLANTS', res.data))
       .catch(err => {
+        console.log(err)
         if (err.response.status === 404) {
           router.push({ name: 'NotFound404' })
         }
@@ -78,6 +79,7 @@ export const Myplant = {
         commit('SET_MYPLANT', res.data)
         )
       .catch(err => {
+        console.log(err)
         if (err.response.status === 404) {
           router.push({ name: 'NotFound404' })
         }
