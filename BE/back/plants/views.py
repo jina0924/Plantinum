@@ -162,6 +162,26 @@ def otp_status(request, myplant_pk):
         return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 
+# otp 삭제
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def otp_status(request, myplant_pk):
+    myplant = get_object_or_404(Myplant, pk=myplant_pk)
+    me = request.user.id
+    user = myplant.user_id
+
+    if me == user:
+        otp_redis = cache.get(f'{me}_{myplant_pk}')
+        if otp_redis:
+            cache.delete(f'{me}_{myplant_pk}')
+        
+            return Response({'otp_code': None})
+
+    else:
+        return Response({'detail': '잘못된 접근입니다.'}, status=status.HTTP_403_FORBIDDEN)
+
+
 # 연결끊기
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
