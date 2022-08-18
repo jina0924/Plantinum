@@ -2,8 +2,23 @@ from rest_framework import serializers
 from .models import Plants, Myplant, Sensing, Diary
 from django.contrib.auth import get_user_model
 
-
 User = get_user_model()
+
+
+class DiarySerializer(serializers.ModelSerializer):
+
+    class MyplantSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Myplant
+            fields = ('pk', 'nickname',)
+    
+    my_plant = MyplantSerializer(read_only=True)
+
+    class Meta:
+
+        model = Diary
+        fields = '__all__'
 
 
 class MyplantSerializer(serializers.ModelSerializer):
