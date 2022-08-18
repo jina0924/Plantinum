@@ -105,15 +105,6 @@ const HOST = 'http://127.0.0.1:8000/api/v1/'
 
 
 
-## 📟GIT
-
-[GIT](./GIT/)
-
-> [Convention.md](./GIT//Convention.md) : 프로젝트의 git convention
-
-> [git_command.md](./GIT//git_command.md) : git 사용법
-
-
 
 ## 💿ERD
  [ERD](https://www.erdcloud.com/d/BqMQqe8yrRaQ5PXyd)
