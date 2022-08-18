@@ -13,12 +13,12 @@ from django.core.cache import cache
 User = get_user_model()
 
 
-# 전체 식물 조회 => 제공하지 않는 기능, 개발 확인용
-@api_view(['GET'])
-def plants(request):
-    plants = get_list_or_404(Plants)
-    serializer = PlantsSerializer(plants, many=True)
-    return Response(serializer.data)    
+# 전체 식물 조회
+# @api_view(['GET'])
+# def plants(request):
+#     plants = get_list_or_404(Plants)
+#     serializer = PlantsSerializer(plants, many=True)
+#     return Response(serializer.data)    
 
 
 # 내 식물 전체 조회 
