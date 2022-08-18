@@ -331,52 +331,6 @@ http://127.0.0.1:8000/api/v1/plants/search/
 
 
 
-### ~~식물 이름 검색~~
-
-- ~~물주기 등록시 사용~~
-- ~~로그인 사용자 - 토큰 사용~~
-- ~~GET~~
-- ~~URL~~
-
-```
-http://127.0.0.1:8000/api/v1/plants/search/{검색어}/
-```
-
-- ~~Request Parameters~~
-
-| ~~Name~~ | ~~Type~~ | ~~Description~~                          | ~~Mandatory~~ | ~~Example~~ |
-| -------- | ------ | ---------------------------------------- | --------- | ------- |
-| ~~검색어~~ | ~~String~~ | ~~한글명, 검색어를 포함하는 모든 식물 검색~~ | ~~O~~     | ~~백~~  |
-
-- ~~Response~~
-
-```
-[
-    {
-        "pk": 32,
-        "name": "동백"
-    },
-    {
-        "pk": 77,
-        "name": "백량금"
-    },
-    {
-        "pk": 78,
-        "name": "백정화"
-    },
-    {
-        "pk": 79,
-        "name": "백화등"
-    },
-    {
-        "pk": 149,
-        "name": "죽백나무"
-    }
-]
-```
-
-
-
 ### 내식물 전체 조회
 
 - 로그인 사용자 - 토큰 사용
@@ -1127,94 +1081,6 @@ http://127.0.0.1:8000/api/v1/leaf82/main
 
 
 
-### ~~잎팔이 글 특정 지역/동네별 조회~~
-
-- ~~시도(지역)과 시군구(동네)를 함께 요청~~
-- ~~`경기도 용인시` 같은 경우, `용인시`를 입력하면 `용인시/용인시 처인구/용인시 기흥구/용인시 수지구` 모두 검색~~
-- ~~최신순으로 조회~~
-- ~~GET~~
-- ~~URL~~
-
-```
-http://127.0.0.1:8000/api/v1/leaf82/{시도}/{시군구}/
-```
-
-- ~~Request Parameters~~
-
-| Name   | Type   | Description | Mandatory | Example |
-| ------ | ------ | ----------- | --------- | ------- |
-| 시도   | String | 한글명      | O         | 경기도  |
-| 시군구 | String | 한글명      | O         | 용인시  |
-
-- Response
-
-```
-[
-    {
-        "id": 7,
-        "user": {
-            "pk": 3,
-            "username": "test3",
-            "nickname": "촉촉한올리브나무5182"
-        },
-        "addr": {
-            "id": 109,
-            "sido": "경기도",
-            "sigungu": "용인시 기흥구"
-        },
-        "plantname": "루스커스",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T15:37:44.139568Z",
-        "content": "연락주세요",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
-    },
-    {
-        "id": 6,
-        "user": {
-            "pk": 2,
-            "username": "test2",
-            "nickname": "싱싱한귤나무1120"
-        },
-        "addr": {
-            "id": 108,
-            "sido": "경기도",
-            "sigungu": "용인시 처인구"
-        },
-        "plantname": "싱고니움",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T15:37:32.734002Z",
-        "content": "연락주세요",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
-    },
-    {
-        "id": 5,
-        "user": {
-            "pk": 1,
-            "username": "test1",
-            "nickname": "새내기야자나무9690"
-        },
-        "addr": {
-            "id": 107,
-            "sido": "경기도",
-            "sigungu": "용인시"
-        },
-        "plantname": "호야",
-        "photo": "https://url.kr/d1acln",
-        "created_at": "2022-08-02T15:37:22.502227Z",
-        "content": "연락주세요",
-        "price": 15000,
-        "category_class": "분양해요",
-        "status_class": "판매중"
-    }
-]
-```
-
-
-
 ### 잎팔이 검색
 
 - 선택한 카테고리/식물이름/시도/시군구에 해당하는 모든 글 조회
@@ -1445,10 +1311,6 @@ http://127.0.0.1:8000/api/v1/leaf82/{username}/{posting_addr}/
 ```
 
 
-
-# 5. 추가 예정
-
-유저정보 api
 
 
 
