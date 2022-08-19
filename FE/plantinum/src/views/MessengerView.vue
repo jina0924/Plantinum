@@ -347,7 +347,7 @@ export default {
 
 .chat-profile-img {
   width: 45px;
-  height: 45%;
+  height: 45px;
   margin-right: .5rem;
   border-radius: 50%;
 }
