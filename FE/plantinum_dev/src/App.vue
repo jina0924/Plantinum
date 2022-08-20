@@ -18,11 +18,32 @@ export default {
   // computed: {
   //   ...mapGetters(['currentUser', 'isLoggedIn',])
   // },
+  data() {
+    return {
+      viewWidth: window.innerWidth
+    }
+  },
   methods: {
-    ...mapActions(['fetchCurrentUser', 'fetchProfile'])
+    ...mapActions(['fetchCurrentUser', 'fetchProfile', 'setDevice', 'getDevice']),
+    // 너비가 변할 때 넘겨줄 데이터
+    handleResize() {
+      this.viewWidth = window.innerWidth
+    },    
+  },
+  mounted() {
+    window.addEventListener('resize', this.handleResize);
+	},
+  beforeUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   },
   created () {
     this.fetchCurrentUser()
+    this.getDevice()
+  },
+  watch: {
+    viewWidth() {
+      this.setDevice(this.viewWidth)
+    }
   }
 }
 </script>
