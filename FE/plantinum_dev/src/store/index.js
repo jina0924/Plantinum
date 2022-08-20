@@ -5,12 +5,13 @@ import { Leaf82 } from './modules/leaf82'
 import { Timer } from './modules/timer'
 import { Messenger } from './modules/messenger'
 import createPersistedState from "vuex-persistedstate"
+import { Viewport } from './modules/viewport'
 
 // import accounts from './modules/accounts'
 
 export default createStore({
   modules: { 
-    Account, Myplant, Leaf82, Timer, Messenger,
+    Account, Myplant, Leaf82, Timer, Messenger, Viewport
   },
   plugins: [createPersistedState({
     // paths: ['Account', 'Myplant',]
