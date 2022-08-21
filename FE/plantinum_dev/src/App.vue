@@ -55,6 +55,8 @@ export default {
 <style>
   #app {
     font-family: 'SUIT';
+    min-height: 100vh;
+    position: relative;
   }
 
   body {

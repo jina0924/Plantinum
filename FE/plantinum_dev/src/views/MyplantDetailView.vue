@@ -97,14 +97,12 @@
       </div>
     </div>
     <!-- 식물 일지 부분 -->
-    <!-- 모달 부분 -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import NavBar from '@/components/NavBar.vue'
-// import MyplantModal from '@/components/MyplantModal.vue'
 
 export default {
   name: 'MyplantDetailView',
@@ -124,7 +122,6 @@ export default {
       return this.myplant.created_at?.substr(0, 10)
     },
     isConnected() {
-      // return this.myplant.otp_code ? 'SuPool 연결 끊기' : 'SuPool 연결'
       if (this.myplant.is_connected) { 
         return 'SuPool 연결 끊기'
       } else if (this.temp_OTP !== null && this.myplant.is_connected === false) {
@@ -137,7 +134,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant']),
+    ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant', 'startTimer', 'stopTimer', 'changeModal']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
         this.modal = 0
@@ -150,8 +147,6 @@ export default {
       const interval = setInterval(() => {
         this.checkOTP(this.myplantPk)
         this.countTime(this.otpTimer - 1)
-        console.log(this.otpTimer)
-        // console.log(this.temp_OTP)
         if (this.otpTimer <= 55 && this.temp_OTP === null) {
           this.stopTimer(interval)
           this.fetchMyplant(this.myplantPk)
@@ -163,11 +158,12 @@ export default {
         }
       }, 1000)
       return interval},
+
     stopTimer(Timer) {
       clearInterval(Timer)
       this.countTime(60)
       this.modal = 0
-    }
+    },
   },
   created() {
     this.fetchMyplant(this.$route.params.plantPk)
