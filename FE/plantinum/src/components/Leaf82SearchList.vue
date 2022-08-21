@@ -1,7 +1,6 @@
 <template>
-  <div class="search row">
-    <div class="col-sm-2 col-md-4 col-0"></div>
-    <div class="search-box col-sm-8 col-md-4 col-12">
+  <div class="search">
+    <div :class="searchBox">
       <div class="d-flex justify-content-center">
         <input class="search-input pl-3" type="text" v-model="info.plantname" placeholder="식물명을 입력해주세요" @keyup.enter="beforeSearch()">        
         <button class="search-btn" type="submit" @click="beforeSearch()">
@@ -25,12 +24,10 @@
         </button>
       </div>
     </div>
-    <div class="col-sm-2 col-md-4 col-0"></div>
   </div>
-  <div class="select-box row mt-5 mb-3">
-    <div class="col-sm-2 col-0"></div>
-    <div class="select row d-flex justify-content-end col-sm-8 col-12">
-      <div class="create">
+  <div class="select-box mt-5 mb-3">
+    <div class="select d-flex justify-content-end">
+      <div :class="create">
         <router-link :to="{ name : 'leaf82New' }" v-if="isLoggedIn">
           <button class="create-btn">
             등록
@@ -38,10 +35,9 @@
         </router-link>
       </div>
     </div>
-    <div class="col-sm-2 col-0"></div>
   </div>
   <div class="leaf82-sell">
-    <div class="title d-flex justify-content-center mb-5" v-if="isSell">
+    <div :class="title" v-if="isSell">
       <span class="sell-on pr-2">분양해요</span>
       <span class="divider"> | </span>
       <span class="buy-off pl-2" @click="onoff()">분양받아요</span>
@@ -75,7 +71,7 @@
       </div>
       <div class="col-sm-2 col-md-3 col-0" v-if="!sList[0]"></div>
     </div>
-    <div class="title d-flex justify-content-center mb-5" v-if="!isSell">
+    <div :class="title" v-if="!isSell">
       <span class="sell-off pr-2" @click="onoff()">분양해요</span>
       <span class="divider"> | </span>
       <span class="buy-on pl-2">분양받아요</span>
@@ -136,7 +132,10 @@ export default {
         category_class: '분양해요',
       },
       bList: [],
-      sList: []
+      sList: [],
+      searchBox: '',
+      create: '',
+      title: '',
     }
   },
 
@@ -369,15 +368,32 @@ export default {
         delete params.sido
       }
       this.search(params)
-    }
+    },
+
+    changeDevice() {
+      if (this.device === 'PC') {
+        this.searchBox = 'search-box PC'
+        this.create = 'create PC'
+        this.title = 'title PC d-flex justify-content-center mb-5'
+      } else if (this.device === 'Tablet') {
+        this.searchBox = 'search-box tablet'
+        this.create = 'create tablet'
+        this.title = 'title tablet d-flex justify-content-center mb-5'
+      } else {
+        this.searchBox = 'search-box mobile'
+        this.create = 'create mobile'
+        this.title = 'title mobile d-flex justify-content-center mb-5'
+      }
+    },
   },
 
   computed: {
-    ...mapGetters(['sido', 'sigungu', 'isLoggedIn', 'sellObject', 'sellList', 'buyObject', 'buyList'])
+    ...mapGetters(['sido', 'sigungu', 'isLoggedIn', 'sellObject', 'sellList', 'buyObject', 'buyList', 'device'])
   },
 
   created() {
     this.fetchSearch()
+    this.changeDevice()
   },
 
   watch: {
@@ -386,6 +402,9 @@ export default {
     },
     buyList() {
       this.fillList()
+    },
+    device() {
+      this.changeDevice()
     }
   }
 }
@@ -396,6 +415,7 @@ div {
   margin: 0;
   padding: 0;
 }
+
 .search {
   background: url('@/assets/Leaf82/searchbar_pic_0.jpg') bottom right;
   padding-top: 175px;
@@ -403,11 +423,28 @@ div {
   background-size: cover;
 }
 
-.search-box {
-  position: relative;
+.search-box.PC {
   border-radius: 0.5rem;
   box-shadow: 0rem 0rem 1rem #d2d2d2;
+  font-size: 1.2rem;
+  margin-right: 25%;
+  margin-left: 25%;
+}
 
+.search-box.tablet {
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0rem 1rem #d2d2d2;
+  font-size: 1.2rem;
+  margin-right: 20%;
+  margin-left: 20%;
+}
+
+.search-box.mobile {
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0rem 1rem #d2d2d2;
+  font-size: 0.8rem;
+  margin-right: 10%;
+  margin-left: 10%;
 }
 
 .search-input {
@@ -415,7 +452,6 @@ div {
   height: 2.5rem;
   border: 0;
   border-top-left-radius: 0.5rem;
-  font-size: 1.2rem;
 }
 
 .search-input:focus {
@@ -438,30 +474,6 @@ div {
   cursor: pointer;
 }
 
-.create {
-  width: 4rem;
-}
-
-.create-btn {
-  width: 100%;
-  border: none;
-  background-color: #b2c9ab;
-  color: white;
-  border-radius: 0.5rem;
-  font-size: 0.9rem;
-  height: 1.8rem;
-}
-
-.create-btn:focus {
-  outline: none;
-}
-
-.create-btn:hover {
-  cursor: pointer;
-  background-color: #65805d;
-  transition: all 0.5s;
-}
-
 select {
   height: 2.5rem;
   width: 45%;
@@ -480,7 +492,6 @@ select:focus {
   border-left: none;
   border-bottom: none;
   border-bottom-left-radius: 0.5rem;
-  font-size: 1.2rem;
 }
 
 .sigungu {
@@ -488,7 +499,6 @@ select:focus {
   border-left: none;
   border-right: none;
   border-bottom: none;
-  font-size: 1.2rem;
 }
 
 .reset {
@@ -513,8 +523,54 @@ select:focus {
   cursor: pointer;
 }
 
-.title {
+.create.PC {
+  width: 4rem;
+  margin-right: 25%;
+}
+
+.create.tablet {
+  width: 4rem;
+  margin-right: 20%;
+}
+
+.create.mobile {
+  width: 4rem;
+  margin-right: 10%;
+  margin-bottom: 1rem;
+}
+
+.create-btn {
+  width: 100%;
+  border: none;
+  background-color: #b2c9ab;
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  height: 1.8rem;
+}
+
+.create-btn:focus {
+  outline: none;
+}
+
+.create-btn:hover {
+  cursor: pointer;
+  background-color: #65805d;
+  transition: all 0.5s;
+}
+
+/* 리스트 영역 */
+
+.title.PC {
   font-size: 2rem;
+}
+
+.title.tablet {
+  font-size: 2rem;
+}
+
+.title.mobile {
+  font-size: 1.6rem;
 }
 
 .divider {

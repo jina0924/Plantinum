@@ -28,5 +28,6 @@ export default {
 <style scoped>
 .new-myplant{
   background-color: #F8F5EE;
+  min-height: 95vh;
 }
 </style>
