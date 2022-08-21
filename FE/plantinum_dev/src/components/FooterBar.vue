@@ -55,14 +55,20 @@ export default {
 </script>
 
 <style scoped>
+hr {
+  margin-top: 0;
+}
+
 .footer-bar.PC {
   font-family: 'SUIT', sans-serif;
   background-color: #F3F3F3;
   padding-left: 3rem;
   padding-right: 3rem;
   padding-bottom: 1rem;
-  position: absolute;
-  bottom: 0;
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* width: 100vw; */
+  /* margin-top: 2rem; */
 }
 
 .footer-bar.tablet {
@@ -71,8 +77,10 @@ export default {
   padding-left: 3rem;
   padding-right: 3rem;
   padding-bottom: 1rem;
-  position: absolute;
-  bottom: 0;
+  /* position: absolute;
+  bottom: 0; */
+  /* width: 100vw; */
+  /* margin-top: 2rem; */
 }
 
 .footer-bar.mobile {
@@ -81,8 +89,10 @@ export default {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-bottom: 0.8rem;
-  position: absolute;
-  bottom: 0;
+  /* position: absolute;
+  bottom: 0; */
+  /* width: 100vw; */
+  /* margin-top: 2rem; */
 }
 
 .first-line.PC {
