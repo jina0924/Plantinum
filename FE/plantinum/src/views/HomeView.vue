@@ -423,13 +423,13 @@ div {
 
 .first-box-tablet {
   height: 800px;
-  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('../assets/HomeView/main_pic_1.jpg') top left;
+  background: url('../assets/HomeView/main_pic_1.jpg') top left;
   background-size: cover;
 }
 
 .first-box-mobile {
   height: 600px;
-  background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('../assets/HomeView/main_pic_1.jpg') bottom left;
+  background: url('../assets/HomeView/main_pic_1.jpg') bottom left;
   background-size: cover;
 }
 
