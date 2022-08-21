@@ -10,7 +10,7 @@
     <myplant-list :myplants='myplants_data'></myplant-list>
     <!-- 추가 버튼 (스티키 바텀) -->
     <div class="create-btn" v-if="mypage">
-      <router-link class="add px-5 mx-5 pb-5" :to="{ name: 'myplantNew' }">
+      <router-link class="add px-5 mx-5" :to="{ name: 'myplantNew' }">
         <button class="btn">
           <span class="material-symbols-outlined">add</span>
         </button>

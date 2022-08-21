@@ -1,4 +1,4 @@
-so<template>
+<template>
   <nav-bar></nav-bar>
   <!-- <div class="row mx-0"> -->
       <!-- 여백 -->
