@@ -3,6 +3,8 @@
     <!-- <nav-bar v-if="isLoggedIn"></nav-bar> -->
     <!-- <nav-bar></nav-bar> -->
     <router-view></router-view>
+    <footer-bar></footer-bar>
+
   </div>
 </template>
 
@@ -10,11 +12,13 @@
 // import NavBar from '@/components/NavBar.vue'
 // import { mapGetters, mapActions } from 'vuex'
 import { mapActions } from 'vuex'
+import FooterBar from '@/components/FooterBar.vue'
+
 
 
 export default {
   name: 'App',
-  // components: { NavBar },
+  components: { FooterBar },
   // computed: {
   //   ...mapGetters(['currentUser', 'isLoggedIn',])
   // },
