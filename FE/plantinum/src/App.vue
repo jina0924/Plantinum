@@ -1,7 +1,7 @@
 <template>
-  <div id="app" :style="[isProfile ? { backgroundColor: 'white' } : { backgroundColor: '#F8F5EE' }]">
+  <div id="app" :style="[isProfile ? { backgroundColor: '#f7f8f8' } : { backgroundColor: '#F8F5EE' }]">
     <router-view></router-view>
-    <footer-bar></footer-bar>
+    <footer-bar v-if="isFooterGroup"></footer-bar>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ export default {
   data() {
     return {
       viewWidth: window.innerWidth,
-      profileGroup: ['profile', 'updateprofile', 'updatepassword'],
+      profileGroup: ['profile', 'updateprofile', 'updatepassword',],
+      noFooterGroup: ['login', 'NotFound404']
     }
   },
 
@@ -32,6 +33,9 @@ export default {
   computed: {
     isProfile() {
       return this.profileGroup.includes(this.$route.name)
+    },
+    isFooterGroup() {
+      return !this.noFooterGroup.includes(this.$route.name)
     },
   },
   
