@@ -387,6 +387,7 @@ export default {
 
 .chat-list-img {
   width: 60px;
+  height: 60px;
   margin-right: .5rem;
   border-radius: 50%;
 }
@@ -453,7 +454,7 @@ export default {
 
 .chat-profile-img {
   width: 45px;
-  height: 100%;
+  height: 45px;
   margin-right: .5rem;
   border-radius: 50%;
 }
