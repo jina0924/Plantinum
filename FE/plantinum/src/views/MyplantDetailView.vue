@@ -10,6 +10,7 @@
           </div>
           <div class="col-lg-5 col-xl-6 plant-profile-info">
             <h2 class="myplant-nickname">{{ myplant.nickname }}</h2>
+            <!-- 수정/삭제 버튼 -->
             <div v-if="isOwner" class="owner-btn">
               <router-link :to="{ name: 'myplantEdit', params: { plantPk: myplantPk } }" class="edit-btn">
                 <span class="material-symbols-outlined">drive_file_rename_outline</span>
@@ -47,8 +48,10 @@
                 <button v-if="!myplant.is_connected && !!temp_OTP" @click="changeModal(3)" class="btn plant-info-btn plant-info-btn-end">{{ isConnected }}</button>
               </div>
 
+              <!-- 정보 모달 -->
               <div class="black-bg" @click="close($event)" v-if="modal===1 || modal===2 ">
                 <div class="modal-bg myplant-modal">
+                  <!-- 계절별 식물 관리 정보 모달 -->
                   <div v-if="modal===1">
                     <h5>계절별 식물 관리 정보</h5>
                     <div class="season">봄</div>{{ myplant.plant_info?.watercycle_spring_nm }}
@@ -56,6 +59,7 @@
                     <div class="season">가을</div>{{ myplant.plant_info?.watercycle_autumn_nm }}
                     <div class="season">겨울</div>{{ myplant.plant_info?.watercycle_winter_nm }}
                   </div>
+                  <!-- 특별 관리 정보 모달 -->
                   <div v-if="modal===2">
                     <h5>특별 관리 정보</h5>
                     <p>{{ myplant.plant_info?.specl_manage_info }}</p>
@@ -65,7 +69,8 @@
               </div>
 
               <!-- OTP 모달 -->
-              <div class="black-bg" v-if="modal===3 && isOwner">
+              <!-- <div class="black-bg" v-if="!!temp_OTP"> -->
+              <div class="black-bg" @click="close($event)" v-if="modal===3 && isOwner">
                 <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
                   <div>
@@ -77,12 +82,13 @@
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="60" class="progress-bar"></progress>
                       </div>
+                      <button class="modal-close-btn">닫기</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="!myplant.is_connected && !myplant.otp_code" class="supool-info d-flex align-items-center">
+            <div v-if="!myplant.is_connected && !temp_OTP" class="supool-info d-flex align-items-center">
               <span class="material-symbols-outlined supool-icon">potted_plant</span>
               <span>SuPool은 Plantinum에서 제작한 자동화 화분입니다</span>
             </div>
@@ -90,6 +96,7 @@
         </div>
       </div>
     </div>
+    <!-- 식물 일지 부분 -->
   </div>
 </template>
 
@@ -103,6 +110,7 @@ export default {
     return {
       myplantPk: this.$route.params.plantPk,
       modal: 0,
+      interval: 0,
     }
   },
   props: {
@@ -118,6 +126,7 @@ export default {
       if (this.myplant.is_connected) { 
         return 'SuPool 연결 끊기'
       } else if (this.temp_OTP !== null && this.myplant.is_connected === false) {
+        // return 'SuPool 연결중'
         return this.temp_OTP
       } else {
         return 'SuPool 연결'
@@ -129,39 +138,56 @@ export default {
     ...mapActions(['fetchMyplant', 'fetchOTP', 'checkOTP', 'disconnectMyplant', 'countTime', 'deleteMyplant', 'removeOTP']),
     close(event) {
       if (event.target.classList.contains('black-bg') || event.target.classList.contains('modal-close-btn')) {
+        if (this.modal === 3) {
+          this.stopTimer(this.interval)
+          this.countTime(60)
+          this.removeOTP(this.myplantPk)
+          this.interval = 0
+        }
         this.modal = 0
       }
     },
     changeModal(num) {
       this.modal = num
-    }, 
+    },
     startTimer() {
-      const interval = setInterval(() => {
+      this.interval = setInterval(() => {
         this.checkOTP(this.myplantPk)
         this.countTime(this.otpTimer - 1)
         if (this.otpTimer <= 55 && this.temp_OTP === null) {
-          this.stopTimer(interval)
+          this.stopTimer(this.interval)
           this.fetchMyplant(this.myplantPk)
           this.modal = 0
         } else if (this.myplant.is_connected===true) {
-          this.stopTimer(interval)
+          this.stopTimer(this.interval)
           this.temp_OTP = null
           this.modal = 0
         }
       }, 1000)
-      return interval},
+      return this.interval},
+
     stopTimer(Timer) {
       clearInterval(Timer)
       this.countTime(60)
       this.modal = 0
-    }
+    },
   },
   created() {
     this.fetchMyplant(this.$route.params.plantPk)
     if (this.temp_OTP) {
-      this.startTimer()
+      this.removeOTP(this.myplantPk)
+      this.countTime(60)
     }
   },
+
+  beforeUnmount() {
+    if (this.temp_OTP !== null) {
+      this.stopTimer(this.interval)
+      this.countTime(60)
+      this.removeOTP(this.myplantPk)
+    }
+  },
+
 }
 </script>
 

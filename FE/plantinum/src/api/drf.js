@@ -27,7 +27,7 @@ export default {
     plantOTP: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'otp/',
     otpStatus: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'otp/' + 'status/',
     disconnect: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'disconnect/',
-    otpRemove: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'otp/' + 'remove/',
+    removeOTP: (plantPk) => HOST + PLANTS + `${plantPk}/` + 'otp/' + 'remove/'
   },
   leaf82: {
     leaf82: () => HOST + LEAF82 + 'main',
