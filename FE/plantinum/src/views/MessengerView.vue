@@ -10,7 +10,7 @@
             <div class="card-body">
 
               <div class="row">
-                <!-- 채팅 목록 -->
+
                 <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
 
                   <div class="p-2">
@@ -43,24 +43,24 @@
 
                 </div>
                 <hr class="d-md-none">
-                <!-- 채팅 내용 -->
+
                 <div class="col-md-6 col-lg-7 col-xl-8">
                   <div class="you-username" v-if="now_receiver!==-1">{{ nicknames[now_receiver] }}</div>
                   <div class="chat-view" ref="now_messages">
-                    <!-- 채팅방 클릭 전 -->
+
                     <div v-if="now_receiver===-1" class="leaf82-chat-start">
                       <span class="material-symbols-outlined leaf82-chat-icon">nest_found_savings</span>
                       <div>잎팔이 채팅</div>
                     </div>
-                    <!-- 채팅방 클릭 후 -->
+
                     <div v-for="msg in now_messages" :key="msg">
-                      <!-- 거래 식물 이름 -->
+
                       <div class="d-flex flex-row justify-content-center" v-if="msg.person==='PLANT'">
                         <div>
                           <p class="plant-name">---- {{ msg.msg }} 채팅 시작 ----</p>
                         </div>
                       </div>
-                      <!-- 상대가 적은 메시지 -->
+
                       <div class="d-flex flex-row justify-content-start" v-if="msg.person!==username && msg.person!=='PLANT'">
                         <img :src="baseURL + urls[now_receiver]"
                           alt="avatar 1" class="chat-profile-img">
@@ -69,7 +69,7 @@
                           <p class="message-time">{{ msg.datetime.substr(5, 11) }}</p>
                         </div>
                       </div>
-                      <!-- 내가 적은 메시지 -->
+
                       <div class="d-flex flex-row justify-content-end" v-if="msg.person===username">
                         <div>
                           <p class="my-message">{{ msg.msg }}</p>
@@ -78,7 +78,7 @@
                       </div>
                     </div>
                     </div>
-                  <!-- 채팅 메시지 적는 부분 -->
+
                   <div class="d-flex justify-content-start align-items-center" v-if="now_receiver!==-1">
                     <input v-model="message" type="text" class="form-input" id="exampleFormControlInput2"
                       placeholder="Type message" @keyup.enter="sendMessage">
@@ -114,7 +114,7 @@ export default {
       id: -1,
       message: '',
       now_messages: [],
-      now_receiver: -1, // 새로고침 했거나, 거래탭에서 채팅하기로 넘어오지 않았을 경우
+      now_receiver: -1,
       rooms: {},
       urls: {},
       baseURL: "https://plantinum.s3.ap-northeast-2.amazonaws.com/",
@@ -122,7 +122,6 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters(['receiver','currentUser',])
     ...mapGetters(['receiver','username', 'leaf82_plant', 'nickname']),
   },
   async created() {
@@ -136,22 +135,16 @@ export default {
       this.now_plant = this.leaf82_plant
     }
 
-    // 소켓 생성 - 서버주소
     this.socket = io('http://i7a109.p.ssafy.io:3000')
     this.socket.on('connect', () => {
     })
-    // 소켓연결후 id(pk) 건내줌
     this.socket.emit('makeSocketName',this.id);
-    // 현재 채팅방 리스트 불러오기
     this.socket.emit('getRooms',this.id);
 
-    //-1이 아니면 거래에서 건너온것_start
     if(this.now_receiver !== -1){
-      // 전에 거래 기록 없을 때
       if( (this.now_receiver in this.rooms) == false ){
         this.socket.emit('startchat',this.now_receiver, this.leaf82_plant);
       }else{
-        // 전에 거래 기록 있을 때
         this.socket.emit("getMessages",this.rooms[this.now_receiver]);
       }
     }
@@ -160,18 +153,15 @@ export default {
     })
 
 
-    // 서버에서 보낸 채팅내역 받아오기
     this.socket.on('messages', (messages) => {
       this.now_messages = messages
     })
-    // 서버에서 메세지 받아오기
     this.socket.on('message', (message, sender) => {
       if(sender === this.now_receiver || sender == this.username){
         this.now_messages.push(message)
       }
     })
 
-    //채팅방 정보 받아오기
     this.socket.on('sendRooms',(data)=>{
       this.rooms[data.with_who] = data.room_num;
       this.urls[data.with_who] = data.photo_url;
@@ -185,21 +175,15 @@ export default {
     ...mapActions(['setReceiver',]),
 
     changeReceiver(data){
-      //현재 채팅자와 같을때 - 아무일도 일어나지 않음
       if(this.now_receiver === data){
         return;
       }else{
-        // 다를때
-        
-        // 상대 변경
         this.now_receiver=data;
-        // 채팅시작
         this.socket.emit("getMessages",this.rooms[this.now_receiver]);
       }
     },
 
     sendMessage() {
-      // 소켓을 통해 서버로 메세지를 보낸다.
       if(this.now_receiver == -1){
         return;
       }
@@ -208,8 +192,6 @@ export default {
     },
 
     start(){
-      //이미 채팅 진행중인 상대면 채팅 내역 가져오기
-      //아니면 채팅방 만들기 신호
       if( (this.receiver in this.rooms) == false ){
         this.socket.emit('startchat',{receiver:this.receiver});
       }else{
@@ -247,6 +229,10 @@ export default {
 
 
 <style scoped>
+section {
+  min-height: 87vh;
+}
+
 .card {
   border-radius: 15px;
   border: 1px solid white;
@@ -406,7 +392,6 @@ export default {
   margin: 1.3rem .5rem 1.5rem 0;
   background-color: #fff;
   background-clip: padding-box;
-  /* border: 1px solid #efefef; */
   border-color: rgba(178, 201, 171, 20% ) ;
   border: none;
   border-radius: 0.25rem;

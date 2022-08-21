@@ -166,11 +166,16 @@ export default {
 </script>
 
 <style scoped>
+.detail-back {
+  min-height: 95vh;
+}
+
 .profile-body { 
   background-color: white;
   border-radius: 15px;
   padding: 3.5rem 2rem;
   margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .plant-profile-img {
