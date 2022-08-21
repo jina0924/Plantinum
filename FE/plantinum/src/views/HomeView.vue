@@ -399,54 +399,13 @@ import NavBar from '@/components/NavBar.vue'
 export default {
   name: 'HomeView',
 
-  data() {
-    return {
-      width: window.innerWidth,
-      device: 'PC',
-    }
-  },
-
   components: {
     NavBar
   },
 
-  methods: {
-    handleResize() {
-      this.width = window.innerWidth;
-    },
-
-    mobileOrPc() {
-      if (this.width <= 420) {
-        this.device = 'Mobile'
-      } else if (576 < this.width && this.width <= 920) {
-        this.device = 'Tablet'
-      } else {
-        this.device = 'PC'
-      }
-    },
-
-  },
   computed: {
-    ...mapGetters(['username', 'isLoggedIn', 'currentUser']),
+    ...mapGetters(['username', 'isLoggedIn', 'currentUser', 'device']),
   },
-
-  created() {
-    this.mobileOrPc()
-  },
-
-  mounted() {
-    window.addEventListener('resize', this.handleResize);
-	},
-
-  beforeUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  },
-
-  watch: {
-    width() {
-      this.mobileOrPc()
-    }
-  }
 }
 </script>
 
@@ -497,7 +456,6 @@ div {
   background-color: white;
 }
 
-
 .third-box {
   height: 1117px;
   background-color: #F3F3F3;
@@ -521,7 +479,6 @@ div {
   background-color: #F3F3F3;
   padding-top: 1px;
 }
-
 
 .fourth-box {
   height: 1117px;
