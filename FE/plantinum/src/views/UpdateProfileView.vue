@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
 .profile {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('@/assets/ProfileView/background_img.jpg');
+  background-image: url('@/assets/ProfileView/background_img.jpg');
   background-size: cover;
   height: 1000px;
 }
