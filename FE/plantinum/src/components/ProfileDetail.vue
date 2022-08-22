@@ -277,5 +277,6 @@ export default {
   width: 10rem;
   height: 10rem;
   border-radius: 5%;
+  object-fit: cover;
 }
 </style>
