@@ -187,7 +187,8 @@ export default {
       if(this.now_receiver == -1){
         return;
       }
-      if (this.message.trim() !== '') {
+      const check_msg = this.message
+      if (check_msg.trim() !== '') {
         this.socket.emit('send', {receiver:this.now_receiver , msg: this.message, room_num:this.rooms[this.now_receiver]});
         this.message = ''
       }
