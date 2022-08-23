@@ -64,15 +64,15 @@
                       <div class="d-flex flex-row justify-content-start" v-if="msg.person!==username && msg.person!=='PLANT'">
                         <img :src="baseURL + urls[now_receiver]"
                           alt="avatar 1" class="chat-profile-img">
-                        <div>
-                          <p class="your-message">{{ msg.msg }}</p>
+                        <div class="message-section">
+                          <pre class="your-message chat-message">{{ msg.msg }}</pre>
                           <p class="message-time">{{ msg.datetime.substr(5, 11) }}</p>
                         </div>
                       </div>
 
                       <div class="d-flex flex-row justify-content-end" v-if="msg.person===username">
-                        <div>
-                          <p class="my-message">{{ msg.msg }}</p>
+                        <div class="message-section">
+                          <pre class="my-message chat-message">{{ msg.msg }}</pre>
                           <p class="message-time">{{ msg.datetime.substr(5, 11) }}</p>
                         </div>
                       </div>
@@ -80,8 +80,8 @@
                     </div>
 
                   <div class="d-flex justify-content-start align-items-center" v-if="now_receiver!==-1">
-                    <input v-model="message" type="text" class="form-input" id="exampleFormControlInput2"
-                      placeholder="Type message" @keyup.enter="sendMessage">
+                    <textarea v-model="message" type="text" class="form-input" id="exampleFormControlInput2"
+                      placeholder="Type message" @keyup.enter="sendMessage" rows="1" autofocus></textarea>
                     <span @click="sendMessage" class="material-symbols-outlined send-btn">send</span>
                   </div>
 
@@ -364,6 +364,16 @@ section {
   color: #845A49  ;
 }
 
+.message-section {
+  max-width: 50%;
+}
+
+.chat-message {
+  font-family: 'SUIT';
+  white-space: pre-wrap;
+  /* width: 90%; */
+}
+
 .your-message {
   background-color: #f5f6f7;
   border-radius: 10px;
@@ -400,12 +410,27 @@ section {
   border-radius: 0.25rem;
   box-shadow: 0.5rem 0.5rem 0.5rem #efefef;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  resize: none;
 }
 
 .form-input:focus {
   outline: none;
   border-color: rgba(178, 201, 171, 20% ) ;
   box-shadow: 0.5rem 0.3rem 0.5rem rgba(178, 201, 171, 50% ); 
+}
+
+.form-input::-webkit-scrollbar {
+  width: 10px;
+}
+.form-input::-webkit-scrollbar-thumb {
+  background-color: #EFEFEF;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.form-input::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 10px;
 }
 
 .send-btn:hover {
