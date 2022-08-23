@@ -179,8 +179,8 @@ export default {
     },
 
     onInputImage() {
-      if (this.$refs.profileImage.files[0].size > 2621440) {
-        alert('사진이 너무 큽니다. 2.5MB보다 작은 사진을 선택해주세요.')
+      if (this.$refs.profileImage.files[0].size > 31457280) {
+        alert('사진이 너무 큽니다. 30MB보다 작은 사진을 선택해주세요.')
         this.val = this.$refs.profileImage.files[0]
       } else {
         this.info.photo = this.$refs.profileImage.files[0]
