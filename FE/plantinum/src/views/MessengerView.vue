@@ -63,7 +63,7 @@
 
                       <div class="d-flex flex-row justify-content-start" v-if="msg.person!==username && msg.person!=='PLANT'">
                         <img :src="baseURL + urls[now_receiver]"
-                          alt="avatar 1" class="chat-profile-img">
+                          alt="avatar 1" class="chat-profile-img" v-if="now_receiver !== -1">
                         <div class="message-section">
                           <pre class="your-message chat-message">{{ msg.msg }}</pre>
                           <p class="message-time">{{ msg.datetime.substr(5, 11) }}</p>
