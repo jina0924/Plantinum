@@ -82,7 +82,7 @@
                       <div class="d-flex justify-content-center">
                         <progress :value=otpTimer max="60" class="progress-bar"></progress>
                       </div>
-                      <button class="modal-close-btn">닫기</button>
+                      <button class="modal-close-btn">취소</button>
                     </div>
                   </div>
                 </div>
