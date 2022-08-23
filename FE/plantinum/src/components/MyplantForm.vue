@@ -36,7 +36,7 @@
             <input v-if="newMyplant.plantname==='직접 입력하기'" type="text" id="tmp-plant" placeholder="식물 종류를 직접 입력해주세요." class="form-input mt-3" v-model="newMyplant.tmp">
           </div>
           <div class="select-plant mb-3" v-if="action==='update'">
-            <input v-if="newMyplant.plantname!=='직접 입력하기'" type="text" id="plant" :placeholder="myplant.plant_info.name" class="form-input disabled-input" disabled>
+            <input v-if="newMyplant.plantname!=='직접 입력하기'" type="text" id="plant" :placeholder="myplant.plant_info?.name" class="form-input disabled-input" disabled>
             <input v-if="newMyplant.plantname==='직접 입력하기'" type="text" id="plant" :placeholder="myplant.tmp" class="form-input disabled-input" disabled>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <router-link :to="{ name: 'myplant', params: { username: username } }" v-if="action==='create'">
             <button class="form-btn back-btn">뒤로가기</button>
           </router-link>
-          <router-link :to="{ name: 'myplantDetail', params: { username: username, plantPk: myplant.id } }" v-if="action==='update'">
+          <router-link :to="{ name: 'myplantDetail', params: { username: username, plantPk: $route.params.plantPk } }" v-if="action==='update'">
             <button class="form-btn back-btn">뒤로가기</button>
           </router-link>
           <button class="form-btn myplant-create-submit-btn">등록</button>
@@ -80,9 +80,13 @@ export default {
   methods: {
     ...mapActions(['createMyplant', 'searchPlant', 'updateMyplant']),
     onInputImage() {
-      this.newMyplant.photo = this.$refs.newMyplantImage.files[0]
-      const url = URL.createObjectURL(this.newMyplant.photo)
-      this.newMyplantImage = url
+      if (this.$refs.newMyplantImage.files[0].size > 2621440) {
+        alert('사진이 너무 큽니다. 2.5MB보다 작은 사진을 선택해주세요.')
+      } else {
+        this.newMyplant.photo = this.$refs.newMyplantImage.files[0]
+        const url = URL.createObjectURL(this.newMyplant.photo)
+        this.newMyplantImage = url
+      }
     },
     onDeleteImage() {
       this.newMyplant.photo = ''

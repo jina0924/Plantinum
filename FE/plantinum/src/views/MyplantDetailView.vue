@@ -69,7 +69,6 @@
               </div>
 
               <!-- OTP 모달 -->
-              <!-- <div class="black-bg" v-if="!!temp_OTP"> -->
               <div class="black-bg" @click="close($event)" v-if="modal===3 && isOwner">
                 <div class="modal-bg myplant-modal">
                   <!-- OTP 모달 -->
