@@ -116,6 +116,8 @@
 
 <script>
 import { mapActions , mapGetters } from 'vuex'
+import router from '@/router'
+
 
 export default {
   name: 'Leaf82SearchList',
@@ -259,7 +261,8 @@ export default {
       this.info.plantname = ''
       this.info.sido = ''
       this.info.sigungu = ''
-      this.fetchSearch()
+      // this.fetchSearch()
+      router.go()
     },
 
     onoff() {
