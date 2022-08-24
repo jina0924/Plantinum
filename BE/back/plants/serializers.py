@@ -38,6 +38,8 @@ class MyplantSerializer(serializers.ModelSerializer):
     plant_info = PlantsSerializer(read_only=True)
     plantname = serializers.CharField(read_only=True)
 
+    is_connected = serializers.BooleanField(read_only=True)
+
     class SensingSerializer(serializers.ModelSerializer):
         class Meta:
             model = Sensing
