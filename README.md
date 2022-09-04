@@ -1,6 +1,8 @@
 # 🍀PLANTINUM
 
-![로고](./FE/img_files/logo.png) * 수정중!
+<div align="center">
+  <img src="./README.assets/logo.png" width="60%">
+</div>
 
 **PLANTinum** 이란 **Plant + Platinum** 의 합성어입니다. 또한, **plan**을 의미하기도 해서 계획적으로 식물을 관리하고 보살핀다는 의미를 담고있습니다. 본 프로젝트는 반려식물을 자동으로 케어해주고 나아가 웹을 통하여 이렇게 기른 반려식물을 거래할 수 있게 만드는 **IoT 플랫폼 서비스** 개발을 목표로 합니다.
 
@@ -16,7 +18,7 @@
 
 사이트 주소 : [Plantinum](http://plantinum.co.kr)
 
-> 자세한 내용은 [포팅 매뉴얼]() 참고
+> 자세한 내용은 [포팅 매뉴얼](./exec) 참고
 
 - FE
 > 파일 위치 : ./FE/plantinum
@@ -39,7 +41,7 @@ $ python manage.py runserver
 
 - CHAT
 
-> 파일 위치 : ./BE/test_chat
+> 파일 위치 : ./BE/chat
 ```shell
 $ nohup node app.js &
 ```
@@ -81,7 +83,7 @@ const HOST = 'http://127.0.0.1:8000/api/v1/'
 ### 🌻BE
 [api 가이드 문서.md](./BE/api%20%EA%B0%80%EC%9D%B4%EB%93%9C%20%EB%AC%B8%EC%84%9C.md) 참고
 
-[채팅 서버 구축 문서.md](./BE/uwsgiuwsgi를 이용해서 django와 nginx연결하기.md) 참고
+[채팅 서버 구축 문서.md](./BE/uwsgi%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%B4%EC%84%9C%20django%EC%99%80%20nginx%EC%97%B0%EA%B2%B0%ED%95%98%EA%B8%B0.md) 참고
 
 
 
@@ -101,15 +103,6 @@ const HOST = 'http://127.0.0.1:8000/api/v1/'
 
 > [STACK_EXPLANATION](./Docs/STACK_EXPLANATION.md) : 기술 스택 정리
 
-
-
-## 📟GIT
-
-[GIT](./GIT/)
-
-> [Convention.md](./GIT//Convention.md) : 프로젝트의 git convention
-
-> [git_command.md](./GIT//git_command.md) : git 사용법
 
 
 
